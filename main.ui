@@ -1,0 +1,1196 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>692</width>
+    <height>597</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>openMSX Catapult</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset>logo.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QVBoxLayout" >
+    <property name="margin" >
+     <number>0</number>
+    </property>
+    <property name="spacing" >
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabWidget" >
+      <widget class="QWidget" name="mediaTab" >
+       <attribute name="title" >
+        <string>Media</string>
+       </attribute>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>9</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="hardwareFrame" >
+          <property name="sizePolicy" >
+           <sizepolicy>
+            <hsizetype>7</hsizetype>
+            <vsizetype>7</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="palette" >
+           <palette>
+            <active>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>170</red>
+              <green>170</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>212</red>
+              <green>212</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>85</red>
+              <green>85</green>
+              <blue>127</blue>
+             </color>
+             <color>
+              <red>113</red>
+              <green>113</green>
+              <blue>170</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>170</red>
+              <green>170</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>103</red>
+              <green>141</green>
+              <blue>178</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>238</blue>
+             </color>
+             <color>
+              <red>82</red>
+              <green>24</green>
+              <blue>139</blue>
+             </color>
+             <color>
+              <red>212</red>
+              <green>212</green>
+              <blue>255</blue>
+             </color>
+            </active>
+            <inactive>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>170</red>
+              <green>170</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>212</red>
+              <green>212</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>85</red>
+              <green>85</green>
+              <blue>127</blue>
+             </color>
+             <color>
+              <red>113</red>
+              <green>113</green>
+              <blue>170</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>170</red>
+              <green>170</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>103</red>
+              <green>141</green>
+              <blue>178</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>238</blue>
+             </color>
+             <color>
+              <red>82</red>
+              <green>24</green>
+              <blue>139</blue>
+             </color>
+             <color>
+              <red>212</red>
+              <green>212</green>
+              <blue>255</blue>
+             </color>
+            </inactive>
+            <disabled>
+             <color>
+              <red>85</red>
+              <green>85</green>
+              <blue>127</blue>
+             </color>
+             <color>
+              <red>170</red>
+              <green>170</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>212</red>
+              <green>212</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>85</red>
+              <green>85</green>
+              <blue>127</blue>
+             </color>
+             <color>
+              <red>113</red>
+              <green>113</green>
+              <blue>170</blue>
+             </color>
+             <color>
+              <red>85</red>
+              <green>85</green>
+              <blue>127</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>85</red>
+              <green>85</green>
+              <blue>127</blue>
+             </color>
+             <color>
+              <red>170</red>
+              <green>170</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>170</red>
+              <green>170</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+             <color>
+              <red>86</red>
+              <green>117</green>
+              <blue>148</blue>
+             </color>
+             <color>
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+             <color>
+              <red>0</red>
+              <green>0</green>
+              <blue>238</blue>
+             </color>
+             <color>
+              <red>82</red>
+              <green>24</green>
+              <blue>139</blue>
+             </color>
+             <color>
+              <red>212</red>
+              <green>212</green>
+              <blue>255</blue>
+             </color>
+            </disabled>
+           </palette>
+          </property>
+          <property name="frameShape" >
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow" >
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="" >
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>0</number>
+           </property>
+           <property name="spacing" >
+            <number>6</number>
+           </property>
+           <item>
+            <layout class="QVBoxLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QListView" name="mediaList" >
+               <property name="sizePolicy" >
+                <sizepolicy>
+                 <hsizetype>5</hsizetype>
+                 <vsizetype>5</vsizetype>
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QStackedWidget" name="mediaStack" >
+             <property name="frameShape" >
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow" >
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="currentIndex" >
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="page" >
+              <widget class="QLabel" name="" >
+               <property name="geometry" >
+                <rect>
+                 <x>10</x>
+                 <y>10</y>
+                 <width>321</width>
+                 <height>111</height>
+                </rect>
+               </property>
+               <property name="text" >
+                <string>The cartridge slots, disk drives and cassette player of the currently active MSX are shown in the list above. After you select one of them, you can insert a cartridge, disk or cassette in this panel. </string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               </property>
+               <property name="wordWrap" >
+                <bool>true</bool>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="diskPage" >
+              <layout class="QVBoxLayout" >
+               <property name="margin" >
+                <number>9</number>
+               </property>
+               <property name="spacing" >
+                <number>6</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="diskLabel" >
+                   <property name="font" >
+                    <font>
+                     <family>Sans Serif</family>
+                     <pointsize>16</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                     <underline>false</underline>
+                     <strikeout>false</strikeout>
+                    </font>
+                   </property>
+                   <property name="text" >
+                    <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:16pt; font-weight:600; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:400;">Disk A&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="diskEjectButton" >
+                   <property name="sizePolicy" >
+                    <sizepolicy>
+                     <hsizetype>0</hsizetype>
+                     <vsizetype>0</vsizetype>
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="icon" >
+                    <iconset>eject.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="diskDescriptionLabel" >
+                 <property name="font" >
+                  <font>
+                   <family>Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <weight>50</weight>
+                   <italic>false</italic>
+                   <bold>false</bold>
+                   <underline>false</underline>
+                   <strikeout>false</strikeout>
+                  </font>
+                 </property>
+                 <property name="text" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Disk image of 720K&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="diskBrowseImageButton" >
+                   <property name="text" >
+                    <string>Browse Disk &amp;Images...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType" >
+                    <enum>QSizePolicy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" >
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="diskBrowseDirectoryButton" >
+                   <property name="text" >
+                    <string>Browse &amp;Directories...</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QComboBox" name="diskHistoryBox" >
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>1</hsizetype>
+                   <vsizetype>1</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="editable" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="maxCount" >
+                  <number>100</number>
+                 </property>
+                 <property name="insertPolicy" >
+                  <enum>QComboBox::InsertAtTop</enum>
+                 </property>
+                 <property name="sizeAdjustPolicy" >
+                  <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+                 </property>
+                 <property name="minimumContentsLength" >
+                  <number>20</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation" >
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" >
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="cartPage" >
+              <layout class="QVBoxLayout" >
+               <property name="margin" >
+                <number>9</number>
+               </property>
+               <property name="spacing" >
+                <number>6</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="cartLabel" >
+                   <property name="font" >
+                    <font>
+                     <family>Sans Serif</family>
+                     <pointsize>16</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                     <underline>false</underline>
+                     <strikeout>false</strikeout>
+                    </font>
+                   </property>
+                   <property name="text" >
+                    <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:16pt; font-weight:600; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:400;">Cartridge A&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="cartEjectButton" >
+                   <property name="sizePolicy" >
+                    <sizepolicy>
+                     <hsizetype>0</hsizetype>
+                     <vsizetype>0</vsizetype>
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="icon" >
+                    <iconset>eject.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="cartDescriptionLabel" >
+                 <property name="font" >
+                  <font>
+                   <family>Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <weight>50</weight>
+                   <italic>false</italic>
+                   <bold>false</bold>
+                   <underline>false</underline>
+                   <strikeout>false</strikeout>
+                  </font>
+                 </property>
+                 <property name="text" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">ROM image of 256K&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="cartBrowseImageButton" >
+                   <property name="text" >
+                    <string>Browse ROM &amp;Images...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" >
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QComboBox" name="cartHistoryBox" >
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>1</hsizetype>
+                   <vsizetype>1</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="editable" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="maxCount" >
+                  <number>100</number>
+                 </property>
+                 <property name="insertPolicy" >
+                  <enum>QComboBox::InsertAtTop</enum>
+                 </property>
+                 <property name="sizeAdjustPolicy" >
+                  <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+                 </property>
+                 <property name="minimumContentsLength" >
+                  <number>20</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation" >
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" >
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>6</number>
+             </property>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="resetButton" >
+               <property name="text" >
+                <string>Reset</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="inputTab" >
+       <attribute name="title" >
+        <string>Input</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="videoTab" >
+       <attribute name="title" >
+        <string>Video</string>
+       </attribute>
+       <widget class="QWidget" name="widget" >
+        <property name="geometry" >
+         <rect>
+          <x>51</x>
+          <y>44</y>
+          <width>251</width>
+          <height>364</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" >
+         <property name="margin" >
+          <number>0</number>
+         </property>
+         <property name="spacing" >
+          <number>0</number>
+         </property>
+         <item row="1" column="0" >
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>6</number>
+           </property>
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="blurLabel" >
+             <property name="text" >
+              <string>Blur:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="blurSlider" >
+             <property name="maximum" >
+              <number>100</number>
+             </property>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition" >
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval" >
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="1" >
+          <widget class="QSpinBox" name="blurSpinBox" >
+           <property name="maximum" >
+            <number>100</number>
+           </property>
+           <property name="singleStep" >
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" >
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>6</number>
+           </property>
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="gammaLabel" >
+             <property name="text" >
+              <string>Gamma Correction:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="gammaSlider" >
+             <property name="maximum" >
+              <number>100</number>
+             </property>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition" >
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval" >
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="1" >
+          <widget class="QSpinBox" name="glowSpinBox" >
+           <property name="maximum" >
+            <number>100</number>
+           </property>
+           <property name="singleStep" >
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0" >
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>6</number>
+           </property>
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="contrastLabel" >
+             <property name="text" >
+              <string>Contrast:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="contrastSlider" >
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0" >
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>6</number>
+           </property>
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="glowLabel" >
+             <property name="text" >
+              <string>Glow:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="glowSlider" >
+             <property name="maximum" >
+              <number>100</number>
+             </property>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition" >
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval" >
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="6" column="1" >
+          <widget class="QDoubleSpinBox" name="noiseSpinBox" />
+         </item>
+         <item row="4" column="0" >
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>6</number>
+           </property>
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="brightnessLabel" >
+             <property name="text" >
+              <string>Brightness:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="brightnessSlider" >
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="3" column="1" >
+          <widget class="QDoubleSpinBox" name="gammaSpinBox" >
+           <property name="maximum" >
+            <double>5</double>
+           </property>
+           <property name="minimum" >
+            <double>0</double>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" >
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>6</number>
+           </property>
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="noiseLabel" >
+             <property name="text" >
+              <string>Noise:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="noiseSlider" >
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="0" >
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>6</number>
+           </property>
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="scanlineLabel" >
+             <property name="text" >
+              <string>Scanline:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="scanlineSlider" >
+             <property name="maximum" >
+              <number>100</number>
+             </property>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition" >
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval" >
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="4" column="1" >
+          <widget class="QDoubleSpinBox" name="brightnessSpinBox" />
+         </item>
+         <item row="5" column="1" >
+          <widget class="QDoubleSpinBox" name="contrastSpinBox" />
+         </item>
+         <item row="0" column="1" >
+          <widget class="QSpinBox" name="scanlineSpinBox" >
+           <property name="maximum" >
+            <number>100</number>
+           </property>
+           <property name="singleStep" >
+            <number>5</number>
+           </property>
+           <property name="value" >
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="audioTab" >
+       <attribute name="title" >
+        <string>Audio</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="consoleTab" >
+       <attribute name="title" >
+        <string>Console</string>
+       </attribute>
+       <layout class="QVBoxLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QTextEdit" name="logText" >
+          <property name="readOnly" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="consoleLineEdit" />
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" >
+      <property name="margin" >
+       <number>0</number>
+      </property>
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>6</number>
+        </property>
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="playButton" >
+          <property name="icon" >
+           <iconset>play.png</iconset>
+          </property>
+          <property name="checkable" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pauseButton" >
+          <property name="icon" >
+           <iconset>pause.png</iconset>
+          </property>
+          <property name="checkable" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="stopButton" >
+          <property name="icon" >
+           <iconset>stop.png</iconset>
+          </property>
+          <property name="checkable" >
+           <bool>true</bool>
+          </property>
+          <property name="checked" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="forwardButton" >
+          <property name="icon" >
+           <iconset>forward.png</iconset>
+          </property>
+          <property name="checkable" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" >
+         <size>
+          <width>351</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>692</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_Quit" />
+   </widget>
+   <widget class="QMenu" name="menu_Help" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_HelpSetup" />
+    <addaction name="action_HelpUser" />
+    <addaction name="separator" />
+    <addaction name="action_AboutCatapult" />
+    <addaction name="action_AboutQt" />
+   </widget>
+   <addaction name="menu_File" />
+   <addaction name="menu_Help" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>575</y>
+     <width>692</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <action name="action_AboutCatapult" >
+   <property name="text" >
+    <string>&amp;About openMSX Catapult</string>
+   </property>
+  </action>
+  <action name="action_Quit" >
+   <property name="text" >
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="action_AboutQt" >
+   <property name="text" >
+    <string>About &amp;Qt</string>
+   </property>
+  </action>
+  <action name="action_HelpSetup" >
+   <property name="text" >
+    <string>openMSX &amp;Setup Guide</string>
+   </property>
+  </action>
+  <action name="action_HelpUser" >
+   <property name="text" >
+    <string>openMSX &amp;User's Manual</string>
+   </property>
+  </action>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>consoleLineEdit</receiver>
+   <slot>setFocus()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>253</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>299</x>
+     <y>536</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
