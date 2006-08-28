@@ -51,15 +51,16 @@ class ControlBridge(QtCore.QObject):
 		if len(words) == 0:
 			raise TypeError('command must contain at least one word')
 		line = u' '.join([
-			word.replace('\\', '\\\\').replace(' ', '\\ ')
+			unicode(word).replace('\\', '\\\\').replace(' ', '\\ ')
 			for word in words
 			])
 
 		def execute(callback = None):
-			self.sendCommandRaw(
-				line,
-				lambda result: callback(*parseTclValue(result))
-				)
+			if callback is None:
+				rawCallback = None
+			else:
+				rawCallback = lambda result: callback(*parseTclValue(result))
+			self.sendCommandRaw(line, rawCallback)
 		return execute
 
 	def sendCommandRaw(self, command, callback = None):
