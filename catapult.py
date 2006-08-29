@@ -132,15 +132,7 @@ class MainWindow(QtGui.QMainWindow):
 
 	#@QtCore.pyqtSignature('')
 	def closeConnection(self):
-		# TODO: Have a fallback in case openMSX does not respond.
-		# TODO: Handle the situation when openMSX has already quit.
-		# TODO: Is waiting for the quit command to be confirmed good enough,
-		#       or should we wait for the control connection end tag?
-		# TODO: I remember Wouter saying that "quit" is just an alias for
-		#       something that we should actually use.
-		# TODO: Make sure closing the openMSX window does not actually quit
-		#       openMSX if it was started from a control connection.
-		self.__bridge.command('quit')(QtGui.qApp.quit)
+		self.__bridge.closeConnection(QtGui.qApp.quit)
 
 	def __getAssistentClient(self):
 		if not hasattr(self, 'assistentClient'):

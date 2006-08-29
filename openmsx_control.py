@@ -21,10 +21,34 @@ class ControlBridge(QtCore.QObject):
 
 	def openConnection(self):
 		self.__connection = connection = ControlConnection(self)
+		self.connect(
+			connection, ControlConnection.connectionClosedSignal,
+			self.connectionClosed
+			)
+		connection.start()
 		for updateType in self.__updateHandlers.iterkeys():
 			self.sendCommandRaw('update enable %s' % updateType)
 		for handler in self.__initialHandlers:
 			handler()
+
+	def closeConnection(self, callback):
+		if self.__connection is None:
+			# Connection is already closed.
+			callback()
+		else:
+			# TODO: Have a fallback in case openMSX does not respond.
+			# TODO: Is waiting for the quit command to be confirmed good enough,
+			#       or should we wait for the control connection end tag?
+			# TODO: I remember Wouter saying that "quit" is just an alias for
+			#       something that we should actually use.
+			# TODO: Make sure closing the openMSX window does not actually quit
+			#       openMSX if it was started from a control connection.
+			self.command('quit')(callback)
+
+	def connectionClosed(self):
+		print 'connection with openMSX was closed'
+		self.__connection = None
+		# TODO: How to handle this? Attempt a reconnect?
 
 	def registerInitial(self, handler):
 		'''Registers a handler to be called after a new connection is
@@ -144,6 +168,8 @@ class ControlHandler(QtXml.QXmlDefaultHandler):
 		return True
 
 class ControlConnection(QtCore.QObject):
+	# Signals:
+	connectionClosedSignal = QtCore.SIGNAL('connectionClosed()')
 
 	def __init__(self, bridge):
 		QtCore.QObject.__init__(self)
@@ -175,6 +201,9 @@ class ControlConnection(QtCore.QObject):
 		process.setReadChannel(QtCore.QProcess.StandardOutput)
 		self.__inputSource = None
 
+	def start(self):
+		process = self.__process
+
 		# Start the openMSX process.
 		# TODO: Detect and report errors.
 		process.start(
@@ -195,6 +224,8 @@ class ControlConnection(QtCore.QObject):
 	#@QtCore.pyqtSignature('QProcess::ProcessState')
 	def processStateChanged(self, newState):
 		print 'process entered state', newState, 'error', self.__process.error()
+		if newState == QtCore.QProcess.NotRunning:
+			self.emit(self.connectionClosedSignal)
 
 	#@QtCore.pyqtSignature('')
 	def dumpEvent(self):
