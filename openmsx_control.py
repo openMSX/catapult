@@ -1,3 +1,5 @@
+# $Id$
+
 from PyQt4 import QtCore, QtXml
 
 from openmsx_utils import parseTclValue

@@ -1,3 +1,5 @@
+# $Id$
+
 from PyQt4 import QtCore, QtGui
 
 class MediaModel(QtCore.QAbstractListModel):
