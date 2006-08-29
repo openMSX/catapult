@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# $Id$
 
 from PyQt4 import QtCore, QtGui
 import sys
