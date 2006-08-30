@@ -8,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>692</width>
-    <height>597</height>
+    <width>617</width>
+    <height>556</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -28,6 +28,9 @@
     </property>
     <item>
      <widget class="QTabWidget" name="tabWidget" >
+      <property name="currentIndex" >
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="mediaTab" >
        <attribute name="title" >
         <string>Media</string>
@@ -314,6 +317,9 @@
             </disabled>
            </palette>
           </property>
+          <property name="autoFillBackground" >
+           <bool>true</bool>
+          </property>
           <property name="frameShape" >
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -323,7 +329,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QWidget" name="" >
+         <widget class="QWidget" name="widget" >
           <layout class="QVBoxLayout" >
            <property name="margin" >
             <number>0</number>
@@ -362,28 +368,30 @@
               <enum>QFrame::Sunken</enum>
              </property>
              <property name="currentIndex" >
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="page" >
-              <widget class="QLabel" name="" >
-               <property name="geometry" >
-                <rect>
-                 <x>10</x>
-                 <y>10</y>
-                 <width>321</width>
-                 <height>111</height>
-                </rect>
+              <layout class="QGridLayout" >
+               <property name="margin" >
+                <number>9</number>
                </property>
-               <property name="text" >
-                <string>The cartridge slots, disk drives and cassette player of the currently active MSX are shown in the list above. After you select one of them, you can insert a cartridge, disk or cassette in this panel. </string>
+               <property name="spacing" >
+                <number>6</number>
                </property>
-               <property name="alignment" >
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-               </property>
-               <property name="wordWrap" >
-                <bool>true</bool>
-               </property>
-              </widget>
+               <item row="0" column="0" >
+                <widget class="QLabel" name="label" >
+                 <property name="text" >
+                  <string>The cartridge slots, disk drives and cassette player of the currently active MSX are shown in the list above. After you select one of them, you can insert a cartridge, disk or cassette in this panel. </string>
+                 </property>
+                 <property name="alignment" >
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 </property>
+                 <property name="wordWrap" >
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
              <widget class="QWidget" name="diskPage" >
               <layout class="QVBoxLayout" >
@@ -1111,8 +1119,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>692</width>
-     <height>29</height>
+     <width>617</width>
+     <height>32</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File" >
@@ -1134,16 +1142,7 @@
    <addaction name="menu_File" />
    <addaction name="menu_Help" />
   </widget>
-  <widget class="QStatusBar" name="statusbar" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>575</y>
-     <width>692</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar" />
   <action name="action_AboutCatapult" >
    <property name="text" >
     <string>&amp;About openMSX Catapult</string>
