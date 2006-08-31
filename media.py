@@ -223,14 +223,22 @@ class MediaSwitcher(QtCore.QObject):
 			mediaModel, mediaModel.dataChangedSignal,
 			self.mediaPathChanged
 			)
-		# Connect signals of disk panel:
-		# It is essential to keep a reference, otherwise the class is garbage
-		# collected even though it has signal-slot connections attached to it.
-		self.__diskHandler = DiskHandler(ui, self)
-		self.__diskHandler.connectSignals()
+		# Connect signals of media panels:
+		# It is essential to keep the references, otherwise the classes are
+		# garbage collected even though they have signal-slot connections
+		# attached to them.
+		self.__handlers = handlers = [
+			Handler(ui, self)
+			for Handler in ( DiskHandler, CartHandler )
+			]
+		for handler in handlers:
+			handler.connectSignals()
 
 	def __updateCartPage(self, mediaSlot, identifier):
+		ui = self.__ui
+		path = self.__mediaModel.getInserted(mediaSlot)
 		print 'TODO: Implement __updateCartPage'
+		print path
 
 	def __updateDrivePage(self, mediaSlot, identifier):
 		ui = self.__ui
@@ -309,6 +317,9 @@ class MediaSwitcher(QtCore.QObject):
 		'''
 		self.__mediaModel.setInserted(self.__mediaSlot, path)
 
+# TODO: We can probably share the method implementations as well, not just
+#       the signal-slot connections.
+#       For example diskInsert and cartInsert differ only in name.
 class MediaHandler(QtCore.QObject):
 	medium = None
 
@@ -394,4 +405,51 @@ class DiskHandler(MediaHandler):
 			)
 		if not directory.isNull():
 			self.diskBrowsed(directory)
+
+class CartHandler(MediaHandler):
+	medium = 'cart'
+
+	def _connections(self):
+		return MediaHandler._connections(self) + (
+			( 'BrowseImageButton', None, 'clicked()', 'BrowseImage' ),
+			)
+
+	def cartInsert(self, path):
+		'''Tells the model to insert a given cart.
+		'''
+		self._switcher.setPath(str(path))
+
+	def cartEject(self):
+		# TODO: I think it looks strange to insert empty string (ejected cart)
+		#       into the history.
+		#self.cartInsert('')
+		self._ui.cartHistoryBox.clearEditText()
+		self.cartInsert('')
+
+	def cartEdited(self):
+		'''Inserts the cart specified in the combobox line edit.
+		'''
+		self.cartInsert(str(self._ui.cartHistoryBox.lineEdit().text()))
+
+	def cartBrowsed(self, path):
+		'''Inserts the result of a browse image/dir dialog into the history
+		combobox and informs openMSX.
+		'''
+		print 'selected:', path or '<empty>'
+		history = self._ui.cartHistoryBox
+		history.insertItem(0, path)
+		history.setCurrentIndex(0)
+		self.cartInsert(path)
+
+	def cartBrowseImage(self):
+		cart = QtGui.QFileDialog.getOpenFileName(
+			self._ui.mediaStack, 'Select ROM Image',
+			# TODO: Remember previous path.
+			#QtCore.QDir.currentPath(),
+			'/home/mth/openmsx/test',
+			'ROM Images (*.rom *.zip *.gz);;All Files (*)',
+			None #, 0
+			)
+		if not cart.isNull():
+			self.cartBrowsed(cart)
 
