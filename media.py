@@ -14,9 +14,6 @@ class MediaModel(QtCore.QAbstractListModel):
 
 	def __updateAll(self):
 		# Query cartridge slots.
-		# TODO: openMSX does not offer this kind of query yet.
-		#       In the mean time, just register 2 slots, since that's the
-		#       amount of slots most MSXes have.
 		self.__bridge.command('info', 'command', 'cart?')(self.__cartListReply)
 		# Query disks.
 		# TODO: The idea of the name "updateAll" was to be able to deal with
@@ -211,6 +208,7 @@ def addToHistory(comboBox, path):
 		comboBox.setCurrentIndex(0)
 
 class MediaSwitcher(QtCore.QObject):
+
 	def __init__(self, mediaModel, ui):
 		QtCore.QObject.__init__(self)
 		self.__mediaModel = mediaModel
@@ -226,26 +224,10 @@ class MediaSwitcher(QtCore.QObject):
 			self.mediaPathChanged
 			)
 		# Connect signals of disk panel:
-		self.connect(
-			ui.diskEjectButton, QtCore.SIGNAL('clicked()'),
-			self.diskEject
-			)
-		self.connect(
-			ui.diskBrowseImageButton, QtCore.SIGNAL('clicked()'),
-			self.diskBrowseImage
-			)
-		self.connect(
-			ui.diskBrowseDirectoryButton, QtCore.SIGNAL('clicked()'),
-			self.diskBrowseDirectory
-			)
-		self.connect(
-			ui.diskHistoryBox, QtCore.SIGNAL('activated(QString)'),
-			self.diskInsert
-			)
-		self.connect(
-			ui.diskHistoryBox.lineEdit(), QtCore.SIGNAL('editingFinished()'),
-			self.diskEdited
-			)
+		# It is essential to keep a reference, otherwise the class is garbage
+		# collected even though it has signal-slot connections attached to it.
+		self.__diskHandler = DiskHandler(ui, self)
+		self.__diskHandler.connectSignals()
 
 	def __updateCartPage(self, mediaSlot, identifier):
 		print 'TODO: Implement __updateCartPage'
@@ -322,36 +304,77 @@ class MediaSwitcher(QtCore.QObject):
 		if self.__mediaSlot == mediaSlot:
 			self.__updateMediaPage(mediaSlot)
 
+	def setPath(self, path):
+		'''Sets a new path for the currently selected medium.
+		'''
+		self.__mediaModel.setInserted(self.__mediaSlot, path)
+
+class MediaHandler(QtCore.QObject):
+	medium = None
+
+	def __init__(self, ui, switcher):
+		QtCore.QObject.__init__(self)
+		self._ui = ui
+		self._switcher = switcher
+
+	def connectSignals(self):
+		for controlName, func, signal, method in self._connections():
+			control = getattr(self._ui, self.medium + controlName)
+			if func is not None:
+				control = func(control)
+			print control, signal, method
+			self.connect(
+				control, QtCore.SIGNAL(signal),
+				getattr(self, self.medium + method)
+				)
+
+	def _connections(self):
+		return (
+			( 'EjectButton', None, 'clicked()', 'Eject' ),
+			( 'HistoryBox', None, 'activated(QString)', 'Insert' ),
+			( 'HistoryBox', lambda box: box.lineEdit(),
+			  'editingFinished()', 'Edited' ),
+			)
+
+class DiskHandler(MediaHandler):
+	medium = 'disk'
+
+	def _connections(self):
+		return MediaHandler._connections(self) + (
+			( 'BrowseImageButton', None, 'clicked()', 'BrowseImage' ),
+			( 'BrowseDirectoryButton', None, 'clicked()', 'BrowseDirectory' ),
+			)
+
 	def diskInsert(self, path):
 		'''Tells the model to insert a given disk.
 		'''
-		self.__mediaModel.setInserted(self.__mediaSlot, str(path))
+		self._switcher.setPath(str(path))
 
 	def diskEject(self):
 		# TODO: I think it looks strange to insert empty string (ejected disk)
 		#       into the history.
 		#self.diskInsert('')
-		self.__ui.diskHistoryBox.clearEditText()
+		self._ui.diskHistoryBox.clearEditText()
 		self.diskInsert('')
 
 	def diskEdited(self):
 		'''Inserts the disk specified in the combobox line edit.
 		'''
-		self.diskInsert(str(self.__ui.diskHistoryBox.lineEdit().text()))
+		self.diskInsert(str(self._ui.diskHistoryBox.lineEdit().text()))
 
 	def diskBrowsed(self, path):
 		'''Inserts the result of a browse image/dir dialog into the history
 		combobox and informs openMSX.
 		'''
 		print 'selected:', path or '<empty>'
-		history = self.__ui.diskHistoryBox
+		history = self._ui.diskHistoryBox
 		history.insertItem(0, path)
 		history.setCurrentIndex(0)
 		self.diskInsert(path)
 
 	def diskBrowseImage(self):
 		disk = QtGui.QFileDialog.getOpenFileName(
-			self.__ui.mediaStack, 'Select Disk Image',
+			self._ui.mediaStack, 'Select Disk Image',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath(),
 			'/home/mth/msx/demos',
@@ -363,7 +386,7 @@ class MediaSwitcher(QtCore.QObject):
 
 	def diskBrowseDirectory(self):
 		directory = QtGui.QFileDialog.getExistingDirectory(
-			self.__ui.mediaStack, 'Select Directory',
+			self._ui.mediaStack, 'Select Directory',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath()
 			'/home/mth/msx/demos',
