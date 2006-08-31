@@ -2,6 +2,8 @@
 
 from PyQt4 import QtCore, QtGui
 
+from custom import initialDiskDir, initialRomDir
+
 class MediaModel(QtCore.QAbstractListModel):
 	dataChangedSignal = QtCore.SIGNAL('dataChanged(QModelIndex, QModelIndex)')
 
@@ -237,9 +239,9 @@ class MediaSwitcher(QtCore.QObject):
 	def __updateCartPage(self, mediaSlot, identifier):
 		ui = self.__ui
 		path = self.__mediaModel.getInserted(mediaSlot)
-		
+
 		ui.cartLabel.setText('Cartridge %s' % identifier.upper())
-		
+
 		fileInfo = QtCore.QFileInfo(path)
 
 		if path == '':
@@ -413,7 +415,7 @@ class DiskHandler(MediaHandler):
 			self._ui.mediaStack, 'Select Disk Image',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath(),
-			'/home/manuel/msx-soft/diskimages',
+			initialDiskDir,
 			'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)',
 			None #, 0
 			)
@@ -425,7 +427,7 @@ class DiskHandler(MediaHandler):
 			self._ui.mediaStack, 'Select Directory',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath()
-			'/home/manuel/msx-soft/diskimages',
+			initialDiskDir,
 			#QtGui.QFileDialog.Option()
 			)
 		if not directory.isNull():
@@ -471,7 +473,7 @@ class CartHandler(MediaHandler):
 			self._ui.mediaStack, 'Select ROM Image',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath(),
-			'/home/mth/openmsx/test',
+			initialRomDir,
 			'ROM Images (*.rom *.zip *.gz);;All Files (*)',
 			None #, 0
 			)

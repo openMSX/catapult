@@ -1,5 +1,9 @@
 $Id$
 
+2006-08-31 Maarten ter Huurne <maarten@treewalker.org>
+	* Put all hardcoded paths in "custom.py". They should disappear eventually,
+	  but this is at least better than before.
+
 2006-08-29 Manuel Bilderbeek <manuel@msxnet.org>
 	* Initial ChangeLog
 	* Previous stuff: prototyped by Maarten in 2006

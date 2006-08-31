@@ -2,6 +2,7 @@
 
 from PyQt4 import QtCore, QtXml
 
+from custom import executable
 from openmsx_utils import parseTclValue
 
 def escapeTcl(value):
@@ -209,7 +210,7 @@ class ControlConnection(QtCore.QObject):
 		# Start the openMSX process.
 		# TODO: Detect and report errors.
 		process.start(
-			'/home/mth/openmsx/derived/openmsx -control stdio',
+			executable + ' -control stdio',
 		#	'gdb'
 		#	' --quiet'
 		#	' --command=script.gdb'
