@@ -1,6 +1,7 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
+import os.path
 
 from custom import initialDiskDir, initialRomDir
 
@@ -190,8 +191,14 @@ class MediaModel(QtCore.QAbstractListModel):
 				description = 'Disk drive %s' % name[-1].upper()
 			else:
 				description = name.upper()
+			if path:
+				dirName, fileName = os.path.split(path)
+				if fileName == '':
+					fileName = dirName[dirName.rfind(os.path.sep) + 1 : ]
+			else:
+				fileName = '<empty>'
 			return QtCore.QVariant(
-				'%s: %s' % ( description, path or '<empty>' )
+				'%s: %s' % ( description, fileName )
 				)
 		elif role == QtCore.Qt.UserRole:
 			return QtCore.QVariant(name)
@@ -474,7 +481,7 @@ class CartHandler(MediaHandler):
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath(),
 			initialRomDir,
-			'ROM Images (*.rom *.zip *.gz);;All Files (*)',
+			'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)',
 			None #, 0
 			)
 		if not cart.isNull():
