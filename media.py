@@ -237,8 +237,33 @@ class MediaSwitcher(QtCore.QObject):
 	def __updateCartPage(self, mediaSlot, identifier):
 		ui = self.__ui
 		path = self.__mediaModel.getInserted(mediaSlot)
-		print 'TODO: Implement __updateCartPage'
-		print path
+		
+		ui.cartLabel.setText('Cartridge %s' % identifier.upper())
+		
+		fileInfo = QtCore.QFileInfo(path)
+
+		if path == '':
+			description = 'No cartridge in slot'
+		elif fileInfo.isFile():
+			lastDot = path.rfind('.')
+			if lastDot == -1:
+				ext = None
+			else:
+				ext = path[lastDot + 1 : ].lower()
+			if ext in ('rom', 'ri'):
+				description = 'ROM image'
+				size = fileInfo.size()
+				if size != 0:
+					description += ' of %dkB' % (size / 1024)
+			elif ext in ('zip', 'gz'):
+				description = 'Compressed ROM image'
+			else:
+				description = 'ROM image of unknown type'
+		elif fileInfo.exists():
+			description = 'Special file node'
+		else:
+			description = 'Not found'
+		ui.cartDescriptionLabel.setText(description)
 
 	def __updateDrivePage(self, mediaSlot, identifier):
 		ui = self.__ui
@@ -388,7 +413,7 @@ class DiskHandler(MediaHandler):
 			self._ui.mediaStack, 'Select Disk Image',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath(),
-			'/home/mth/msx/demos',
+			'/home/manuel/msx-soft/diskimages',
 			'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)',
 			None #, 0
 			)
@@ -400,7 +425,7 @@ class DiskHandler(MediaHandler):
 			self._ui.mediaStack, 'Select Directory',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath()
-			'/home/mth/msx/demos',
+			'/home/manuel/msx-soft/diskimages',
 			#QtGui.QFileDialog.Option()
 			)
 		if not directory.isNull():
