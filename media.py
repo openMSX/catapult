@@ -264,6 +264,11 @@ class MediaSwitcher(QtCore.QObject):
 				size = fileInfo.size()
 				if size != 0:
 					description += ' of %dkB' % (size / 1024)
+					megabits = size / 1024 / 128
+					if megabits == 1:
+						description += ' (MegaROM)'
+					elif megabits > 1:
+						description += ' (%d MegaROM)' % megabits
 			elif ext in ('zip', 'gz'):
 				description = 'Compressed ROM image'
 			else:
