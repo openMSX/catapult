@@ -1,8 +1,12 @@
 $Id$
 
+2006-08-31 Manuel Bilderbeek <manuel@msxnet.org>
+	* Implemented the update of the cartridge page.
+	* Set initial page in mediastack back to the info one.
+
 2006-08-31 Maarten ter Huurne <maarten@treewalker.org>
-	* Put all hardcoded paths in "custom.py". They should disappear eventually,
-	  but this is at least better than before.
+	* Put all hardcoded paths in "custom.py". They should disappear
+	  eventually, but this is at least better than before.
 
 2006-08-29 Manuel Bilderbeek <manuel@msxnet.org>
 	* Initial ChangeLog
