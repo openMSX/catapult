@@ -108,7 +108,7 @@ class MediaModel(QtCore.QAbstractListModel):
 				del self.__mediaSlots[first + oldStart : first + oldIndex]
 				del oldSlots[oldStart : oldIndex]
 				self.endInsertRows()
-				oldIndex = start
+				oldIndex = oldStart
 
 			# Preserve drives that exist in both lists.
 			while oldSlot is not None and oldSlot == newSlot:
