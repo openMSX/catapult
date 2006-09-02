@@ -1,5 +1,12 @@
 $Id$
 
+2006-09-01 Maarten ter Huurne <maarten@treewalker.org>
+	* Added support for PyLint:
+	  - make sure you have the latest version (www.logilab.org)
+	  - the configuration file "pylintrc" is customized for this project
+	  - run it on all sources with "make lint", or on one source file with
+	    "pylint -rn module.py"
+
 2006-08-31 Manuel Bilderbeek <manuel@msxnet.org>
 	* Implemented the update of the cartridge page.
 	* Set initial page in mediastack back to the info one.
