@@ -65,7 +65,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		first = None
 		last = None
 		index = 0
-		for name, path in self.__mediaSlots:
+		for name, path_ in self.__mediaSlots:
 			if name >= medium and first is None:
 				first = index
 			index += 1
@@ -80,7 +80,7 @@ class MediaModel(QtCore.QAbstractListModel):
 
 		# Prepare lists; append None as sentinel.
 		oldSlots = [
-			name for name, path in self.__mediaSlots[first : last]
+			name for name, path_ in self.__mediaSlots[first : last]
 			] + [ None ]
 		newSlots = list(mediaSlots)
 		newSlots.sort()
@@ -236,9 +236,9 @@ class MediaSwitcher(QtCore.QObject):
 		# It is essential to keep the references, otherwise the classes are
 		# garbage collected even though they have signal-slot connections
 		# attached to them.
-		self.__handlers = handlers = [
-			Handler(ui, self)
-			for Handler in ( DiskHandler, CartHandler )
+		self.__handlers = [
+			handler(ui, self)
+			for handler in ( DiskHandler, CartHandler )
 			]
 
 	def __updateCartPage(self, mediaSlot, identifier):
@@ -341,9 +341,12 @@ class MediaSwitcher(QtCore.QObject):
 		self.__ui.mediaStack.setCurrentWidget(page)
 
 	#@QtCore.pyqtSignature(QModelIndex, QModelIndex)
-	def mediaPathChanged(self, topLeft, bottomRight):
+	def mediaPathChanged(
+		self, topLeft, bottomRight
+		# pylint: disable-msg=W0613
 		# TODO: We use the fact that we know MediaModel will only mark one
 		#       item changed at a time. This is not correct in general.
+		):
 		index = topLeft
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
 		if self.__mediaSlot == mediaSlot:

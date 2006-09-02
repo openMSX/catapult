@@ -7,7 +7,7 @@ import sys
 from custom import docDir
 from media import MediaModel, MediaSwitcher
 from openmsx_control import ControlBridge
-from player import VisibleSetting, PlayState
+from player import PlayState
 from settings import SettingsManager
 from ui_main import Ui_MainWindow
 
@@ -25,6 +25,10 @@ class MainWindow(QtGui.QMainWindow):
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
 		ui.setupUi(self)
+
+		# Resources that are loaded on demand.
+		self.__aboutDialog = None
+		self.__assistentClient = None
 
 		self.__logColours = dict([
 			( level, QtGui.QColor(
@@ -137,15 +141,15 @@ class MainWindow(QtGui.QMainWindow):
 		self.__bridge.closeConnection(QtGui.qApp.quit)
 
 	def __getAssistentClient(self):
-		if not hasattr(self, 'assistentClient'):
+		if self.__assistentClient is None:
 			from PyQt4.QtAssistant import QAssistantClient
 			# Note: The string parameter is the path to look for the
 			#       Qt Assistent executable.
 			#       Empty string means use OS search path.
 			# TODO: Is it safe to assume Qt Assistent is always in the path?
 			#       What happens if it is not?
-			self.assistentClient = QAssistantClient('')
-		return self.assistentClient
+			self.__assistentClient = QAssistantClient('')
+		return self.__assistentClient
 
 	#@QtCore.pyqtSignature('')
 	def showHelpSetup(self):
@@ -164,14 +168,13 @@ class MainWindow(QtGui.QMainWindow):
 
 	#@QtCore.pyqtSignature('')
 	def showAboutDialog(self):
-		if hasattr(self, 'aboutDialog'):
-			dialog = self.aboutDialog
-		else:
+		dialog = self.__aboutDialog
+		if dialog is None:
 			# TODO: An about dialog should not have minimize and maximize
 			#       buttons. Although I'm not asking Qt to show those, I still
 			#       get them. Maybe a misunderstanding between Qt and the
 			#       window manager (KWin)?
-			self.aboutDialog = dialog = QtGui.QDialog(
+			self.__aboutDialog = dialog = QtGui.QDialog(
 				self,
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -189,8 +192,8 @@ class MainWindow(QtGui.QMainWindow):
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
-	bridge = ControlBridge()
-	mainWindow = MainWindow(bridge)
-	bridge.openConnection()
+	controlBridge = ControlBridge()
+	mainWindow = MainWindow(controlBridge)
+	controlBridge.openConnection()
 	mainWindow.show()
 	sys.exit(app.exec_())

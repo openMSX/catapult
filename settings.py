@@ -37,13 +37,13 @@ class Setting(QtCore.QObject):
 		#decorated = QtCore.pyqtSignature(signature)(self.setValue.im_func)
 		#self.setValue = lambda value: decorated(self, value)
 
-	def connectSync(self, name, object):
+	def connectSync(self, obj):
 		'''Connect to the specified object in two directions:
 		this setting's valueChanged to the object's setValue and
 		the object's valueChanged to this setting's setValue.
 		'''
-		assert object.connect(self, self.valueChangedSignal, object.setValue)
-		assert self.connect(object, self.valueChangedSignal, self.setValue)
+		assert obj.connect(self, self.valueChangedSignal, obj.setValue)
+		assert self.connect(obj, self.valueChangedSignal, self.setValue)
 
 	def getValue(self):
 		'''Returns the current value of this setting.
@@ -141,8 +141,8 @@ class SettingsManager(QtCore.QObject):
 	def __getitem__(self, key):
 		return self.__settings[key]
 
-	def connectSetting(self, name, object):
-		self.__settings[name].connectSync(name, object)
+	def connectSetting(self, name, obj):
+		self.__settings[name].connectSync(obj)
 
 	def sync(self):
 		'''Retrieves the current values of all registered settings.

@@ -131,17 +131,27 @@ class ControlHandler(QtXml.QXmlDefaultHandler):
 	def __init__(self, bridge):
 		QtXml.QXmlDefaultHandler.__init__(self)
 		self.__bridge = bridge
+		self.__attrs = None
+		self.__message = None
 
 	def fatalError(self, exception):
-		print 'XML parse error: %s' %exception.message()
+		print 'XML parse error: %s' % exception.message()
 		return False # stop parsing
 
-	def startElement(self, namespaceURI, localName, qName, atts):
+	def startElement(
+		self, namespaceURI, localName, qName, atts
+		# pylint: disable-msg=W0613
+		# We don't need all the arguments, but Qt defines this interface.
+		):
 		self.__attrs = atts
 		self.__message = ''
 		return True
 
-	def endElement(self, namespaceURI, localName, qName):
+	def endElement(
+		self, namespaceURI, localName, qName
+		# pylint: disable-msg=W0613
+		# We don't need all the arguments, but Qt defines this interface.
+		):
 		if qName == 'openmsx-output':
 			pass
 		elif qName == 'reply':

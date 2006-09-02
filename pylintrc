@@ -66,7 +66,7 @@ comment=no
 include-ids=yes
 
 # Disable the message with the given id.
-disable-msg=C0111
+disable-msg=C0111,W0142,R0201
 
 
 # checks for
@@ -84,7 +84,7 @@ enable-variables=yes
 init-import=no
 
 # A regular expression matching names used for dummy variables (i.e. not used).
-dummy-variables-rgx=_|dummy
+dummy-variables-rgx=(.*)_|dummy
 
 # List of additional names supposed to be defined in builtins. Remember that
 # you should avoid to define new builtins when possible.
@@ -148,7 +148,7 @@ class-rgx=[A-Z_][A-Za-z]+$
 function-rgx=[a-z_][A-Za-z_]{2,30}$
 
 # Regular expression which should only match correct method names
-method-rgx=[a-z_][A-Za-z_]{2,30}$
+method-rgx=([a-z_][A-Za-z_]{2,30})|(on_[a-z_][A-Za-z_]{2,30}_[a-z_][A-Za-z_]{2,30})$
 
 # Regular expression which should only match correct instance attribute names
 attr-rgx=[a-z_][A-Za-z_]{2,30}$
