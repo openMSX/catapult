@@ -366,6 +366,10 @@ class MediaHandler(QtCore.QObject):
 		QtCore.QObject.__init__(self)
 		self._ui = ui
 		self._switcher = switcher
+		self._mediumToImageDir = {
+			'disk': initialDiskDir,
+			'cart': initialRomDir,
+			}
 
 		# Look up UI elements.
 		self._ejectButton = getattr(ui, self.medium + 'EjectButton')
@@ -413,7 +417,8 @@ class MediaHandler(QtCore.QObject):
 			self._ui.mediaStack, self.browseTitle,
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath(),
-			initialRomDir,
+			self._mediumToImageDir.get(self.medium)
+			or QtCore.QDir.currentPath(),
 			self.imageSpec, None #, 0
 			)
 		if not path.isNull():
