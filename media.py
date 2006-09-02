@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtGui
 import os.path
 
-from custom import initialDiskDir, initialRomDir
+from custom import initialDiskDir, initialRomDir, initialCasDir
 
 class MediaModel(QtCore.QAbstractListModel):
 	dataChangedSignal = QtCore.SIGNAL('dataChanged(QModelIndex, QModelIndex)')
@@ -23,6 +23,10 @@ class MediaModel(QtCore.QAbstractListModel):
 		#       openMSX crashes. However, that means we will have to resync
 		#       the inserted media, not just the list of slots.
 		self.__bridge.command('info', 'command', 'disk?')(self.__diskListReply)
+		# Query cassetteplayer.
+		self.__bridge.command(
+			'info', 'command', 'cassetteplayer'
+			)(self.__casListReply)
 
 	def __setMedium(self, mediaSlot, path):
 		index = 0
@@ -58,6 +62,12 @@ class MediaModel(QtCore.QAbstractListModel):
 		# TODO: Make sure this method is called every time when drives are
 		#       added or removed.
 		self.__listReply('disk', drives)
+
+	def __casListReply(self, *cassetteplayer):
+		# TODO: Make sure this method is called every time when
+		#       cassetteplayers are added or removed, if that is even
+		#       possible.
+		self.__listReply('cassette', cassetteplayer)
 
 	def __listReply(self, medium, mediaSlots):
 		# Determine which segment of the media slots list (which is sorted)
@@ -189,6 +199,8 @@ class MediaModel(QtCore.QAbstractListModel):
 				description = 'Cartridge slot %s' % name[-1].upper()
 			elif name.startswith('disk'):
 				description = 'Disk drive %s' % name[-1].upper()
+			elif name.startswith('cassette'):
+				description = 'Cassette player'
 			else:
 				description = name.upper()
 			if path:
@@ -226,6 +238,9 @@ class MediaSwitcher(QtCore.QObject):
 		self.__pageMap = {
 			'cart': ( ui.cartPage, self.__updateCartPage ),
 			'disk': ( ui.diskPage, self.__updateDrivePage ),
+			'cassette': ( 
+				ui.cassettePage, self.__updateCassettePage 
+				),
 			}
 		# Connect to media model:
 		self.connect(
@@ -238,7 +253,7 @@ class MediaSwitcher(QtCore.QObject):
 		# attached to them.
 		self.__handlers = [
 			handler(ui, self)
-			for handler in ( DiskHandler, CartHandler )
+			for handler in ( DiskHandler, CartHandler, CassetteHandler )
 			]
 
 	def __updateCartPage(self, mediaSlot, identifier):
@@ -320,9 +335,47 @@ class MediaSwitcher(QtCore.QObject):
 
 		ui.diskHistoryBox.lineEdit().setText(path)
 
+	def __updateCassettePage(self, mediaSlot, identifier
+		# identifier is ignored for cassetteplayer:
+		# pylint: disable-msg=W0613
+		):
+		ui = self.__ui
+		path = self.__mediaModel.getInserted(mediaSlot)
+		fileInfo = QtCore.QFileInfo(path)
+
+		ui.cassetteLabel.setText('Cassette Player') # this could also be removed
+
+		if path == '':
+			description = 'No cassette in player'
+		elif fileInfo.isFile():
+			lastDot = path.rfind('.')
+			if lastDot == -1:
+				ext = None
+			else:
+				ext = path[lastDot + 1 : ].lower()
+			if ext == 'cas':
+				description = 'Cassette image in CAS format'
+			elif ext == 'wav':
+				description = 'Raw cassette image'
+			elif ext in ('zip', 'gz'):
+				description = 'Compressed cassette image'
+			else:
+				description = 'Cassette image of unknown type'
+		elif fileInfo.exists():
+			description = 'Special file node'
+		else:
+			description = 'Not found'
+		ui.cassetteDescriptionLabel.setText(description)
+
+		ui.cassetteHistoryBox.lineEdit().setText(path)
+
 	def __updateMediaPage(self, mediaSlot):
-		medium = mediaSlot[ : -1]
-		identifier = mediaSlot[-1]
+		if mediaSlot == 'cassetteplayer':
+			medium = 'cassette'
+			identifier = None # is ignored for cassetteplayer 
+		else:
+			medium = mediaSlot[ : -1]
+			identifier = mediaSlot[-1]
 		# Look up page widget and update method for this medium.
 		page, updater = self.__pageMap[medium]
 		# Initialise the UI page for this medium.
@@ -369,6 +422,7 @@ class MediaHandler(QtCore.QObject):
 		self._mediumToImageDir = {
 			'disk': initialDiskDir,
 			'cart': initialRomDir,
+			'cassette': initialCasDir,
 			}
 
 		# Look up UI elements.
@@ -456,4 +510,9 @@ class CartHandler(MediaHandler):
 	medium = 'cart'
 	browseTitle = 'Select ROM Image'
 	imageSpec = 'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)'
+
+class CassetteHandler(MediaHandler):
+	medium = 'cassette'
+	browseTitle = 'Select Cassette Image'
+	imageSpec = 'Cassette Images (*.cas *.wav *.zip *.gz);;All Files (*)'
 

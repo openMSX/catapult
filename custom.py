@@ -5,15 +5,19 @@
 # it easier to customize them for your environment.
 
 # openMSX executable.
-executable = '/home/mth/openmsx/derived/openmsx'
+executable = 'openmsx'
 
 # openMSX documentation directory.
-docDir = '/home/mth/openmsx/doc'
+docDir = '/home/manuel/cvs/openmsx/openMSX/doc'
 
 # A directory containing MSX ROM images.
 # This is used as the default directory to browse for ROM images.
-initialRomDir = '/home/mth/msx/games/mega'
+initialRomDir = '/home/manuel/msx-soft'
 
 # A directory containing MSX disk images.
 # This is used as the default directory to browse for disk images.
-initialDiskDir = '/home/mth/msx/demos'
+initialDiskDir = '/home/manuel/msx-soft/diskimages'
+
+# A directory containing MSX cassette images.
+# This is used as the default directory to browse for cassette images.
+initialCasDir = '/home/manuel/msx-soft/tapes'

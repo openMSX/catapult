@@ -1,5 +1,8 @@
 $Id$
 
+2006-09-02 Manuel Bilderbeek <manuel@msxnet.org>
+	* Implemented basic cassette support.
+
 2006-09-01 Maarten ter Huurne <maarten@treewalker.org>
 	* Added support for PyLint:
 	  - make sure you have the latest version (www.logilab.org)
