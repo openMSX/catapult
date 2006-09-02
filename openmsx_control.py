@@ -189,6 +189,10 @@ class ControlConnection(QtCore.QObject):
 		self.__errBuf = ''
 		self.__logListener = bridge._log
 
+		# Create a cyclic reference to avoid being garbage collected during
+		# signal handling. It will be collected later though.
+		self.__cycle = self
+
 		# Create process for openMSX (but don't start it yet).
 		self.__process = process = QtCore.QProcess()
 
@@ -198,6 +202,10 @@ class ControlConnection(QtCore.QObject):
 		parser.setContentHandler(handler)
 		parser.setErrorHandler(handler)
 
+		assert self.connect(
+			process, QtCore.SIGNAL('error(QProcess::ProcessError)'),
+			self.processError
+			)
 		assert self.connect(
 			process, QtCore.SIGNAL('stateChanged(QProcess::ProcessState)'),
 			self.processStateChanged
@@ -233,6 +241,12 @@ class ControlConnection(QtCore.QObject):
 		status = process.write('<openmsx-control>\n')
 		# TODO: Throw I/O exception instead.
 		assert status != -1
+
+	#@QtCore.pyqtSignature('QProcess::ProcessError')
+	def processError(self, error):
+		print 'process error:', error
+		if error == QtCore.QProcess.FailedToStart:
+			self.emit(self.connectionClosedSignal)
 
 	#@QtCore.pyqtSignature('QProcess::ProcessState')
 	def processStateChanged(self, newState):
