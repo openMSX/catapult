@@ -1,3 +1,5 @@
+# $Id$
+
 .PHONY: run lint dist
 
 UI_DESIGNS:=$(wildcard *.ui)
