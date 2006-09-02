@@ -240,8 +240,6 @@ class MediaSwitcher(QtCore.QObject):
 			Handler(ui, self)
 			for Handler in ( DiskHandler, CartHandler )
 			]
-		for handler in handlers:
-			handler.connectSignals()
 
 	def __updateCartPage(self, mediaSlot, identifier):
 		ui = self.__ui
@@ -356,83 +354,84 @@ class MediaSwitcher(QtCore.QObject):
 		'''
 		self.__mediaModel.setInserted(self.__mediaSlot, path)
 
-# TODO: We can probably share the method implementations as well, not just
-#       the signal-slot connections.
-#       For example diskInsert and cartInsert differ only in name.
 class MediaHandler(QtCore.QObject):
 	medium = None
+	browseTitle = None
+	imageSpec = None
 
 	def __init__(self, ui, switcher):
 		QtCore.QObject.__init__(self)
 		self._ui = ui
 		self._switcher = switcher
 
-	def connectSignals(self):
-		for controlName, func, signal, method in self._connections():
-			control = getattr(self._ui, self.medium + controlName)
-			if func is not None:
-				control = func(control)
-			print control, signal, method
-			self.connect(
-				control, QtCore.SIGNAL(signal),
-				getattr(self, self.medium + method)
-				)
+		# Look up UI elements.
+		self._ejectButton = getattr(ui, self.medium + 'EjectButton')
+		self._browseButton = getattr(ui, self.medium + 'BrowseImageButton')
+		self._historyBox = getattr(ui, self.medium + 'HistoryBox')
 
-	def _connections(self):
-		return (
-			( 'EjectButton', None, 'clicked()', 'Eject' ),
-			( 'HistoryBox', None, 'activated(QString)', 'Insert' ),
-			( 'HistoryBox', lambda box: box.lineEdit(),
-			  'editingFinished()', 'Edited' ),
-			)
+		# Connect signals.
+		for control, signal, handler in (
+			( self._ejectButton, 'clicked()', self.eject ),
+			( self._browseButton, 'clicked()', self.browseImage ),
+			( self._historyBox, 'activated(QString)', self.insert ),
+			( self._historyBox.lineEdit(), 'editingFinished()', self.edited ),
+			):
+			QtCore.QObject.connect(control, QtCore.SIGNAL(signal), handler)
 
-class DiskHandler(MediaHandler):
-	medium = 'disk'
-
-	def _connections(self):
-		return MediaHandler._connections(self) + (
-			( 'BrowseImageButton', None, 'clicked()', 'BrowseImage' ),
-			( 'BrowseDirectoryButton', None, 'clicked()', 'BrowseDirectory' ),
-			)
-
-	def diskInsert(self, path):
-		'''Tells the model to insert a given disk.
+	def insert(self, path):
+		'''Tells the model to insert a new medium with the given path.
 		'''
 		self._switcher.setPath(str(path))
 
-	def diskEject(self):
-		# TODO: I think it looks strange to insert empty string (ejected disk)
-		#       into the history.
-		#self.diskInsert('')
-		self._ui.diskHistoryBox.clearEditText()
-		self.diskInsert('')
-
-	def diskEdited(self):
-		'''Inserts the disk specified in the combobox line edit.
+	def eject(self):
+		'''Removes the currently inserted medium.
 		'''
-		self.diskInsert(str(self._ui.diskHistoryBox.lineEdit().text()))
+		# TODO: I think it looks strange to insert empty string (no medium)
+		#       into the history.
+		self._historyBox.clearEditText()
+		self.insert('')
 
-	def diskBrowsed(self, path):
-		'''Inserts the result of a browse image/dir dialog into the history
-		combobox and informs openMSX.
+	def edited(self):
+		'''Inserts the medium specified in the combobox line edit.
+		'''
+		self.insert(str(self._historyBox.lineEdit().text()))
+
+	def browsed(self, path):
+		'''Inserts the result of a browse dialog into the history combobox
+		and informs openMSX.
 		'''
 		print 'selected:', path or '<empty>'
-		history = self._ui.diskHistoryBox
-		history.insertItem(0, path)
-		history.setCurrentIndex(0)
-		self.diskInsert(path)
+		self._historyBox.insertItem(0, path)
+		self._historyBox.setCurrentIndex(0)
+		self.insert(path)
 
-	def diskBrowseImage(self):
-		disk = QtGui.QFileDialog.getOpenFileName(
-			self._ui.mediaStack, 'Select Disk Image',
+	def browseImage(self):
+		path = QtGui.QFileDialog.getOpenFileName(
+			self._ui.mediaStack, self.browseTitle,
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath(),
-			initialDiskDir,
-			'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)',
-			None #, 0
+			initialRomDir,
+			self.imageSpec, None #, 0
 			)
-		if not disk.isNull():
-			self.diskBrowsed(disk)
+		if not path.isNull():
+			self.browsed(path)
+
+class DiskHandler(MediaHandler):
+	medium = 'disk'
+	browseTitle = 'Select Disk Image'
+	imageSpec = 'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)'
+
+	def __init__(self, ui, switcher):
+		MediaHandler.__init__(self, ui, switcher)
+
+		# Look up UI elements.
+		self._browseDirButton = getattr(ui, 'diskBrowseDirectoryButton')
+
+		# Connect signals.
+		QtCore.QObject.connect(
+			self._browseDirButton, QtCore.SIGNAL('clicked()'),
+			self.diskBrowseDirectory
+			)
 
 	def diskBrowseDirectory(self):
 		directory = QtGui.QFileDialog.getExistingDirectory(
@@ -443,52 +442,10 @@ class DiskHandler(MediaHandler):
 			#QtGui.QFileDialog.Option()
 			)
 		if not directory.isNull():
-			self.diskBrowsed(directory)
+			self.browsed(directory)
 
 class CartHandler(MediaHandler):
 	medium = 'cart'
-
-	def _connections(self):
-		return MediaHandler._connections(self) + (
-			( 'BrowseImageButton', None, 'clicked()', 'BrowseImage' ),
-			)
-
-	def cartInsert(self, path):
-		'''Tells the model to insert a given cart.
-		'''
-		self._switcher.setPath(str(path))
-
-	def cartEject(self):
-		# TODO: I think it looks strange to insert empty string (ejected cart)
-		#       into the history.
-		#self.cartInsert('')
-		self._ui.cartHistoryBox.clearEditText()
-		self.cartInsert('')
-
-	def cartEdited(self):
-		'''Inserts the cart specified in the combobox line edit.
-		'''
-		self.cartInsert(str(self._ui.cartHistoryBox.lineEdit().text()))
-
-	def cartBrowsed(self, path):
-		'''Inserts the result of a browse image/dir dialog into the history
-		combobox and informs openMSX.
-		'''
-		print 'selected:', path or '<empty>'
-		history = self._ui.cartHistoryBox
-		history.insertItem(0, path)
-		history.setCurrentIndex(0)
-		self.cartInsert(path)
-
-	def cartBrowseImage(self):
-		cart = QtGui.QFileDialog.getOpenFileName(
-			self._ui.mediaStack, 'Select ROM Image',
-			# TODO: Remember previous path.
-			#QtCore.QDir.currentPath(),
-			initialRomDir,
-			'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)',
-			None #, 0
-			)
-		if not cart.isNull():
-			self.cartBrowsed(cart)
+	browseTitle = 'Select ROM Image'
+	imageSpec = 'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)'
 
