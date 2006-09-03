@@ -2,11 +2,13 @@ Source: openmsx-catapult
 Section: otherosfs
 Priority: optional
 Maintainer: Joost Yervante Damad <joost@lumatec.be>
-Build-Depends: debhelper (>= 5.0.0), python-qt4-dev (>= 4.0.1)
+Build-Depends: debhelper (>= 5.0.37.2), python-qt4 (>= 4.0.1), docbook-to-man, python-support (>=0.3), python
 Standards-Version: 3.7.2
+XS-Python-Version: >= 2.3, << 2.5
 
 Package: openmsx-catapult
 Architecture: all
-Depends: ${shlibs:Depends}, openmsx (>= 0.6.1)
+Depends: openmsx (>= 0.6.1), python, python-qt4 (>= 4.0.1)
+XB-Python-Version: ${python:Versions}
 Description: GUI for openMSX
  openMSX catapult is a graphical frontend for the openMSX emulator
