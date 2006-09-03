@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtGui
 import os.path
 
-from custom import initialDiskDir, initialRomDir, initialCasDir
+from preferences import preferences
 from qt_utils import QtSignal, Signal
 
 class MediaModel(QtCore.QAbstractListModel):
@@ -418,9 +418,9 @@ class MediaHandler(QtCore.QObject):
 		self._ui = ui
 		self._switcher = switcher
 		self._mediumToImageDir = {
-			'disk': initialDiskDir,
-			'cart': initialRomDir,
-			'cassette': initialCasDir,
+			'disk': preferences.value('dirs/initialdisk'),
+			'cart': preferences.value('dirs/initialrom'),
+			'cassette': preferences.value('dirs/initialcas'),
 			}
 
 		# Look up UI elements.
@@ -496,7 +496,7 @@ class DiskHandler(MediaHandler):
 			self._ui.mediaStack, 'Select Directory',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath()
-			initialDiskDir,
+			preferences.value('dirs/initialdisk'),
 			#QtGui.QFileDialog.Option()
 			)
 		if not directory.isNull():

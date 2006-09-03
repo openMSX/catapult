@@ -1,5 +1,9 @@
 $Id$
 
+2006-09-03 Manuel Bilderbeek <manuel@msxnet.org>
+	* Implemented persistent preferences.
+	  TODO: make them changeable :) Defaults are still in custom.py
+
 2006-09-03 Joost Damad <joost@lumatec.be>
 	* add support for building a debian package
 	* improve clean target: remove .pyc and .pyo files
