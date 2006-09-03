@@ -14,7 +14,6 @@ class VisibleSetting(QtCore.QObject):
 		self.__rendererSetting = rendererSetting
 		self.__lastRenderer = None
 		self.__value = False
-		print rendererSetting
 		rendererSetting.valueChanged.connect(self.update)
 
 	def getValue(self):
