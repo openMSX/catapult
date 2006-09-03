@@ -1,0 +1,33 @@
+----------------------------------------------------------------------------
+openMSX Catapult
+----------------------------------------------------------------------------
+
+This is the new openMSX Catapult, an external GUI for openMSX.
+
+Requirements:
+- Python 2.3 or higher
+- PyQt4 (thus also Qt4)
+- openMSX, preferably a recent version from CVS (post 0.6.1)
+
+For the moment, you have to set some hardcoded paths to values
+corresponding to your system. You can find these in "custom.py".
+
+Then to start Catapult, just run "make".
+
+All source code and other works that are part of, or distributed with
+openMSX Catapult are copyrighted by their respective authors. The file
+'AUTHORS' contains a list of people who made works for openMSX Catapult
+or contributed works to openMSX Catapult.
+
+All source code and other works of openMSX Catapult are licensed under the
+GNU Public License (GPL) version 2, of which you can find a copy in the
+file 'GPL'.
+
+For more information, visit our home page:
+    http://www.openmsx.org/
+
+Happy MSX-ing!
+                        the openMSX developers
+
+----------------------------------------------------------------------------
+$Id$
