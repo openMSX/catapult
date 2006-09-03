@@ -1,5 +1,9 @@
 $Id$
 
+2006-09-03 Maarten ter Huurne <maarten@treewalker.org>
+	* add support for building a debian package
+	* improve clean target: remove .pyc and .pyo files
+
 2006-09-02 Maarten ter Huurne <maarten@treewalker.org>
 	* Added "qt_utils" module which gives convenient access to signals and
 	  slots (a more Pythonic API).

@@ -18,6 +18,8 @@ $(UI_GEN_SRC): ui_%.py: %.ui
 
 clean:
 	rm $(UI_GEN_SRC)
+	-rm *.pyc
+	-rm *.pyo
 
 # Altough the generated sources are not checked, the modules that are checked
 # import them and those import statements are checked.

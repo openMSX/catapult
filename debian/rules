@@ -12,7 +12,7 @@ build-stamp:
 	dh_testdir
 
 	$(MAKE) build
-	docbook-to-man debian/openmsx-catapult.sgml > openmsx-catapult.1
+	docbook-to-man debian/openmsx-catapult.sgml > debian/openmsx-catapult.1
 
 	touch build-stamp
 
@@ -22,7 +22,7 @@ clean:
 	rm -f build-stamp
 	-$(MAKE) clean
 	-rm -rf debian/openmsx-catapult
-	-rm -f openmsx-catapult.1
+	-rm -f debian/openmsx-catapult.1
 	dh_clean
 
 install: build
@@ -43,7 +43,7 @@ binary-indep: build install
 	dh_installchangelogs ChangeLog
 	dh_installdocs
 	dh_installmenu
-	dh_installman openmsx-catapult.1
+	dh_installman debian/openmsx-catapult.1
 	dh_link usr/share/python-support/openmsx-catapult/catapult.py usr/bin/openmsx-catapult
 	dh_strip
 	dh_compress
