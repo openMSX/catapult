@@ -4,13 +4,13 @@ from PyQt4 import QtCore, QtXml
 
 from custom import executable
 from openmsx_utils import parseTclValue
+from qt_utils import QtSignal, Signal
 
 def escapeTcl(value):
 	return value.replace('\\', '\\\\').replace(' ', '\\ ')
 
 class ControlBridge(QtCore.QObject):
-	# Signals:
-	logLineSignal = QtCore.SIGNAL('logLine(QString, QString)')
+	logLine = Signal('QString', 'QString')
 
 	def __init__(self):
 		QtCore.QObject.__init__(self)
@@ -24,10 +24,7 @@ class ControlBridge(QtCore.QObject):
 
 	def openConnection(self):
 		self.__connection = connection = ControlConnection(self)
-		self.connect(
-			connection, ControlConnection.connectionClosedSignal,
-			self.connectionClosed
-			)
+		connection.connectionClosed.connect(self.connectionClosed)
 		connection.start()
 		for updateType in self.__updateHandlers.iterkeys():
 			self.sendCommandRaw('update enable %s' % updateType)
@@ -109,7 +106,7 @@ class ControlBridge(QtCore.QObject):
 
 	def _log(self, level, message):
 		print 'log', str(level).upper() + ':', message
-		self.emit(self.logLineSignal, level, message)
+		self.logLine.emit(level, message)
 
 	def _reply(self, ok, result):
 		serial = self.__receiveSerial
@@ -181,8 +178,7 @@ class ControlHandler(QtXml.QXmlDefaultHandler):
 		return True
 
 class ControlConnection(QtCore.QObject):
-	# Signals:
-	connectionClosedSignal = QtCore.SIGNAL('connectionClosed()')
+	connectionClosed = Signal()
 
 	def __init__(self, bridge):
 		QtCore.QObject.__init__(self)
@@ -202,20 +198,16 @@ class ControlConnection(QtCore.QObject):
 		parser.setContentHandler(handler)
 		parser.setErrorHandler(handler)
 
-		assert self.connect(
-			process, QtCore.SIGNAL('error(QProcess::ProcessError)'),
+		QtSignal(process, 'error', 'QProcess::ProcessError').connect(
 			self.processError
 			)
-		assert self.connect(
-			process, QtCore.SIGNAL('stateChanged(QProcess::ProcessState)'),
+		QtSignal(process, 'stateChanged', 'QProcess::ProcessState').connect(
 			self.processStateChanged
 			)
-		assert self.connect(
-			process, QtCore.SIGNAL('readyReadStandardOutput()'),
+		QtSignal(process, 'readyReadStandardOutput').connect(
 			self.processEvent
 			)
-		assert self.connect(
-			process, QtCore.SIGNAL('readyReadStandardError()'),
+		QtSignal(process, 'readyReadStandardError').connect(
 			self.dumpEvent
 			)
 
@@ -246,13 +238,13 @@ class ControlConnection(QtCore.QObject):
 	def processError(self, error):
 		print 'process error:', error
 		if error == QtCore.QProcess.FailedToStart:
-			self.emit(self.connectionClosedSignal)
+			self.connectionClosed.emit()
 
 	#@QtCore.pyqtSignature('QProcess::ProcessState')
 	def processStateChanged(self, newState):
 		print 'process entered state', newState, 'error', self.__process.error()
 		if newState == QtCore.QProcess.NotRunning:
-			self.emit(self.connectionClosedSignal)
+			self.connectionClosed.emit()
 
 	#@QtCore.pyqtSignature('')
 	def dumpEvent(self):

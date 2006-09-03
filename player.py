@@ -2,20 +2,20 @@
 
 from PyQt4 import QtCore
 
+from qt_utils import Signal
+
 class VisibleSetting(QtCore.QObject):
 	'''Virtual setting which interacts with the "renderer" setting.
 	'''
-	valueChangedSignal = QtCore.SIGNAL('valueChanged(bool)')
+	valueChanged = Signal('bool')
 
 	def __init__(self, rendererSetting):
 		QtCore.QObject.__init__(self)
 		self.__rendererSetting = rendererSetting
 		self.__lastRenderer = None
 		self.__value = False
-		assert self.connect(
-			rendererSetting, rendererSetting.valueChangedSignal,
-			self.update
-			)
+		print rendererSetting
+		rendererSetting.valueChanged.connect(self.update)
 
 	def getValue(self):
 		return self.__value
@@ -32,7 +32,7 @@ class VisibleSetting(QtCore.QObject):
 				self.__rendererSetting.setValue(self.__lastRenderer)
 		else:
 			self.__rendererSetting.setValue('none')
-		self.emit(self.valueChangedSignal, value)
+		self.valueChanged.emit(value)
 
 	#@QtCore.pyqtSignature('QString')
 	def update(self, value):
@@ -42,7 +42,7 @@ class VisibleSetting(QtCore.QObject):
 		self.__value = boolValue
 		if boolValue:
 			self.__lastRenderer = value
-		self.emit(self.valueChangedSignal, boolValue)
+		self.valueChanged.emit(boolValue)
 
 class PlayState(QtCore.QObject):
 	play = 'play'
@@ -71,10 +71,7 @@ class PlayState(QtCore.QObject):
 		for setting in (
 			powerSetting, pauseSetting, throttleSetting, visibleSetting
 			):
-			assert self.connect(
-				setting, setting.valueChangedSignal,
-				self.update
-				)
+			setting.valueChanged.connect(self.update)
 
 	def computeState(self):
 		'''Determines the state of the music-player-like control,

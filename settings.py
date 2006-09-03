@@ -2,15 +2,15 @@
 
 from PyQt4 import QtCore
 
+from qt_utils import QtSignal, Signal
+
 class Setting(QtCore.QObject):
 	'''Abstract base class for settings.
 	'''
+	# Note: Will be overridden with real signature.
+	valueChanged = Signal('?')
 
 	# TODO: Make these static methods?
-	def _getSignature(self):
-		'''Returns the Qt type of this value.
-		'''
-		raise NotImplementedError
 
 	def _convertFromStr(self, valueStr):
 		'''Converts a string to a value of the setting's type.
@@ -28,22 +28,15 @@ class Setting(QtCore.QObject):
 		self.__value = None
 		self.__bridge = bridge
 
-		# TODO: Perform these initialialisations on the class rather than the
-		#       instance?
-		signature = self._getSignature()
-		self.valueChangedSignal = QtCore.SIGNAL(
-			'valueChanged(%s)' % signature
-			)
-		#decorated = QtCore.pyqtSignature(signature)(self.setValue.im_func)
-		#self.setValue = lambda value: decorated(self, value)
-
 	def connectSync(self, obj):
 		'''Connect to the specified object in two directions:
 		this setting's valueChanged to the object's setValue and
 		the object's valueChanged to this setting's setValue.
 		'''
-		assert obj.connect(self, self.valueChangedSignal, obj.setValue)
-		assert self.connect(obj, self.valueChangedSignal, self.setValue)
+		self.valueChanged.connect(obj.setValue)
+		QtSignal(
+			obj, 'valueChanged', *self.valueChanged.argTypes
+			).connect(self.setValue)
 
 	def getValue(self):
 		'''Returns the current value of this setting.
@@ -60,7 +53,7 @@ class Setting(QtCore.QObject):
 		value = self._convertFromStr(valueStr)
 		if value != self.__value:
 			self.__value = value
-			self.emit(self.valueChangedSignal, value)
+			self.valueChanged.emit(value)
 
 	def revert(self):
 		'''Revert to the default value.
@@ -75,15 +68,13 @@ class Setting(QtCore.QObject):
 	def setValue(self, value):
 		if value != self.__value:
 			self.__value = value
-			self.emit(self.valueChangedSignal, value)
+			self.valueChanged.emit(value)
 			self.__bridge.command(
 				'set', self.__name, self._convertToStr(value)
 				)()
 
 class BooleanSetting(Setting):
-
-	def _getSignature(self):
-		return 'bool'
+	valueChanged = Signal('bool')
 
 	def _convertFromStr(self, valueStr):
 		return valueStr in ('on', 'true', 'yes')
@@ -95,9 +86,7 @@ class BooleanSetting(Setting):
 			return 'off'
 
 class EnumSetting(Setting):
-
-	def _getSignature(self):
-		return 'QString'
+	valueChanged = Signal('QString')
 
 	def _convertFromStr(self, valueStr):
 		return valueStr
@@ -106,9 +95,7 @@ class EnumSetting(Setting):
 		return value
 
 class IntegerSetting(Setting):
-
-	def _getSignature(self):
-		return 'int'
+	valueChanged = Signal('int')
 
 	def _convertFromStr(self, valueStr):
 		return int(valueStr)

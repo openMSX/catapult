@@ -4,9 +4,10 @@ from PyQt4 import QtCore, QtGui
 import os.path
 
 from custom import initialDiskDir, initialRomDir, initialCasDir
+from qt_utils import QtSignal, Signal
 
 class MediaModel(QtCore.QAbstractListModel):
-	dataChangedSignal = QtCore.SIGNAL('dataChanged(QModelIndex, QModelIndex)')
+	dataChanged = Signal('QModelIndex', 'QModelIndex')
 
 	def __init__(self, bridge):
 		QtCore.QAbstractListModel.__init__(self)
@@ -38,7 +39,7 @@ class MediaModel(QtCore.QAbstractListModel):
 					print 'insert into %s: %s' % (name, path or '<empty>')
 					self.__mediaSlots[index] = name, path
 					modelIndex = self.createIndex(index, 0)
-					self.emit(self.dataChangedSignal, modelIndex, modelIndex)
+					self.dataChanged.emit(modelIndex, modelIndex)
 					return True
 			index += 1
 		else:
@@ -238,15 +239,12 @@ class MediaSwitcher(QtCore.QObject):
 		self.__pageMap = {
 			'cart': ( ui.cartPage, self.__updateCartPage ),
 			'disk': ( ui.diskPage, self.__updateDrivePage ),
-			'cassette': ( 
-				ui.cassettePage, self.__updateCassettePage 
+			'cassette': (
+				ui.cassettePage, self.__updateCassettePage
 				),
 			}
 		# Connect to media model:
-		self.connect(
-			mediaModel, mediaModel.dataChangedSignal,
-			self.mediaPathChanged
-			)
+		mediaModel.dataChanged.connect(self.mediaPathChanged)
 		# Connect signals of media panels:
 		# It is essential to keep the references, otherwise the classes are
 		# garbage collected even though they have signal-slot connections
@@ -372,7 +370,7 @@ class MediaSwitcher(QtCore.QObject):
 	def __updateMediaPage(self, mediaSlot):
 		if mediaSlot == 'cassetteplayer':
 			medium = 'cassette'
-			identifier = None # is ignored for cassetteplayer 
+			identifier = None # is ignored for cassetteplayer
 		else:
 			medium = mediaSlot[ : -1]
 			identifier = mediaSlot[-1]
@@ -431,13 +429,12 @@ class MediaHandler(QtCore.QObject):
 		self._historyBox = getattr(ui, self.medium + 'HistoryBox')
 
 		# Connect signals.
-		for control, signal, handler in (
-			( self._ejectButton, 'clicked()', self.eject ),
-			( self._browseButton, 'clicked()', self.browseImage ),
-			( self._historyBox, 'activated(QString)', self.insert ),
-			( self._historyBox.lineEdit(), 'editingFinished()', self.edited ),
-			):
-			QtCore.QObject.connect(control, QtCore.SIGNAL(signal), handler)
+		QtSignal(self._ejectButton, 'clicked').connect(self.eject)
+		QtSignal(self._browseButton, 'clicked').connect(self.browseImage)
+		QtSignal(self._historyBox, 'activated', 'QString').connect(self.insert)
+		QtSignal(self._historyBox.lineEdit(), 'editingFinished').connect(
+			self.edited
+			)
 
 	def insert(self, path):
 		'''Tells the model to insert a new medium with the given path.
@@ -490,8 +487,7 @@ class DiskHandler(MediaHandler):
 		self._browseDirButton = getattr(ui, 'diskBrowseDirectoryButton')
 
 		# Connect signals.
-		QtCore.QObject.connect(
-			self._browseDirButton, QtCore.SIGNAL('clicked()'),
+		QtSignal(self._browseDirButton, 'clicked').connect(
 			self.diskBrowseDirectory
 			)
 

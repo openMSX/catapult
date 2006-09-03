@@ -8,6 +8,7 @@ from custom import docDir
 from media import MediaModel, MediaSwitcher
 from openmsx_control import ControlBridge
 from player import PlayState
+from qt_utils import QtSignal
 from settings import SettingsManager
 from ui_main import Ui_MainWindow
 
@@ -36,17 +37,14 @@ class MainWindow(QtGui.QMainWindow):
 			for level, color in self.logStyle.iteritems()
 			])
 
-		assert self.connect(
-			QtGui.qApp, QtCore.SIGNAL('lastWindowClosed()'),
-			self.closeConnection
-			)
+		QtSignal(QtGui.qApp, 'lastWindowClosed').connect(self.closeConnection)
 		# We have to let openMSX quit gracefully before quitting Catapult.
 		QtGui.qApp.setQuitOnLastWindowClosed(False)
 
 		self.__connectMenuActions(ui)
 
 		settingsManager = SettingsManager(bridge)
-		assert self.connect(bridge, bridge.logLineSignal, self.logLine)
+		bridge.logLine.connect(self.logLine)
 		settingsManager.connectSetting('scanline', ui.scanlineSlider)
 		settingsManager.connectSetting('scanline', ui.scanlineSpinBox)
 		settingsManager.connectSetting('blur', ui.blurSlider)
@@ -59,11 +57,10 @@ class MainWindow(QtGui.QMainWindow):
 		self.__mediaModel = mediaModel = MediaModel(bridge)
 		self.__mediaSwitcher = mediaSwitcher = MediaSwitcher(mediaModel, ui)
 		ui.mediaList.setModel(mediaModel)
-		assert mediaSwitcher.connect(
+		QtSignal(
 			ui.mediaList.selectionModel(),
-				QtCore.SIGNAL('currentChanged(QModelIndex, QModelIndex)'),
-			mediaSwitcher.updateMedia
-			)
+			'currentChanged', 'QModelIndex', 'QModelIndex'
+			).connect(mediaSwitcher.updateMedia)
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
@@ -71,28 +68,18 @@ class MainWindow(QtGui.QMainWindow):
 		they have an @QtCore.pyqtSignature decoration. Unfortunately,
 		we have to support Python 2.3, which does not have decoration.
 		'''
-		for spec in (
+		for action, func in (
 			# The action is only triggered when Quit is selected from the menu,
 			# not when the main application window is closed. Therefore we
 			# unify both flows by closing the windows, which will indirectly
 			# lead to a quit.
-			( ui.action_Quit, QtGui.qApp, 'closeAllWindows()' ),
+			( ui.action_Quit, QtGui.qApp.closeAllWindows ),
 			( ui.action_HelpSetup, self.showHelpSetup ),
 			( ui.action_HelpUser, self.showHelpUser ),
 			( ui.action_AboutCatapult, self.showAboutDialog ),
-			( ui.action_AboutQt, QtGui.qApp, 'aboutQt()' ),
+			( ui.action_AboutQt, QtGui.qApp.aboutQt ),
 			):
-			if len(spec) == 2:
-				action, func = spec
-				assert self.connect(
-					action, QtCore.SIGNAL('triggered(bool)'), func
-					)
-			else:
-				action, obj, slot = spec
-				assert self.connect(
-					action, QtCore.SIGNAL('triggered(bool)'),
-					obj, QtCore.SLOT(slot)
-					)
+			QtSignal(action, 'triggered', 'bool').connect(func)
 
 	def consoleReply(self, reply):
 		if reply.endswith('\n'):
