@@ -4,7 +4,7 @@
 from PyQt4 import QtCore, QtGui
 import sys
 
-from preferences import preferences
+from custom import docDir
 from media import MediaModel, MediaSwitcher
 from openmsx_control import ControlBridge
 from player import PlayState
@@ -144,14 +144,14 @@ class MainWindow(QtGui.QMainWindow):
 		client = self.__getAssistentClient()
 		# TODO: Make metadata documents to customize Qt Assistant for openMSX.
 		# TODO: Get a reliable path (by guessing? from openMSX?).
-		client.showPage(preferences.value('dirs/doc') + '/manual/setup.html')
+		client.showPage(docDir + '/manual/setup.html')
 
 	#@QtCore.pyqtSignature('')
 	def showHelpUser(self):
 		print 'show User\'s Manual'
 		client = self.__getAssistentClient()
 		# TODO: Get a reliable path (by guessing? from openMSX?).
-		client.showPage(preferences.value('dirs/doc') + '/manual/user.html')
+		client.showPage(docDir + '/manual/user.html')
 
 	#@QtCore.pyqtSignature('')
 	def showAboutDialog(self):
@@ -181,7 +181,7 @@ if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
 	app.setOrganizationName('openMSX Team') # too late to work for the prefs?
 	app.setOrganizationDomain('openmsx.org')
-	app.setApplicationName('openMSX Catapult TNG')
+	app.setApplicationName('openMSX Catapult')
 	controlBridge = ControlBridge()
 	mainWindow = MainWindow(controlBridge)
 	controlBridge.openConnection()

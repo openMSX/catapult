@@ -1,17 +1,13 @@
 # $Id$
 
 from PyQt4 import QtCore
-from custom import *
+from custom import initialRomDir, initialDiskDir, initialCasDir, executable
 
 preferences = QtCore.QSettings('openMSX Team', 'openMSX Catapult')
 
 # set defaults for keys if they don't exist
 # TODO: try to determine sensible defaults automatically
 preferences.beginGroup('dirs')
-
-# openMSX documentation directory.
-if not preferences.contains('doc'):
-	preferences.setValue('doc', QtCore.QVariant(docDir))
 
 # A directory containing MSX ROM images.
 # This is used as the default directory to browse for ROM images.
