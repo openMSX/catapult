@@ -1,6 +1,6 @@
 $Id$
 
-2006-09-03 Maarten ter Huurne <maarten@treewalker.org>
+2006-09-03 Joost Damad <joost@lumatec.be>
 	* add support for building a debian package
 	* improve clean target: remove .pyc and .pyo files
 
