@@ -1,5 +1,12 @@
 $Id$
 
+2006-09-02 Maarten ter Huurne <maarten@treewalker.org>
+	* Added "qt_utils" module which gives convenient access to signals and
+	  slots (a more Pythonic API).
+	* New Make targets:
+	  - build: creates generated files ("run" now depends on "build")
+	  - clean: removes generated files
+
 2006-09-02 Manuel Bilderbeek <manuel@msxnet.org>
 	* Implemented basic cassette support.
 
