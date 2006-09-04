@@ -27,7 +27,7 @@ class ConfigDialog:
 			ui.setupUi(dialog)
 			self._browseExecutableButton = getattr(ui, "BrowseExecutableButton")
 			self._execEdit = getattr(ui, "ExecEdit")
-                	self._execEdit.setText(preferences['system/executable'])
+			self._execEdit.setText(preferences['system/executable'])
 			QtSignal(self._browseExecutableButton, 'clicked').connect(self.browseExec)
 			QtSignal(self._execEdit, 'editingFinished').connect(self.setExec)
 		dialog.show()
@@ -41,12 +41,12 @@ class ConfigDialog:
 	def browseExec(self):
 		path =  QtGui.QFileDialog.getOpenFileName(
 			self._browseExecutableButton,
-                        'Select openMSX executable',
-                        QtCore.QDir.currentPath(),
-                        'All Files (*)'
-                        )
-                if not path.isNull():
-                        self._execEdit.setText(path)
+			'Select openMSX executable',
+			QtCore.QDir.currentPath(),
+			'All Files (*)'
+			)
+		if not path.isNull():
+			self._execEdit.setText(path)
 		self.setExec()
 
 configDialog = ConfigDialog()
