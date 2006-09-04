@@ -418,9 +418,9 @@ class MediaHandler(QtCore.QObject):
 		self._ui = ui
 		self._switcher = switcher
 		self._mediumToImageDir = {
-			'disk': preferences.value('dirs/initialdisk').toString(),
-			'cart': preferences.value('dirs/initialrom').toString(),
-			'cassette': preferences.value('dirs/initialcas').toString(),
+			'disk': preferences['dirs/initialdisk'],
+			'cart': preferences['dirs/initialrom'],
+			'cassette': preferences['dirs/initialcas'],
 			}
 
 		# Look up UI elements.
@@ -496,7 +496,7 @@ class DiskHandler(MediaHandler):
 			self._ui.mediaStack, 'Select Directory',
 			# TODO: Remember previous path.
 			#QtCore.QDir.currentPath()
-			preferences.value('dirs/initialdisk').toString(),
+			preferences['dirs/initialdisk'],
 			#QtGui.QFileDialog.Option()
 			)
 		if not directory.isNull():
