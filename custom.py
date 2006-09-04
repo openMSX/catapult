@@ -5,7 +5,7 @@
 # it easier to customize them for your environment.
 
 # openMSX executable.
-executable = '/home/mth/openmsx/derived/openmsx'
+executable = 'openmsx'
 
 # openMSX documentation directory.
 docDir = '/home/mth/openmsx/doc'

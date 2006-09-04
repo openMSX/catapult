@@ -2,7 +2,7 @@
 
 from PyQt4 import QtCore, QtXml
 
-from custom import executable
+from preferences import preferences
 from openmsx_utils import parseTclValue
 from qt_utils import QtSignal, Signal
 
@@ -220,7 +220,7 @@ class ControlConnection(QtCore.QObject):
 		# Start the openMSX process.
 		# TODO: Detect and report errors.
 		process.start(
-			executable + ' -control stdio',
+			preferences['system/executable'] + ' -control stdio',
 		#	'gdb'
 		#	' --quiet'
 		#	' --command=script.gdb'

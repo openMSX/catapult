@@ -1264,12 +1264,6 @@
      <height>32</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_File" >
-    <property name="title" >
-     <string>&amp;File</string>
-    </property>
-    <addaction name="action_Quit" />
-   </widget>
    <widget class="QMenu" name="menu_Help" >
     <property name="title" >
      <string>&amp;Help</string>
@@ -1280,7 +1274,20 @@
     <addaction name="action_AboutCatapult" />
     <addaction name="action_AboutQt" />
    </widget>
+   <widget class="QMenu" name="menu_File" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_Quit" />
+   </widget>
+   <widget class="QMenu" name="menuConfiguration" >
+    <property name="title" >
+     <string>Edit</string>
+    </property>
+    <addaction name="action_EditConfiguration" />
+   </widget>
    <addaction name="menu_File" />
+   <addaction name="menuConfiguration" />
    <addaction name="menu_Help" />
   </widget>
   <widget class="QStatusBar" name="statusbar" />
@@ -1310,6 +1317,11 @@
   <action name="action_HelpUser" >
    <property name="text" >
     <string>openMSX &amp;User's Manual</string>
+   </property>
+  </action>
+  <action name="action_EditConfiguration" >
+   <property name="text" >
+    <string>&amp;Configuration</string>
    </property>
   </action>
  </widget>

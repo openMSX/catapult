@@ -1,5 +1,9 @@
 $Id$
 
+2006-09-04 Manuel Bilderbeek <manuel@msxnet.org>
+	* Implemented an edit config dialog, so that you can set the
+	  executable.
+
 2006-09-03 Manuel Bilderbeek <manuel@msxnet.org>
 	* Implemented persistent preferences.
 	  TODO: make them changeable :) Defaults are still in custom.py

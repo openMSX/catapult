@@ -4,6 +4,7 @@
 from PyQt4 import QtCore, QtGui
 import sys
 
+from editconfig import configDialog
 from custom import docDir
 from media import MediaModel, MediaSwitcher
 from openmsx_control import ControlBridge
@@ -74,6 +75,7 @@ class MainWindow(QtGui.QMainWindow):
 			# unify both flows by closing the windows, which will indirectly
 			# lead to a quit.
 			( ui.action_Quit, QtGui.qApp.closeAllWindows ),
+			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_HelpSetup, self.showHelpSetup ),
 			( ui.action_HelpUser, self.showHelpUser ),
 			( ui.action_AboutCatapult, self.showAboutDialog ),
@@ -176,6 +178,7 @@ class MainWindow(QtGui.QMainWindow):
 		dialog.raise_()
 		dialog.activateWindow()
 		#print '%X' % int(dialog.windowFlags())
+
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
