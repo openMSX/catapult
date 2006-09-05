@@ -37,7 +37,6 @@ class ConfigDialog:
 	def setExec(self):
 		preferences['system/executable'] = self._execEdit.text()
 
-
 	def browseExec(self):
 		path =  QtGui.QFileDialog.getOpenFileName(
 			self._browseExecutableButton,
