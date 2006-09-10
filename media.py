@@ -1,6 +1,7 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
+from bisect import bisect
 import os.path
 
 from preferences import preferences
@@ -17,17 +18,39 @@ class MediaModel(QtCore.QAbstractListModel):
 		bridge.registerUpdate('media', self.__updateMedium)
 
 	def __updateAll(self):
-		# Query cartridge slots.
-		self.__bridge.command('info', 'command', 'cart?')(self.__cartListReply)
-		# Query disks.
 		# TODO: The idea of the name "updateAll" was to be able to deal with
-		#       openMSX crashes. However, that means we will have to resync
-		#       the inserted media, not just the list of slots.
-		self.__bridge.command('info', 'command', 'disk?')(self.__diskListReply)
-		# Query cassetteplayer.
-		self.__bridge.command(
-			'info', 'command', 'cassetteplayer'
-			)(self.__casListReply)
+		#       openMSX crashes. So, we should go back to knowing nothing about
+		#       the openMSX state.
+		#self.__mediaSlots = []
+		for pattern in ( 'cart?', 'disk?', 'cassetteplayer' ):
+			# Query medium slots.
+			self.__bridge.command('info', 'command', pattern)(
+				self.__mediumListReply
+				)
+
+	def __mediumListReply(self, *slots):
+		'''This method is called to list the initial media slots of a
+		particular type.
+		'''
+		if len(slots) == 0:
+			return
+		for medium in ( 'cart', 'disk', 'cassette' ):
+			if slots[0].startswith(medium):
+				break
+		else:
+			print 'media slot "%s" not recognised' % slots[0]
+			return
+		for slot in slots:
+			self.__mediaSlotAdded(slot)
+
+	def __mediaSlotAdded(self, slot):
+		parent = QtCore.QModelIndex() # invalid model index
+		newEntry = ( slot, None )
+		index = bisect(self.__mediaSlots, newEntry)
+		self.beginInsertRows(parent, index, index)
+		self.__mediaSlots.insert(index, newEntry)
+		self.endInsertRows()
+		self.__bridge.command(slot)(self.__mediumReply)
 
 	def __setMedium(self, mediaSlot, path):
 		index = 0
@@ -54,112 +77,16 @@ class MediaModel(QtCore.QAbstractListModel):
 			# TODO: Is that a temporary situation?
 			print 'received update for non-existing media slot "%s"' % mediaSlot
 
-	def __cartListReply(self, *carts):
-		# TODO: Make sure this method is called every time when carts are
-		#       added or removed.
-		self.__listReply('cart', carts)
-
-	def __diskListReply(self, *drives):
-		# TODO: Make sure this method is called every time when drives are
-		#       added or removed.
-		self.__listReply('disk', drives)
-
-	def __casListReply(self, *cassetteplayer):
-		# TODO: Make sure this method is called every time when
-		#       cassetteplayers are added or removed, if that is even
-		#       possible.
-		self.__listReply('cassette', cassetteplayer)
-
-	def __listReply(self, medium, mediaSlots):
-		# Determine which segment of the media slots list (which is sorted)
-		# contains the given medium.
-		first = None
-		last = None
-		index = 0
-		for name, path_ in self.__mediaSlots:
-			if name >= medium and first is None:
-				first = index
-			index += 1
-			if name.startswith(medium):
-				last = index
-		if first is None:
-			# name < medium throughout, so add at the end
-			first = index
-		if last is None:
-			# no prefix matches, so segment of this medium is empty
-			last = first
-
-		# Prepare lists; append None as sentinel.
-		oldSlots = [
-			name for name, path_ in self.__mediaSlots[first : last]
-			] + [ None ]
-		newSlots = list(mediaSlots)
-		newSlots.sort()
-		newSlots.append(None)
-
-		# Initialise iteration variables.
-		# Note: index in self.__mediaSlots is at oldIndex + first.
-		oldIndex = 0 # index in oldSlots
-		oldSlot = oldSlots[oldIndex]
-		newIndex = 0 # index in newSlots
-		newSlot = newSlots[newIndex]
-
-		# Merge the two sorted drive lists.
-		parent = QtCore.QModelIndex() # invalid model index
-		while not (oldSlot is None and newSlot is None):
-			# Remove old drives that no longer occur in the new list.
-			oldStart = oldIndex
-			while (oldSlot is not None) and (
-				newSlot is None or oldSlot < newSlot
-				):
-				oldIndex += 1
-				oldSlot = oldSlots[oldIndex]
-			if oldStart != oldIndex:
-				self.beginRemoveRows(parent, oldStart, oldIndex - 1)
-				del self.__mediaSlots[first + oldStart : first + oldIndex]
-				del oldSlots[oldStart : oldIndex]
-				self.endInsertRows()
-				oldIndex = oldStart
-
-			# Preserve drives that exist in both lists.
-			while oldSlot is not None and oldSlot == newSlot:
-				oldIndex += 1
-				oldSlot = oldSlots[oldIndex]
-				newIndex += 1
-				newSlot = newSlots[newIndex]
-
-			# Insert new drives that don't occur in the old list.
-			newStart = newIndex
-			while (newSlot is not None) and (
-				oldSlot is None or newSlot < oldSlot
-				):
-				newIndex += 1
-				newSlot = newSlots[newIndex]
-			if newStart != newIndex:
-				oldStart = oldIndex
-				oldIndex += newIndex - newStart
-				insertedDrives = newSlots[newStart : newIndex]
-				self.beginInsertRows(parent, oldStart, oldIndex - 1)
-				self.__mediaSlots[first + oldStart : first + oldStart] = [
-					( drive, None ) for drive in insertedDrives
-					]
-				oldSlots[oldStart : oldStart] = insertedDrives
-				self.endInsertRows()
-				for drive in insertedDrives:
-					# TODO: Query current path from openMSX.
-					self.__bridge.command(drive)(self.__diskReply)
-					print 'query drive', drive
-
-	def __diskReply(self, drive, path, flags):
-		print 'disk update', drive, 'to', path, 'flags', flags
-		if drive[-1] == ':':
-			drive = drive[ : -1]
+	def __mediumReply(self, mediaSlot, path, flags):
+		print 'media update %s to "%s" flags "%s"' % ( mediaSlot, path, flags )
+		if mediaSlot[-1] == ':':
+			mediaSlot = mediaSlot[ : -1]
 		else:
-			print 'disk change reply does not start with "<disk>:", '\
-				'but with "%s"' % drive
+			print 'medium slot query reply does not start with "<medium>:", '\
+				'but with "%s"' % mediaSlot
 			return
 		# TODO: Do something with the flags.
-		self.__updateMedium(drive, path)
+		self.__updateMedium(mediaSlot, path)
 
 	def getInserted(self, mediaSlot):
 		'''Returns the path of the medium currently inserted in the given slot.
