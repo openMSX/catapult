@@ -16,6 +16,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		self.__mediaSlots = []
 		bridge.registerInitial(self.__updateAll)
 		bridge.registerUpdate('media', self.__updateMedium)
+		bridge.registerUpdate('hardware', self.__updateHardware)
 
 	def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with
@@ -44,13 +45,24 @@ class MediaModel(QtCore.QAbstractListModel):
 			self.__mediaSlotAdded(slot)
 
 	def __mediaSlotAdded(self, slot):
-		parent = QtCore.QModelIndex() # invalid model index
 		newEntry = ( slot, None )
 		index = bisect(self.__mediaSlots, newEntry)
+		parent = QtCore.QModelIndex() # invalid model index
 		self.beginInsertRows(parent, index, index)
 		self.__mediaSlots.insert(index, newEntry)
 		self.endInsertRows()
 		self.__bridge.command(slot)(self.__mediumReply)
+
+	def __mediaSlotRemoved(self, slot):
+		index = bisect(self.__mediaSlots, ( slot, ))
+		if 0 <= index < len(self.__mediaSlots) \
+		and self.__mediaSlots[index][0] == slot:
+			parent = QtCore.QModelIndex() # invalid model index
+			self.beginRemoveRows(parent, index, index)
+			del self.__mediaSlots[index]
+			self.endRemoveRows()
+		else:
+			print 'removed slot "%s" did not exist' % slot
 
 	def __setMedium(self, mediaSlot, path):
 		index = 0
@@ -76,6 +88,21 @@ class MediaModel(QtCore.QAbstractListModel):
 			# slots.
 			# TODO: Is that a temporary situation?
 			print 'received update for non-existing media slot "%s"' % mediaSlot
+
+	def __updateHardware(self, hardware, action):
+		for medium in ( 'cart', 'disk', 'cassette' ):
+			if hardware.startswith(medium):
+				break
+		else:
+			print 'received update for unknown hardware "%s"' % hardware
+			return
+		if action == 'add':
+			self.__mediaSlotAdded(hardware)
+		elif action == 'remove':
+			self.__mediaSlotRemoved(hardware)
+		else:
+			print 'received update for unsupported action "%s" for ' \
+				'hardware "%s".' % ( action, hardware )
 
 	def __mediumReply(self, mediaSlot, path, flags):
 		print 'media update %s to "%s" flags "%s"' % ( mediaSlot, path, flags )
