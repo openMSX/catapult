@@ -1,6 +1,6 @@
 # $Id$
 
-.PHONY: run build clean lint dist
+.PHONY: run build clean lint lintrun dist
 
 UI_DESIGNS:=$(wildcard *.ui)
 UI_GEN_SRC:=$(UI_DESIGNS:%.ui=ui_%.py)
@@ -23,6 +23,14 @@ clean:
 # import them and those import statements are checked.
 lint: build
 	pylint $(SOURCES)
+
+lintrun: build
+	@echo "Checking modified sources with PyLint..."
+	@MODIFIED=`svn st | sed -ne 's/[AM]..... \(.*\.py\)$$/\1/p'` && \
+		if [ -n "$$MODIFIED" ]; then \
+			! pylint --debug-mode $$MODIFIED | grep .; \
+		fi
+	python catapult.py
 
 dist:
 	 zip $(shell date +%Y-%m-%d-%H-%M).zip $(DIST_FILES)
