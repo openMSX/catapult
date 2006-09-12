@@ -32,5 +32,12 @@ lintrun: build
 		fi
 	python catapult.py
 
+precommit: build
+	@svn diff
+	@MODIFIED=`svn st | sed -ne 's/[AM]..... \(.*\.py\)$$/\1/p'` && \
+		if [ -n "$$MODIFIED" ]; then \
+			pylint -rn $$MODIFIED; \
+		fi
+
 dist:
 	 zip $(shell date +%Y-%m-%d-%H-%M).zip $(DIST_FILES)
