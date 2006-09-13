@@ -41,6 +41,11 @@ class MainWindow(QtGui.QMainWindow):
 		QtSignal(QtGui.qApp, 'lastWindowClosed').connect(self.closeConnection)
 		# We have to let openMSX quit gracefully before quitting Catapult.
 		QtGui.qApp.setQuitOnLastWindowClosed(False)
+		# Register Tcl commands to intercept openMSX exit.
+		# This should happen before SettingsManager is instantiated, since that
+		# will register "unset renderer" and the exit interception should be
+		# in place before the output window is opened.
+		bridge.registerInitial(self.__interceptExit)
 
 		self.__connectMenuActions(ui)
 
@@ -82,6 +87,21 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_AboutQt, QtGui.qApp.aboutQt ),
 			):
 			QtSignal(action, 'triggered', 'bool').connect(func)
+
+	def __interceptExit(self):
+		'''Redefines the "exit" command so openMSX will stop instead of exit
+		when the window is closed or the quit hotkey is used.
+		'''
+		# TODO: On Mac OS X, if the user selects Quit from the dock menu,
+		#       openMSX will be marked as not responding.
+		# TODO: If the user quits openMSX with a hotkey, should that just
+		#       close the window or quit Catapult as well?
+		#       For example on Mac, we might use Cmd-Q to quit openMSX and
+		#       Catapult, while Cmd-W only closes the openMSX window.
+		self.__bridge.sendCommandRaw('rename exit exit_process')
+		self.__bridge.sendCommandRaw(
+			'proc exit {} { set ::renderer none ; set ::power off }'
+			)
 
 	def consoleReply(self, reply):
 		if reply.endswith('\n'):

@@ -43,7 +43,7 @@ class ControlBridge(QtCore.QObject):
 			#       something that we should actually use.
 			# TODO: Make sure closing the openMSX window does not actually quit
 			#       openMSX if it was started from a control connection.
-			self.command('quit')(callback)
+			self.command('exit_process')(callback)
 
 	def connectionClosed(self):
 		print 'connection with openMSX was closed'
@@ -72,6 +72,13 @@ class ControlBridge(QtCore.QObject):
 		self.__updateHandlers[updateType] = handler
 
 	def command(self, *words):
+		'''Send a Tcl command to openMSX.
+		The words that form the command are passed as separate arguments.
+		An object representing the command returned; when this object is called,
+		the command will be executed. You can pass it a handler that will be
+		called with the result of the command, or omit this if you are not
+		interested in the result.
+		'''
 		if len(words) == 0:
 			raise TypeError('command must contain at least one word')
 		line = u' '.join([
