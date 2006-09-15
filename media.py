@@ -371,11 +371,6 @@ class MediaHandler(QtCore.QObject):
 		QtCore.QObject.__init__(self)
 		self._ui = ui
 		self._switcher = switcher
-		self._mediumToImageDir = {
-			'disk': preferences['dirs/initialdisk'],
-			'cart': preferences['dirs/initialrom'],
-			'cassette': preferences['dirs/initialcas'],
-			}
 
 		# Look up UI elements.
 		self._ejectButton = getattr(ui, self.medium + 'EjectButton')
@@ -418,15 +413,14 @@ class MediaHandler(QtCore.QObject):
 		self.insert(path)
 
 	def browseImage(self):
+		prefName = 'dirs/' + self.medium
 		path = QtGui.QFileDialog.getOpenFileName(
 			self._ui.mediaStack, self.browseTitle,
-			# TODO: Remember previous path.
-			#QtCore.QDir.currentPath(),
-			self._mediumToImageDir.get(self.medium)
-			or QtCore.QDir.currentPath(),
+			preferences.get(prefName, QtCore.QDir.homePath()),
 			self.imageSpec, None #, 0
 			)
 		if not path.isNull():
+			preferences[prefName] = path
 			self.browsed(path)
 
 class DiskHandler(MediaHandler):
@@ -441,20 +435,17 @@ class DiskHandler(MediaHandler):
 		self._browseDirButton = getattr(ui, 'diskBrowseDirectoryButton')
 
 		# Connect signals.
-		QtSignal(self._browseDirButton, 'clicked').connect(
-			self.diskBrowseDirectory
-			)
+		QtSignal(self._browseDirButton, 'clicked').connect(self.browseDirectory)
 
-	def diskBrowseDirectory(self):
-		directory = QtGui.QFileDialog.getExistingDirectory(
+	def browseDirectory(self):
+		prefName = 'dirs/' + self.medium
+		path = QtGui.QFileDialog.getExistingDirectory(
 			self._ui.mediaStack, 'Select Directory',
-			# TODO: Remember previous path.
-			#QtCore.QDir.currentPath()
-			preferences['dirs/initialdisk'],
-			#QtGui.QFileDialog.Option()
+			preferences.get(prefName, QtCore.QDir.homePath())
 			)
-		if not directory.isNull():
-			self.browsed(directory)
+		if not path.isNull():
+			preferences[prefName] = path
+			self.browsed(path)
 
 class CartHandler(MediaHandler):
 	medium = 'cart'

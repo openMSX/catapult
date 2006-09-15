@@ -1,7 +1,7 @@
 # $Id$
 
 from PyQt4 import QtCore
-from custom import initialRomDir, initialDiskDir, initialCasDir, executable
+from custom import executable
 
 class _Preferences(object):
 
@@ -31,25 +31,13 @@ class _Preferences(object):
 	def __setitem__(self, key, value):
 		self.__preferences.setValue(key, QtCore.QVariant(value))
 
+	def get(self, key, default = None):
+		try:
+			return self[key]
+		except KeyError:
+			return default
+
 preferences = _Preferences('openMSX Team', 'openMSX Catapult')
-
-# set defaults for keys if they don't exist
-# TODO: try to determine sensible defaults automatically
-
-# A directory containing MSX ROM images.
-# This is used as the default directory to browse for ROM images.
-if 'dirs/initialrom' not in preferences:
-	preferences['dirs/initialrom'] = initialRomDir
-
-# A directory containing MSX disk images.
-# This is used as the default directory to browse for disk images.
-if 'dirs/initialdisk' not in preferences:
-	preferences['dirs/initialdisk'] = initialDiskDir
-
-# A directory containing MSX cassette images.
-# This is used as the default directory to browse for cassette images.
-if 'dirs/initialcas' not in preferences:
-	preferences['dirs/initialcas'] = initialCasDir
 
 # openMSX executable.
 if 'system/executable' not in preferences:
