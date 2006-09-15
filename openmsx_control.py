@@ -6,9 +6,6 @@ from preferences import preferences
 from openmsx_utils import parseTclValue
 from qt_utils import QtSignal, Signal
 
-def escapeTcl(value):
-	return value.replace('\\', '\\\\').replace(' ', '\\ ')
-
 class ControlBridge(QtCore.QObject):
 	logLine = Signal('QString', 'QString')
 
@@ -279,7 +276,11 @@ class ControlConnection(QtCore.QObject):
 
 	def sendCommand(self, command):
 		status = self.__process.write(
-			QtCore.QString('<command>%s</command>\n' % command).toUtf8()
+			QtCore.QString(
+				'<command>%s</command>\n'
+				% command.replace('&', '&amp;')
+				  .replace('<', '&lt;').replace('>', '&gt;')
+				).toUtf8()
 			)
 		# TODO: Throw I/O exception instead.
 		assert status != -1
