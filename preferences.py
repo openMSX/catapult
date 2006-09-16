@@ -7,6 +7,7 @@ class _Preferences(object):
 
 	_conversionMethods = {
 		QtCore.QVariant.String: QtCore.QVariant.toString,
+		QtCore.QVariant.StringList: QtCore.QVariant.toStringList,
 		}
 
 	def __init__(self, *args):

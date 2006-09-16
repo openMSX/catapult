@@ -377,6 +377,11 @@ class MediaHandler(QtCore.QObject):
 		self._browseButton = getattr(ui, self.medium + 'BrowseImageButton')
 		self._historyBox = getattr(ui, self.medium + 'HistoryBox')
 
+		# Load history.
+		history = preferences.get(self.medium + '/history')
+		if history is not None:
+			self._historyBox.addItems(history)
+
 		# Connect signals.
 		QtSignal(self._ejectButton, 'clicked').connect(self.eject)
 		QtSignal(self._browseButton, 'clicked').connect(self.browseImage)
@@ -388,40 +393,48 @@ class MediaHandler(QtCore.QObject):
 	def insert(self, path):
 		'''Tells the model to insert a new medium with the given path.
 		'''
+		print 'selected:', path or '<nothing>'
+		if not path:
+			return
+
+		historyBox = self._historyBox
+		# Insert path at the top of the list.
+		historyBox.insertItem(0, path)
+		historyBox.setCurrentIndex(0)
+		# Remove duplicates of the path from the history.
+		index = 1
+		while index < historyBox.count():
+			if historyBox.itemText(index) == path:
+				historyBox.removeItem(index)
+			else:
+				index += 1
+
+		# Update the model.
 		self._switcher.setPath(str(path))
+
+		# Persist history.
+		history = QtCore.QStringList()
+		for index in range(historyBox.count()):
+			history.append(historyBox.itemText(index))
+		preferences[self.medium + '/history'] = history
 
 	def eject(self):
 		'''Removes the currently inserted medium.
 		'''
-		# TODO: I think it looks strange to insert empty string (no medium)
-		#       into the history.
 		self._historyBox.clearEditText()
-		self.insert('')
+		self._switcher.setPath('')
 
 	def edited(self):
 		'''Inserts the medium specified in the combobox line edit.
 		'''
-		self.insert(str(self._historyBox.lineEdit().text()))
-
-	def browsed(self, path):
-		'''Inserts the result of a browse dialog into the history combobox
-		and informs openMSX.
-		'''
-		print 'selected:', path or '<empty>'
-		self._historyBox.insertItem(0, path)
-		self._historyBox.setCurrentIndex(0)
-		self.insert(path)
+		self.insert(self._historyBox.lineEdit().text())
 
 	def browseImage(self):
-		prefName = 'dirs/' + self.medium
-		path = QtGui.QFileDialog.getOpenFileName(
+		self.insert(QtGui.QFileDialog.getOpenFileName(
 			self._ui.mediaStack, self.browseTitle,
-			preferences.get(prefName, QtCore.QDir.homePath()),
+			self._historyBox.itemText(0) or QtCore.QDir.homePath(),
 			self.imageSpec, None #, 0
-			)
-		if not path.isNull():
-			preferences[prefName] = path
-			self.browsed(path)
+			))
 
 class DiskHandler(MediaHandler):
 	medium = 'disk'
@@ -438,14 +451,10 @@ class DiskHandler(MediaHandler):
 		QtSignal(self._browseDirButton, 'clicked').connect(self.browseDirectory)
 
 	def browseDirectory(self):
-		prefName = 'dirs/' + self.medium
-		path = QtGui.QFileDialog.getExistingDirectory(
+		self.insert(QtGui.QFileDialog.getExistingDirectory(
 			self._ui.mediaStack, 'Select Directory',
-			preferences.get(prefName, QtCore.QDir.homePath())
-			)
-		if not path.isNull():
-			preferences[prefName] = path
-			self.browsed(path)
+			self._historyBox.itemText(0) or QtCore.QDir.homePath()
+			))
 
 class CartHandler(MediaHandler):
 	medium = 'cart'
