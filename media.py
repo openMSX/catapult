@@ -378,7 +378,7 @@ class MediaHandler(QtCore.QObject):
 		self._historyBox = getattr(ui, self.medium + 'HistoryBox')
 
 		# Load history.
-		history = preferences.get(self.medium + '/history')
+		history = preferences.getList(self.medium + '/history')
 		if history is not None:
 			self._historyBox.addItems(history)
 

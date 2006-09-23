@@ -38,6 +38,23 @@ class _Preferences(object):
 		except KeyError:
 			return default
 
+	def getList(self, key):
+		'''Gets a preference as a QStringList.
+		If the preference does not exist, an empty list is returned.
+		This method works around the problem that a stored QStringList which
+		contains a single item is read back as a QString.
+		'''
+		try:
+			value = self[key]
+		except KeyError:
+			return QtCore.QStringList()
+		if isinstance(value, QtCore.QStringList):
+			return value
+		elif isinstance(value, QtCore.QString):
+			return QtCore.QStringList(value)
+		else:
+			raise TypeError('%s cannot be converted to list' % type(value))
+
 preferences = _Preferences('openMSX Team', 'openMSX Catapult')
 
 # openMSX executable.
