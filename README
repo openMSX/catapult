@@ -9,6 +9,23 @@ Requirements:
 - PyQt4 (thus also Qt4)
 - openMSX, preferably a recent version from CVS (post 0.6.1)
 
+Download links:
+
+Qt4: (pick one of the Open Source Editions)
+  http://www.trolltech.com/products/qt/downloads
+PyQt4: (compilation requires SIP to be installed as well)
+  http://www.riverbankcomputing.co.uk/sip/download.php
+  http://www.riverbankcomputing.co.uk/pyqt/download.php
+openMSX:
+  http://openmsx.sourceforge.net/temp/openmsx-SVN-snapshot.tar.gz
+Catapult:
+  http://openmsx.sourceforge.net/temp/catapult-SVN-snapshot.tar.gz
+
+Or you can get openMSX and Catapult from Subversion (SVN), that way you will
+be able to follow development:
+  svn co https://svn.sourceforge.net/svnroot/openmsx/openmsx/trunk openmsx
+  svn co https://svn.sourceforge.net/svnroot/openmsx/catapult/trunk catapult
+
 For the moment, you have to set some hardcoded paths to values
 corresponding to your system. You can find these in "custom.py".
 
