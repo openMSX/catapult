@@ -4,6 +4,14 @@
 from PyQt4 import QtCore, QtGui
 import sys
 
+# Application info must be set before the "preferences" module is imported.
+# Since many different modules might import "preferences", we perform the
+# setup before any Catapult modules are imported.
+app = QtGui.QApplication(sys.argv)
+app.setOrganizationName('openMSX Team')
+app.setOrganizationDomain('openmsx.org')
+app.setApplicationName('openMSX Catapult')
+
 from editconfig import configDialog
 from custom import docDir
 from media import MediaModel, MediaSwitcher
@@ -201,10 +209,6 @@ class MainWindow(QtGui.QMainWindow):
 
 
 if __name__ == '__main__':
-	app = QtGui.QApplication(sys.argv)
-	app.setOrganizationName('openMSX Team') # too late to work for the prefs?
-	app.setOrganizationDomain('openmsx.org')
-	app.setApplicationName('openMSX Catapult')
 	controlBridge = ControlBridge()
 	mainWindow = MainWindow(controlBridge)
 	controlBridge.openConnection()
