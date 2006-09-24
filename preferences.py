@@ -55,7 +55,7 @@ class _Preferences(object):
 		else:
 			raise TypeError('%s cannot be converted to list' % type(value))
 
-preferences = _Preferences('openMSX Team', 'openMSX Catapult')
+preferences = _Preferences('openMSX', 'Catapult')
 
 # openMSX executable.
 if 'system/executable' not in preferences:
