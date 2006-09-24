@@ -5,7 +5,7 @@ from preferences import preferences
 from qt_utils import QtSignal
 
 class ConfigDialog:
-	
+
 	def __init__(self):
 		self.__configDialog = None
 		self._browseExecutableButton = None
@@ -28,7 +28,9 @@ class ConfigDialog:
 			self._browseExecutableButton = getattr(ui, "BrowseExecutableButton")
 			self._execEdit = getattr(ui, "ExecEdit")
 			self._execEdit.setText(preferences['system/executable'])
-			QtSignal(self._browseExecutableButton, 'clicked').connect(self.browseExec)
+			QtSignal(self._browseExecutableButton, 'clicked').connect(
+				self.browseExec
+				)
 			QtSignal(self._execEdit, 'editingFinished').connect(self.setExec)
 		dialog.show()
 		dialog.raise_()
