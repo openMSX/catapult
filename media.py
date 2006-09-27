@@ -381,6 +381,9 @@ class MediaHandler(QtCore.QObject):
 		history = preferences.getList(self.medium + '/history')
 		if history is not None:
 			self._historyBox.addItems(history)
+			# On OS X, the top item of the history is automatically put into
+			# the edit box; this is not what we want, so we clear it.
+			self._historyBox.clearEditText()
 
 		# Connect signals.
 		QtSignal(self._ejectButton, 'clicked').connect(self.eject)
