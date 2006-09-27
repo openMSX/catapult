@@ -2,7 +2,7 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-import sys
+import os.path, sys
 
 # Application info must be set before the "preferences" module is imported.
 # Since many different modules might import "preferences", we perform the
@@ -11,6 +11,18 @@ app = QtGui.QApplication(sys.argv)
 app.setOrganizationName('openMSX Team')
 app.setOrganizationDomain('openmsx.org')
 app.setApplicationName('openMSX Catapult')
+
+if sys.platform == 'darwin':
+	# Determine app folder location.
+	appPath = os.path.abspath(sys.argv[0]).split('/')
+	while True:
+		pathElem = appPath.pop()
+		if pathElem == 'Contents':
+			break
+	appDir = '/'.join(appPath)
+	# Change working dir to resource dir, so icons are loaded correctly.
+	success = QtCore.QDir.setCurrent(appDir + '/Contents/Resources/')
+	assert success
 
 from editconfig import configDialog
 from custom import docDir
