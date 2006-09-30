@@ -26,6 +26,7 @@ if sys.platform == 'darwin':
 
 from editconfig import configDialog
 from custom import docDir
+from machine import MachineManager
 from media import MediaModel, MediaSwitcher
 from openmsx_control import ControlBridge
 from player import PlayState
@@ -49,6 +50,7 @@ class MainWindow(QtGui.QMainWindow):
 		ui.setupUi(self)
 
 		# Resources that are loaded on demand.
+		self.__machineDialog = None
 		self.__aboutDialog = None
 		self.__assistentClient = None
 
@@ -79,6 +81,13 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.connectSetting('glow', ui.glowSpinBox)
 
 		self.__playState = PlayState(settingsManager, ui)
+
+		self.__machineManager = machineManager = MachineManager(
+			self, ui.machineBox, settingsManager
+			)
+		QtSignal(
+			ui.machineButton, 'clicked'
+			).connect(machineManager.chooseMachine)
 
 		self.__mediaModel = mediaModel = MediaModel(bridge)
 		self.__mediaSwitcher = mediaSwitcher = MediaSwitcher(mediaModel, ui)
@@ -156,6 +165,20 @@ class MainWindow(QtGui.QMainWindow):
 		self.logLine('command', '> %s' % line)
 		self.__ui.consoleLineEdit.clear()
 		self.__bridge.sendCommandRaw(line, self.consoleReply)
+
+	def chooseMachine(self):
+		dialog = self.__machineDialog
+		if dialog is None:
+			self.__machineDialog = dialog = QtGui.QDialog(
+				self, QtCore.Qt.Dialog | QtCore.Qt.WindowTitleHint
+				)
+			# Setup UI made in Qt Designer.
+			from ui_machine import Ui_Dialog
+			ui = Ui_Dialog()
+			ui.setupUi(dialog)
+		dialog.show()
+		dialog.raise_()
+		dialog.activateWindow()
 
 	#@QtCore.pyqtSignature('QString, QString')
 	def logLine(self, level, message):

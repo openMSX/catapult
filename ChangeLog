@@ -1,5 +1,9 @@
 $Id$
 
+2006-09-30 Maarten ter Huurne <maarten@treewalker.org>
+	* First version of machine selection.
+	  Not finished yet, but enough to commit.
+
 2006-09-04 Manuel Bilderbeek <manuel@msxnet.org>
 	* Implemented an edit config dialog, so that you can set the
 	  executable.

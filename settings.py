@@ -121,6 +121,7 @@ class SettingsManager(QtCore.QObject):
 			( 'pause', BooleanSetting ),
 			( 'throttle', BooleanSetting ),
 			( 'renderer', EnumSetting ),
+			( 'machine', EnumSetting ),
 			):
 			assert name not in self.__settings
 			self.__settings[name] = settingClass(name, bridge)
