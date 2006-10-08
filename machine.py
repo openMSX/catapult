@@ -2,6 +2,7 @@
 
 from PyQt4 import QtCore, QtGui
 from qt_utils import QtSignal
+from preferences import preferences
 
 class MachineManager(QtCore.QObject):
 
@@ -13,7 +14,11 @@ class MachineManager(QtCore.QObject):
 		#self.__settingsManager = settingsManager
 		self.__machineDialog = None
 
-		# TODO: Load machine history from preferences.
+		# Load history.
+		for machine in preferences.getList('machine/history'):
+			machineBox.addItem(
+				str(machine).replace('_', ' '), QtCore.QVariant(machine)
+				)
 
 		# Make connections.
 		self.__machineSetting = machineSetting = settingsManager['machine']
@@ -53,7 +58,11 @@ class MachineManager(QtCore.QObject):
 				machineBox.removeItem(index)
 			else:
 				index += 1
-		# TODO: Save machine history to preferences.
+		# Persist history.
+		history = QtCore.QStringList()
+		for index in range(machineBox.count()):
+			history.append(machineBox.itemData(index).toString())
+		preferences['machine/history'] = history
 
 	def __machineSelected(self, index):
 		#print 'selected index %d of combo box' % index
