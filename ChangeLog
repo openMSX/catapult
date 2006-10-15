@@ -1,5 +1,12 @@
 $Id$
 
+2006-10-14 Maarten ter Huurne <maarten@treewalker.org>
+	* Manuel implemented querying the full machines list from openMSX and
+	  populating the machines dialog with that info.
+	  I finalized the layout and connected the events.
+	  Error handling is still missing though; probably additional support
+	  from openMSX is needed to do it well.
+
 2006-09-30 Maarten ter Huurne <maarten@treewalker.org>
 	* First version of machine selection.
 	  Not finished yet, but enough to commit.

@@ -83,7 +83,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__playState = PlayState(settingsManager, ui)
 
 		self.__machineManager = machineManager = MachineManager(
-			self, ui.machineBox, settingsManager
+			self, ui.machineBox, settingsManager, bridge
 			)
 		QtSignal(
 			ui.machineButton, 'clicked'
