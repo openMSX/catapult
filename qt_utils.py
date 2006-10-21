@@ -19,13 +19,21 @@ class QtSignal(object):
 		self._object = obj
 		self._name = name
 		self._argTypes = argTypes
-		self._signature = QtCore.SIGNAL(self._getSignature())
+		signature = self._getSignature()
+		self._checkSignal(obj, signature)
+		self._signature = QtCore.SIGNAL(signature)
 
 	def __str__(self):
 		return 'SIGNAL(%s)' % self._getSignature()
 
 	def _getSignature(self):
 		return '%s(%s)' % (self._name, ', '.join(self._argTypes))
+
+	def _checkSignal(self, obj, signature):
+		if obj.metaObject().indexOfSignal(
+			QtCore.QMetaObject.normalizedSignature(signature).data()
+			) == -1:
+			raise AttributeError('No signal matching signature: %s' % signature)
 
 	def connect(self, slot):
 		# Sanity check on slot.
@@ -56,6 +64,12 @@ class _SignalSource(QtSignal):
 	'''Used internally by Signal.
 	'''
 
+	def _checkSignal(self, obj, signature):
+		# Signal is defined in Python, so Qt does not know about it.
+		# However, since no-one except the Signal class should be instantiating
+		# us, it's safe to assume the signal exists.
+		pass
+
 	def emit(self, *args):
 		if len(args) != len(self._argTypes):
 			raise TypeError(
@@ -65,7 +79,7 @@ class _SignalSource(QtSignal):
 		self._object.emit(self._signature, *args)
 
 class Signal(object):
-	'''Descriptor which makes it easy to declare slots in Python code.
+	'''Descriptor which makes it easy to declare signals in Python code.
 
 	Usage:
 	class X(QtCore.QObject):
