@@ -102,7 +102,7 @@ class _SignalDescriptor(object):
 				# However, since no-one except the Signal class should be
 				# instantiating us, it's safe to assume the signal exists.
 
-			signal = _SignalWrapper(obj, signature, len(self.__argTypes))
+			signal = _SignalWrapper(obj, self.__signature, len(self.__argTypes))
 			obj.__dict__[storageName] = signal
 			return signal
 
