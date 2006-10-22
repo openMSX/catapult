@@ -24,6 +24,15 @@ class MachineModel(QtCore.QAbstractTableModel):
 			machine[-2] for machine in self.__machines
 			)
 
+	def find(self, machine):
+		'''Searches for a machine with the given name.
+		Returns the row on which the machine is found, or -1 if it is not found.
+		'''
+		for row, sortRow in enumerate(self.__machines):
+			if sortRow[-2] == machine:
+				return row
+		return -1
+
 	def repopulate(self):
 		self.__machines = []
 		self.__allAscending = []
@@ -145,9 +154,9 @@ class MachineManager(QtCore.QObject):
 		self.__machineSetting = machineSetting = settingsManager['machine']
 		machineSetting.valueChanged.connect(self.__machineChanged)
 		connect(machineBox, 'activated(int)', self.__machineSelected)
-		model.rowsInserted.connect(self.__machinesAdded)
 
 	def chooseMachine(self):
+		self.__currentMachine = self.__machineSetting.getValue()
 		dialog = self.__machineDialog
 		if dialog is None:
 			self.__machineDialog = dialog = QtGui.QDialog(
@@ -164,18 +173,23 @@ class MachineManager(QtCore.QObject):
 			horizontalHeader.setHighlightSections(False)
 			horizontalHeader.setClickable(True)
 			ui.machineTable.verticalHeader().hide()
-			ui.machineTable.setModel(self.__model)
+			model = self.__model
+			ui.machineTable.setModel(model)
 			# Make connections.
 			connect(dialog, 'accepted()', self.__machineDialogAccepted)
 			connect(
 				horizontalHeader, 'sectionClicked(int)',
 				ui.machineTable.sortByColumn
 				)
+			model.rowsInserted.connect(self.__machinesAdded)
+			model.layoutChanged.connect(self.__setSelection)
 			# This is a slot rather than a signal, so we connect it by
 			# overriding the method implementation.
 			ui.machineTable.currentChanged = self.__machineHighlighted
 			# Fetch machine info.
 			self.__model.repopulate()
+		else:
+			self.__setSelection()
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
@@ -183,6 +197,9 @@ class MachineManager(QtCore.QObject):
 	def __machineHighlighted(self, current, previous):
 		# pylint: disable-msg=W0613
 		self.__ui.okButton.setEnabled(True)
+		self.__currentMachine = \
+			self.__model.data(current, QtCore.Qt.UserRole).toString()
+		self.__ui.machineTable.scrollTo(current)
 
 	def __machineDialogAccepted(self):
 		index = self.__ui.machineTable.currentIndex()
@@ -223,6 +240,7 @@ class MachineManager(QtCore.QObject):
 		table = self.__ui.machineTable
 		header = table.horizontalHeader()
 		for row in range(start, end + 1):
+			# Widen columns if new content is larger than requested size.
 			for column in range(model.columnCount() - 1):
 				requestedWidth = max(
 					self.__requestedWidths[column],
@@ -234,3 +252,11 @@ class MachineManager(QtCore.QObject):
 					self.__requestedWidths[column] = itemWidth
 					header.resizeSection(column, itemWidth)
 
+	def __setSelection(self):
+		model = self.__model
+		row = model.find(self.__currentMachine)
+		if row != -1:
+			table = self.__ui.machineTable
+			index = model.createIndex(row, 0)
+			table.setCurrentIndex(index)
+			table.scrollTo(index)
