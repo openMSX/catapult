@@ -19,7 +19,7 @@ class VisibleSetting(QtCore.QObject):
 	def getValue(self):
 		return self.__value
 
-	#@QtCore.pyqtSignature('QString')
+	@QtCore.pyqtSignature('QString')
 	def setValue(self, value):
 		if self.__value == value:
 			return
@@ -33,7 +33,7 @@ class VisibleSetting(QtCore.QObject):
 			self.__rendererSetting.setValue('none')
 		self.valueChanged.emit(value)
 
-	#@QtCore.pyqtSignature('QString')
+	@QtCore.pyqtSignature('QString')
 	def update(self, value):
 		boolValue = (value != 'none')
 		if self.__value == boolValue:
@@ -98,7 +98,7 @@ class PlayState(QtCore.QObject):
 		else:
 			return self.unknown
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def update(self):
 		newState = self.computeState()
 		for state, button in self.__buttonMap.iteritems():

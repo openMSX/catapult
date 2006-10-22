@@ -334,7 +334,7 @@ class MediaSwitcher(QtCore.QObject):
 		updater(mediaSlot, identifier)
 		return page
 
-	#@QtCore.pyqtSignature('QModelIndex')
+	@QtCore.pyqtSignature('QModelIndex')
 	def updateMedia(self, index):
 		# Find out which media entry has become active.
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
@@ -345,7 +345,7 @@ class MediaSwitcher(QtCore.QObject):
 		# Switch page.
 		self.__ui.mediaStack.setCurrentWidget(page)
 
-	#@QtCore.pyqtSignature(QModelIndex, QModelIndex)
+	@QtCore.pyqtSignature('QModelIndex, QModelIndex')
 	def mediaPathChanged(
 		self, topLeft, bottomRight
 		# pylint: disable-msg=W0613

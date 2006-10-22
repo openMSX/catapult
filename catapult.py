@@ -54,11 +54,11 @@ class MainWindow(QtGui.QMainWindow):
 		self.__aboutDialog = None
 		self.__assistentClient = None
 
-		self.__logColours = dict([
+		self.__logColours = dict(
 			( level, QtGui.QColor(
 				(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF ) )
 			for level, color in self.logStyle.iteritems()
-			])
+			)
 
 		connect(QtGui.qApp, 'lastWindowClosed()', self.closeConnection)
 		# We have to let openMSX quit gracefully before quitting Catapult.
@@ -138,27 +138,27 @@ class MainWindow(QtGui.QMainWindow):
 
 	# Slots:
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def on_playButton_clicked(self):
 		self.__playState.setState(PlayState.play)
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def on_pauseButton_clicked(self):
 		self.__playState.setState(PlayState.pause)
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def on_stopButton_clicked(self):
 		self.__playState.setState(PlayState.stop)
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def on_forwardButton_clicked(self):
 		self.__playState.setState(PlayState.forward)
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def on_resetButton_clicked(self):
 		self.__bridge.command('reset')()
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def on_consoleLineEdit_returnPressed(self):
 		line = self.__ui.consoleLineEdit.text()
 		self.logLine('command', '> %s' % line)
@@ -179,7 +179,7 @@ class MainWindow(QtGui.QMainWindow):
 		dialog.raise_()
 		dialog.activateWindow()
 
-	#@QtCore.pyqtSignature('QString, QString')
+	@QtCore.pyqtSignature('QString, QString')
 	def logLine(self, level, message):
 		text = self.__ui.logText
 		text.setTextColor(
@@ -187,7 +187,7 @@ class MainWindow(QtGui.QMainWindow):
 			)
 		text.append(message)
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def closeConnection(self):
 		self.__bridge.closeConnection(QtGui.qApp.quit)
 
@@ -202,7 +202,7 @@ class MainWindow(QtGui.QMainWindow):
 			self.__assistentClient = QAssistantClient('')
 		return self.__assistentClient
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def showHelpSetup(self):
 		print 'show Setup Guide'
 		client = self.__getAssistentClient()
@@ -210,14 +210,14 @@ class MainWindow(QtGui.QMainWindow):
 		# TODO: Get a reliable path (by guessing? from openMSX?).
 		client.showPage(docDir + '/manual/setup.html')
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def showHelpUser(self):
 		print 'show User\'s Manual'
 		client = self.__getAssistentClient()
 		# TODO: Get a reliable path (by guessing? from openMSX?).
 		client.showPage(docDir + '/manual/user.html')
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def showAboutDialog(self):
 		dialog = self.__aboutDialog
 		if dialog is None:

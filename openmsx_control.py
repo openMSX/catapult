@@ -78,10 +78,10 @@ class ControlBridge(QtCore.QObject):
 		'''
 		if len(words) == 0:
 			raise TypeError('command must contain at least one word')
-		line = u' '.join([
+		line = u' '.join(
 			unicode(word).replace('\\', '\\\\').replace(' ', '\\ ')
 			for word in words
-			])
+			)
 
 		def execute(callback = None):
 			if callback is None:
@@ -233,19 +233,19 @@ class ControlConnection(QtCore.QObject):
 		# TODO: Throw I/O exception instead.
 		assert status != -1
 
-	#@QtCore.pyqtSignature('QProcess::ProcessError')
+	@QtCore.pyqtSignature('QProcess::ProcessError')
 	def processError(self, error):
 		print 'process error:', error
 		if error == QtCore.QProcess.FailedToStart:
 			self.connectionClosed.emit()
 
-	#@QtCore.pyqtSignature('QProcess::ProcessState')
+	@QtCore.pyqtSignature('QProcess::ProcessState')
 	def processStateChanged(self, newState):
 		print 'process entered state', newState, 'error', self.__process.error()
 		if newState == QtCore.QProcess.NotRunning:
 			self.connectionClosed.emit()
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def dumpEvent(self):
 		data = self.__errBuf + str(self.__process.readAllStandardError())
 		lastNewLine = data.rfind('\n')
@@ -256,7 +256,7 @@ class ControlConnection(QtCore.QObject):
 			self.__logListener('warning', lines)
 		self.__errBuf = data
 
-	#@QtCore.pyqtSignature('')
+	@QtCore.pyqtSignature('')
 	def processEvent(self):
 		inputSource = self.__inputSource
 		first = inputSource is None
