@@ -23,15 +23,9 @@
     <number>6</number>
    </property>
    <item>
-    <widget class="QTableWidget" name="machineTable" >
+    <widget class="QTableView" name="machineTable" >
      <property name="verticalScrollBarPolicy" >
-      <enum>Qt::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy" >
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="editTriggers" >
-      <set>QAbstractItemView::NoEditTriggers</set>
+      <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
      <property name="alternatingRowColors" >
       <bool>true</bool>
@@ -42,32 +36,6 @@
      <property name="selectionBehavior" >
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
-     <property name="columnCount" >
-      <number>4</number>
-     </property>
-     <property name="sortingEnabled" >
-      <bool>true</bool>
-     </property>
-     <column>
-      <property name="text" >
-       <string>Company</string>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Model</string>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Type</string>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Description</string>
-      </property>
-     </column>
     </widget>
    </item>
    <item>
@@ -149,7 +117,7 @@
   </connection>
   <connection>
    <sender>machineTable</sender>
-   <signal>itemActivated(QTableWidgetItem*)</signal>
+   <signal>activated(QModelIndex)</signal>
    <receiver>Dialog</receiver>
    <slot>accept()</slot>
    <hints>
