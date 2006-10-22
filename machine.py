@@ -1,6 +1,8 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
+from bisect import insort
+
 from qt_utils import QtSignal, connect
 from preferences import preferences
 
@@ -12,17 +14,43 @@ class MachineModel(QtCore.QAbstractTableModel):
 	def __init__(self):
 		QtCore.QAbstractTableModel.__init__(self)
 		self.__machines = []
-		self.__allAscending = None
+		self.__allAscending = []
+		self.__sortColumn = 0
+		self.__sortReversed = False
 
 	def __str__(self):
-		return 'MachineModel(%s)' % ', '.join([
-			name for name, info_ in self.__machines
-			])
+		return 'MachineModel(%s)' % ', '.join(
+			machine[-2] for machine in self.__machines
+			)
 
 	def addMachine(self, name, info):
-		rowNr = len(self.__machines)
+		sortRow = [
+			info[key].lower() for key in self.__columnKeys
+			] + [ name, info ]
+
+		if self.__sortReversed:
+			sortSign = -1
+		else:
+			sortSign = 1
+		column = self.__sortColumn
+		key = sortRow[column]
+		# Unfortunately "bisect" does not offer a way to use a different
+		# comparator, so we have to do binary search ourselves.
+		low = 0
+		high = len(self.__machines)
+		while low < high:
+			mid = (low + high) / 2
+			machine = self.__machines[mid]
+			if (cmp(key, machine[column]) or cmp(sortRow, machine)) == sortSign:
+				low = mid + 1
+			else:
+				high = mid
+		rowNr = low
+
+		self.__machines.insert(rowNr, sortRow)
+		insort(self.__allAscending, sortRow)
+
 		parent = QtCore.QModelIndex() # invalid model index
-		self.__machines.append(( name, info ))
 		self.rowsInserted.emit(parent, rowNr, rowNr)
 
 	def rowCount(self, parent = QtCore.QModelIndex()):
@@ -47,40 +75,25 @@ class MachineModel(QtCore.QAbstractTableModel):
 			return QtCore.QVariant()
 
 		column = index.column()
-		machine = self.__machines[index.row()]
-		#print 'data requested for', machine[0], 'column', column, 'role', role
+		sortRow = self.__machines[index.row()]
+		#print 'data requested for', sortRow[-2], 'column', column, 'role', role
 		if role == QtCore.Qt.DisplayRole:
 			key = self.__columnKeys[column]
-			return QtCore.QVariant(machine[1][key])
+			return QtCore.QVariant(sortRow[-1][key])
 		elif role == QtCore.Qt.UserRole:
-			return QtCore.QVariant(machine[0])
+			return QtCore.QVariant(sortRow[-2])
 
 		return QtCore.QVariant()
 
 	def sort(self, column, order = QtCore.Qt.AscendingOrder):
-		print 'sort', column, order
-
-		# TODO: Do this when last machine reply is in.
-		if self.__allAscending is None:
-			# Sort in ascending order, with first column as primary key,
-			# second column as secondary key etc.
-			# By using this as a base, we only have to re-sort once when the
-			# primary sort key changes.
-			self.__allAscending = list(self.__machines)
-			for index in range(len(self.__columnKeys)):
-				key = self.__columnKeys[-(index + 1)]
-				self.__allAscending.sort(
-					lambda m1, m2: cmp(m1[1][key].lower(), m2[1][key].lower())
-					)
-
-		self.__machines = list(self.__allAscending)
-		key = self.__columnKeys[column]
-		self.__machines.sort(
-			lambda m1, m2: cmp(m1[1][key].lower(), m2[1][key].lower())
-			)
+		self.__sortColumn = column
 		# It seems (Py)Qt confuses ascending and descending, so we interpret
 		# it the other way around, to be consistent with other apps.
-		if order == QtCore.Qt.AscendingOrder:
+		self.__sortReversed = order == QtCore.Qt.AscendingOrder
+
+		self.__machines = list(self.__allAscending)
+		self.__machines.sort(key = lambda machine: machine[column])
+		if self.__sortReversed:
 			self.__machines.reverse()
 
 		self.layoutChanged.emit()
