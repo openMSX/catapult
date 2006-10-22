@@ -70,7 +70,6 @@ class _SignalDescriptor(object):
 		for clazz in obj.__class__.__mro__:
 			for name, member in clazz.__dict__.iteritems():
 				if member == self:
-					self.__name = name
 					return name
 		else:
 			raise AttributeError('Not a member of given object')
