@@ -4,7 +4,7 @@ from PyQt4 import QtCore, QtXml
 
 from preferences import preferences
 from openmsx_utils import parseTclValue
-from qt_utils import QtSignal, Signal
+from qt_utils import Signal, connect
 
 class ControlBridge(QtCore.QObject):
 	logLine = Signal('QString', 'QString')
@@ -202,18 +202,13 @@ class ControlConnection(QtCore.QObject):
 		parser.setContentHandler(handler)
 		parser.setErrorHandler(handler)
 
-		QtSignal(process, 'error', 'QProcess::ProcessError').connect(
-			self.processError
-			)
-		QtSignal(process, 'stateChanged', 'QProcess::ProcessState').connect(
+		connect(process, 'error(QProcess::ProcessError)', self.processError)
+		connect(
+			process, 'stateChanged(QProcess::ProcessState)',
 			self.processStateChanged
 			)
-		QtSignal(process, 'readyReadStandardOutput').connect(
-			self.processEvent
-			)
-		QtSignal(process, 'readyReadStandardError').connect(
-			self.dumpEvent
-			)
+		connect(process, 'readyReadStandardOutput()', self.processEvent)
+		connect(process, 'readyReadStandardError()', self.dumpEvent)
 
 		process.setReadChannel(QtCore.QProcess.StandardOutput)
 		self.__inputSource = None

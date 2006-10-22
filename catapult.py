@@ -30,7 +30,7 @@ from machine import MachineManager
 from media import MediaModel, MediaSwitcher
 from openmsx_control import ControlBridge
 from player import PlayState
-from qt_utils import QtSignal
+from qt_utils import connect
 from settings import SettingsManager
 from ui_main import Ui_MainWindow
 
@@ -60,7 +60,7 @@ class MainWindow(QtGui.QMainWindow):
 			for level, color in self.logStyle.iteritems()
 			])
 
-		QtSignal(QtGui.qApp, 'lastWindowClosed').connect(self.closeConnection)
+		connect(QtGui.qApp, 'lastWindowClosed()', self.closeConnection)
 		# We have to let openMSX quit gracefully before quitting Catapult.
 		QtGui.qApp.setQuitOnLastWindowClosed(False)
 		# Register Tcl commands to intercept openMSX exit.
@@ -85,17 +85,16 @@ class MainWindow(QtGui.QMainWindow):
 		self.__machineManager = machineManager = MachineManager(
 			self, ui.machineBox, settingsManager, bridge
 			)
-		QtSignal(
-			ui.machineButton, 'clicked'
-			).connect(machineManager.chooseMachine)
+		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
 		self.__mediaModel = mediaModel = MediaModel(bridge)
 		self.__mediaSwitcher = mediaSwitcher = MediaSwitcher(mediaModel, ui)
 		ui.mediaList.setModel(mediaModel)
-		QtSignal(
+		connect(
 			ui.mediaList.selectionModel(),
-			'currentChanged', 'QModelIndex', 'QModelIndex'
-			).connect(mediaSwitcher.updateMedia)
+			'currentChanged(QModelIndex, QModelIndex)',
+			mediaSwitcher.updateMedia
+			)
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
@@ -115,7 +114,7 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_AboutCatapult, self.showAboutDialog ),
 			( ui.action_AboutQt, QtGui.qApp.aboutQt ),
 			):
-			QtSignal(action, 'triggered', 'bool').connect(func)
+			connect(action, 'triggered(bool)', func)
 
 	def __interceptExit(self):
 		'''Redefines the "exit" command so openMSX will stop instead of exit

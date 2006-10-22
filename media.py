@@ -5,10 +5,10 @@ from bisect import bisect
 import os.path
 
 from preferences import preferences
-from qt_utils import QtSignal, Signal
+from qt_utils import QtSignal, connect
 
 class MediaModel(QtCore.QAbstractListModel):
-	dataChanged = Signal('QModelIndex', 'QModelIndex')
+	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
 
 	def __init__(self, bridge):
 		QtCore.QAbstractListModel.__init__(self)
@@ -385,12 +385,10 @@ class MediaHandler(QtCore.QObject):
 		self._historyBox.clearEditText()
 
 		# Connect signals.
-		QtSignal(self._ejectButton, 'clicked').connect(self.eject)
-		QtSignal(self._browseButton, 'clicked').connect(self.browseImage)
-		QtSignal(self._historyBox, 'activated', 'QString').connect(self.insert)
-		QtSignal(self._historyBox.lineEdit(), 'editingFinished').connect(
-			self.edited
-			)
+		connect(self._ejectButton, 'clicked()', self.eject)
+		connect(self._browseButton, 'clicked()', self.browseImage)
+		connect(self._historyBox, 'activated(QString)', self.insert)
+		connect(self._historyBox.lineEdit(), 'editingFinished()', self.edited)
 
 	def insert(self, path):
 		'''Tells the model to insert a new medium with the given path.
@@ -450,7 +448,7 @@ class DiskHandler(MediaHandler):
 		self._browseDirButton = getattr(ui, 'diskBrowseDirectoryButton')
 
 		# Connect signals.
-		QtSignal(self._browseDirButton, 'clicked').connect(self.browseDirectory)
+		connect(self._browseDirButton, 'clicked()', self.browseDirectory)
 
 	def browseDirectory(self):
 		self.insert(QtGui.QFileDialog.getExistingDirectory(

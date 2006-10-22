@@ -2,7 +2,7 @@
 
 from PyQt4 import QtCore
 
-from qt_utils import QtSignal, Signal
+from qt_utils import Signal, connect
 
 class Setting(QtCore.QObject):
 	'''Abstract base class for settings.
@@ -34,9 +34,7 @@ class Setting(QtCore.QObject):
 		the object's valueChanged to this setting's setValue.
 		'''
 		self.valueChanged.connect(obj.setValue)
-		QtSignal(
-			obj, 'valueChanged', *self.valueChanged.argTypes
-			).connect(self.setValue)
+		connect(obj, self.valueChanged.signature, self.setValue)
 
 	def getValue(self):
 		'''Returns the current value of this setting.

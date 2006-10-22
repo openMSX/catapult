@@ -1,13 +1,13 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from qt_utils import QtSignal, Signal
+from qt_utils import QtSignal, connect
 from preferences import preferences
 
 class MachineModel(QtCore.QAbstractTableModel):
 	__columnKeys = 'manufacturer', 'code', 'type', 'description'
-	rowsInserted = Signal('QModelIndex', 'int', 'int')
-	layoutChanged = Signal()
+	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
+	layoutChanged = QtSignal()
 
 	def __init__(self):
 		QtCore.QAbstractTableModel.__init__(self)
@@ -107,9 +107,7 @@ class MachineManager(QtCore.QObject):
 		# Make connections.
 		self.__machineSetting = machineSetting = settingsManager['machine']
 		machineSetting.valueChanged.connect(self.__machineChanged)
-		QtSignal(
-			machineBox, 'activated', 'int'
-			).connect(self.__machineSelected)
+		connect(machineBox, 'activated(int)', self.__machineSelected)
 
 	def chooseMachine(self):
 		dialog = self.__machineDialog
@@ -130,12 +128,11 @@ class MachineManager(QtCore.QObject):
 			ui.machineTable.verticalHeader().hide()
 			ui.machineTable.setModel(self.__model)
 			# Make connections.
-			QtSignal(
-				dialog, 'accepted'
-				).connect(self.__machineDialogAccepted)
-			QtSignal(
-				horizontalHeader, 'sectionClicked', 'int'
-				).connect(ui.machineTable.sortByColumn)
+			connect(dialog, 'accepted()', self.__machineDialogAccepted)
+			connect(
+				horizontalHeader, 'sectionClicked(int)',
+				ui.machineTable.sortByColumn
+				)
 			# This is a slot rather than a signal, so we connect it by
 			# overriding the method implementation.
 			ui.machineTable.currentChanged = self.__machineHighlighted

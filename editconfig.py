@@ -2,7 +2,7 @@
 
 from PyQt4 import QtCore, QtGui
 from preferences import preferences
-from qt_utils import QtSignal
+from qt_utils import connect
 
 class ConfigDialog:
 
@@ -28,10 +28,8 @@ class ConfigDialog:
 			self._browseExecutableButton = getattr(ui, "BrowseExecutableButton")
 			self._execEdit = getattr(ui, "ExecEdit")
 			self._execEdit.setText(preferences['system/executable'])
-			QtSignal(self._browseExecutableButton, 'clicked').connect(
-				self.browseExec
-				)
-			QtSignal(self._execEdit, 'editingFinished').connect(self.setExec)
+			connect(self._browseExecutableButton, 'clicked()', self.browseExec)
+			connect(self._execEdit, 'editingFinished()', self.setExec)
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
