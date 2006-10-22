@@ -11,8 +11,9 @@ class MachineModel(QtCore.QAbstractTableModel):
 	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
 	layoutChanged = QtSignal()
 
-	def __init__(self):
+	def __init__(self, bridge):
 		QtCore.QAbstractTableModel.__init__(self)
+		self.__bridge = bridge
 		self.__machines = []
 		self.__allAscending = []
 		self.__sortColumn = 0
@@ -23,10 +24,33 @@ class MachineModel(QtCore.QAbstractTableModel):
 			machine[-2] for machine in self.__machines
 			)
 
-	def addMachine(self, name, info):
+	def repopulate(self):
+		self.__machines = []
+		self.__allAscending = []
+		# Ask openMSX for list of machines.
+		self.__bridge.command(
+			'openmsx_info', 'machines'
+			)(self.__machineListReply)
+
+	def __machineListReply(self, *machines):
+		for machine in machines:
+			# Note: The request is done in a separate method, so the current
+			#       value of "machine" is passed rather than this method's
+			#       context in which "machine" is changing each iteration.
+			self.__requestMachineInfo(machine)
+
+	def __requestMachineInfo(self, machine):
+		# TODO: Add support for registerable error handlers, so we can
+		#       catch errors when executing these commands.
+		self.__bridge.command(
+			'openmsx_info', 'machines', machine
+			)(lambda *info: self.__machineInfoReply(machine, info))
+
+	def __machineInfoReply(self, name, info):
+		infoDict = dict(info[i : i + 2] for i in xrange(0, len(info), 2))
 		sortRow = [
-			info[key].lower() for key in self.__columnKeys
-			] + [ name, info ]
+			infoDict.get(key, '').lower() for key in self.__columnKeys
+			] + [ name, infoDict ]
 
 		if self.__sortReversed:
 			sortSign = -1
@@ -50,7 +74,8 @@ class MachineModel(QtCore.QAbstractTableModel):
 		self.__machines.insert(rowNr, sortRow)
 		insort(self.__allAscending, sortRow)
 
-		parent = QtCore.QModelIndex() # invalid model index
+		#parent = QtCore.QModelIndex() # invalid model index
+		parent = self.createIndex(rowNr, 0).parent()
 		self.rowsInserted.emit(parent, rowNr, rowNr)
 
 	def rowCount(self, parent = QtCore.QModelIndex()):
@@ -79,7 +104,7 @@ class MachineModel(QtCore.QAbstractTableModel):
 		#print 'data requested for', sortRow[-2], 'column', column, 'role', role
 		if role == QtCore.Qt.DisplayRole:
 			key = self.__columnKeys[column]
-			return QtCore.QVariant(sortRow[-1][key])
+			return QtCore.QVariant(sortRow[-1].get(key, ''))
 		elif role == QtCore.Qt.UserRole:
 			return QtCore.QVariant(sortRow[-2])
 
@@ -104,12 +129,11 @@ class MachineManager(QtCore.QObject):
 		QtCore.QObject.__init__(self)
 		self.__parent = parent
 		self.__machineBox = machineBox
-		self.__bridge = bridge
-		#self.__settingsManager = settingsManager
 		self.__machineDialog = None
 		self.__ui = None
-		self.__model = MachineModel()
+		self.__model = model = MachineModel(bridge)
 		self.__machines = None
+		self.__requestedWidths = [ 0 ] * model.columnCount()
 
 		# Load history.
 		for machine in preferences.getList('machine/history'):
@@ -121,6 +145,7 @@ class MachineManager(QtCore.QObject):
 		self.__machineSetting = machineSetting = settingsManager['machine']
 		machineSetting.valueChanged.connect(self.__machineChanged)
 		connect(machineBox, 'activated(int)', self.__machineSelected)
+		model.rowsInserted.connect(self.__machinesAdded)
 
 	def chooseMachine(self):
 		dialog = self.__machineDialog
@@ -149,10 +174,8 @@ class MachineManager(QtCore.QObject):
 			# This is a slot rather than a signal, so we connect it by
 			# overriding the method implementation.
 			ui.machineTable.currentChanged = self.__machineHighlighted
-			# Ask openMSX for list of machines.
-			self.__bridge.command(
-				'openmsx_info', 'machines'
-				)(self.__machineListReply)
+			# Fetch machine info.
+			self.__model.repopulate()
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
@@ -195,27 +218,19 @@ class MachineManager(QtCore.QObject):
 		#       currently powered on.
 		self.__machineSetting.setValue(machine)
 
-	def __machineListReply(self, *machines):
-		self.__machines = machines
-		for machine in machines:
-			# Note: The request is done in a separate method, so the current
-			#       value of "machine" is passed rather than this method's
-			#       context in which "machine" is changing each iteration.
-			self.__requestMachineInfo(machine)
-
-	def __requestMachineInfo(self, machine):
-		# TODO: Add support for registerable error handlers, so we can
-		#       catch errors when executing these commands.
-		self.__bridge.command(
-			'openmsx_info', 'machines', machine
-			)(lambda *info: self.__machineInfoReply(machine, info))
-
-	def __machineInfoReply(self, name, info):
-		machineTable = self.__ui.machineTable
-		infodict = dict([ info[i : i + 2] for i in xrange(0, len(info), 2) ])
-		self.__model.addMachine(name, infodict)
-		if self.__model.rowCount() == len(self.__machines):
-			machineTable.resizeColumnsToContents()
-			#for column in range(4):
-				#machineTable.resizeColumnToContents(column)
+	def __machinesAdded(self, parent, start, end): # pylint: disable-msg=W0613
+		model = self.__model
+		table = self.__ui.machineTable
+		header = table.horizontalHeader()
+		for row in range(start, end + 1):
+			for column in range(model.columnCount() - 1):
+				requestedWidth = max(
+					self.__requestedWidths[column],
+					table.sizeHintForColumn(column)
+					)
+				index = model.createIndex(row, column)
+				itemWidth = table.sizeHintForIndex(index).width() + 16
+				if itemWidth > requestedWidth:
+					self.__requestedWidths[column] = itemWidth
+					header.resizeSection(column, itemWidth)
 
