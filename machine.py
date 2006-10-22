@@ -57,6 +57,7 @@ class MachineModel(QtCore.QAbstractTableModel):
 
 	def __machineInfoReply(self, name, info):
 		infoDict = dict(info[i : i + 2] for i in xrange(0, len(info), 2))
+		infoDict.setdefault('code', name)
 		sortRow = [
 			infoDict.get(key, '').lower() for key in self.__columnKeys
 			] + [ name, infoDict ]
