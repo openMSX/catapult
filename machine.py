@@ -199,6 +199,10 @@ class MachineManager(QtCore.QObject):
 				horizontalHeader, 'sectionClicked(int)',
 				ui.machineTable.sortByColumn
 				)
+			connect(
+				ui.refreshButton, 'clicked()', 
+				self.__model.repopulate
+				)
 			model.rowsInserted.connect(self.__machinesAdded)
 			model.layoutChanged.connect(self.__setSelection)
 			model.populated.connect(
