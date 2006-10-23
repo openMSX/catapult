@@ -3,13 +3,14 @@
 from PyQt4 import QtCore, QtGui
 from bisect import insort
 
-from qt_utils import QtSignal, connect
+from qt_utils import QtSignal, Signal, connect
 from preferences import preferences
 
 class MachineModel(QtCore.QAbstractTableModel):
 	__columnKeys = 'manufacturer', 'code', 'type', 'description'
 	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
 	layoutChanged = QtSignal()
+	populated = Signal()
 
 	def __init__(self, bridge):
 		QtCore.QAbstractTableModel.__init__(self)
@@ -18,6 +19,7 @@ class MachineModel(QtCore.QAbstractTableModel):
 		self.__allAscending = []
 		self.__sortColumn = 0
 		self.__sortReversed = False
+		self.__machineRepliesLeft = None
 
 	def __str__(self):
 		return 'MachineModel(%s)' % ', '.join(
@@ -42,6 +44,7 @@ class MachineModel(QtCore.QAbstractTableModel):
 			)(self.__machineListReply)
 
 	def __machineListReply(self, *machines):
+		self.__machineRepliesLeft = len(machines)
 		for machine in machines:
 			# Note: The request is done in a separate method, so the current
 			#       value of "machine" is passed rather than this method's
@@ -49,11 +52,12 @@ class MachineModel(QtCore.QAbstractTableModel):
 			self.__requestMachineInfo(machine)
 
 	def __requestMachineInfo(self, machine):
-		# TODO: Add support for registerable error handlers, so we can
-		#       catch errors when executing these commands.
 		self.__bridge.command(
 			'openmsx_info', 'machines', machine
-			)(lambda *info: self.__machineInfoReply(machine, info))
+			)(
+			lambda *info: self.__machineInfoReply(machine, info),
+			lambda message: self.__machineInfoFailed(machine, message),
+			)
 
 	def __machineInfoReply(self, name, info):
 		infoDict = dict(info[i : i + 2] for i in xrange(0, len(info), 2))
@@ -87,6 +91,18 @@ class MachineModel(QtCore.QAbstractTableModel):
 		#parent = QtCore.QModelIndex() # invalid model index
 		parent = self.createIndex(rowNr, 0).parent()
 		self.rowsInserted.emit(parent, rowNr, rowNr)
+
+		self.__machineInfoDone()
+
+	def __machineInfoFailed(self, name, message):
+		print 'Failed to get info about machine %s: %s' % ( name, message )
+		self.__machineInfoDone()
+
+	def __machineInfoDone(self):
+		self.__machineRepliesLeft -= 1
+		if self.__machineRepliesLeft == 0:
+			self.__machineRepliesLeft = None
+			self.populated.emit()
 
 	def rowCount(self, parent = QtCore.QModelIndex()):
 		# pylint: disable-msg=W0613
@@ -143,6 +159,7 @@ class MachineManager(QtCore.QObject):
 		self.__ui = None
 		self.__model = model = MachineModel(bridge)
 		self.__machines = None
+		self.__currentMachine = None
 		self.__requestedWidths = [ 0 ] * model.columnCount()
 
 		# Load history.
@@ -184,6 +201,12 @@ class MachineManager(QtCore.QObject):
 				)
 			model.rowsInserted.connect(self.__machinesAdded)
 			model.layoutChanged.connect(self.__setSelection)
+			model.populated.connect(
+				# A queued connection is used because the table view needs some
+				# time to process the added items before being able to scroll
+				# to the currently selected one.
+				self.__setSelection, QtCore.Qt.QueuedConnection
+				)
 			# This is a slot rather than a signal, so we connect it by
 			# overriding the method implementation.
 			ui.machineTable.currentChanged = self.__machineHighlighted

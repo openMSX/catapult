@@ -24,7 +24,7 @@ class _SignalWrapper(object):
 	def __str__(self):
 		return 'SIGNAL(%s)' % self.__signature
 
-	def connect(self, slot):
+	def connect(self, slot, connType = QtCore.Qt.AutoCompatConnection):
 		# Sanity check on slot.
 		if not callable(slot):
 			raise TypeError('Slot type not callable: %s' % type(slot))
@@ -43,7 +43,9 @@ class _SignalWrapper(object):
 			#       signal: the superfluous arguments are ignored.
 
 		# Make connection.
-		ok = QtCore.QObject.connect(self.__object, self.__macroSignature, slot)
+		ok = QtCore.QObject.connect(
+			self.__object, self.__macroSignature, slot, connType
+			)
 		# Note: I have never seen False being returned in practice, even on
 		#       failed connections.
 		assert ok, 'Failed to connect to "%s"' % self.__signature
@@ -143,7 +145,7 @@ class Signal(_SignalDescriptor):
 
 _reSignature = regex(r'(\w+)\s*\(\s*((?:[\w:]+(?:\s*,\s*[\w:]+)*)?)\s*\)')
 
-def connect(obj, signature, slot):
+def connect(obj, signature, slot, connType = QtCore.Qt.AutoCompatConnection):
 	'''Connects a Qt native signal to a slot.
 	'''
 	match = _reSignature.match(signature)
@@ -152,5 +154,5 @@ def connect(obj, signature, slot):
 		numSignalArgs = argTypes.count(',') + 1
 	else:
 		numSignalArgs = 0
-	_SignalWrapper(obj, signature, numSignalArgs).connect(slot)
+	_SignalWrapper(obj, signature, numSignalArgs).connect(slot, connType)
 

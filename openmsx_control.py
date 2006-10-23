@@ -36,10 +36,6 @@ class ControlBridge(QtCore.QObject):
 			# TODO: Have a fallback in case openMSX does not respond.
 			# TODO: Is waiting for the quit command to be confirmed good enough,
 			#       or should we wait for the control connection end tag?
-			# TODO: I remember Wouter saying that "quit" is just an alias for
-			#       something that we should actually use.
-			# TODO: Make sure closing the openMSX window does not actually quit
-			#       openMSX if it was started from a control connection.
 			self.command('exit_process')(callback)
 
 	def connectionClosed(self):
@@ -83,22 +79,22 @@ class ControlBridge(QtCore.QObject):
 			for word in words
 			)
 
-		def execute(callback = None):
+		def execute(callback = None, errback = None):
 			if callback is None:
 				rawCallback = None
 			else:
 				rawCallback = lambda result: callback(*parseTclValue(result))
-			self.sendCommandRaw(line, rawCallback)
+			self.sendCommandRaw(line, rawCallback, errback)
 		return execute
 
-	def sendCommandRaw(self, command, callback = None):
+	def sendCommandRaw(self, command, callback = None, errback = None):
 		if self.__connection is None:
 			print 'IGNORE command because connection is down:', command
 		else:
 			print 'send %d: %s' % (self.__sendSerial, command)
-			if callback is not None:
+			if callback is not None or errback is not None:
 				assert self.__sendSerial not in self.__callbacks
-				self.__callbacks[self.__sendSerial] = callback
+				self.__callbacks[self.__sendSerial] = callback, errback
 			self.__connection.sendCommand(command)
 			self.__sendSerial += 1
 
@@ -116,8 +112,8 @@ class ControlBridge(QtCore.QObject):
 		serial = self.__receiveSerial
 		self.__receiveSerial += 1
 		print 'command %d %s: %s' % ( serial, ('FAILED', 'OK')[ok], result )
+		callback, errback = self.__callbacks.pop(serial, ( None, None ))
 		if ok:
-			callback = self.__callbacks.pop(serial, None)
 			if callback is None:
 				print 'nobody cares'
 			else:
@@ -126,7 +122,10 @@ class ControlBridge(QtCore.QObject):
 			result = str(result)
 			if result.endswith('\n'):
 				result = result[ : -1]
-			self._log('warning', result)
+			if errback is None:
+				self._log('warning', result)
+			else:
+				errback(result)
 
 class ControlHandler(QtXml.QXmlDefaultHandler):
 	def __init__(self, bridge):
