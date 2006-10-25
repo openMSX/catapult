@@ -139,6 +139,12 @@ class MachineManager(QtCore.QObject):
 		machineSetting.valueChanged.connect(self.__machineChanged)
 		connect(machineBox, 'activated(int)', self.__machineSelected)
 
+	def __disableRefreshButton(self):
+		self.__ui.refreshButton.setEnabled(False)
+
+	def __enableRefreshButton(self):
+		self.__ui.refreshButton.setEnabled(True)
+
 	def chooseMachine(self):
 		self.__currentMachine = self.__machineSetting.getValue()
 		dialog = self.__machineDialog
@@ -165,10 +171,9 @@ class MachineManager(QtCore.QObject):
 				horizontalHeader, 'sectionClicked(int)',
 				ui.machineTable.sortByColumn
 				)
-			connect(
-				ui.refreshButton, 'clicked()', 
-				self.__model.repopulate
-				)
+			connect(ui.refreshButton, 'clicked()', model.repopulate)
+			model.populating.connect(self.__disableRefreshButton)
+			model.populated.connect(self.__enableRefreshButton)
 			model.rowsInserted.connect(self.__machinesAdded)
 			model.layoutChanged.connect(self.__setSelection)
 			model.populated.connect(
