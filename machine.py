@@ -3,23 +3,22 @@
 from PyQt4 import QtCore, QtGui
 from bisect import insort
 
+from hardware import HardwareModel
 from qt_utils import QtSignal, Signal, connect
 from preferences import preferences
 
-class MachineModel(QtCore.QAbstractTableModel):
+class MachineModel(HardwareModel):
 	__columnKeys = 'manufacturer', 'code', 'type', 'description'
+	_hardwareType = 'machine'
 	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
 	layoutChanged = QtSignal()
-	populated = Signal()
 
 	def __init__(self, bridge):
-		QtCore.QAbstractTableModel.__init__(self)
-		self.__bridge = bridge
+		HardwareModel.__init__(self, bridge)
 		self.__machines = []
 		self.__allAscending = []
 		self.__sortColumn = 0
 		self.__sortReversed = False
-		self.__machineRepliesLeft = None
 
 	def __str__(self):
 		return 'MachineModel(%s)' % ', '.join(
@@ -35,36 +34,15 @@ class MachineModel(QtCore.QAbstractTableModel):
 				return row
 		return -1
 
-	def repopulate(self):
+	def _clearItems(self):
 		self.__machines = []
 		self.__allAscending = []
-		# Ask openMSX for list of machines.
-		self.__bridge.command(
-			'openmsx_info', 'machines'
-			)(self.__machineListReply)
 
-	def __machineListReply(self, *machines):
-		self.__machineRepliesLeft = len(machines)
-		for machine in machines:
-			# Note: The request is done in a separate method, so the current
-			#       value of "machine" is passed rather than this method's
-			#       context in which "machine" is changing each iteration.
-			self.__requestMachineInfo(machine)
-
-	def __requestMachineInfo(self, machine):
-		self.__bridge.command(
-			'openmsx_info', 'machines', machine
-			)(
-			lambda *info: self.__machineInfoReply(machine, info),
-			lambda message: self.__machineInfoFailed(machine, message),
-			)
-
-	def __machineInfoReply(self, name, info):
-		infoDict = dict(info[i : i + 2] for i in xrange(0, len(info), 2))
-		infoDict.setdefault('code', name)
+	def _storeItem(self, name, info):
+		info.setdefault('code', name)
 		sortRow = [
-			infoDict.get(key, '').lower() for key in self.__columnKeys
-			] + [ name, infoDict ]
+			info.get(key, '').lower() for key in self.__columnKeys
+			] + [ name, info ]
 
 		if self.__sortReversed:
 			sortSign = -1
@@ -91,18 +69,6 @@ class MachineModel(QtCore.QAbstractTableModel):
 		#parent = QtCore.QModelIndex() # invalid model index
 		parent = self.createIndex(rowNr, 0).parent()
 		self.rowsInserted.emit(parent, rowNr, rowNr)
-
-		self.__machineInfoDone()
-
-	def __machineInfoFailed(self, name, message):
-		print 'Failed to get info about machine %s: %s' % ( name, message )
-		self.__machineInfoDone()
-
-	def __machineInfoDone(self):
-		self.__machineRepliesLeft -= 1
-		if self.__machineRepliesLeft == 0:
-			self.__machineRepliesLeft = None
-			self.populated.emit()
 
 	def rowCount(self, parent = QtCore.QModelIndex()):
 		# pylint: disable-msg=W0613
