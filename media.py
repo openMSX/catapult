@@ -134,8 +134,9 @@ class MediaModel(QtCore.QAbstractListModel):
 		if changed:
 			# TODO: Deal with errors (register callback/errback).
 			if path == '':
-				path = '-eject'
-			self.__bridge.command(mediaSlot, path)()
+				self.__bridge.command(mediaSlot, 'eject')()
+			else:
+				self.__bridge.command(mediaSlot, 'insert', path)()
 
 	def rowCount(self, parent):
 		# TODO: What does this mean?
