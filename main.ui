@@ -149,7 +149,7 @@
                <item row="0" column="0" >
                 <widget class="QLabel" name="label" >
                  <property name="text" >
-                  <string>The cartridge slots, disk drives and cassette player of the currently active MSX are shown in the list above. After you select one of them, you can insert a cartridge, disk or cassette in this panel. </string>
+                  <string>The cartridge slots, disk drives, cassette player, hard disk and CD-ROM drives of the currently active MSX are shown in the list above. After you select one of them, you can insert a cartridge, disk, cassette or CD-ROM in this panel, or change the hard disk image (at power off).</string>
                  </property>
                  <property name="alignment" >
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -554,6 +554,279 @@
                </item>
                <item>
                 <widget class="QComboBox" name="cassetteHistoryBox" >
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>1</hsizetype>
+                   <vsizetype>1</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="editable" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="maxCount" >
+                  <number>100</number>
+                 </property>
+                 <property name="insertPolicy" >
+                  <enum>QComboBox::InsertAtTop</enum>
+                 </property>
+                 <property name="sizeAdjustPolicy" >
+                  <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+                 </property>
+                 <property name="minimumContentsLength" >
+                  <number>20</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation" >
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" >
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="hdPage" >
+              <layout class="QVBoxLayout" >
+               <property name="margin" >
+                <number>9</number>
+               </property>
+               <property name="spacing" >
+                <number>6</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="hdLabel" >
+                   <property name="font" >
+                    <font>
+                     <family>Sans Serif</family>
+                     <pointsize>16</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                     <underline>false</underline>
+                     <strikeout>false</strikeout>
+                    </font>
+                   </property>
+                   <property name="text" >
+                    <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:16pt; font-weight:600; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Hard &lt;span style=" font-weight:400;">Disk A&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="hdDescriptionLabel" >
+                 <property name="font" >
+                  <font>
+                   <family>Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <weight>50</weight>
+                   <italic>false</italic>
+                   <bold>false</bold>
+                   <underline>false</underline>
+                   <strikeout>false</strikeout>
+                  </font>
+                 </property>
+                 <property name="text" >
+                  <string>Hard disk image of 100MB</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="hdBrowseImageButton" >
+                   <property name="text" >
+                    <string>Browse Hard Disk &amp;Images...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType" >
+                    <enum>QSizePolicy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" >
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QComboBox" name="hdHistoryBox" >
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>1</hsizetype>
+                   <vsizetype>1</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="editable" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="maxCount" >
+                  <number>100</number>
+                 </property>
+                 <property name="insertPolicy" >
+                  <enum>QComboBox::InsertAtTop</enum>
+                 </property>
+                 <property name="sizeAdjustPolicy" >
+                  <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+                 </property>
+                 <property name="minimumContentsLength" >
+                  <number>20</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation" >
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" >
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="cdPage" >
+              <layout class="QVBoxLayout" >
+               <property name="margin" >
+                <number>9</number>
+               </property>
+               <property name="spacing" >
+                <number>6</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="cdLabel" >
+                   <property name="font" >
+                    <font>
+                     <family>Sans Serif</family>
+                     <pointsize>16</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                     <underline>false</underline>
+                     <strikeout>false</strikeout>
+                    </font>
+                   </property>
+                   <property name="text" >
+                    <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:16pt; font-weight:600; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">CD-ROM Drive&lt;span style=" font-weight:400;"> A&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="cdEjectButton" >
+                   <property name="sizePolicy" >
+                    <sizepolicy>
+                     <hsizetype>0</hsizetype>
+                     <vsizetype>0</vsizetype>
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="icon" >
+                    <iconset>eject.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="cdDescriptionLabel" >
+                 <property name="font" >
+                  <font>
+                   <family>Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <weight>50</weight>
+                   <italic>false</italic>
+                   <bold>false</bold>
+                   <underline>false</underline>
+                   <strikeout>false</strikeout>
+                  </font>
+                 </property>
+                 <property name="text" >
+                  <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">CD-ROM image of 650MB&lt;/p>&lt;/body>&lt;/html></string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="cdBrowseImageButton" >
+                   <property name="text" >
+                    <string>Browse CD-ROM &amp;Images...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType" >
+                    <enum>QSizePolicy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" >
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QComboBox" name="cdHistoryBox" >
                  <property name="sizePolicy" >
                   <sizepolicy>
                    <hsizetype>1</hsizetype>
@@ -1029,7 +1302,7 @@
      <x>0</x>
      <y>0</y>
      <width>617</width>
-     <height>29</height>
+     <height>32</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help" >
@@ -1058,16 +1331,7 @@
    <addaction name="menuConfiguration" />
    <addaction name="menu_Help" />
   </widget>
-  <widget class="QStatusBar" name="statusbar" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>534</y>
-     <width>617</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar" />
   <action name="action_AboutCatapult" >
    <property name="text" >
     <string>&amp;About openMSX Catapult</string>

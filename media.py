@@ -23,7 +23,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		#       openMSX crashes. So, we should go back to knowing nothing about
 		#       the openMSX state.
 		#self.__mediaSlots = []
-		for pattern in ( 'cart?', 'disk?', 'cassetteplayer' ):
+		for pattern in ( 'cart?', 'disk?', 'cassetteplayer', 'hd?', 'cd?' ):
 			# Query medium slots.
 			self.__bridge.command('info', 'command', pattern)(
 				self.__mediumListReply
@@ -35,7 +35,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		'''
 		if len(slots) == 0:
 			return
-		for medium in ( 'cart', 'disk', 'cassette' ):
+		for medium in ( 'cart', 'disk', 'cassette', 'hd', 'cd' ):
 			if slots[0].startswith(medium):
 				break
 		else:
@@ -90,7 +90,7 @@ class MediaModel(QtCore.QAbstractListModel):
 			print 'received update for non-existing media slot "%s"' % mediaSlot
 
 	def __updateHardware(self, hardware, action):
-		for medium in ( 'cart', 'disk', 'cassette' ):
+		for medium in ( 'cart', 'disk', 'cassette', 'hd', 'cd' ):
 			if hardware.startswith(medium):
 				break
 		else:
@@ -157,6 +157,10 @@ class MediaModel(QtCore.QAbstractListModel):
 				description = 'Disk drive %s' % name[-1].upper()
 			elif name.startswith('cassette'):
 				description = 'Cassette player'
+			elif name.startswith('hd'):
+				description = 'Hard disk drive %s' % name[-1].upper()
+			elif name.startswith('cd'):
+				description = 'CD-ROM drive %s' % name[-1].upper()
 			else:
 				description = name.upper()
 			if path:
@@ -197,6 +201,8 @@ class MediaSwitcher(QtCore.QObject):
 			'cassette': (
 				ui.cassettePage, self.__updateCassettePage
 				),
+			'hd': ( ui.hdPage, self.__updateHarddiskPage ),
+			'cd': ( ui.cdPage, self.__updateCDROMPage ),
 			}
 		# Connect to media model:
 		mediaModel.dataChanged.connect(self.mediaPathChanged)
@@ -206,14 +212,15 @@ class MediaSwitcher(QtCore.QObject):
 		# attached to them.
 		self.__handlers = [
 			handler(ui, self)
-			for handler in ( DiskHandler, CartHandler, CassetteHandler )
+			for handler in ( DiskHandler, CartHandler, 
+				CassetteHandler, HarddiskHandler, CDROMHandler )
 			]
 
 	def __updateCartPage(self, mediaSlot, identifier):
 		ui = self.__ui
 		path = self.__mediaModel.getInserted(mediaSlot)
 
-		ui.cartLabel.setText('Cartridge %s' % identifier.upper())
+		ui.cartLabel.setText('Cartridge Slot %s' % identifier.upper())
 
 		fileInfo = QtCore.QFileInfo(path)
 
@@ -250,7 +257,7 @@ class MediaSwitcher(QtCore.QObject):
 		path = self.__mediaModel.getInserted(mediaSlot)
 		fileInfo = QtCore.QFileInfo(path)
 
-		ui.diskLabel.setText('Drive %s' % identifier.upper())
+		ui.diskLabel.setText('Disk Drive %s' % identifier.upper())
 
 		if path == '':
 			description = 'No disk in drive'
@@ -287,6 +294,76 @@ class MediaSwitcher(QtCore.QObject):
 		#       do not include flags.
 
 		ui.diskHistoryBox.lineEdit().setText(path)
+
+	def __updateHarddiskPage(self, mediaSlot, identifier):
+		ui = self.__ui
+		path = self.__mediaModel.getInserted(mediaSlot)
+		fileInfo = QtCore.QFileInfo(path)
+
+		ui.hdLabel.setText('Hard Disk Drive %s' % identifier.upper())
+
+		if path == '':
+			description = 'No hard disk in drive'
+		elif fileInfo.isFile():
+			lastDot = path.rfind('.')
+			if lastDot == -1:
+				ext = None
+			else:
+				ext = path[lastDot + 1 : ].lower()
+			if ext == 'dsk':
+				description = 'Raw hard disk image'
+				size = fileInfo.size()
+				if size != 0:
+					description += ' of %dMB' % (size / 1024 / 1024)
+			elif ext in ('zip', 'gz'):
+				description = 'Compressed hard disk image'
+			else:
+				description = 'Hard disk image of unknown type'
+		elif fileInfo.exists():
+			description = 'Special file node'
+		else:
+			description = 'Not found'
+		ui.hdDescriptionLabel.setText(description)
+		# TODO: Display "(read only)" in description label if the hd is
+		#       read only for some reason:
+		#       - image file that is read-only on host file system
+		#       I guess it's best if openMSX detects and reports this.
+		#       The "hdX" commands return a flag "readonly", but updates
+		#       do not include flags.
+
+		ui.hdHistoryBox.lineEdit().setText(path)
+
+	def __updateCDROMPage(self, mediaSlot, identifier):
+		ui = self.__ui
+		path = self.__mediaModel.getInserted(mediaSlot)
+		fileInfo = QtCore.QFileInfo(path)
+
+		ui.cdLabel.setText('CD-ROM Drive %s' % identifier.upper())
+
+		if path == '':
+			description = 'No CD-ROM in drive'
+		elif fileInfo.isFile():
+			lastDot = path.rfind('.')
+			if lastDot == -1:
+				ext = None
+			else:
+				ext = path[lastDot + 1 : ].lower()
+			if ext == 'iso':
+				description = 'ISO CD-ROM image'
+				size = fileInfo.size()
+				if size != 0:
+					description += ' of %dMB' % (size / 1024 / 1024)
+			elif ext in ('zip', 'gz'):
+				description = 'Compressed CD-ROM image'
+			else:
+				description = 'CD-ROM image of unknown type'
+		elif fileInfo.exists():
+			description = 'Special file node'
+		else:
+			description = 'Not found'
+		ui.cdDescriptionLabel.setText(description)
+
+		ui.cdHistoryBox.lineEdit().setText(path)
 
 	def __updateCassettePage(self, mediaSlot, identifier
 		# identifier is ignored for cassetteplayer:
@@ -374,7 +451,7 @@ class MediaHandler(QtCore.QObject):
 		self._switcher = switcher
 
 		# Look up UI elements.
-		self._ejectButton = getattr(ui, self.medium + 'EjectButton')
+		self._ejectButton = getattr(ui, self.medium + 'EjectButton', None)
 		self._browseButton = getattr(ui, self.medium + 'BrowseImageButton')
 		self._historyBox = getattr(ui, self.medium + 'HistoryBox')
 
@@ -386,7 +463,8 @@ class MediaHandler(QtCore.QObject):
 		self._historyBox.clearEditText()
 
 		# Connect signals.
-		connect(self._ejectButton, 'clicked()', self.eject)
+		if (self._ejectButton):
+			connect(self._ejectButton, 'clicked()', self.eject)
 		connect(self._browseButton, 'clicked()', self.browseImage)
 		connect(self._historyBox, 'activated(QString)', self.insert)
 		connect(self._historyBox.lineEdit(), 'editingFinished()', self.edited)
@@ -467,3 +545,12 @@ class CassetteHandler(MediaHandler):
 	browseTitle = 'Select Cassette Image'
 	imageSpec = 'Cassette Images (*.cas *.wav *.zip *.gz);;All Files (*)'
 
+class HarddiskHandler(MediaHandler):
+	medium = 'hd'
+	browseTitle = 'Select Hard Disk Image'
+	imageSpec = 'Hard Disk Images (*.dsk *.zip *.gz);;All Files (*)'
+
+class CDROMHandler(MediaHandler):
+	medium = 'cd'
+	browseTitle = 'Select CD-ROM Image'
+	imageSpec = 'CD-ROM Images (*.iso *.zip *.gz);;All Files (*)'
