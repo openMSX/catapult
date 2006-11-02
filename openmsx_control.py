@@ -152,6 +152,8 @@ class ControlHandler(QtXml.QXmlDefaultHandler):
 		# pylint: disable-msg=W0613
 		# We don't need all the arguments, but Qt defines this interface.
 		):
+		# pylint: disable-msg=W0212
+		# We use methods from the ControlBridge which are not public.
 		if qName == 'openmsx-output':
 			pass
 		elif qName == 'reply':
@@ -184,6 +186,8 @@ class ControlConnection(QtCore.QObject):
 	connectionClosed = Signal()
 
 	def __init__(self, bridge):
+		# pylint: disable-msg=W0212
+		# We use methods from the ControlBridge which are not public.
 		QtCore.QObject.__init__(self)
 		self.__errBuf = ''
 		self.__logListener = bridge._log
