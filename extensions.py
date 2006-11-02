@@ -21,10 +21,10 @@ class ExtensionModel(HardwareModel):
 
 class ExtensionManager(QtCore.QObject):
 
-	def __init__(self, parent, machineBox, settingsManager, bridge):
+	def __init__(self, parent, bridge):
 		QtCore.QObject.__init__(self)
 		self.__parent = parent
-		self.__model = model = ExtensionModel(bridge)
+		self.__model = ExtensionModel(bridge)
 
 	def chooseMachine(self):
 		# Fetch extension info.
