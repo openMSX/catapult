@@ -13,7 +13,11 @@ class _SignalWrapper(object):
 	'''Wraps a Qt signal in a Python object to make it easier to connect to.
 	'''
 
-	signature = property(lambda self: self.__signature)
+	signature = property(
+		# PyLint does not recognise that "self" is a "_SignalWrapper".
+		# pylint: disable-msg=W0212
+		lambda self: self.__signature
+		)
 
 	def __init__(self, obj, signature, numArgs):
 		self.__object = obj
