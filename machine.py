@@ -4,7 +4,7 @@ from PyQt4 import QtCore, QtGui
 from bisect import insort
 
 from hardware import HardwareModel
-from qt_utils import QtSignal, Signal, connect
+from qt_utils import QtSignal, connect
 from preferences import preferences
 
 class MachineModel(HardwareModel):
