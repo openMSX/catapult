@@ -188,6 +188,15 @@ def addToHistory(comboBox, path):
 		comboBox.insertItem(0, path or '')
 		comboBox.setCurrentIndex(0)
 
+def parseMediaSlot(mediaSlot):
+	'''Returns a tuple ( medium, identifier) that corresponds to the given
+	media slot.
+	'''
+	if mediaSlot == 'cassetteplayer':
+		return 'cassette', None
+	else:
+		return mediaSlot[ : -1], mediaSlot[-1]
+
 class MediaSwitcher(QtCore.QObject):
 
 	def __init__(self, ui, bridge):
@@ -204,13 +213,17 @@ class MediaSwitcher(QtCore.QObject):
 			'hd': ( ui.hdPage, self.__updateHarddiskPage ),
 			'cd': ( ui.cdPage, self.__updateCDROMPage ),
 			}
-		# Connect to media model:
+		# Connect to media model and view:
 		ui.mediaList.setModel(mediaModel)
 		mediaModel.dataChanged.connect(self.mediaPathChanged)
 		connect(
 			ui.mediaList.selectionModel(),
 			'currentChanged(QModelIndex, QModelIndex)',
 			self.updateMedia
+			)
+		connect(
+			ui.mediaList, 'doubleClicked(QModelIndex)',
+			self.browseMedia
 			)
 		# Connect signals of media panels:
 		# It is essential to keep the references, otherwise the classes are
@@ -406,12 +419,7 @@ class MediaSwitcher(QtCore.QObject):
 		ui.cassetteHistoryBox.lineEdit().setText(path)
 
 	def __updateMediaPage(self, mediaSlot):
-		if mediaSlot == 'cassetteplayer':
-			medium = 'cassette'
-			identifier = None # is ignored for cassetteplayer
-		else:
-			medium = mediaSlot[ : -1]
-			identifier = mediaSlot[-1]
+		medium, identifier = parseMediaSlot(mediaSlot)
 		# Look up page widget and update method for this medium.
 		page, updater = self.__pageMap[medium]
 		# Initialise the UI page for this medium.
@@ -428,6 +436,18 @@ class MediaSwitcher(QtCore.QObject):
 		page = self.__updateMediaPage(mediaSlot)
 		# Switch page.
 		self.__ui.mediaStack.setCurrentWidget(page)
+
+	@QtCore.pyqtSignature('QModelIndex')
+	def browseMedia(self, index):
+		# Find out which media entry has become active.
+		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
+		medium, identifier = parseMediaSlot(mediaSlot)
+		for handler in self.__handlers:
+			if handler.medium == medium:
+				handler.browseImage()
+				break
+		else:
+			print 'no handler found for medium "%s"' % medium
 
 	@QtCore.pyqtSignature('QModelIndex, QModelIndex')
 	def mediaPathChanged(
