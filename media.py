@@ -443,7 +443,7 @@ class MediaSwitcher(QtCore.QObject):
 	def browseMedia(self, index):
 		# Find out which media entry has become active.
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
-		medium, identifier = parseMediaSlot(mediaSlot)
+		medium, identifier_ = parseMediaSlot(mediaSlot)
 		for handler in self.__handlers:
 			if handler.medium == medium:
 				handler.browseImage()
