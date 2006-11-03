@@ -27,7 +27,7 @@ if sys.platform == 'darwin':
 from editconfig import configDialog
 from custom import docDir
 from machine import MachineManager
-from media import MediaModel, MediaSwitcher
+from media import MediaSwitcher
 from openmsx_control import ControlBridge
 from player import PlayState
 from qt_utils import connect
@@ -87,14 +87,7 @@ class MainWindow(QtGui.QMainWindow):
 			)
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
-		self.__mediaModel = mediaModel = MediaModel(bridge)
-		self.__mediaSwitcher = mediaSwitcher = MediaSwitcher(mediaModel, ui)
-		ui.mediaList.setModel(mediaModel)
-		connect(
-			ui.mediaList.selectionModel(),
-			'currentChanged(QModelIndex, QModelIndex)',
-			mediaSwitcher.updateMedia
-			)
+		self.__mediaSwitcher = MediaSwitcher(ui, bridge)
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.

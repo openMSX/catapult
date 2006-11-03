@@ -190,9 +190,9 @@ def addToHistory(comboBox, path):
 
 class MediaSwitcher(QtCore.QObject):
 
-	def __init__(self, mediaModel, ui):
+	def __init__(self, ui, bridge):
 		QtCore.QObject.__init__(self)
-		self.__mediaModel = mediaModel
+		self.__mediaModel = mediaModel = MediaModel(bridge)
 		self.__ui = ui
 		self.__mediaSlot = None
 		self.__pageMap = {
@@ -205,14 +205,20 @@ class MediaSwitcher(QtCore.QObject):
 			'cd': ( ui.cdPage, self.__updateCDROMPage ),
 			}
 		# Connect to media model:
+		ui.mediaList.setModel(mediaModel)
 		mediaModel.dataChanged.connect(self.mediaPathChanged)
+		connect(
+			ui.mediaList.selectionModel(),
+			'currentChanged(QModelIndex, QModelIndex)',
+			self.updateMedia
+			)
 		# Connect signals of media panels:
 		# It is essential to keep the references, otherwise the classes are
 		# garbage collected even though they have signal-slot connections
 		# attached to them.
 		self.__handlers = [
 			handler(ui, self)
-			for handler in ( DiskHandler, CartHandler, 
+			for handler in ( DiskHandler, CartHandler,
 				CassetteHandler, HarddiskHandler, CDROMHandler )
 			]
 
