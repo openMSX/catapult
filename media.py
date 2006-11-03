@@ -271,6 +271,8 @@ class MediaSwitcher(QtCore.QObject):
 			description = 'Not found'
 		ui.cartDescriptionLabel.setText(description)
 
+		ui.cartHistoryBox.lineEdit().setText(path)
+
 	def __updateDrivePage(self, mediaSlot, identifier):
 		ui = self.__ui
 		path = self.__mediaModel.getInserted(mediaSlot)
