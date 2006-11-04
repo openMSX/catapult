@@ -30,8 +30,7 @@ class MediaModel(QtCore.QAbstractListModel):
 				)
 
 	def __mediumListReply(self, *slots):
-		'''This method is called to list the initial media slots of a
-		particular type.
+		'''Callback to list the initial media slots of a particular type.
 		'''
 		if len(slots) == 0:
 			return
@@ -44,6 +43,10 @@ class MediaModel(QtCore.QAbstractListModel):
 		for slot in slots:
 			self.__mediaSlotAdded(slot)
 
+	def queryMedium(self, slot):
+		'''Queries the medium info of the specified slot'''
+		self.__bridge.command(slot)(self.__mediumReply)
+
 	def __mediaSlotAdded(self, slot):
 		newEntry = ( slot, None )
 		index = bisect(self.__mediaSlots, newEntry)
@@ -51,7 +54,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		self.beginInsertRows(parent, index, index)
 		self.__mediaSlots.insert(index, newEntry)
 		self.endInsertRows()
-		self.__bridge.command(slot)(self.__mediumReply)
+		self.queryMedium(slot)
 
 	def __mediaSlotRemoved(self, slot):
 		index = bisect(self.__mediaSlots, ( slot, ))
@@ -104,7 +107,7 @@ class MediaModel(QtCore.QAbstractListModel):
 			print 'received update for unsupported action "%s" for ' \
 				'hardware "%s".' % ( action, hardware )
 
-	def __mediumReply(self, mediaSlot, path, flags):
+	def __mediumReply(self, mediaSlot, path, flags = ''):
 		print 'media update %s to "%s" flags "%s"' % ( mediaSlot, path, flags )
 		if mediaSlot[-1] == ':':
 			mediaSlot = mediaSlot[ : -1]
@@ -126,17 +129,19 @@ class MediaModel(QtCore.QAbstractListModel):
 		else:
 			raise KeyError(mediaSlot)
 
-	def setInserted(self, mediaSlot, path):
+	def setInserted(self, mediaSlot, path, errorHandler):
 		'''Sets the path of the medium currently inserted in the given slot.
 		Raises KeyError if no media slot exists by the given name.
 		'''
 		changed = self.__setMedium(mediaSlot, path)
 		if changed:
-			# TODO: Deal with errors (register callback/errback).
 			if path == '':
-				self.__bridge.command(mediaSlot, 'eject')()
+				self.__bridge.command(mediaSlot, 'eject')(
+					None, errorHandler
+					)
 			else:
-				self.__bridge.command(mediaSlot, 'insert', path)()
+				self.__bridge.command(mediaSlot, 'insert', 
+					path)(None, errorHandler)
 
 	def rowCount(self, parent):
 		# TODO: What does this mean?
@@ -455,8 +460,8 @@ class MediaSwitcher(QtCore.QObject):
 	def mediaPathChanged(
 		self, topLeft, bottomRight
 		# pylint: disable-msg=W0613
-		# TODO: We use the fact that we know MediaModel will only mark one
-		#       item changed at a time. This is not correct in general.
+		# TODO: We use the fact that we know MediaModel will only mark
+		# one item changed at a time. This is not correct in general.
 		):
 		index = topLeft
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
@@ -466,7 +471,19 @@ class MediaSwitcher(QtCore.QObject):
 	def setPath(self, path):
 		'''Sets a new path for the currently selected medium.
 		'''
-		self.__mediaModel.setInserted(self.__mediaSlot, path)
+		self.__mediaModel.setInserted(self.__mediaSlot, path, 
+			lambda message: self.__mediaChangeErrorHandler(
+				self.__mediaSlot, message
+				)
+			)
+
+	def __mediaChangeErrorHandler(self, mediaSlot, message):
+		messageBox = QtGui.QMessageBox('Media change problem', message,
+			QtGui.QMessageBox.Warning, 0, 0, 0, 
+			self.__ui.centralwidget
+			)
+		messageBox.show()
+		self.__mediaModel.queryMedium(mediaSlot)
 
 class MediaHandler(QtCore.QObject):
 	medium = None

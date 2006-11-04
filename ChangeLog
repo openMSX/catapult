@@ -1,5 +1,8 @@
 $Id$
 
+2006-11-04 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added error handling for media changes.
+
 2006-11-01 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added hard disk and CD-ROM media handling.
 	  TODO: handle the fact that hard disk image changing can only be
