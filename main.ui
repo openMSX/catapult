@@ -90,6 +90,9 @@
              <height>27</height>
             </rect>
            </property>
+           <property name="toolTip" >
+            <string>Change the current MSX machine</string>
+           </property>
            <property name="text" >
             <string>Change...</string>
            </property>
@@ -886,6 +889,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="resetButton" >
+               <property name="toolTip" >
+                <string>Reset the MSX</string>
+               </property>
                <property name="text" >
                 <string>Reset</string>
                </property>
@@ -1230,6 +1236,9 @@
         </property>
         <item>
          <widget class="QPushButton" name="playButton" >
+          <property name="toolTip" >
+           <string>Run the selected MSX (power on)</string>
+          </property>
           <property name="icon" >
            <iconset>play.png</iconset>
           </property>
@@ -1240,6 +1249,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="pauseButton" >
+          <property name="toolTip" >
+           <string>Pause the MSX</string>
+          </property>
           <property name="icon" >
            <iconset>pause.png</iconset>
           </property>
@@ -1250,6 +1262,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="stopButton" >
+          <property name="toolTip" >
+           <string>Stop running the MSX (power off)</string>
+          </property>
           <property name="icon" >
            <iconset>stop.png</iconset>
           </property>
@@ -1263,6 +1278,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="forwardButton" >
+          <property name="toolTip" >
+           <string>Set speed to maximum</string>
+          </property>
           <property name="icon" >
            <iconset>forward.png</iconset>
           </property>
@@ -1296,7 +1314,7 @@
      <x>0</x>
      <y>0</y>
      <width>617</width>
-     <height>29</height>
+     <height>32</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help" >
@@ -1325,16 +1343,7 @@
    <addaction name="menuConfiguration" />
    <addaction name="menu_Help" />
   </widget>
-  <widget class="QStatusBar" name="statusbar" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>534</y>
-     <width>617</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar" />
   <action name="action_AboutCatapult" >
    <property name="text" >
     <string>&amp;About openMSX Catapult</string>
