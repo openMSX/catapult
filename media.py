@@ -16,7 +16,11 @@ class MediaModel(QtCore.QAbstractListModel):
 		self.__mediaSlots = []
 		bridge.registerInitial(self.__updateAll)
 		bridge.registerUpdate('media', self.__updateMedium)
-		bridge.registerUpdate('hardware', self.__updateHardware)
+		bridge.registerUpdatePrefix(
+			'hardware',
+			( 'cart', 'disk', 'cassette', 'hd', 'cd' ),
+			self.__updateHardware
+			)
 
 	def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with
@@ -93,12 +97,6 @@ class MediaModel(QtCore.QAbstractListModel):
 			print 'received update for non-existing media slot "%s"' % mediaSlot
 
 	def __updateHardware(self, hardware, action):
-		for medium in ( 'cart', 'disk', 'cassette', 'hd', 'cd' ):
-			if hardware.startswith(medium):
-				break
-		else:
-			print 'received update for unknown hardware "%s"' % hardware
-			return
 		if action == 'add':
 			self.__mediaSlotAdded(hardware)
 		elif action == 'remove':

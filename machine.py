@@ -122,10 +122,13 @@ class MachineManager(QtCore.QObject):
 		self.__parent = parent
 		self.__machineBox = machineBox
 		self.__machineDialog = None
+		self.__bridge = bridge
 		self.__ui = None
 		self.__model = model = MachineModel(bridge)
 		self.__machines = None
-		self.__currentMachine = None
+		self.__currentMachineId = None
+		self.__currentMachineConfig = None
+		self.__selectedMachineConfig = None
 		self.__requestedWidths = [ 0 ] * model.columnCount()
 
 		# Load history.
@@ -135,9 +138,29 @@ class MachineManager(QtCore.QObject):
 				)
 
 		# Make connections.
-		self.__machineSetting = machineSetting = settingsManager['machine']
-		machineSetting.valueChanged.connect(self.__machineChanged)
 		connect(machineBox, 'activated(int)', self.__machineSelected)
+
+		bridge.registerUpdatePrefix(
+			'hardware', ( 'machine', ), self.__updateHardware
+			)
+		# Query initial state.
+		bridge.registerInitial(self.__queryInitial)
+
+	def __queryInitial(self):
+		'''Query initial state.
+		'''
+		bridge = self.__bridge
+		bridge.command('machine')(self.__updateMachineId)
+
+	def __updateMachineId(self, machineId):
+		print 'ID of current machine:', machineId
+		self.__currentMachineId = machineId
+		self.__bridge.command('machine_info', 'config_name')(self.__machineChanged)
+
+	def __updateHardware(self, machineId, event):
+		print 'Machine', machineId, ':', event
+		if event == 'select':
+			self.__updateMachineId(machineId)
 
 	def __disableRefreshButton(self):
 		self.__ui.refreshButton.setEnabled(False)
@@ -146,7 +169,7 @@ class MachineManager(QtCore.QObject):
 		self.__ui.refreshButton.setEnabled(True)
 
 	def chooseMachine(self):
-		self.__currentMachine = self.__machineSetting.getValue()
+		self.__selectedMachineConfig = self.__currentMachineConfig
 		dialog = self.__machineDialog
 		if dialog is None:
 			self.__machineDialog = dialog = QtGui.QDialog(
@@ -196,17 +219,22 @@ class MachineManager(QtCore.QObject):
 	def __machineHighlighted(self, current, previous):
 		# pylint: disable-msg=W0613
 		self.__ui.okButton.setEnabled(True)
-		self.__currentMachine = \
+		self.__selectedMachineConfig = \
 			self.__model.data(current, QtCore.Qt.UserRole).toString()
 		self.__ui.machineTable.scrollTo(current)
 
 	def __machineDialogAccepted(self):
 		index = self.__ui.machineTable.currentIndex()
 		machine = self.__model.data(index, QtCore.Qt.UserRole).toString()
-		self.__machineSetting.setValue(machine)
+		self.__setMachine(machine)
+
+	def __setMachine(self, machine):
+		# Request machine change from openMSX.
+		self.__bridge.command('machine', machine)()
 
 	def __machineChanged(self, value):
 		print 'current machine:', value
+		self.__currentMachineConfig = value
 		# TODO: Replace current item (edit text?) as well.
 		machineBox = self.__machineBox
 		machineBox.insertItem(
@@ -232,7 +260,7 @@ class MachineManager(QtCore.QObject):
 		print 'selected machine:', machine
 		# TODO: Ask user for confirmation if current machine is different and
 		#       currently powered on.
-		self.__machineSetting.setValue(machine)
+		self.__setMachine(machine)
 
 	def __machinesAdded(self, parent, start, end): # pylint: disable-msg=W0613
 		model = self.__model
@@ -253,7 +281,7 @@ class MachineManager(QtCore.QObject):
 
 	def __setSelection(self):
 		model = self.__model
-		row = model.find(self.__currentMachine)
+		row = model.find(self.__selectedMachineConfig)
 		if row != -1:
 			table = self.__ui.machineTable
 			index = model.createIndex(row, 0)
