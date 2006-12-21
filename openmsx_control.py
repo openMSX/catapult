@@ -6,6 +6,26 @@ from preferences import preferences
 from openmsx_utils import parseTclValue
 from qt_utils import Signal, connect
 
+class PrefixDemux(object):
+
+	def __init__(self):
+		self.__mapping = {}
+
+	def __call__(self, name, message):
+		handled = False
+		for prefix, handler in self.__mapping.iteritems():
+			if name.startswith(prefix):
+				handler(name, message)
+				handled = True
+		if not handled:
+			print 'ignore update for "%s": %s' % ( name, message )
+
+	def register(self, prefixes, handler):
+		mapping = self.__mapping
+		for prefix in prefixes:
+			assert prefix not in mapping
+			mapping[prefix] = handler
+
 class ControlBridge(QtCore.QObject):
 	logLine = Signal('QString', 'QString')
 
@@ -59,10 +79,17 @@ class ControlBridge(QtCore.QObject):
 		'''
 		# TODO: Along the way, we will probably need these updates:
 		#       'led', 'setting', 'plug', 'unplug', 'media', 'status'
-		assert updateType not in self.__updateHandlers
+		assert updateType not in self.__updateHandlers, updateType
 		# TODO: How to deal with connected/not-connected?
 		assert self.__connection is None, 'register before connecting!'
 		self.__updateHandlers[updateType] = handler
+
+	def registerUpdatePrefix(self, updateType, prefixes, handler):
+		demux = self.__updateHandlers.get(updateType)
+		if demux is None:
+			demux = PrefixDemux()
+			self.registerUpdate(updateType, demux)
+		demux.register(prefixes, handler)
 
 	def command(self, *words):
 		'''Send a Tcl command to openMSX.
