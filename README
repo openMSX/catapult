@@ -23,8 +23,8 @@ Catapult:
 
 Or you can get openMSX and Catapult from Subversion (SVN), that way you will
 be able to follow development:
-  svn co https://svn.sourceforge.net/svnroot/openmsx/openmsx/trunk openmsx
-  svn co https://svn.sourceforge.net/svnroot/openmsx/catapult/trunk catapult
+  svn co https://openmsx.svn.sourceforge.net/svnroot/openmsx/openmsx/trunk openmsx
+  svn co https://openmsx.svn.sourceforge.net/svnroot/openmsx/catapult/trunk catapult
 
 For the moment, you have to set some hardcoded paths to values
 corresponding to your system. You can find these in "custom.py".
