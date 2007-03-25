@@ -2,6 +2,7 @@
 
 from PyQt4 import QtCore
 from custom import executable
+from custom import debugexecutable
 
 class _Preferences(object):
 

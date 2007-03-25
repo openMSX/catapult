@@ -7,5 +7,8 @@
 # openMSX executable.
 executable = 'openmsx'
 
+# openMSX debug executable.
+debugexecutable = 'openmsxsdebugger'
+
 # openMSX documentation directory.
 docDir = '/home/mth/openmsx/doc'

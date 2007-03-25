@@ -33,6 +33,7 @@ from player import PlayState
 from qt_utils import connect
 from settings import SettingsManager
 from ui_main import Ui_MainWindow
+from preferences import preferences
 
 class MainWindow(QtGui.QMainWindow):
 	# Colors used for different types of log messages:
@@ -49,6 +50,9 @@ class MainWindow(QtGui.QMainWindow):
 		self.__ui = ui = Ui_MainWindow()
 		ui.setupUi(self)
 
+		# Disable 'start debugger' if no setting for it
+		if preferences.get('system/debugExecutable','') == '':
+			ui.DebuggerButton.setDisabled(1);
 		# Resources that are loaded on demand.
 		self.__machineDialog = None
 		self.__aboutDialog = None

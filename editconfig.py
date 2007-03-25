@@ -10,6 +10,8 @@ class ConfigDialog:
 		self.__configDialog = None
 		self._browseExecutableButton = None
 		self._execEdit = None
+		self._browseDebugExecutableButton = None
+		self._debugExecEdit = None
 
 	def show(self):
 		dialog = self.__configDialog
@@ -28,8 +30,13 @@ class ConfigDialog:
 			self._browseExecutableButton = getattr(ui, "BrowseExecutableButton")
 			self._execEdit = getattr(ui, "ExecEdit")
 			self._execEdit.setText(preferences['system/executable'])
+			self._browseDebugExecutableButton = getattr(ui, "BrowseDebugExecutableButton")
+			self._debugExecEdit = getattr(ui, "DebugExecEdit")
+			self._debugExecEdit.setText(preferences.get('system/debugExecutable',''))
 			connect(self._browseExecutableButton, 'clicked()', self.browseExec)
 			connect(self._execEdit, 'editingFinished()', self.setExec)
+			connect(self._browseDebugExecutableButton, 'clicked()', self.browseDebugExec)
+			connect(self._debugExecEdit, 'editingFinished()', self.setDebugExec)
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
@@ -47,5 +54,19 @@ class ConfigDialog:
 		if not path.isNull():
 			self._execEdit.setText(path)
 		self.setExec()
+
+	def setDebugExec(self):
+		preferences['system/debugExecutable'] = self._debugExecEdit.text()
+
+	def browseDebugExec(self):
+		path =  QtGui.QFileDialog.getOpenFileName(
+			self._browseDebugExecutableButton,
+			'Select openMSX debugger executable',
+			QtCore.QDir.currentPath(),
+			'All Files (*)'
+			)
+		if not path.isNull():
+			self._debugExecEdit.setText(path)
+		self.setDebugExec()
 
 configDialog = ConfigDialog()
