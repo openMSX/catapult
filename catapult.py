@@ -27,6 +27,7 @@ if sys.platform == 'darwin':
 from editconfig import configDialog
 from custom import docDir
 from machine import MachineManager
+from extension import ExtensionManager
 from media import MediaSwitcher
 from openmsx_control import ControlBridge
 from player import PlayState
@@ -55,6 +56,7 @@ class MainWindow(QtGui.QMainWindow):
 			ui.DebuggerButton.setDisabled(1);
 		# Resources that are loaded on demand.
 		self.__machineDialog = None
+		self.__extensionDialog = None
 		self.__aboutDialog = None
 		self.__assistentClient = None
 
@@ -85,6 +87,11 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.connectSetting('glow', ui.glowSpinBox)
 
 		self.__playState = PlayState(settingsManager, ui)
+
+		self.__extensionManager = extensionManager = ExtensionManager(
+			self, ui.extensionList, settingsManager, bridge
+			)
+		connect(ui.extensionButton, 'clicked()', extensionManager.chooseExtension)
 
 		self.__machineManager = machineManager = MachineManager(
 			self, ui.machineBox, settingsManager, bridge
@@ -170,6 +177,20 @@ class MainWindow(QtGui.QMainWindow):
 				)
 			# Setup UI made in Qt Designer.
 			from ui_machine import Ui_Dialog
+			ui = Ui_Dialog()
+			ui.setupUi(dialog)
+		dialog.show()
+		dialog.raise_()
+		dialog.activateWindow()
+
+	def chooseExtension(self):
+		dialog = self.__extensionDialog
+		if dialog is None:
+			self.__extensionDialog = dialog = QtGui.QDialog(
+				self, QtCore.Qt.Dialog | QtCore.Qt.WindowTitleHint
+				)
+			# Setup UI made in Qt Designer.
+			from ui_extension import Ui_Dialog
 			ui = Ui_Dialog()
 			ui.setupUi(dialog)
 		dialog.show()

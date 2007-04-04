@@ -133,7 +133,7 @@
                  <number>6</number>
                 </property>
                 <item>
-                 <widget class="QListWidget" name="ExtensionList" />
+                 <widget class="QListWidget" name="extensionList" />
                 </item>
                 <item>
                  <layout class="QHBoxLayout" >
@@ -159,7 +159,7 @@
                   <item>
                    <widget class="QPushButton" name="extensionButton" >
                     <property name="text" >
-                     <string>Change...</string>
+                     <string>Add...</string>
                     </property>
                    </widget>
                   </item>
