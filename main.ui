@@ -26,7 +26,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget" >
       <property name="currentIndex" >
-       <number>0</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="mediaTab" >
        <attribute name="title" >
@@ -1285,6 +1285,257 @@
         </item>
         <item>
          <widget class="QLineEdit" name="consoleLineEdit" />
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="diskmanipulatorTab" >
+       <property name="enabled" >
+        <bool>true</bool>
+       </property>
+       <attribute name="title" >
+        <string>Diskmanipulator</string>
+       </attribute>
+       <layout class="QVBoxLayout" >
+        <property name="margin" >
+         <number>9</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QSplitter" name="splitter" >
+          <property name="sizePolicy" >
+           <sizepolicy>
+            <hsizetype>7</hsizetype>
+            <vsizetype>7</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="QWidget" name="layoutWidget" >
+           <layout class="QVBoxLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" >
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QComboBox" name="mediaComboBox" />
+              </item>
+              <item>
+               <widget class="QToolButton" name="openImageButton" >
+                <property name="text" >
+                 <string>...</string>
+                </property>
+                <property name="icon" >
+                 <iconset>openfile.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="newImageButton" >
+                <property name="text" >
+                 <string>...</string>
+                </property>
+                <property name="icon" >
+                 <iconset>newfile.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="Line" name="line" >
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QToolButton" name="dirUpButton" >
+                <property name="text" >
+                 <string>...</string>
+                </property>
+                <property name="icon" >
+                 <iconset>folderup.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="dirReloadButton" >
+                <property name="text" >
+                 <string>...</string>
+                </property>
+                <property name="icon" >
+                 <iconset>folderreload.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="dirNewButton" >
+                <property name="text" >
+                 <string>...</string>
+                </property>
+                <property name="icon" >
+                 <iconset>newfolder.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit" >
+                <property name="readOnly" >
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tableWidget" />
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="layoutWidget" >
+           <layout class="QHBoxLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" >
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QToolButton" name="importButton" >
+                <property name="text" >
+                 <string>&lt;&lt;</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="exportButton" >
+                <property name="text" >
+                 <string>>></string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" >
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <item>
+               <layout class="QHBoxLayout" >
+                <property name="margin" >
+                 <number>0</number>
+                </property>
+                <property name="spacing" >
+                 <number>6</number>
+                </property>
+                <item>
+                 <widget class="QToolButton" name="hostDirUpButton" >
+                  <property name="text" >
+                   <string>...</string>
+                  </property>
+                  <property name="icon" >
+                   <iconset>folderup.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="hostDirReloadButton" >
+                  <property name="text" >
+                   <string>...</string>
+                  </property>
+                  <property name="icon" >
+                   <iconset>folderreload.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="hostDirNewButton" >
+                  <property name="text" >
+                   <string>...</string>
+                  </property>
+                  <property name="icon" >
+                   <iconset>newfolder.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBox_2" >
+                  <property name="editable" >
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="tableWidget_2" />
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
