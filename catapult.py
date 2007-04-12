@@ -29,6 +29,7 @@ from custom import docDir
 from machine import MachineManager
 from extension import ExtensionManager
 from media import MediaSwitcher
+from diskmanipulator import Diskmanipulator
 from openmsx_control import ControlBridge
 from player import PlayState
 from qt_utils import connect
@@ -99,6 +100,10 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, bridge)
+		self.__diskmanipulator = diskmanipulator = Diskmanipulator(ui, bridge)
+		connect(ui.dirUpButton, 'clicked()', diskmanipulator.updir)
+		connect(ui.dirReloadButton, 'clicked()', diskmanipulator.refreshdir)
+		connect(ui.dirNewButton, 'clicked()', diskmanipulator.mkdir)
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
