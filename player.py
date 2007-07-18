@@ -4,6 +4,8 @@ from PyQt4 import QtCore
 
 from qt_utils import Signal
 
+from settings import *
+
 class VisibleSetting(QtCore.QObject):
 	'''Virtual setting which interacts with the "renderer" setting.
 	'''
@@ -60,9 +62,13 @@ class PlayState(QtCore.QObject):
 			self.forward: ui.forwardButton,
 			}
 
+		settingsManager.registerSetting('power', BooleanSetting)
 		self.__powerSetting = powerSetting = settingsManager['power']
+		settingsManager.registerSetting('pause', BooleanSetting)
 		self.__pauseSetting = pauseSetting = settingsManager['pause']
+		settingsManager.registerSetting('throttle', BooleanSetting)
 		self.__throttleSetting = throttleSetting = settingsManager['throttle']
+		settingsManager.registerSetting('renderer', EnumSetting)
 		self.__visibleSetting = visibleSetting = VisibleSetting(
 			settingsManager['renderer']
 			)

@@ -29,11 +29,12 @@ from custom import docDir
 from machine import MachineManager
 from extension import ExtensionManager
 from media import MediaSwitcher
+from audio import AudioMixer
 from diskmanipulator import Diskmanipulator
 from openmsx_control import ControlBridge
 from player import PlayState
 from qt_utils import connect
-from settings import SettingsManager
+from settings import *
 from ui_main import Ui_MainWindow
 from preferences import preferences
 
@@ -80,10 +81,13 @@ class MainWindow(QtGui.QMainWindow):
 
 		settingsManager = SettingsManager(bridge)
 		bridge.logLine.connect(self.logLine)
+		settingsManager.registerSetting('scanline', IntegerSetting)
 		settingsManager.connectSetting('scanline', ui.scanlineSlider)
 		settingsManager.connectSetting('scanline', ui.scanlineSpinBox)
+		settingsManager.registerSetting('blur', IntegerSetting)
 		settingsManager.connectSetting('blur', ui.blurSlider)
 		settingsManager.connectSetting('blur', ui.blurSpinBox)
+		settingsManager.registerSetting('glow', IntegerSetting)
 		settingsManager.connectSetting('glow', ui.glowSlider)
 		settingsManager.connectSetting('glow', ui.glowSpinBox)
 
@@ -100,6 +104,7 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, bridge)
+		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
 		self.__diskmanipulator = diskmanipulator = Diskmanipulator(ui, bridge)
 		connect(ui.dirUpButton, 'clicked()', diskmanipulator.updir)
 		connect(ui.dirReloadButton, 'clicked()', diskmanipulator.refreshdir)

@@ -1,5 +1,11 @@
 $Id$
 
+2007-07-18 Manuel Bildebeek <manuel@msxnet.org>
+	* Make settings register themselves at the settingsManager.
+	* Added an initial (experimental) audio mixer. Reviewing/improvements
+	  most welcome :) TODO: it doesn't handle changes yet (due to machine
+	  changes).
+
 2007-03-25 David Heremans <david.heremans@gnu-linux.net>
 	* Changed the ui_main to have a place holder for the extensions.
 	* Added a (not working yet) 'start debugger' button and altered the

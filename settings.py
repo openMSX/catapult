@@ -109,22 +109,18 @@ class SettingsManager(QtCore.QObject):
 		bridge.registerInitial(self.sync)
 		bridge.registerUpdate('setting', self.update)
 		self.__settings = {}
-		# TODO: Move this list elsewhere.
-		#       Move it as a list or change to register() method?
-		for name, settingClass in (
-			( 'scanline', IntegerSetting ),
-			( 'blur', IntegerSetting ),
-			( 'glow', IntegerSetting ),
-			( 'power', BooleanSetting ),
-			( 'pause', BooleanSetting ),
-			( 'throttle', BooleanSetting ),
-			( 'renderer', EnumSetting ),
-			):
-			assert name not in self.__settings
-			self.__settings[name] = settingClass(name, bridge)
 
 	def __getitem__(self, key):
 		return self.__settings[key]
+
+	def registerSetting(self, name, settingClass):
+		assert name not in self.__settings # setting may not be registered twice
+		self.__settings[name] = settingClass(name, self.__bridge)
+		self.__bridge.command('set', name)(self.__settings[name].updateValue)
+
+	# this method probably needs an unconnectSetting method to make things robust
+	def unregisterSetting(self, name):
+		del self.__settings[name]
 
 	def connectSetting(self, name, obj):
 		self.__settings[name].connectSync(obj)
