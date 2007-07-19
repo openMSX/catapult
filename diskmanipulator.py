@@ -44,10 +44,12 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		#labels.append('File Name')
 		#labels.append('Atributes')
 		#labels.append('Size');
-		msxDirTable.setHorizontalHeaderLabels(labels);
-		#msxDirTable.horizontalHeader().setResizeMode(0, QtCore.Qt.QHeaderView.Stretch);
-		msxDirTable.verticalHeader().hide();
-		msxDirTable.setShowGrid(0);
+		msxDirTable.setHorizontalHeaderLabels(labels)
+		#msxDirTable.horizontalHeader().setResizeMode(
+		#	0, QtCore.Qt.QHeaderView.Stretch
+		#	)
+		msxDirTable.verticalHeader().hide()
+		msxDirTable.setShowGrid(0)
 
 		# Look up UI elements.
 		self._openImageButton = getattr(ui, 'openImageButton')

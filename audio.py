@@ -1,11 +1,12 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from qt_utils import Signal, connect
-from settings import *
+from qt_utils import Signal
+import settings
 
 # this model keeps track of which audio devices exist
-# TODO: make it dynamical (it doesn't keep track of changes in the device list yet...)
+# TODO: make it dynamical (it doesn't keep track of changes in the device list
+# yet...)
 class AudioModel(QtCore.QAbstractListModel):
 
 	updated = Signal()
@@ -26,7 +27,9 @@ class AudioModel(QtCore.QAbstractListModel):
 	def __soundDeviceListReply(self, *devices):
 		for device in devices:
 			self.__audioChannels.append(device)
-			self.__settingsManager.registerSetting(device + '_volume', IntegerSetting)
+			self.__settingsManager.registerSetting(
+				device + '_volume', settings.IntegerSetting
+				)
 		self.updated.emit()
 
 	def getChannels(self):
@@ -37,7 +40,7 @@ class AudioMixer(QtCore.QObject):
 
 	def __init__(self, ui, settingsManager, bridge):
 		QtCore.QObject.__init__(self)
-		self.__audioModel = audioModel = AudioModel(bridge, settingsManager)
+		self.__audioModel = AudioModel(bridge, settingsManager)
 		self.__ui = ui
 		self.__settingsManager = settingsManager
 		self.__audioModel.updated.connect(self.__rebuildUI)
@@ -53,16 +56,16 @@ class AudioMixer(QtCore.QObject):
 	def __rebuildUI(self):
 		audioChannels = self.__audioModel.getChannels()
 		for channel in audioChannels:
-			self.__labelMap[channel] = QtGui.QLabel(self.__ui)
-			self.__labelMap[channel].setText(channel + ' volume')
-			self.__sliderBox.addWidget(self.__labelMap[channel])
-			self.__sliderMap[channel] = QtGui.QSlider(self.__ui)
-			self.__sliderMap[channel].setObjectName(channel + '_slider')
+			self.__labelMap[channel] = label = QtGui.QLabel(self.__ui)
+			label.setText(channel + ' volume')
+			self.__sliderBox.addWidget(label)
+			self.__sliderMap[channel] = slider = QtGui.QSlider(self.__ui)
+			slider.setObjectName(channel + '_slider')
 
-			self.__sliderMap[channel].setOrientation(QtCore.Qt.Horizontal)
-			self.__sliderMap[channel].setTickPosition(QtGui.QSlider.TicksBelow)
-			self.__sliderMap[channel].setTickInterval(10)
-			self.__sliderMap[channel].setToolTip('Volume of ' + channel)
-			self.__sliderBox.addWidget(self.__sliderMap[channel])
-			self.__settingsManager.connectSetting(channel + '_volume', self.__sliderMap[channel])
+			slider.setOrientation(QtCore.Qt.Horizontal)
+			slider.setTickPosition(QtGui.QSlider.TicksBelow)
+			slider.setTickInterval(10)
+			slider.setToolTip('Volume of ' + channel)
+			self.__sliderBox.addWidget(slider)
+			self.__settingsManager.connectSetting(channel + '_volume', slider)
 

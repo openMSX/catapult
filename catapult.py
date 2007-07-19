@@ -34,7 +34,7 @@ from diskmanipulator import Diskmanipulator
 from openmsx_control import ControlBridge
 from player import PlayState
 from qt_utils import connect
-from settings import *
+import settings
 from ui_main import Ui_MainWindow
 from preferences import preferences
 
@@ -55,7 +55,7 @@ class MainWindow(QtGui.QMainWindow):
 
 		# Disable 'start debugger' if no setting for it
 		if preferences.get('system/debugExecutable','') == '':
-			ui.DebuggerButton.setDisabled(1);
+			ui.DebuggerButton.setDisabled(1)
 		# Resources that are loaded on demand.
 		self.__machineDialog = None
 		self.__extensionDialog = None
@@ -79,15 +79,15 @@ class MainWindow(QtGui.QMainWindow):
 
 		self.__connectMenuActions(ui)
 
-		settingsManager = SettingsManager(bridge)
+		settingsManager = settings.SettingsManager(bridge)
 		bridge.logLine.connect(self.logLine)
-		settingsManager.registerSetting('scanline', IntegerSetting)
+		settingsManager.registerSetting('scanline', settings.IntegerSetting)
 		settingsManager.connectSetting('scanline', ui.scanlineSlider)
 		settingsManager.connectSetting('scanline', ui.scanlineSpinBox)
-		settingsManager.registerSetting('blur', IntegerSetting)
+		settingsManager.registerSetting('blur', settings.IntegerSetting)
 		settingsManager.connectSetting('blur', ui.blurSlider)
 		settingsManager.connectSetting('blur', ui.blurSpinBox)
-		settingsManager.registerSetting('glow', IntegerSetting)
+		settingsManager.registerSetting('glow', settings.IntegerSetting)
 		settingsManager.connectSetting('glow', ui.glowSlider)
 		settingsManager.connectSetting('glow', ui.glowSpinBox)
 
