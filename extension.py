@@ -164,9 +164,7 @@ class ExtensionManager(QtCore.QObject):
 		# Request extension remove from openMSX.
 		extensions = self.__extensionList.selectedItems()
 		for extension in extensions:
-			print 'Going to remove extension %s\n' % extension.text()
 			self.__bridge.command('remove_extension', extension.text())()
-
 
 	def __updateExtension(self, extension, event):
 		print 'Extension', extension, ':', event
