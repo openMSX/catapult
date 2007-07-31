@@ -2,11 +2,9 @@
 # main differences:
 #	- s/Machine/Extension/ in most places
 #	- added the 'CLI-name'
-# So far this code correctly displays the list of extensions
-# and performs the 'ext'-coomand correct if you have only one extension
-# selected. I was trying to get feedback working (see extension_list.py)
-# before I would make the multiselect handling, but stopped once I saw
-# the current problems with extensions events
+# This still needs a lot of cleaning up
+# There's an awful mixing of code for the extension Add dialog and for the extension part
+# in the main view
 
 from PyQt4 import QtCore, QtGui
 from bisect import insort
@@ -126,13 +124,13 @@ class ExtensionModel(HardwareModel):
 
 class ExtensionManager(QtCore.QObject):
 
-	def __init__(self, parent, extensionList, settingsManager, bridge):
+	def __init__(self, parent, ui, settingsManager, bridge):
 		QtCore.QObject.__init__(self)
 		self.__parent = parent
-		self.__extensionList = extensionList
+		self.__extensionList = ui.extensionList
 		self.__extensionDialog = None
 		self.__bridge = bridge
-		self.__ui = None
+		self.__ui = ui
 		self.__model = model = ExtensionModel(bridge)
 		self.__extensions = None
 		self.__currentExtensionId = None
@@ -148,10 +146,11 @@ class ExtensionManager(QtCore.QObject):
 
 		# Make connections.
 		#connect(extensionBox, 'activated(int)', self.__extensionSelected)
+		connect(ui.removeExtensionsButton, 'clicked()', self.__removeExtensions)
 
-		#bridge.registerUpdatePrefix(
-		#	'hardware', ( 'machine', ), self.__updateHardware
-		#	)
+		bridge.registerUpdate(
+			'extension', self.__updateExtension
+		)
 		# Query initial state.
 		#bridge.registerInitial(self.__queryInitial)
 
@@ -161,15 +160,21 @@ class ExtensionManager(QtCore.QObject):
 		bridge = self.__bridge
 		#bridge.command('machine')(self.__updateMachineId)
 
-	def __updateMachineId(self, machineId):
-		print 'ID of current machine:', machineId
-		#self.__currentMachineId = machineId
-		#self.__bridge.command('machine_info', 'config_name')(self.__machineChanged)
+	def __removeExtensions(self):
+		# Request extension remove from openMSX.
+		extensions = self.__extensionList.selectedItems()
+		for extension in extensions:
+			print 'Going to remove extension %s\n' % extension.text()
+			self.__bridge.command('remove_extension', extension.text())()
 
-	def __updateHardware(self, machineId, event):
-		print 'Machine', machineId, ':', event
-		#if event == 'select':
-		#	self.__updateMachineId(machineId)
+
+	def __updateExtension(self, extension, event):
+		print 'Extension', extension, ':', event
+		if event == 'add':
+			self.__extensionList.addItem(extension)
+		elif event == 'remove':
+			l = self.__extensionList
+			l.takeItem(l.row((l.findItems(extension, QtCore.Qt.MatchFixedString | QtCore.Qt.MatchCaseSensitive))[0]))
 
 	def __disableRefreshButton(self):
 		self.__ui.refreshButton.setEnabled(False)
@@ -238,20 +243,14 @@ class ExtensionManager(QtCore.QObject):
 		self.__setExtension(extension)
 
 	def __setExtension(self, extension):
-		# Request machine change from openMSX.
+		# Request extension add from openMSX.
 		self.__bridge.command('ext', extension)()
-		self.__extensionList.add(extension)
 
 	def __extensionChanged(self, value):
 		print 'current extension:', value
 		self.__currentExtensionConfig = value
-#		# TODO: Replace current item (edit text?) as well.
-#		machineBox = self.__machineBox
-#		machineBox.insertItem(
-#			0, str(value).replace('_', ' '), QtCore.QVariant(value)
-#			)
-#		machineBox.setCurrentIndex(0)
-#		# Remove duplicates of the path from the history.
+		# TODO: make extension history? Or save extensions for this machine?
+		# Remove duplicates of the path from the history.
 #		index = 1
 #		while index < machineBox.count():
 #			if machineBox.itemData(index).toString() == value:
