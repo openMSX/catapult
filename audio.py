@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtGui
 from qt_utils import Signal, connect
 import settings
-import gc
+#import gc
 
 # this model keeps track of which audio devices exist
 # TODO: add hardcoded master_volume setting (is not a sound device as such)
@@ -47,7 +47,9 @@ class AudioModel(QtCore.QAbstractListModel):
 
 class AudioMixer(QtCore.QObject):
 
-	def __init__(self, ui, settingsManager, machineManager, extensionManager, bridge):
+	def __init__(self, ui, settingsManager, machineManager, extensionManager,
+			bridge
+			):
 		QtCore.QObject.__init__(self)
 		self.__audioModel = AudioModel(bridge, settingsManager, machineManager, 
 			extensionManager
