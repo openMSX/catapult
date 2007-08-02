@@ -54,6 +54,13 @@ class _SignalWrapper(object):
 		#       failed connections.
 		assert ok, 'Failed to connect to "%s"' % self.__signature
 
+	def disconnect(self, slot):
+		# Break connection.
+		ok = QtCore.QObject.disconnect(
+			self.__object, self.__macroSignature, slot
+			)
+		assert ok, 'Failed to disconnect'
+
 	def emit(self, *args):
 		if len(args) != self.__numArgs:
 			raise TypeError(
