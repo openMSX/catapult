@@ -36,6 +36,14 @@ class Setting(QtCore.QObject):
 		self.valueChanged.connect(obj.setValue)
 		connect(obj, self.valueChanged.signature, self.setValue)
 
+	def disconnectSync(self, obj):
+		'''Disconnect from the specified object in two directions:
+		this setting's valueChanged from the object's setValue and
+		the object's valueChanged from this setting's setValue.
+		'''
+		self.valueChanged.disconnect(obj.setValue)
+		disconnect(obj, self.valueChanged.signature, self.setValue)
+
 	def getValue(self):
 		'''Returns the current value of this setting.
 		'''
@@ -118,9 +126,14 @@ class SettingsManager(QtCore.QObject):
 		self.__settings[name] = settingClass(name, self.__bridge)
 		self.__bridge.command('set', name)(self.__settings[name].updateValue)
 
-	# this method probably needs an unconnectSetting method to make things robust
+	# this method probably needs an unconnectSetting method for robustness
 	def unregisterSetting(self, name):
+#		print 'unregistering setting %s' % name
+		assert name in self.__settings # setting must've been registered
 		del self.__settings[name]
+
+	def disconnectSetting(self, name, obj):
+		self.__settings[name].disconnectSync(obj)
 
 	def connectSetting(self, name, obj):
 		self.__settings[name].connectSync(obj)
