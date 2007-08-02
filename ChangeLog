@@ -1,5 +1,9 @@
 $Id$
 
+2007-08-02 Manuel Bilderbeek <manuel@msxnet.org>
+	* Audio channels list is now updated when the machine or extensions
+	  change (in a rough way, but it works).
+
 2007-07-31 Manuel Bilderbeek <manuel@msxnet.org>
 	* Make extensions work. Code could still be improved a lot, but at least it's
 	  functional now.

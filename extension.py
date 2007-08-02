@@ -10,7 +10,7 @@ from PyQt4 import QtCore, QtGui
 from bisect import insort
 
 from hardware import HardwareModel
-from qt_utils import QtSignal, connect
+from qt_utils import QtSignal, connect, Signal
 from preferences import preferences
 
 class ExtensionModel(HardwareModel):
@@ -124,6 +124,8 @@ class ExtensionModel(HardwareModel):
 
 class ExtensionManager(QtCore.QObject):
 
+	extensionChanged = Signal()
+
 	def __init__(self, parent, ui, settingsManager, bridge):
 		QtCore.QObject.__init__(self)
 		self.__parent = parent
@@ -168,6 +170,7 @@ class ExtensionManager(QtCore.QObject):
 
 	def __updateExtension(self, extension, event):
 		print 'Extension', extension, ':', event
+		self.extensionChanged.emit()
 		if event == 'add':
 			self.__extensionList.addItem(extension)
 		elif event == 'remove':

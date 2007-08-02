@@ -4,7 +4,7 @@ from PyQt4 import QtCore, QtGui
 from bisect import insort
 
 from hardware import HardwareModel
-from qt_utils import QtSignal, connect
+from qt_utils import QtSignal, Signal, connect
 from preferences import preferences
 
 class MachineModel(HardwareModel):
@@ -117,6 +117,8 @@ class MachineModel(HardwareModel):
 
 class MachineManager(QtCore.QObject):
 
+	machineChanged = Signal()
+
 	def __init__(self, parent, machineBox, settingsManager, bridge):
 		QtCore.QObject.__init__(self)
 		self.__parent = parent
@@ -161,6 +163,7 @@ class MachineManager(QtCore.QObject):
 		print 'Machine', machineId, ':', event
 		if event == 'select':
 			self.__updateMachineId(machineId)
+			self.machineChanged.emit()
 
 	def __disableRefreshButton(self):
 		self.__ui.refreshButton.setEnabled(False)

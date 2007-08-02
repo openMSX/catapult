@@ -1,22 +1,26 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from qt_utils import Signal
+from qt_utils import Signal, connect
 import settings
+import gc
 
 # this model keeps track of which audio devices exist
-# TODO: make it dynamical (it doesn't keep track of changes in the device list
-# yet...)
+# TODO: add hardcoded master_volume setting (is not a sound device as such)
 class AudioModel(QtCore.QAbstractListModel):
 
 	updated = Signal()
 
-	def __init__(self, bridge, settingsManager):
+	def __init__(self, bridge, settingsManager, machineManager, extensionManager):
 		QtCore.QAbstractListModel.__init__(self)
 		self.__bridge = bridge
 		self.__settingsManager = settingsManager
 		self.__audioChannels = []
 		bridge.registerInitial(self.__updateAll)
+		# update the list of channels when extensions or machines changed
+		connect(machineManager, 'machineChanged()', self.__updateAll)
+		connect(extensionManager, 'extensionChanged()', self.__updateAll)
+		
 		#bridge.registerUpdate('audio', self.__updateAudio)
 
 	def __updateAll(self):
@@ -25,6 +29,11 @@ class AudioModel(QtCore.QAbstractListModel):
 			)
 	
 	def __soundDeviceListReply(self, *devices):
+		# first unregister possible existing audio channels.
+		for device in self.__audioChannels:
+			self.__settingsManager.unregisterSetting(device + '_volume')
+		self.__audioChannels = []
+		# then register the new devices
 		for device in devices:
 			self.__audioChannels.append(device)
 			self.__settingsManager.registerSetting(
@@ -38,14 +47,16 @@ class AudioModel(QtCore.QAbstractListModel):
 
 class AudioMixer(QtCore.QObject):
 
-	def __init__(self, ui, settingsManager, bridge):
+	def __init__(self, ui, settingsManager, machineManager, extensionManager, bridge):
 		QtCore.QObject.__init__(self)
-		self.__audioModel = AudioModel(bridge, settingsManager)
+		self.__audioModel = AudioModel(bridge, settingsManager, machineManager, 
+			extensionManager
+			)
 		self.__ui = ui
 		self.__settingsManager = settingsManager
 		self.__audioModel.updated.connect(self.__rebuildUI)
-		self.__sliderMap = { }
-		self.__labelMap = { }
+		self.__sliderMap = {}
+		self.__labelMap = {}
 
 		self.__sliderGrid = QtGui.QGridLayout(self.__ui)
 		self.__sliderBox = QtGui.QVBoxLayout()
@@ -54,12 +65,25 @@ class AudioMixer(QtCore.QObject):
 		self.__sliderGrid.addLayout(self.__sliderBox, 0, 0)
 
 	def __rebuildUI(self):
+		for channel in self.__sliderMap:
+			slider = self.__sliderMap[channel]
+			self.__sliderBox.removeWidget(slider)
+			slider.setParent(None) # try to remove references
+			slider.deleteLater()
+			# TODO: find out if this is causing a memory leak
+			#print 'REFERRERS for channel: %s %s' % (channel, gc.get_referrers(slider))
+		self.__sliderMap = {}
+		for label in self.__labelMap.itervalues():
+			self.__sliderBox.removeWidget(label)
+			label.setParent(None) # try to remove references
+			label.deleteLater()
+		self.__labelMap = {}
 		audioChannels = self.__audioModel.getChannels()
 		for channel in audioChannels:
-			self.__labelMap[channel] = label = QtGui.QLabel(self.__ui)
+			self.__labelMap[channel] = label = QtGui.QLabel()
 			label.setText(channel + ' volume')
 			self.__sliderBox.addWidget(label)
-			self.__sliderMap[channel] = slider = QtGui.QSlider(self.__ui)
+			self.__sliderMap[channel] = slider = QtGui.QSlider()
 			slider.setObjectName(channel + '_slider')
 
 			slider.setOrientation(QtCore.Qt.Horizontal)

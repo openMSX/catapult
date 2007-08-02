@@ -104,7 +104,9 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, bridge)
-		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
+		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, machineManager,
+			extensionManager, bridge
+			)
 		self.__diskmanipulator = diskmanipulator = Diskmanipulator(ui, bridge)
 		connect(ui.dirUpButton, 'clicked()', diskmanipulator.updir)
 		connect(ui.dirReloadButton, 'clicked()', diskmanipulator.refreshdir)
