@@ -1,8 +1,6 @@
 # $Id$
 
 from PyQt4 import QtCore
-from custom import executable
-from custom import debugexecutable
 
 class _Preferences(object):
 
@@ -57,8 +55,3 @@ class _Preferences(object):
 			raise TypeError('%s cannot be converted to list' % type(value))
 
 preferences = _Preferences('openMSX', 'Catapult')
-
-# openMSX executable.
-if 'system/executable' not in preferences:
-	preferences['system/executable'] = executable
-
