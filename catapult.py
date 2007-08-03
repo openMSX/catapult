@@ -96,7 +96,8 @@ class MainWindow(QtGui.QMainWindow):
 		self.__extensionManager = extensionManager = ExtensionManager(
 			self, ui, settingsManager, bridge
 			)
-		connect(ui.extensionButton, 'clicked()', extensionManager.chooseExtension)
+		connect(ui.extensionButton, 'clicked()',
+			extensionManager.chooseExtension)
 
 		self.__machineManager = machineManager = MachineManager(
 			self, ui.machineBox, settingsManager, bridge
@@ -104,13 +105,10 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, bridge)
-		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, machineManager,
-			extensionManager, bridge
+		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager,
+			machineManager, extensionManager, bridge
 			)
-		self.__diskmanipulator = diskmanipulator = Diskmanipulator(ui, bridge)
-		connect(ui.dirUpButton, 'clicked()', diskmanipulator.updir)
-		connect(ui.dirReloadButton, 'clicked()', diskmanipulator.refreshdir)
-		connect(ui.dirNewButton, 'clicked()', diskmanipulator.mkdir)
+		self.__diskmanipulator = Diskmanipulator(ui, bridge)
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.

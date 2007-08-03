@@ -50,11 +50,11 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		msxDirTable.verticalHeader().hide()
 		msxDirTable.setShowGrid(0)
 
-		# Look up UI elements.
-		self._openImageButton = getattr(ui, 'openImageButton')
-
 		# Connect signals.
-		connect(self._openImageButton , 'clicked()', self.browseImage)
+		connect(ui.openImageButton, 'clicked()', self.browseImage)
+		connect(ui.dirUpButton, 'clicked()', self.updir)
+		connect(ui.dirReloadButton, 'clicked()', self.refreshDir)
+		connect(ui.dirNewButton, 'clicked()', self.mkdir)
 
 	def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with
