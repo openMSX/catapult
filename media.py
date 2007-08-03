@@ -138,7 +138,7 @@ class MediaModel(QtCore.QAbstractListModel):
 					None, errorHandler
 					)
 			else:
-				self.__bridge.command(mediaSlot, 'insert', 
+				self.__bridge.command(mediaSlot, 'insert',
 					path)(None, errorHandler)
 
 	def rowCount(self, parent):
@@ -469,7 +469,7 @@ class MediaSwitcher(QtCore.QObject):
 	def setPath(self, path):
 		'''Sets a new path for the currently selected medium.
 		'''
-		self.__mediaModel.setInserted(self.__mediaSlot, path, 
+		self.__mediaModel.setInserted(self.__mediaSlot, path,
 			lambda message: self.__mediaChangeErrorHandler(
 				self.__mediaSlot, message
 				)
@@ -477,7 +477,7 @@ class MediaSwitcher(QtCore.QObject):
 
 	def __mediaChangeErrorHandler(self, mediaSlot, message):
 		messageBox = QtGui.QMessageBox('Media change problem', message,
-			QtGui.QMessageBox.Warning, 0, 0, 0, 
+			QtGui.QMessageBox.Warning, 0, 0, 0,
 			self.__ui.centralwidget
 			)
 		messageBox.show()
