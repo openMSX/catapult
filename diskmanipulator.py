@@ -4,7 +4,6 @@ from PyQt4 import QtCore, QtGui
 from bisect import bisect
 import os.path
 
-from preferences import preferences
 from qt_utils import QtSignal, connect
 
 class Diskmanipulator(QtCore.QAbstractListModel):
@@ -19,24 +18,24 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		self.__cwd = []
 		self.__media = 'diska'
 		bridge.registerInitial(self.__updateAll)
-		#TODO currently only one 'media' update handler allowed!!
+		# TODO: currently only one 'media' update handler allowed!!
 		#bridge.registerUpdate('media', self.__updateMedium)
 		#bridge.registerUpdatePrefix(
 		#	'hardware',
 		#	( 'disk', 'hd' ),
 		#	self.__updateHardware
 		#	)
-		#TODO: how are handling the 'virtual_drive' in the above case ??
-		
+		# TODO: how are handling the 'virtual_drive' in the above case ??
+
 		#quick hack to have some values available
 		self.__combobox.addItem(QtCore.QString('diska'))
 		self.__combobox.addItem(QtCore.QString('diskb'))
 		self.__combobox.addItem(QtCore.QString('hda'))
-		self.__cwd = {} 
+		self.__cwd = {}
 		self.__cwd['diska'] = '/'
 		self.__cwd['diskb'] = '/'
 		self.__cwd['hda'] = '/'
-		
+
 		# Set the msxDirTable as needed
 		msxDirTable = self.__ui.msxDirTable
 		msxDirTable.setRowCount(0)
@@ -81,9 +80,9 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 			return
 		for slot in slots:
 			self.__mediaSlotAdded(slot)
-			# add value to the combobox (if not there already should still be tested)
+			# add value to the combobox (if not there already should still be
+			# tested)
 			self.__combobox.addItem(slot)
-
 
 	def queryMedium(self, slot):
 		'''Queries the medium info of the specified slot'''
@@ -176,7 +175,7 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 					None, errorHandler
 					)
 			else:
-				self.__bridge.command(mediaSlot, 'insert', 
+				self.__bridge.command(mediaSlot, 'insert',
 					path)(None, errorHandler)
 
 	def rowCount(self, parent):
@@ -225,37 +224,39 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		if not path:
 			return
 		# insert the selected image in the 'virtual drive'
-		self.__bridge.command('virtual_drive',path)(self.__mediumReply)
+		self.__bridge.command('virtual_drive', path)(self.__mediumReply)
 		# set the combobox to the virtual_drive entrie
 		# go to the root of this disk and get the files,l output
 
-	def refreshdir(self):
+	def refreshDir(self):
 		self.__ui.cwdLine.setText(self.__cwd[self.__media])
-		self.__bridge.command('diskmanipulator','dir',self.__media)(self.displaydir)
+		self.__bridge.command('diskmanipulator', 'dir', self.__media)(
+			self.displayDir
+			)
 
-	def displaydir(self,*value):
-		'''fills in the tablewidget with the output of the 
-		diskmanipulator dir command'''
-		entries = "\t".join(value).split("\n")
+	def displayDir(self, *value):
+		'''Fills in the tablewidget with the output of the
+		diskmanipulator dir command.
+		'''
+		entries = '\t'.join(value).split('\n')
 		self.__ui.msxDirTable.setRowCount(0)
-		for entry in entries[:-1]:
-			data= entry.split("\t")
+		for entry in entries[ : -1]:
+			data = entry.split('\t')
 			print data
-			fileNameItem=QtGui.QTableWidgetItem(data[0])
+			fileNameItem = QtGui.QTableWidgetItem(data[0])
 			fileNameItem.setFlags(QtCore.Qt.ItemIsEnabled)
-			fileAttrItem=QtGui.QTableWidgetItem(data[1])
+			fileAttrItem = QtGui.QTableWidgetItem(data[1])
 			fileAttrItem.setFlags(QtCore.Qt.ItemIsEnabled)
-			fileSizeItem=QtGui.QTableWidgetItem(data[2])
+			fileSizeItem = QtGui.QTableWidgetItem(data[2])
 			fileSizeItem.setFlags(QtCore.Qt.ItemIsEnabled)
-			row=self.__ui.msxDirTable.rowCount()
+			row = self.__ui.msxDirTable.rowCount()
 			self.__ui.msxDirTable.insertRow(row)
-			self.__ui.msxDirTable.setItem(row,0,fileNameItem)
-			self.__ui.msxDirTable.setItem(row,1,fileAttrItem)
-			self.__ui.msxDirTable.setItem(row,2,fileSizeItem)
-
-
+			self.__ui.msxDirTable.setItem(row, 0, fileNameItem)
+			self.__ui.msxDirTable.setItem(row, 1, fileAttrItem)
+			self.__ui.msxDirTable.setItem(row, 2, fileSizeItem)
 
 	def updir(self):
-		self.refreshdir()
+		self.refreshDir()
+
 	def mkdir(self):
-		self.refreshdir()
+		self.refreshDir()
