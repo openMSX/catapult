@@ -1,17 +1,19 @@
+# $Id$
+
 # A quick hack of machine.py from mthuurne
 # main differences:
 #	- s/Machine/Extension/ in most places
 #	- added the 'CLI-name'
 # This still needs a lot of cleaning up
-# There's an awful mixing of code for the extension Add dialog and for the extension part
-# in the main view
+# There's an awful mixing of code for the extension Add dialog and for the
+# extension part in the main view
 
 from PyQt4 import QtCore, QtGui
 from bisect import insort
 
 from hardware import HardwareModel
 from qt_utils import QtSignal, connect, Signal
-from preferences import preferences
+#from preferences import preferences
 
 class ExtensionModel(HardwareModel):
 	__columnKeys = 'name', 'type', 'manufacturer', 'description'
@@ -64,7 +66,8 @@ class ExtensionModel(HardwareModel):
 		while low < high:
 			mid = (low + high) / 2
 			extension = self.__extensions[mid]
-			if (cmp(key, extension[column]) or cmp(sortRow, extension)) == sortSign:
+			if (cmp(key, extension[column]) or cmp(sortRow, extension)) \
+					== sortSign:
 				low = mid + 1
 			else:
 				high = mid
@@ -159,7 +162,7 @@ class ExtensionManager(QtCore.QObject):
 	def __queryInitial(self):
 		'''Query initial state.
 		'''
-		bridge = self.__bridge
+		#bridge = self.__bridge
 		#bridge.command('machine')(self.__updateMachineId)
 
 	def __removeExtensions(self):
@@ -174,8 +177,11 @@ class ExtensionManager(QtCore.QObject):
 		if event == 'add':
 			self.__extensionList.addItem(extension)
 		elif event == 'remove':
-			l = self.__extensionList
-			l.takeItem(l.row((l.findItems(extension, QtCore.Qt.MatchFixedString | QtCore.Qt.MatchCaseSensitive))[0]))
+			widget = self.__extensionList
+			widget.takeItem(widget.row(widget.findItems(
+				extension,
+				QtCore.Qt.MatchFixedString | QtCore.Qt.MatchCaseSensitive
+				)[0]))
 
 	def __disableRefreshButton(self):
 		self.__ui.refreshButton.setEnabled(False)
