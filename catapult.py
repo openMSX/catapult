@@ -100,7 +100,7 @@ class MainWindow(QtGui.QMainWindow):
 			extensionManager.chooseExtension)
 
 		self.__machineManager = machineManager = MachineManager(
-			self, ui.machineBox, settingsManager, bridge
+			self, ui.machineBox, bridge
 			)
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 

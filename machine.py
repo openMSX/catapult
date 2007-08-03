@@ -119,7 +119,7 @@ class MachineManager(QtCore.QObject):
 
 	machineChanged = Signal()
 
-	def __init__(self, parent, machineBox, settingsManager, bridge):
+	def __init__(self, parent, machineBox, bridge):
 		QtCore.QObject.__init__(self)
 		self.__parent = parent
 		self.__machineBox = machineBox
