@@ -27,15 +27,19 @@ class ConfigDialog:
 			from ui_config import Ui_Dialog
 			ui = Ui_Dialog()
 			ui.setupUi(dialog)
-			self._browseExecutableButton = getattr(ui, "BrowseExecutableButton")
-			self._execEdit = getattr(ui, "ExecEdit")
+			# TODO: Rename UI objects so their names start with lower case.
+			self._browseExecutableButton = ui.BrowseExecutableButton
+			self._execEdit = ui.ExecEdit
 			self._execEdit.setText(preferences['system/executable'])
-			self._browseDebugExecutableButton = getattr(ui, "BrowseDebugExecutableButton")
-			self._debugExecEdit = getattr(ui, "DebugExecEdit")
-			self._debugExecEdit.setText(preferences.get('system/debugExecutable',''))
+			self._browseDebugExecutableButton = ui.BrowseDebugExecutableButton
+			self._debugExecEdit = ui.DebugExecEdit
+			self._debugExecEdit.setText(
+				preferences.get('system/debugExecutable', '')
+				)
 			connect(self._browseExecutableButton, 'clicked()', self.browseExec)
 			connect(self._execEdit, 'editingFinished()', self.setExec)
-			connect(self._browseDebugExecutableButton, 'clicked()', self.browseDebugExec)
+			connect(self._browseDebugExecutableButton, 'clicked()',
+				self.browseDebugExec)
 			connect(self._debugExecEdit, 'editingFinished()', self.setDebugExec)
 		dialog.show()
 		dialog.raise_()

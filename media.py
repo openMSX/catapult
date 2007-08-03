@@ -567,7 +567,7 @@ class DiskHandler(MediaHandler):
 		MediaHandler.__init__(self, ui, switcher)
 
 		# Look up UI elements.
-		self._browseDirButton = getattr(ui, 'diskBrowseDirectoryButton')
+		self._browseDirButton = ui.diskBrowseDirectoryButton
 
 		# Connect signals.
 		connect(self._browseDirButton, 'clicked()', self.browseDirectory)
