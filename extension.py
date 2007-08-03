@@ -129,7 +129,7 @@ class ExtensionManager(QtCore.QObject):
 
 	extensionChanged = Signal()
 
-	def __init__(self, parent, ui, settingsManager, bridge):
+	def __init__(self, parent, ui, bridge):
 		QtCore.QObject.__init__(self)
 		self.__parent = parent
 		self.__extensionList = ui.extensionList

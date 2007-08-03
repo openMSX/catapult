@@ -94,7 +94,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__playState = PlayState(settingsManager, ui)
 
 		self.__extensionManager = extensionManager = ExtensionManager(
-			self, ui, settingsManager, bridge
+			self, ui, bridge
 			)
 		connect(ui.extensionButton, 'clicked()',
 			extensionManager.chooseExtension)
