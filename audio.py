@@ -6,10 +6,11 @@ import settings
 #import gc
 
 # this model keeps track of which audio devices exist
-# TODO: add hardcoded master_volume setting (is not a sound device as such)
 class AudioModel(QtCore.QAbstractListModel):
 
 	updated = Signal()
+
+	__firstTime = True
 
 	def __init__(self, bridge, settingsManager, machineManager, extensionManager):
 		QtCore.QAbstractListModel.__init__(self)
@@ -30,10 +31,17 @@ class AudioModel(QtCore.QAbstractListModel):
 	
 	def __soundDeviceListReply(self, *devices):
 		# first unregister possible existing audio channels.
+		if not self.__firstTime:
+			self.__firstTime = False
+			self.__settingsManager.unregisterSetting('master_volume')
 		for device in self.__audioChannels:
 			self.__settingsManager.unregisterSetting(device + '_volume')
 		self.__audioChannels = []
 		# then register the new devices
+		self.__audioChannels.append('master')
+		self.__settingsManager.registerSetting('master_volume', 
+			settings.IntegerSetting
+			)
 		for device in devices:
 			self.__audioChannels.append(device)
 			self.__settingsManager.registerSetting(

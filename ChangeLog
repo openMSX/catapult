@@ -1,6 +1,9 @@
 $Id$
 
 2007-08-02 Manuel Bilderbeek <manuel@msxnet.org>
+	* Add master volume control (can not be queried from openMSX)
+
+2007-08-02 Manuel Bilderbeek <manuel@msxnet.org>
 	* Audio channels list is now updated when the machine or extensions
 	  change (in a rough way, but it works).
 
