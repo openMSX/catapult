@@ -3,8 +3,7 @@
 from PyQt4 import QtCore
 
 from qt_utils import Signal
-
-from settings import *
+from settings import BooleanSetting, EnumSetting
 
 class VisibleSetting(QtCore.QObject):
 	'''Virtual setting which interacts with the "renderer" setting.
