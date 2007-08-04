@@ -16,7 +16,7 @@ from qt_utils import QtSignal, connect, Signal
 #from preferences import preferences
 
 class ExtensionModel(HardwareModel):
-	__columnKeys = 'name', 'code', 'manufacturer', 'type', 'description'
+	__columnKeys = 'name', 'manufacturer', 'code', 'type', 'description'
 	_hardwareType = 'extension'
 	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
 	layoutChanged = QtSignal()
