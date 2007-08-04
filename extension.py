@@ -16,7 +16,7 @@ from qt_utils import QtSignal, connect, Signal
 #from preferences import preferences
 
 class ExtensionModel(HardwareModel):
-	__columnKeys = 'name', 'type', 'manufacturer', 'description'
+	__columnKeys = 'name', 'code', 'manufacturer', 'type', 'description'
 	_hardwareType = 'extension'
 	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
 	layoutChanged = QtSignal()
@@ -29,13 +29,13 @@ class ExtensionModel(HardwareModel):
 		self.__sortReversed = False
 
 	def __str__(self):
-		return 'MachineModel(%s)' % ', '.join(
-			machine[-2] for machine in self.__machines
+		return 'ExtensionModel(%s)' % ', '.join(
+			extension[-2] for extension in self.__extensions
 			)
 
 	def find(self, extension):
 		'''Searches for an extension with the given name.
-		Returns the row on which the machine is found, or -1 if it is not found.
+		Returns the row on which the extension is found, or -1 if it is not found.
 		'''
 		for row, sortRow in enumerate(self.__extensions):
 			if sortRow[-2] == extension:
@@ -48,7 +48,6 @@ class ExtensionModel(HardwareModel):
 
 	def _storeItem(self, name, info):
 		info.setdefault('code', name)
-		info["name"] = name
 		sortRow = [
 			info.get(key, '').lower() for key in self.__columnKeys
 			] + [ name, info ]

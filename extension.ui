@@ -54,7 +54,7 @@
        <item>
         <widget class="QPushButton" name="refreshButton" >
          <property name="toolTip" >
-          <string>Refresh the list of machines</string>
+          <string>Refresh the list of extensions</string>
          </property>
          <property name="text" >
           <string>Refresh</string>
