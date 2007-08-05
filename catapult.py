@@ -74,6 +74,8 @@ class MainWindow(QtGui.QMainWindow):
 		# in place before the output window is opened.
 		bridge.registerInitial(self.__interceptExit)
 
+		self.__diskmanipulator = Diskmanipulator(bridge)
+
 		self.__connectMenuActions(ui)
 
 		settingsManager = settings.SettingsManager(bridge)
@@ -105,7 +107,6 @@ class MainWindow(QtGui.QMainWindow):
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager,
 			machineManager, extensionManager, bridge
 			)
-		self.__diskmanipulator = Diskmanipulator(ui, bridge)
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
@@ -120,6 +121,7 @@ class MainWindow(QtGui.QMainWindow):
 			# lead to a quit.
 			( ui.action_Quit, QtGui.qApp.closeAllWindows ),
 			( ui.action_EditConfiguration, configDialog.show ),
+			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
 			( ui.action_HelpSetup, self.showHelpSetup ),
 			( ui.action_HelpUser, self.showHelpUser ),
 			( ui.action_AboutCatapult, self.showAboutDialog ),

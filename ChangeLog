@@ -1,5 +1,10 @@
 $Id$
 
+2007-08-05 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added Tools menu with Disk Manipulator and debugger. (Note:
+	  diskmanipulator is not tested (nor usable) and debugger is not
+	  functional yet.)
+
 2007-08-02 Manuel Bilderbeek <manuel@msxnet.org>
 	* Add master volume control (can not be queried from openMSX)
 

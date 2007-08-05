@@ -9,52 +9,71 @@ from qt_utils import QtSignal, connect
 class Diskmanipulator(QtCore.QAbstractListModel):
 	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
 
-	def __init__(self, ui, bridge):
+	def __init__(self, bridge):
 		QtCore.QAbstractListModel.__init__(self)
-		self.__ui = ui
-		self.__combobox = ui.mediaComboBox
+		self.__dmDialog = None
+		self.__ui = None
+		self.__combobox = None
 		self.__bridge = bridge
 		self.__mediaSlots = []
-		self.__cwd = []
+		self.__cwd = {}
 		self.__media = 'diska'
-		bridge.registerInitial(self.__updateAll)
-		# TODO: currently only one 'media' update handler allowed!!
-		#bridge.registerUpdate('media', self.__updateMedium)
-		#bridge.registerUpdatePrefix(
-		#	'hardware',
-		#	( 'disk', 'hd' ),
-		#	self.__updateHardware
-		#	)
-		# TODO: how are handling the 'virtual_drive' in the above case ??
 
 		#quick hack to have some values available
-		self.__combobox.addItem(QtCore.QString('diska'))
-		self.__combobox.addItem(QtCore.QString('diskb'))
-		self.__combobox.addItem(QtCore.QString('hda'))
-		self.__cwd = {}
 		self.__cwd['diska'] = '/'
 		self.__cwd['diskb'] = '/'
 		self.__cwd['hda'] = '/'
 
-		# Set the msxDirTable as needed
-		msxDirTable = self.__ui.msxDirTable
-		msxDirTable.setRowCount(0)
-		labels = QtCore.QStringList() << 'File Name' << 'Atributes' <<  'Size'
-		#labels.append('File Name')
-		#labels.append('Atributes')
-		#labels.append('Size');
-		msxDirTable.setHorizontalHeaderLabels(labels)
-		#msxDirTable.horizontalHeader().setResizeMode(
-		#	0, QtCore.Qt.QHeaderView.Stretch
-		#	)
-		msxDirTable.verticalHeader().hide()
-		msxDirTable.setShowGrid(0)
+	def show(self):
+		dialog = self.__dmDialog
+		if dialog is None:
+			self.__dmDialog = dialog = QtGui.QDialog(
+				None, # TODO: find a way to get the real parent
+				QtCore.Qt.Dialog
+				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
+				)
+			# Setup UI made in Qt Designer.
+			from ui_diskmanipulator import Ui_diskManipulator
+			ui = Ui_diskManipulator()
+			ui.setupUi(dialog)
+			self.__ui = ui
+			self.__combobox = ui.mediaComboBox
+			# TODO: currently only one 'media' update handler allowed!!
+			#bridge.registerUpdate('media', self.__updateMedium)
+			#bridge.registerUpdatePrefix(
+			#	'hardware',
+			#	( 'disk', 'hd' ),
+			#	self.__updateHardware
+			#	)
+			# TODO: how are handling the 'virtual_drive' in the above case ??
 
-		# Connect signals.
-		connect(ui.openImageButton, 'clicked()', self.browseImage)
-		connect(ui.dirUpButton, 'clicked()', self.updir)
-		connect(ui.dirReloadButton, 'clicked()', self.refreshDir)
-		connect(ui.dirNewButton, 'clicked()', self.mkdir)
+			#quick hack to have some values available
+			self.__combobox.addItem(QtCore.QString('diska'))
+			self.__combobox.addItem(QtCore.QString('diskb'))
+			self.__combobox.addItem(QtCore.QString('hda'))
+
+			# Set the msxDirTable as needed
+			msxDirTable = self.__ui.msxDirTable
+			msxDirTable.setRowCount(0)
+			labels = QtCore.QStringList() << 'File Name' << 'Atributes' <<  'Size'
+			#labels.append('File Name')
+			#labels.append('Atributes')
+			#labels.append('Size');
+			msxDirTable.setHorizontalHeaderLabels(labels)
+			#msxDirTable.horizontalHeader().setResizeMode(
+			#	0, QtCore.Qt.QHeaderView.Stretch
+			#	)
+			msxDirTable.verticalHeader().hide()
+			msxDirTable.setShowGrid(0)
+
+			# Connect signals.
+			connect(ui.openImageButton, 'clicked()', self.browseImage)
+			connect(ui.dirUpButton, 'clicked()', self.updir)
+			connect(ui.dirReloadButton, 'clicked()', self.refreshDir)
+			connect(ui.dirNewButton, 'clicked()', self.mkdir)
+		dialog.show()
+		dialog.raise_()
+		dialog.activateWindow()
 
 	def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with
@@ -217,7 +236,7 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		browseTitle = 'Select Disk Image'
 		imageSpec = 'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)'
 		path = QtGui.QFileDialog.getOpenFileName(
-			self.__ui.centralwidget, browseTitle,
+			self.__ui, browseTitle,
 			QtCore.QDir.homePath(),
 			imageSpec, None #, 0
 			)
