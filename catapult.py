@@ -53,9 +53,6 @@ class MainWindow(QtGui.QMainWindow):
 		self.__ui = ui = Ui_MainWindow()
 		ui.setupUi(self)
 
-		# Disable 'start debugger' if no setting for it
-		if preferences.get('system/debugExecutable','') == '':
-			ui.DebuggerButton.setDisabled(1)
 		# Resources that are loaded on demand.
 		self.__machineDialog = None
 		self.__extensionDialog = None

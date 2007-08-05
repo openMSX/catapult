@@ -1976,13 +1976,6 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QPushButton" name="DebuggerButton" >
-        <property name="text" >
-         <string>Start Debugger</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
@@ -2018,8 +2011,15 @@
     </property>
     <addaction name="action_Quit" />
    </widget>
+   <widget class="QMenu" name="menuTools" >
+    <property name="title" >
+     <string>Tools</string>
+    </property>
+    <addaction name="actionStart_Debugger" />
+   </widget>
    <addaction name="menu_File" />
    <addaction name="menuConfiguration" />
+   <addaction name="menuTools" />
    <addaction name="menu_Help" />
   </widget>
   <widget class="QStatusBar" name="statusbar" />
@@ -2054,6 +2054,14 @@
   <action name="action_EditConfiguration" >
    <property name="text" >
     <string>&amp;Configuration</string>
+   </property>
+  </action>
+  <action name="actionStart_Debugger" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Start Debugger...</string>
    </property>
   </action>
  </widget>
