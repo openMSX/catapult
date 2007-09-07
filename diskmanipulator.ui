@@ -322,7 +322,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_2" >
+            <widget class="QComboBox" name="hostDirComboBox" >
              <property name="editable" >
               <bool>true</bool>
              </property>
@@ -331,7 +331,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QTableWidget" name="tableWidget_2" />
+          <widget class="QTableWidget" name="hostDirTableWidget" />
          </item>
         </layout>
        </item>

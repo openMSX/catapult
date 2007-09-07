@@ -1,5 +1,12 @@
 $Id$
 
+2007-09-07 David Heremans <david.heremans@gnu-linux.net>
+	* Big WIP commit
+	* fixed blocking tablewidget issue in the diskmanipulator
+	* can already show local files and dirs in right tablewidget
+	* added a start for the softwaredb for the openMSX-CD edition
+	  nothing usable so far :)
+
 2007-08-05 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added Tools menu with Disk Manipulator and debugger. (Note:
 	  diskmanipulator is not tested (nor usable) and debugger is not

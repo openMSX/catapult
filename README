@@ -7,6 +7,7 @@ This is the new openMSX Catapult, an external GUI for openMSX.
 Requirements:
 - Python 2.4 or higher
 - PyQt4 (thus also Qt4)
+- python-pysqlite2 for softwareDB tool
 - openMSX, preferably a recent version from Subversion (post 0.6.1)
 
 Download links:

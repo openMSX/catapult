@@ -18,6 +18,7 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		self.__mediaSlots = []
 		self.__cwd = {}
 		self.__media = 'diska'
+		self.__localDir = QtCore.QDir.home()
 
 		#quick hack to have some values available
 		self.__cwd['diska'] = '/'
@@ -56,24 +57,110 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 			msxDirTable = self.__ui.msxDirTable
 			msxDirTable.setRowCount(0)
 			labels = QtCore.QStringList() << 'File Name' << 'Atributes' <<  'Size'
-			#labels.append('File Name')
-			#labels.append('Atributes')
-			#labels.append('Size');
 			msxDirTable.setHorizontalHeaderLabels(labels)
-			#msxDirTable.horizontalHeader().setResizeMode(
-			#	0, QtCore.Qt.QHeaderView.Stretch
-			#	)
 			msxDirTable.verticalHeader().hide()
+			msxDirTable.horizontalHeader().setResizeMode( 0, QtGui.QHeaderView.Interactive)
+			msxDirTable.horizontalHeader().setResizeMode( 1, QtGui.QHeaderView.Interactive)
+			msxDirTable.horizontalHeader().setResizeMode( 2, QtGui.QHeaderView.Stretch)
 			msxDirTable.setShowGrid(0)
+			msxDirTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectionBehavior(1))
+			msxDirTable.setSelectionMode(QtGui.QAbstractItemView.SelectionMode(3))
+
+			hostDirTable = self.__ui.hostDirTableWidget
+			hostDirTable.setColumnCount(2)
+			labels = QtCore.QStringList() << 'File Name' <<  'Size'
+			hostDirTable.setHorizontalHeaderLabels(labels)
+			hostDirTable.verticalHeader().hide()
+			hostDirTable.horizontalHeader().setResizeMode( 0, QtGui.QHeaderView.Interactive)
+			hostDirTable.horizontalHeader().setResizeMode( 1, QtGui.QHeaderView.Stretch)
+			hostDirTable.setShowGrid(0)
+			hostDirTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectionBehavior(1))
+			hostDirTable.setSelectionMode(QtGui.QAbstractItemView.SelectionMode(3))
+
 
 			# Connect signals.
 			connect(ui.openImageButton, 'clicked()', self.browseImage)
 			connect(ui.dirUpButton, 'clicked()', self.updir)
 			connect(ui.dirReloadButton, 'clicked()', self.refreshDir)
 			connect(ui.dirNewButton, 'clicked()', self.mkdir)
+
+			connect(ui.hostDirComboBox,'activated(QString)',self.setLocalDir)
+			connect(ui.hostDirComboBox.lineEdit(),'editingFinished()',self.editedLocalDir)
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
+	
+	def editedLocalDir(self):
+		self.setLocalDir(self.__ui.hostDirComboBox.currentText())
+
+	def setLocalDir(self,path):
+		'''Show the content of the selected directory
+		'''
+		# clear the visible list, in case nothing is selected, or
+		# the entered dir doesn't exists
+		self.__ui.hostDirTableWidget.setRowCount(0)
+
+		print 'selected:', path or '<nothing>'
+                if not path:
+                        return
+
+                historyBox = self.__ui.hostDirComboBox
+		# if this is a dir then we alter the combobox
+		# if the path doesn't exist (anymore) then we 
+		# remove it from the comboboc
+
+		if QtCore.QDir(path).exists() :
+	                # Insert path at the top of the list.
+	                historyBox.insertItem(0, path)
+	                historyBox.setCurrentIndex(0)
+	                # Remove duplicates of the path from the history.
+	                index = 1
+	                while index < historyBox.count():
+	                        if historyBox.itemText(index) == path:
+	                                historyBox.removeItem(index)
+	                        else:
+	                                index += 1
+			self.__localDir = QtCore.QDir(path)
+			self.refreshLocalDir()
+		else:
+	                # Remove the path from the history.
+	                index = 0
+	                while index < historyBox.count():
+	                        if historyBox.itemText(index) == path:
+	                                historyBox.removeItem(index)
+	                        else:
+	                                index += 1
+	def refreshLocalDir(self):
+		# clear the visible list
+		dirTable = self.__ui.hostDirTableWidget
+		dirTable.setRowCount(0)
+
+		dir = self.__localDir
+
+		dir.setFilter(QtCore.QDir.AllEntries | QtCore.QDir.Hidden )
+		dir.setSorting(QtCore.QDir.DirsFirst )
+
+		entries = dir.entryInfoList()
+		dirTable.setRowCount( dir.entryList().count() )
+		#dirTable.setRowCount( entries.size() )
+		#dirTable.setRowCount( 22 )
+
+		index = 0
+		dirTable.setSortingEnabled(0)
+		#while index < entries.size() :
+		#	fileInfo = entries.at(index)
+		for fileInfo in entries:
+			fileNameItem = QtGui.QTableWidgetItem( fileInfo.fileName() )
+			fileNameItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)  # not editable etc etc
+			dirTable.setItem(index, 0, fileNameItem)
+
+			#fileSizeItem = QtGui.QTableWidgetItem( QtCore.QString( fileInfo.size() ))
+			#fileSizeItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+			#dirTable.setItem(index, 1, fileSizeItem)
+
+			index += 1
+
+
 
 	def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with
@@ -258,21 +345,26 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		diskmanipulator dir command.
 		'''
 		entries = '\t'.join(value).split('\n')
-		self.__ui.msxDirTable.setRowCount(0)
+		self.__ui.msxDirTable.setRowCount(0)			# clear will also erase the labels!
+		self.__ui.msxDirTable.setSortingEnabled(0)
+		row = 0
+		self.__ui.msxDirTable.setRowCount( len(entries) - 1 )
 		for entry in entries[ : -1]:
 			data = entry.split('\t')
-			print data
 			fileNameItem = QtGui.QTableWidgetItem(data[0])
-			fileNameItem.setFlags(QtCore.Qt.ItemIsEnabled)
-			fileAttrItem = QtGui.QTableWidgetItem(data[1])
-			fileAttrItem.setFlags(QtCore.Qt.ItemIsEnabled)
-			fileSizeItem = QtGui.QTableWidgetItem(data[2])
-			fileSizeItem.setFlags(QtCore.Qt.ItemIsEnabled)
-			row = self.__ui.msxDirTable.rowCount()
-			self.__ui.msxDirTable.insertRow(row)
+			fileNameItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)	 # not editable etc etc
 			self.__ui.msxDirTable.setItem(row, 0, fileNameItem)
+
+			fileAttrItem = QtGui.QTableWidgetItem(data[1])
+			fileAttrItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 			self.__ui.msxDirTable.setItem(row, 1, fileAttrItem)
+
+			fileSizeItem = QtGui.QTableWidgetItem(data[2])
+			fileSizeItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 			self.__ui.msxDirTable.setItem(row, 2, fileSizeItem)
+
+			row += 1
+		self.__ui.msxDirTable.setSortingEnabled(1)
 
 	def updir(self):
 		self.refreshDir()

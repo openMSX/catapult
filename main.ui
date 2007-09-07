@@ -1734,6 +1734,11 @@
     <string>Diskmanipulator</string>
    </property>
   </action>
+  <action name="action_SoftwareDB" >
+   <property name="text" >
+    <string>Software DB</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>

@@ -4,6 +4,9 @@
 from PyQt4 import QtCore, QtGui
 import os.path, sys
 
+#Is this a version for the openMSX-CD ?
+openmsxcd = 1
+
 # Application info must be set before the "preferences" module is imported.
 # Since many different modules might import "preferences", we perform the
 # setup before any Catapult modules are imported.
@@ -31,6 +34,7 @@ from extension import ExtensionManager
 from media import MediaSwitcher
 from audio import AudioMixer
 from diskmanipulator import Diskmanipulator
+from softwaredb import SoftwareDB
 from openmsx_control import ControlBridge
 from player import PlayState
 from qt_utils import connect
@@ -52,6 +56,13 @@ class MainWindow(QtGui.QMainWindow):
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
 		ui.setupUi(self)
+		# Added stuff that at the moment will be exclusive to 
+		# the openMSX-CD
+		if openmsxcd:
+			ui.action_SoftwareDB = QtGui.QAction(self)
+			ui.action_SoftwareDB.setObjectName("action_SoftwareDB")
+			ui.action_SoftwareDB.setText(QtGui.QApplication.translate("MainWindow", "Software DB", None, QtGui.QApplication.UnicodeUTF8))
+			ui.menuTools.addAction(ui.action_SoftwareDB)
 
 		# Resources that are loaded on demand.
 		self.__machineDialog = None
@@ -75,6 +86,7 @@ class MainWindow(QtGui.QMainWindow):
 		bridge.registerInitial(self.__interceptExit)
 
 		self.__diskmanipulator = Diskmanipulator(bridge)
+		self.__softwaredb = SoftwareDB(bridge)
 
 		self.__connectMenuActions(ui)
 
@@ -122,6 +134,7 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_Quit, QtGui.qApp.closeAllWindows ),
 			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
+			( ui.action_SoftwareDB, self.__softwaredb.show ),
 			( ui.action_HelpSetup, self.showHelpSetup ),
 			( ui.action_HelpUser, self.showHelpUser ),
 			( ui.action_AboutCatapult, self.showAboutDialog ),

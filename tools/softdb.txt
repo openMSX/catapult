@@ -1,0 +1,1724 @@
+Type;Year;Patched;Compagny;HardwareExtension;Machine;Genre;Info;File
+Disk;unknown;Original;Bit2;fmpac;msx2;Game;Nyancle Racing;SOFTWARE/copyright/Bit2/nyancler.dsk.gz
+Disk;unknown;Original;Bit2;fmpac;msx2;Game;Quinpl;SOFTWARE/copyright/Bit2/quinpl.dsk.gz
+Cart;unknown;Original;Bit2;unknown;msx2;Game;famicle;SOFTWARE/copyright/Bit2/famicle.rom.gz
+Disk;unknown;Original;Bit2;fmpac;msx2;Game;Famicle Parodic 2, disk A;SOFTWARE/copyright/Bit2/famicl2a.dsk.gz
+Disk;unknown;Original;Bit2;fmpac;msx2;Game;Famicle Parodic 2, disk B;SOFTWARE/copyright/Bit2/famicl2b.dsk.gz
+Disk;1988;unknown;Compile;fmpac;msx2;Game;aleste1;SOFTWARE/copyright/Compile/aleste1.dsk.gz
+Disk;1988;unknown;Compile;fmpac;msx2;Game;aleste1t;SOFTWARE/copyright/Compile/aleste1t.dsk.gz
+Disk;1989;unknown;Compile;fmpac;msx2;Game;aleste2a;SOFTWARE/copyright/Compile/aleste2a.dsk.gz
+Disk;1989;unknown;Compile;fmpac;msx2;Game;aleste2b;SOFTWARE/copyright/Compile/aleste2b.dsk.gz
+Disk;1989;unknown;Compile;fmpac;msx2;Game;aleste2c;SOFTWARE/copyright/Compile/aleste2c.dsk.gz
+Cart;1988;unknown;Compile;fmpac;msx2;Game;aleste;SOFTWARE/copyright/Compile/aleste.rom.gz
+Disk;1989;unknown;Compile;fmpac;msx2;Game;ales2trb;SOFTWARE/copyright/Compile/ales2trb.dsk.gz
+Disk;unknown;xxxx;Compile;fmpac;msx2;Game;alestebi;SOFTWARE/copyright/Compile/alestebi.dsk.gz
+Cart;1983;Original;Compile;unknown;msx1;Game;Bee & Flower;SOFTWARE/copyright/Compile/1983/bee_flow.rom.gz
+Cart;1983;Original;Compile;unknown;msx1;Game;Exa-Innova (E.I.);SOFTWARE/copyright/Compile/1983/exinnova.rom.gz
+Cart;1984;Original;Compile;unknown;msx1;Game;Megalopolis SOS;SOFTWARE/copyright/Compile/1984/megalopo.rom.gz
+Cart;1984;Original;Compile;unknown;msx1;Game;Aqua Polis SOS;SOFTWARE/copyright/Compile/1984/aquapoli.rom.gz
+Cart;1984;Original;Compile;unknown;msx1;Game;Hustle Chumy;SOFTWARE/copyright/Compile/1984/hustlech.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;Crusader;SOFTWARE/copyright/Compile/1985/crusader.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;C SO!;SOFTWARE/copyright/Compile/1985/c-so.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;Godzillakun;SOFTWARE/copyright/Compile/1985/gojira.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;Final Justice;SOFTWARE/copyright/Compile/1985/justice.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;Championship Loderunner;SOFTWARE/copyright/Compile/1985/loderun3.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;Lunar Ball;SOFTWARE/copyright/Compile/1985/lunarbal.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;Swing (Madofuci Gaisya No Swingkun);SOFTWARE/copyright/Compile/1985/swing.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;A.E.;SOFTWARE/copyright/Compile/1985/ae.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;Choplifter;SOFTWARE/copyright/Compile/1985/choplift.rom.gz
+Cart;1985;Original;Compile;unknown;msx1;Game;Loderunner;SOFTWARE/copyright/Compile/1985/loderun1.rom.gz
+Cart;1986;Original;Compile;unknown;msx1;Game;Thexder;SOFTWARE/copyright/Compile/1986/thexder.crt.gz
+Cart;1986;Original;Compile;unknown;msx1;Game;Zanac;SOFTWARE/copyright/Compile/1986/zanac1.crt.gz
+Cart;1986;Original;Compile;unknown;msx1;Game;Zanac 2;SOFTWARE/copyright/Compile/1986/zanac2.crt.gz
+Cart;1986;Original;Compile;unknown;msx1;Game;Guardic;SOFTWARE/copyright/Compile/1986/guardic.rom.gz
+Cart;1986;Original;Compile;unknown;msx2;Game;Zanac Excellent;SOFTWARE/copyright/Compile/1986/zanac-ex.rom.gz
+Cart;1986;Original;Compile;unknown;msx1;Game;Gulkave;SOFTWARE/copyright/Compile/1986/gulkave.crt.gz
+Cart;1987;Original;Compile;fmpac;msx1;Game;Jagur;SOFTWARE/copyright/Compile/1987/jagur.rom.gz
+Cart;1987;Original;Compile;fmpac;msx1;Game;Golvellius 1 ;SOFTWARE/copyright/Compile/1987/golvelli.rom.gz
+Cart;1987;Original;Compile;fmpac;unknown;Game;Higemaru;SOFTWARE/copyright/Compile/1987/higemaru.rom.gz
+Cart;1988;Original;Compile;fmpac;msx2;Game;Aleste;SOFTWARE/copyright/Compile/1988/aleste.rom.gz
+Disk;1988;Original;Compile;fmpac;msx2;Game;Aleste 2, disk 3;SOFTWARE/copyright/Compile/1989/aleste_2_disk-c.dsk.gz
+Disk;1988;Original;Compile;fmpac;msx2;Game;Aleste 2, disk 1;SOFTWARE/copyright/Compile/1989/aleste_2_disk-a.dsk.gz
+Disk;1988;Original;Compile;fmpac;msx2;Game;Aleste 2, disk 2;SOFTWARE/copyright/Compile/1989/aleste_2_disk-b.dsk.gz
+Disk;1991;Original;Compile;fmpac;msx2;Game;Gorbys Pipeline;SOFTWARE/copyright/Compile/1991/gorby_sp.dsk.gz
+Disk;1991;Original;Compile;fmpac;msx2;Game;Puyo Puyo;SOFTWARE/copyright/Compile/1991/puyopuyo.dsk.gz
+Disk;unknown;Original;C-TNG;unknown;msx2;Compiler;Compass 1.2beta;SOFTWARE/copyright/compjoet/compas12.di2.gz
+Disk;unknown;Original;Compjoetania;mbstereo;msx2;Demo;Judgement of Sound;SOFTWARE/copyright/compjoet/judgesnd.di2.gz
+Disk;unknown;Original;Compjoetania;moonsound;msx2;Demo;Jungle Symphonies;SOFTWARE/copyright/compjoet/junglsym.di2.gz
+Disk;unknown;Original;C-TNG;moonsound;msx2;Game;SandStone;SOFTWARE/copyright/ctng/sandstone.dsk.gz
+Disk;unknown;Original;Engine;mbstereo;msx2;Game;Dizzy;SOFTWARE/copyright/engine/dizzy.di2.gz
+Disk;unknown;Original;Engine;mbstereo;msx2;Game;DASS;SOFTWARE/copyright/engine/pre-dass.di2.gz
+Disk;unknown;Original;Engine;mbstereo;msx2;Game;Dass;SOFTWARE/copyright/engine/dass.di2.gz
+Disk;unknown;Original;Engine;mbstereo;msx2;Game;DIX;SOFTWARE/copyright/engine/dix.di2.gz
+Cart;unknown;Original;Falcom;fmpac;msx2;Game;Dragon Slayer 2 / Xanadu;SOFTWARE/copyright/falcom/xanadu.rom.gz
+Disk;unknown;Original;Gamearts;fmpac;msx2;Game;firehw_a;SOFTWARE/copyright/gamearts/firehw_a.dsk.gz
+Disk;unknown;Original;Gamearts;fmpac;msx2;Game;solitaic;SOFTWARE/copyright/gamearts/solitaic.dsk.gz
+Cart;unknown;Original;Gamearts;unknown;msx1;Game;thexder;SOFTWARE/copyright/gamearts/thexder.rom.gz
+Disk;unknown;Original;Gamearts;fmpac;msx2;Game;fireha1c;SOFTWARE/copyright/gamearts/fireha1c.dsk.gz
+Disk;unknown;Original;Gamearts;fmpac;msx2;Game;fireha2;SOFTWARE/copyright/gamearts/fireha2.dsk.gz
+Disk;unknown;Original;Gamearts;fmpac;msx2;Game;firehw_b;SOFTWARE/copyright/gamearts/firehw_b.dsk.gz
+Disk;unknown;Original;Glodia;unknown;msx2;Game;Testament, disk a;SOFTWARE/copyright/glodia/testamea.dsk.gz
+Disk;unknown;Original;Glodia;unknown;msx2;Game;Testament, disk b;SOFTWARE/copyright/glodia/testameb.dsk.gz
+Cart;unknown;Original;Hal;unknown;msx1;Game;Eggerland Mystery;SOFTWARE/copyright/Hal/egger.rom.gz
+Cart;unknown;Original;Hal;unknown;msx1;Game;Eggerland 2;SOFTWARE/copyright/Hal/egger2.rom.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Athletic Land (beta?) RC700b;SOFTWARE/copyright/Konami/athland2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Comic Bakery RC714;SOFTWARE/copyright/Konami/bakery.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Baseball RC724;SOFTWARE/copyright/Konami/baseball.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Billiards / Video Hustler (OEM version) HBS-G008C;SOFTWARE/copyright/Konami/billiard.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Boxing RC736;SOFTWARE/copyright/Konami/boxing.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Cabbage Patch Kids RC716;SOFTWARE/copyright/Konami/cabbage.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Circus Charlie RC712;SOFTWARE/copyright/Konami/circus.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Crazy Train oemHBS-G006C;SOFTWARE/copyright/Konami/crtrain.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Green Beret (Konami UK) KN327;SOFTWARE/copyright/Konami/gberet.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Soccer / Football (same?) RC732b;SOFTWARE/copyright/Konami/football.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Frogger RC704;SOFTWARE/copyright/Konami/frogger.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;The Maze of Galious RC749;SOFTWARE/copyright/Konami/galious.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;The Game Master RC735;SOFTWARE/copyright/Konami/gmaster.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;The Game Master 2 (has 8kB SRAM onboard) RC755;SOFTWARE/copyright/Konami/gmaster2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Ganbare Goemon (aka Samurai) RC748;SOFTWARE/copyright/Konami/goemon.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;The Goonies RC734;SOFTWARE/copyright/Konami/goonies.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Nemesis 2 (Gradius 2) (same?) RC751c;SOFTWARE/copyright/Konami/gradius2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Contra (aka Gryzor) RC762;SOFTWARE/copyright/Konami/gryzor.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Hyper Rally RC718;SOFTWARE/copyright/Konami/hrally.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Hyper Sports 1 RC715;SOFTWARE/copyright/Konami/hsport1.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Hyper Sports 2 RC717;SOFTWARE/copyright/Konami/hsport2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Hyper Sports 3 RC733;SOFTWARE/copyright/Konami/hsport3.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Sky Jaguar RC721;SOFTWARE/copyright/Konami/jaguar.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Juno First oemHBS-G002C;SOFTWARE/copyright/Konami/juno-f.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;King Kong 2 RC745;SOFTWARE/copyright/Konami/kkong2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Knightmare RC739;SOFTWARE/copyright/Konami/knight.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Billiards / Video Hustler(same?) RC706c;SOFTWARE/copyright/Konami/konbill.ri.gz
+Disk;unknown;Original;Konami;unknown;msx2;Game;konami_2;SOFTWARE/copyright/Konami/konami_2.dsk.gz
+Disk;unknown;Original;Konami;unknown;msx2;Game;konami_4;SOFTWARE/copyright/Konami/konami_4.dsk.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Antarctic Adventure RC701;SOFTWARE/copyright/Konami/antadv.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Yie Ar Kung Fu RC725;SOFTWARE/copyright/Konami/kungfu.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Yie Ar Kung Fu 2 RC737;SOFTWARE/copyright/Konami/kungfu2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;King s Valley RC727;SOFTWARE/copyright/Konami/kvalley.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Golf RC723;SOFTWARE/copyright/Konami/k-golf.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Magical Tree (same?) RC713b;SOFTWARE/copyright/Konami/magitree.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Majutsushi (aka Mah-Jong 2) has a 8 bit D/A onboard RC765;SOFTWARE/copyright/Konami/majutusi.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Metal Gear RC750;SOFTWARE/copyright/Konami/mgear.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Solid Snake (Metal Gear 2) RC767;SOFTWARE/copyright/Konami/mgear2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Monkey Academy RC702;SOFTWARE/copyright/Konami/monkey.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Mopi Ranger RC728;SOFTWARE/copyright/Konami/mpranger.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Nemesis 2 (Gradius 2) beta version RC751b;SOFTWARE/copyright/Konami/nem2beta.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Nemesis (Gradius) RC742;SOFTWARE/copyright/Konami/nemesis1.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Nemesis 3 RC764;SOFTWARE/copyright/Konami/nemesis3.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Hyper Olympic 1  RC710;SOFTWARE/copyright/Konami/olympic1.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Hyper Olympic 2 RC711;SOFTWARE/copyright/Konami/olympic2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Parodius RC759;SOFTWARE/copyright/Konami/parodius.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Penguin Adventure RC743;SOFTWARE/copyright/Konami/penguin.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Pennant Race 2 RC766;SOFTWARE/copyright/Konami/pennant2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Ping Pong RC731;SOFTWARE/copyright/Konami/pingpong.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Pippols RC729;SOFTWARE/copyright/Konami/pippols.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Pooyan BC-M5;SOFTWARE/copyright/Konami/pooyan.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Q-Bert RC746;SOFTWARE/copyright/Konami/qbert.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Quarth RC769;SOFTWARE/copyright/Konami/quarth.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Road Fighter RC730;SOFTWARE/copyright/Konami/road.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;samurai;SOFTWARE/copyright/Konami/samurai.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Shalom (Knightmare 3) RC754;SOFTWARE/copyright/Konami/shalom.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Soccer / Football RC732;SOFTWARE/copyright/Konami/soccer.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Sparkie HBS-G001C;SOFTWARE/copyright/Konami/sparkie.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Space Manbow RC768;SOFTWARE/copyright/Konami/spmanbow.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Super Cobra RC705;SOFTWARE/copyright/Konami/sucobra.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Synthesizer (has a 8 bit D/A on board) RC741;SOFTWARE/copyright/Konami/synthe.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Tennis RC720;SOFTWARE/copyright/Konami/tennis.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Time Pilot RC703;SOFTWARE/copyright/Konami/tmpilot.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Track & Field 1 RC710b;SOFTWARE/copyright/Konami/track1.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Track & Field 2 RC711b;SOFTWARE/copyright/Konami/track2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Magical Tree RC713;SOFTWARE/copyright/Konami/tree.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Usas RC753;SOFTWARE/copyright/Konami/usas.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Usas RC753b;SOFTWARE/copyright/Konami/usas-inv.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;King s Valley 2  MSX1 RC760;SOFTWARE/copyright/Konami/valley21.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;King s Valley 2  MSX2 RC761;SOFTWARE/copyright/Konami/valley22.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Billiards / Video Hustler RC706b;SOFTWARE/copyright/Konami/vhustler.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Vampire Killer RC744;SOFTWARE/copyright/Konami/vkiller.ri.gz
+Disk;unknown;Original;Konami;unknown;msx2;Game;konamico;SOFTWARE/copyright/Konami/konamico.dsk.gz
+Disk;unknown;Original;Konami;unknown;msx2;Game;konami_1;SOFTWARE/copyright/Konami/konami_1.dsk.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Athletic Land RC700;SOFTWARE/copyright/Konami/athland1.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;F1 Spirit RC752;SOFTWARE/copyright/Konami/f1spirit.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Hinotori (aka Firebird) RC747;SOFTWARE/copyright/Konami/firebird.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;hw-star;SOFTWARE/copyright/Konami/hw-star.ri.gz
+Cart;unknown;Original;Konami;unknown;unknown;Game;Mah Jong RC707;SOFTWARE/copyright/Konami/mahjong.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Nemesis 2 (Gradius 2) RC751;SOFTWARE/copyright/Konami/nemesis2.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Pennant Race 1 RC757;SOFTWARE/copyright/Konami/pennant1.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Salamander RC758;SOFTWARE/copyright/Konami/salamand.ri.gz
+Cart;unknown;Original;Konami;unknown;msx1;Game;Twin Bee RC740;SOFTWARE/copyright/Konami/twinbee.ri.gz
+Cart;unknown;Original;Konami;unknown;msx2;Game;Vampire Killer (same?) RC744b;SOFTWARE/copyright/Konami/vam-inv.ri.gz
+Disk;unknown;Original;Konami;scca;msx2;Game;Game Collection 1 (SCC version);SOFTWARE/copyright/Konami/DISKS/gc1a-scc.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;Game Collection 1 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/gc1a-sccp.dsk.gz
+Disk;unknown;Original;Konami;scca;msx2;Game;Game Collection 1, disk B;SOFTWARE/copyright/Konami/DISKS/gc1b.dsk.gz
+Disk;unknown;Original;Konami;scca;msx2;Game;Game Collection 2 (SCC version);SOFTWARE/copyright/Konami/DISKS/gc2-scc.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;Game Collection 2 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/gc2-sccp.dsk.gz
+Disk;unknown;Original;Konami;scca;msx2;Game;Game Collection 3 (SCC version);SOFTWARE/copyright/Konami/DISKS/gc3-scc.dsk.gz
+Disk;unknown;Original;Konami;scca;msx2;Game;Game Collection 4 (SCC version);SOFTWARE/copyright/Konami/DISKS/gc4-scc.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;Game Collection 4 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/gc4-sccp.dsk.gz
+Disk;unknown;Original;Konami;scca;msx2;Game;Game Collection Special (SCC version);SOFTWARE/copyright/Konami/DISKS/gcs-scc.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;Game Collection Special (SCC+ version);SOFTWARE/copyright/Konami/DISKS/gcs-sccp.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;SD Snatcher, disk 1 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/sd1jpscp.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;SD Snatcher, disk 3 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/sd3jpscp.dsk.gz
+Disk;unknown;Original;Konami;scca,sccb;msx2;Game;Snatcher, disk 1 (SCC version);SOFTWARE/copyright/Konami/DISKS/sna1scc.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;Snatcher, disk 1 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/sna1sccp.dsk.gz
+Disk;unknown;Original;Konami;scca,sccb;msx2;Game;Snatcher, disk 2 (SCC version);SOFTWARE/copyright/Konami/DISKS/sna2scc.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;Snatcher, disk 2 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/sna2sccp.dsk.gz
+Disk;unknown;Original;Konami;scca,sccb;msx2;Game;Snatcher, disk 3 (SCC version);SOFTWARE/copyright/Konami/DISKS/snat3scc.dsk.gz
+Disk;unknown;Original;Konami;scca,sccb;msx2;Game;Uranai (Fortune Teller);SOFTWARE/copyright/Konami/DISKS/uranai.dsk.gz
+Disk;unknown;Original;Konami;fmpac,msx2plus;msx2;Game;F1 Spirit 3D Special, disk A;SOFTWARE/copyright/Konami/DISKS/f1sp3da.dsk.gz
+Disk;unknown;Original;Konami;fmpac,msx2plus;msx2;Game;F1 Spirit 3D Special, disk B;SOFTWARE/copyright/Konami/DISKS/f1sp3db.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;Game Collection 3 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/gc3-sccp.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;SD Snatcher, disk 2 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/sd2jpscp.dsk.gz
+Disk;unknown;Original;Konami;sccpa;msx2;Game;Snatcher, disk 3 (SCC+ version);SOFTWARE/copyright/Konami/DISKS/sna3sccp.dsk.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Gianna Sisters;SOFTWARE/copyright/sunrise/giannas.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Moonblaster 1.4;SOFTWARE/copyright/sunrise/mb14.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 1;SOFTWARE/copyright/sunrise/pa1.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 2, disk 1;SOFTWARE/copyright/sunrise/pa2-1.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 2, disk 2;SOFTWARE/copyright/sunrise/pa2-2.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 2, disk 3;SOFTWARE/copyright/sunrise/pa2-3.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 2, disk 4;SOFTWARE/copyright/sunrise/pa2-4.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 3, disk 1;SOFTWARE/copyright/sunrise/pa3-1.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 3, disk 2;SOFTWARE/copyright/sunrise/pa3-2.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 3, disk 3;SOFTWARE/copyright/sunrise/pa3-3.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Pumpkin Adventure 3, disk 4;SOFTWARE/copyright/sunrise/pa3-4.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;The Shrines of Enigma;SOFTWARE/copyright/sunrise/senigma.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;The Witches Revenge, disk 1;SOFTWARE/copyright/sunrise/witchs-1.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;The Witches Revenge, disk 2;SOFTWARE/copyright/sunrise/witchs-2.di2.gz
+Disk;unknown;Original;Sunrise;unknown;msx2;Game;blade;SOFTWARE/copyright/sunrise/blade.di1.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;Blade Lords;SOFTWARE/copyright/sunrise/blade-d2.di1.gz
+Disk;unknown;Original;Sunrise;unknown;msx2;Game;Moonblaster for Moonsound;SOFTWARE/copyright/sunrise/mbfms.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo;msx2;Game;The Witches Revenge, disk 3;SOFTWARE/copyright/sunrise/witchs-3.di2.gz
+Cart;unknown;Original;Taito;unknown;msx2;Game;Rastan Saga;SOFTWARE/copyright/taito/rastan.rom.gz
+Disk;unknown;Original;T&E;fmpac;msx2;Game;Undeadline;SOFTWARE/copyright/TandE/undeadli.dsk.gz
+Disk;unknown;Original;T&E;fmpac;msx2;Game;Greatest Driver, disk A;SOFTWARE/copyright/TandE/greateda.dsk.gz
+Disk;unknown;Original;T&E;fmpac;msx2;Game;Greatest Driver, disk B;SOFTWARE/copyright/TandE/greatedb.dsk.gz
+Disk;unknown;Original;Telenet;unknown;msx2;Game;Fantasm Soldier Valis 2, disk A;SOFTWARE/copyright/Telenet/fantas2a.dsk.gz
+Disk;unknown;Original;Telenet;unknown;msx2;Game;Fantasm Soldier Valis 2, disk B;SOFTWARE/copyright/Telenet/fantas2b.dsk.gz
+Disk;unknown;Original;Telenet;unknown;msx2;Game;Fantasm Soldier Valis 2, disk C;SOFTWARE/copyright/Telenet/fantas2c.dsk.gz
+Disk;unknown;Original;Telenet;unknown;msx2;Game;Fantasm Soldier Valis 2, disk D;SOFTWARE/copyright/Telenet/fantas2d.dsk.gz
+Disk;unknown;Original;Telenet;unknown;msx2;Game;Sa-Zi-Ri;SOFTWARE/copyright/Telenet/sa-zi-ri.dsk.gz
+Disk;unknown;Original;Telenet;unknown;msx2;Game;andorogy;SOFTWARE/copyright/Telenet/./SOFTWARE/copyright/Telenet/andorogy.rom.gz.gz
+Disk;unknown;Original;Telenet;unknown;msx2;Game;Columns;SOFTWARE/copyright/Telenet/columns.dsk.gz
+Disk;unknown;Original;Mayhem;mbstereo;msx2;Demo;Almost Real;SOFTWARE/donated/almost_real.dsk.gz
+Disk;1998;original;Bandwagon;unknown;msx2;Demo;Merituulen karaisemat;SOFTWARE/downloaded/bandwagon/bw-meri.dsk.gz
+Disk;2000;original;Bandwagon;unknown;msx2;Demo;Alankomaat;SOFTWARE/downloaded/bandwagon/bw-nl.dsk.gz
+Disk;1998;original;Bandwagon;unknown;msx2;Demo;Rappio;SOFTWARE/downloaded/bandwagon/bw-rappi.dsk.gz
+Disk;2001;original;Bandwagon;unknown;msx2;Demo;Riyadh;SOFTWARE/downloaded/bandwagon/bw-riya2.dsk.gz
+Disk;1998;original;Bandwagon;unknown;msx2;Demo;Elakoon vapaus;SOFTWARE/downloaded/bandwagon/bw-vaps.dsk.gz
+Disk;2000;original;Bandwagon;unknown;msx2;Demo;Vesikauhu;SOFTWARE/downloaded/bandwagon/bw-vesi.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 1;SOFTWARE/downloaded/dragondisks/dragon01.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 2;SOFTWARE/downloaded/dragondisks/dragon02.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 3;SOFTWARE/downloaded/dragondisks/dragon03.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 4;SOFTWARE/downloaded/dragondisks/dragon04.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 5;SOFTWARE/downloaded/dragondisks/dragon05.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 6;SOFTWARE/downloaded/dragondisks/dragon06.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 7;SOFTWARE/downloaded/dragondisks/dragon07.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 8;SOFTWARE/downloaded/dragondisks/dragon08.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 9;SOFTWARE/downloaded/dragondisks/dragon09.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 10;SOFTWARE/downloaded/dragondisks/dragon10.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 11;SOFTWARE/downloaded/dragondisks/dragon11.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk 12;SOFTWARE/downloaded/dragondisks/dragon12.dsk.gz
+Disk;unknown;original;Unknown;fmpac;msx2;DiskMagazine;DragonDisk Special;SOFTWARE/downloaded/dragondisks/dragonsp.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scc;msx2;Demo;Celesta;SOFTWARE/downloaded/fac/celesta.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scc;msx2;Demo;FAC Demo 1;SOFTWARE/downloaded/fac/facdemo1.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scc;msx2;Demo;FAC Demo 2;SOFTWARE/downloaded/fac/facdemo2.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scc;msx2;Demo;FAC Demo 3;SOFTWARE/downloaded/fac/facdemo3.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scc;msx2;Demo;FAC Demo 4;SOFTWARE/downloaded/fac/facdemo4.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scc;msx2;Demo;FAC Demo 5;SOFTWARE/downloaded/fac/facdemo5.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scc;msx2;Demo;Synth Power;SOFTWARE/downloaded/fac/facsnth1.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scc;msx2;Demo;Synth Power #2;SOFTWARE/downloaded/fac/facsnth2.dsk.gz
+Disk;unknown;original;Paragon;mbstereo;msx2;Game;Construction Craze;SOFTWARE/downloaded/group/concraze.dsk.gz
+Disk;unknown;original;FCS;mbstereo;msx2plus;Game;Mega Doom disk1;SOFTWARE/downloaded/group/megadoo1.dsk.gz
+Disk;unknown;original;FCS;mbstereo;msx2plus;Game;Mega Doom disk2;SOFTWARE/downloaded/group/megadoo2.dsk.gz
+Disk;unknown;original;Paragon;mbstereo;msx2;Game;Rick Dangerous;SOFTWARE/downloaded/group/rickdang.dsk.gz
+Disk;unknown;original;Olaf Benneker;mbstereo;msx2;Game;MineSweeper;SOFTWARE/downloaded/group/mineswp.dsk.gz
+Disk;unknown;original;FCS;mbstereo;msx2;Game;Quattro;SOFTWARE/downloaded/group/quattro.dsk.gz
+Disk;unknown;original;Syntax Error;mbstereo;msx2;Demo;Pulsar disk1;SOFTWARE/downloaded/group/pulsar-a.dsk.gz
+Disk;unknown;original;Syntax Error;mbstereo;msx2;Demo;Pulsar disk2;SOFTWARE/downloaded/group/pulsar-b.dsk.gz
+Disk;unknown;original;FCS;mbstereo;msx2;Demo;Synsation;SOFTWARE/downloaded/group/synsat.dsk.gz
+Disk;unknown;original;FCS;mbstereo;msx2;Demo;Turnix;SOFTWARE/downloaded/group/turnix.dsk.gz
+Disk;unknown;original;Meits;mbstereo;msx2;MusicDisk;Meits best noises 1;SOFTWARE/downloaded/group/meitsbn1.dsk.gz
+Disk;unknown;original;Meits;mbstereo;msx2;MusicDisk;Meits best noises 2;SOFTWARE/downloaded/group/meitsbn2.dsk.gz
+Disk;unknown;original;Meits;moonsound;msx2;MusicDisk;Meits best noises 2+;SOFTWARE/downloaded/group/mbn2plus.dsk.gz
+Disk;unknown;original;Meits;moonsound;msx2;MusicDisk;Meits best noises final;SOFTWARE/downloaded/group/mbnfinal.dsk.gz
+Disk;unknown;original;FCS;mbstereo;msx2;MusicDisk;C-Qensr;SOFTWARE/downloaded/group/c-qensr.dsk.gz
+Disk;unknown;original;Anma;mbstereo;msx2;Demo;ANMA amusements disk;SOFTWARE/downloaded/group2/anmamuse.dsk.gz
+Disk;unknown;original;Hegega;mbstereo;msx2;Game;Bet your life disk1;SOFTWARE/downloaded/group2/betylif1.dsk.gz
+Disk;unknown;original;Hegega;mbstereo;msx2;Game;Bet your life disk2;SOFTWARE/downloaded/group2/betylif2.dsk.gz
+Disk;unknown;original;Hegega;mbstereo;msx2;MusicDisk;Carbuncle Big Band;SOFTWARE/downloaded/group2/carbgbnd.dsk.gz
+Disk;unknown;original;Meusesoft;mbstereo;msx2;Tool;Dirsort;SOFTWARE/downloaded/group2/dirsort.dsk.gz
+Disk;unknown;original;Station;mbstereo;msx2;Demo;The Freak;SOFTWARE/downloaded/group2/freak.dsk.gz
+Disk;unknown;original;Hegega;mbstereo;msx2;Game;Gorby vs. Puyo;SOFTWARE/downloaded/group2/grbvspyo.dsk.gz
+Disk;unknown;original;Meusesoft;mbstereo;msx2;Tool;HD-Menu 3.2;SOFTWARE/downloaded/group2/hdmenu32.dsk.gz
+Disk;unknown;original;Impact;mbstereo;msx2;MusicDisk;Impact House Disk 2;SOFTWARE/downloaded/group2/impachd2.dsk.gz
+Disk;unknown;original;Impact;mbstereo;msx2;MusicDisk;Impact House Disk 3;SOFTWARE/downloaded/group2/impachd3.dsk.gz
+Disk;unknown;original;Flying Bytes;mbstereo;msx2;MusicDisk;Move the House;SOFTWARE/downloaded/group2/mthouse.dsk.gz
+Disk;unknown;original;Station;mbstereo;msx2;Demo;New Sensation;SOFTWARE/downloaded/group2/nwsenstn.dsk.gz
+Disk;unknown;original;Juan Salas;mbstereo;msx2;Tool;Paint IV;SOFTWARE/downloaded/group2/paint4.dsk.gz
+Disk;unknown;original;Anma;audio;turbor;Demo;Relax;SOFTWARE/downloaded/group2/relax.dsk.gz
+Disk;unknown;original;RMF;mbstereo;msx2;MusicDisk;RMF Music disk 1;SOFTWARE/downloaded/group2/rmfmusic.dsk.gz
+Disk;unknown;original;Fuzzy Logic;scc;msx2;MusicDisk;SCC Musix disk;SOFTWARE/downloaded/group2/sccmusix.dsk.gz
+Disk;unknown;original;Abbyss;mbstereo;msx2;Demo;Uncle in Brazil;SOFTWARE/downloaded/group2/uncle.dsk.gz
+Disk;unknown;original;MCE;mbstereo;msx2;Game;Quinch;SOFTWARE/downloaded/group4/quinch.dsk.gz
+Disk;unknown;original;NOP;mbstereo;msx2;Game;Micro Mirror Men promo;SOFTWARE/downloaded/group4/mmmpromo.dsk.gz
+Disk;unknown;original;Airborne;mbstereo;msx2;Demo;Fading away;SOFTWARE/downloaded/group4/fadeaway.dsk.gz
+Disk;unknown;original;Airborne;mbstereo;msx2;Demo;No limit disk1;SOFTWARE/downloaded/group4/nolimita.dsk.gz
+Disk;unknown;original;Airborne;mbstereo;msx2;Demo;No limit disk2;SOFTWARE/downloaded/group4/nolimitb.dsk.gz
+Disk;unknown;original;NOP;mbstereo;msx2;Demo;Unknown Reality 2.0 disk1;SOFTWARE/downloaded/group4/ur20a.dsk.gz
+Disk;unknown;original;NOP;mbstereo;msx2;Demo;Unknown Reality 2.0 disk2;SOFTWARE/downloaded/group4/ur20b.dsk.gz
+Disk;unknown;original;NOP;mbstereo;msx2;Demo;Unknown Reality 2.0 disk3;SOFTWARE/downloaded/group4/ur20c.dsk.gz
+Disk;unknown;original;Airborne;mbstereo;msx2;MusicDisk;Crystal;SOFTWARE/downloaded/group4/crystal.dsk.gz
+Disk;unknown;original;Soksoft;mbstereo;msx2;MusicDisk;Destroyer;SOFTWARE/downloaded/group4/destroyr.dsk.gz
+Disk;unknown;original;Soksoft;mbstereo;msx2;MusicDisk;Jarretel;SOFTWARE/downloaded/group4/jarretel.dsk.gz
+Disk;unknown;original;Soksoft;mbstereo;msx2;MusicDisk;Metallica;SOFTWARE/downloaded/group4/metallic.dsk.gz
+Disk;unknown;original;MCFN;mbstereo;msx2;MusicDisk;Jarretenk;SOFTWARE/downloaded/group4/jarrtenk.dsk.gz
+Disk;unknown;original;MCFN;mbstereo;msx2;MusicDisk;Soepfiskje;SOFTWARE/downloaded/group4/soepfisk.dsk.gz
+Disk;unknown;original;MAD;mbstereo;msx2;MusicDisk;Music Madness;SOFTWARE/downloaded/group4/mmadness.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 1;SOFTWARE/downloaded/honey/honey01.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 2;SOFTWARE/downloaded/honey/honey02.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 3;SOFTWARE/downloaded/honey/honey03.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 4;SOFTWARE/downloaded/honey/honey04.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 5;SOFTWARE/downloaded/honey/honey05.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 6;SOFTWARE/downloaded/honey/honey06.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 7;SOFTWARE/downloaded/honey/honey07.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 8;SOFTWARE/downloaded/honey/honey08.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 9;SOFTWARE/downloaded/honey/honey09.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 10;SOFTWARE/downloaded/honey/honey10.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 11;SOFTWARE/downloaded/honey/honey11.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 12;SOFTWARE/downloaded/honey/honey12.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 13;SOFTWARE/downloaded/honey/honey13.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 14;SOFTWARE/downloaded/honey/honey14.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 15;SOFTWARE/downloaded/honey/honey15.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 16;SOFTWARE/downloaded/honey/honey16.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 17;SOFTWARE/downloaded/honey/honey17.dsk.gz
+Disk;unknown;original;Agnes Muller;unknown;msx2;DiskMagazine;Honey Disk 18;SOFTWARE/downloaded/honey/honey18.dsk.gz
+Disk;1997;original;Lieves!Tuore;unknown;msx2;Demo;Aekrus;SOFTWARE/downloaded/lievestuore/aekrus.dsk.gz
+Disk;1997;original;Lieves!Tuore;unknown;msx2;Demo;Aatnos;SOFTWARE/downloaded/lievestuore/aatnos.dsk.gz
+Disk;1998;original;Lieves!Tuore;unknown;msx2;Demo;Avaakkus;SOFTWARE/downloaded/lievestuore/avaakkus.dsk.gz
+Disk;1998;original;Lieves!Tuore;unknown;msx2;Demo;Atselous;SOFTWARE/downloaded/lievestuore/atselous.dsk.gz
+Disk;unknown;Original;Maggoo;ram1mb;msx2;Demo;MSX 20th anniversary demo;SOFTWARE/downloaded/maggoo/msx20th.dsk.gz
+Disk;unknown;Original;Abyss;mbstereo;msx2;Game;Match Maniac;SOFTWARE/downloaded/maggoo/maniac.dsk.gz
+Cart;2003;Original;Alfonso D.C.;unknown;msx1;Game;Penguin Race;SOFTWARE/downloaded/msxdev03/prace.rom
+Cart;2003;Original;WYZ;unknown;msx1;Game;Teki Paki;SOFTWARE/downloaded/msxdev03/tekipaki.rom
+Disk;1998;original;xxx;unknown;msx2;DiskMagazine;paradis1;SOFTWARE/downloaded/msxposse/paradis1.dsk.gz
+Disk;1998;original;xxx;unknown;msx2;DiskMagazine;paradis2;SOFTWARE/downloaded/msxposse/paradis2.dsk.gz
+Disk;1998;original;xxx;unknown;msx2;DiskMagazine;paradis3;SOFTWARE/downloaded/msxposse/paradis3.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 1;SOFTWARE/downloaded/quasar/quasar01.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 2;SOFTWARE/downloaded/quasar/quasar02.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 3;SOFTWARE/downloaded/quasar/quasar03.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 4;SOFTWARE/downloaded/quasar/quasar04.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 5;SOFTWARE/downloaded/quasar/quasar05.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 6;SOFTWARE/downloaded/quasar/quasar06.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 7a;SOFTWARE/downloaded/quasar/quasar7a.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 7b;SOFTWARE/downloaded/quasar/quasar7b.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 8;SOFTWARE/downloaded/quasar/quasar8.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 9;SOFTWARE/downloaded/quasar/quasar09.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 10;SOFTWARE/downloaded/quasar/quasar10.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 11;SOFTWARE/downloaded/quasar/quasar11.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 12;SOFTWARE/downloaded/quasar/quasar12.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 13;SOFTWARE/downloaded/quasar/quasar13.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 14;SOFTWARE/downloaded/quasar/quasar14.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 15;SOFTWARE/downloaded/quasar/quasar15.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 16;SOFTWARE/downloaded/quasar/quasar16.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 17;SOFTWARE/downloaded/quasar/quasar17.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 18;SOFTWARE/downloaded/quasar/quasar18.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 19;SOFTWARE/downloaded/quasar/quasar19.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 20;SOFTWARE/downloaded/quasar/quasar20.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 21a;SOFTWARE/downloaded/quasar/quasr21a.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 21b;SOFTWARE/downloaded/quasar/quasr21b.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 22;SOFTWARE/downloaded/quasar/quasar22.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 23;SOFTWARE/downloaded/quasar/quasar23.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 24;SOFTWARE/downloaded/quasar/quasar24.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 25;SOFTWARE/downloaded/quasar/quasar25.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 26;SOFTWARE/downloaded/quasar/quasar26.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 27a;SOFTWARE/downloaded/quasar/quasar27a.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 27b;SOFTWARE/downloaded/quasar/quasar27b.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 27c;SOFTWARE/downloaded/quasar/quasar27c.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 28;SOFTWARE/downloaded/quasar/quasar28.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 29a;SOFTWARE/downloaded/quasar/quasar29a.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar 29b;SOFTWARE/downloaded/quasar/quasar29b.dsk.gz
+Diska;unknown;original;Unknown;fmpac;msx2;DiskMagazine;Quasar Special;SOFTWARE/downloaded/quasar/quasarsp.dsk.gz
+Disk;unknown;original;GHQ;unknown;msx2;DiskMagazine;Samurai Disk 1;SOFTWARE/downloaded/samurai/samurai1.dsk.gz
+Disk;unknown;original;GHQ;unknown;msx2;DiskMagazine;Samurai Disk 2;SOFTWARE/downloaded/samurai/samurai2.dsk.gz
+Disk;unknown;original;GHQ;unknown;msx2;DiskMagazine;Samurai Disk 3;SOFTWARE/downloaded/samurai/samurai3.dsk.gz
+Disk;unknown;original;GHQ;unknown;msx2;DiskMagazine;Samurai Disk 4;SOFTWARE/downloaded/samurai/samurai4.dsk.gz
+Disk;unknown;original;GHQ;unknown;msx2;DiskMagazine;Samurai Disk 5;SOFTWARE/downloaded/samurai/samurai5.dsk.gz
+Disk;unknown;original;GHQ;unknown;msx2;DiskMagazine;Samurai Disk 6;SOFTWARE/downloaded/samurai/samurai6.dsk.gz
+Disk;unknown;original;GHQ;unknown;msx2;DiskMagazine;Samurai Disk 7;SOFTWARE/downloaded/samurai/samurai7.dsk.gz
+Disk;2000;original;Moai-Tech;moonsound,fmpac;msx2;Game;Blue Warrior;SOFTWARE/downloaded/sunrise/blue.dsk.gz
+Disk;1998;original;TWZ;msxaudio;msx2;Musicdisk;Teddy's In Action;SOFTWARE/downloaded/teddywarez/tia_v12.dsk.gz
+Disk;1998;original;TWZ;moonsound;msx2;Demo;Christmas demo 1998;SOFTWARE/downloaded/teddywarez/twz_xmas.dsk.gz
+Disk;1999;original;TWZ;mbstereo;msx2;Musicdisk;Tunez 1: Garfield Edition;SOFTWARE/downloaded/teddywarez/tunez.dsk.gz
+Disk;1999;original;TWZ;scc;msx2;Musictracker;SCC Blaffer 1.0;SOFTWARE/downloaded/teddywarez/blaffer.dsk.gz
+Disk;1999;original;TWZ;msxaudio;msx2;Musicdisk;Ultra Sonic Waves;SOFTWARE/downloaded/teddywarez/usw.dsk.gz
+Disk;1999;original;TWZ;scc;msx2;Musictracker;SCC Blaffer NT;SOFTWARE/downloaded/teddywarez/blafnt.dsk.gz
+Disk;1999;original;TWZ;scc;msx2;Demo;Christmas demo 1999;SOFTWARE/downloaded/teddywarez/twzchr99.dsk.gz
+Disk;2000;original;TWZ;scc;msx2;Musicdisk;Tunez 2: Asterix Edition;SOFTWARE/downloaded/teddywarez/tunez2.dsk.gz
+Disk;2000;original;TWZ;scc;msx2;Game;Push'em;SOFTWARE/downloaded/teddywarez/pushem.dsk.gz
+Disk;2001;original;TWZ;scc;msx2;Musicdisk;Teddy's In Action 2;SOFTWARE/downloaded/teddywarez/tia2.dsk.gz
+Disk;unknown;original;umf;unknown;msx2;Game;ok fred;SOFTWARE/downloaded/umf/okfred.dsk.gz
+Disk;unknown;original;rom;unknown;msx2;DiskMagazine;ROM1;SOFTWARE/downloaded/umf/rom1.dsk.gz
+Disk;unknown;original;rom;unknown;msx2;DiskMagazine;ROM2;SOFTWARE/downloaded/umf/rom2.dsk.gz
+Disk;unknown;original;rom;unknown;msx2;DiskMagazine;ROM3;SOFTWARE/downloaded/umf/rom3.dsk.gz
+Disk;unknown;original;rom;unknown;msx2;DiskMagazine;ROM4;SOFTWARE/downloaded/umf/rom4.dsk.gz
+Disk;unknown;original;rom;unknown;msx2;DiskMagazine;ROM5;SOFTWARE/downloaded/umf/rom5.dsk.gz
+Disk;unknown;original;rom;unknown;msx2;DiskMagazine;ROM6;SOFTWARE/downloaded/umf/rom6.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;cyber;SOFTWARE/downloaded/unicorn/cyber.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;dvstator;SOFTWARE/downloaded/unicorn/dvstator.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;arklight;SOFTWARE/downloaded/unicorn/arklight.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;eon;SOFTWARE/downloaded/unicorn/eon.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;eternity;SOFTWARE/downloaded/unicorn/eternity.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;fmpaclib;SOFTWARE/downloaded/unicorn/fmpaclib.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;fndtn1a;SOFTWARE/downloaded/unicorn/fndtn1a.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;fndtn1b;SOFTWARE/downloaded/unicorn/fndtn1b.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;ironmdn;SOFTWARE/downloaded/unicorn/ironmdn.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;nightmare;SOFTWARE/downloaded/unicorn/nightmare.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;robotjox;SOFTWARE/downloaded/unicorn/robotjox.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;warwoldb;SOFTWARE/downloaded/unicorn/warwoldb.dsk.gz
+Disk;unknown;original;Unicorn;fmpac;msx2;Demo;warwrlda;SOFTWARE/downloaded/unicorn/warwrlda.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Chicago's 30;SOFTWARE/msxmania/mania001.dsk.gz
+Disk;1984;original;T&E Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Clapton 2;SOFTWARE/msxmania/mania001.dsk.gz
+Disk;1984;original;Ocean;CTRL;Philips_NMS_8250;Arcade;Hunchback;SOFTWARE/msxmania/mania001.dsk.gz
+Disk;1985;original;PSS;CTRL;Philips_NMS_8250;Arcade;Lazer Bykes;SOFTWARE/msxmania/mania001.dsk.gz
+Disk;1984;original;Software Projects;CTRL;Philips_NMS_8250;Platform;Manic Miner;SOFTWARE/msxmania/mania001.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Octagon Squad;SOFTWARE/msxmania/mania001.dsk.gz
+Disk;1988;original;Ocean;CTRL;Philips_NMS_8250;Arcade;Operation Wolf;SOFTWARE/msxmania/mania001.dsk.gz
+Disk;1986;original;Alligata;CTRL;Philips_NMS_8250;Adventure;Rocket Roger;SOFTWARE/msxmania/mania001.dsk.gz
+Disk;1986;original;US Gold;CTRL;Philips_NMS_8250;Sports;10th Frame;SOFTWARE/msxmania/mania002.dsk.gz
+Disk;1986;original;Global Software;CTRL;Philips_NMS_8250;Adventure;Attack of the Killer Tomatoes;SOFTWARE/msxmania/mania002.dsk.gz
+Disk;1986;original;Mr. Micro;CTRL;Philips_NMS_8250;Puzzle;Cubit;SOFTWARE/msxmania/mania002.dsk.gz
+Disk;1986;original;Microids;CTRL;Philips_NMS_8250;Arcade;Demonia;SOFTWARE/msxmania/mania002.dsk.gz
+Disk;1991;original;Positive;CTRL;Philips_NMS_8250;Strategic;Genghis Khan;SOFTWARE/msxmania/mania002.dsk.gz
+Disk;1984;original;PSS;CTRL;Philips_NMS_8250;Arcade;Vacuumania;SOFTWARE/msxmania/mania002.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Shoot'm Up;Winterhawk;SOFTWARE/msxmania/mania002.dsk.gz
+Disk;1985;original;Mr. Micro;CTRL;Philips_NMS_8250;Text Adventure;Zakil Wood;SOFTWARE/msxmania/mania002.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Black Beard;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;1986;original;Colin Dooley;CTRL;Philips_NMS_8250;Arcade;Desolator;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Arcade;Ghostbusters;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;1986;original;Endurance;CTRL;Philips_NMS_8250;Fighting;International Karate;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;1989;original;Positive;CTRL;Philips_NMS_8250;Arcade;Mambo;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;1984;original;SVI;CTRL;Philips_NMS_8250;Boardgame;Noughts and Crosses;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Demo;Psychedelia;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;1985;original;PSS;CTRL;Philips_NMS_8250;Arcade;Trashman;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;1989;original;Ocean;CTRL;Philips_NMS_8250;Arcade;Untouchables;SOFTWARE/msxmania/mania003.dsk.gz
+Disk;1986;original;Codemasters;CTRL;Philips_NMS_8250;Sports;BMX Simulator;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Colony;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1986;original;Kuma;CTRL;Philips_NMS_8250;Cards;Cribbage;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1985;original;Alligata;CTRL;Philips_NMS_8250;Adventure;Disc Warrior;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1985;original;Software Communications;CTRL;Philips_NMS_8250;Sports;Eddy Kidd Jump Challenge;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1985;original;Infogrames;CTRL;Philips_NMS_8250;Simulation;Galactic Mercenaries;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1984;original;Software Projects;CTRL;Philips_NMS_8250;Platform;Jet Set Willy;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1990;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Mythos;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1985;original;J. Serena;CTRL;Philips_NMS_8250;Chess;Sajedrez;SOFTWARE/msxmania/mania004.dsk.gz
+Disk;1988;original;Mastertronic;CTRL;Philips_NMS_8250;Arcade;Barbarian;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;1985;original;H. Itsui;CTRL;Philips_NMS_8250;Shoot'm Up;Hero X;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;1983;original;SVI;CTRL;Philips_NMS_8250;Arcade;Flipper Slipper;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;1988;original;Alfredo Delgado;CTRL;Philips_NMS_8250;Strategic;Final War;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;1986;original;Eaglesoft;CTRL;Philips_NMS_8250;Arcade;Fuzzball;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;1987;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Goody;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;1985;original;Eaglesoft;CTRL;Philips_NMS_8250;Chess;The Chessgame;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Video Tennis;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;1985;original;Tom Gerritsen;CTRL;Philips_NMS_8250;Adult;Yab Yum;SOFTWARE/msxmania/mania005.dsk.gz
+Disk;1985;original;PSS;CTRL;Philips_NMS_8250;Strategic;Battle for Midway;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1990;original;Zigurat;CTRL;Philips_NMS_8250;Racing;Carlos Sainz;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Simulation;F747 400b Flightsimulator;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1986;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Adventure;Future Knight;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1987;original;Ocean;CTRL;Philips_NMS_8250;Adventure;Head over Heels;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1986;original;S. Claude;CTRL;Philips_NMS_8250;Arcade;Loriciels Runner;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1987;original;AGD;CTRL;Philips_NMS_8250;Arcade;Patrullera XH-63;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1986;original;Eaglesoft;CTRL;Philips_NMS_8250;Simulation;Sprinter;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Stop the Express;SOFTWARE/msxmania/mania006.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Adventure;Auf Wiedersehen Monty;SOFTWARE/msxmania/mania007.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Blow Up;SOFTWARE/msxmania/mania007.dsk.gz
+Disk;1991;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Buggy Ranger;SOFTWARE/msxmania/mania007.dsk.gz
+Disk;1987;original;Pisc Soft;CTRL;Philips_NMS_8250;Text Adventure;Castelo Negro;SOFTWARE/msxmania/mania007.dsk.gz
+Disk;1990;original;Opera Soft;CTRL;Philips_NMS_8250;Sports;Golden Basket;SOFTWARE/msxmania/mania007.dsk.gz
+Disk;1987;original;AGD;CTRL;Philips_NMS_8250;Shoot'm Up;Hiper Tronic;SOFTWARE/msxmania/mania007.dsk.gz
+Disk;unknown;original;Garbi Soft;CTRL;Philips_NMS_8250;Arcade;Igloo;SOFTWARE/msxmania/mania007.dsk.gz
+Disk;unknown;original;MSX Gids;CTRL;Philips_NMS_8250;Cards;Klaverjassen;SOFTWARE/msxmania/mania007.dsk.gz
+Disk;1989;original;Ocean;CTRL;Philips_NMS_8250;Arcade;Batman The Movie;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Dog Fighter;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1988;original;Xortrapa Soft;CTRL;Philips_NMS_8250;Arcade;Double Dragon;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Driller Tanks;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1984;original;unknown;CTRL;Philips_NMS_8250;Adventure;Icicle Works;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1986;original;Diabolic;CTRL;Philips_NMS_8250;Arcade;Nuclear Bowls;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1984;original;Pony;CTRL;Philips_NMS_8250;Arcade;Project A;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1984;original;PSS;CTRL;Philips_NMS_8250;Shoot'm Up;Time Bandits;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1986;original;Players;CTRL;Philips_NMS_8250;Arcade;Vestron;SOFTWARE/msxmania/mania008.dsk.gz
+Disk;1986;original;US Gold;CTRL;Philips_NMS_8250;Simulation;Ace of Aces;SOFTWARE/msxmania/mania009.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Shoot'm Up;Chopper;SOFTWARE/msxmania/mania009.dsk.gz
+Disk;1986;original;Tynesoft;CTRL;Philips_NMS_8250;Sports;European Games;SOFTWARE/msxmania/mania009.dsk.gz
+Disk;1990;original;Domark;CTRL;Philips_NMS_8250;Puzzle;Klax;SOFTWARE/msxmania/mania009.dsk.gz
+Disk;1987;original;S. Weigel;CTRL;Philips_NMS_8250;Shoot'm Up;Time Fighter;SOFTWARE/msxmania/mania009.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Adventure;Venom Strikes Back;SOFTWARE/msxmania/mania009.dsk.gz
+Disk;1988;original;MSX Magazine;CTRL;Philips_NMS_8250;Shoot'm Up;Adonis;SOFTWARE/msxmania/mania010.dsk.gz
+Disk;1983;original;Sega;CTRL;Philips_NMS_8250;Arcade;Buck Rogers;SOFTWARE/msxmania/mania010.dsk.gz
+Disk;1984;original;Pony;CTRL;Philips_NMS_8250;Sports;Champions;SOFTWARE/msxmania/mania010.dsk.gz
+Disk;1988;original;Ocean;CTRL;Philips_NMS_8250;Racing;Chase HQ;SOFTWARE/msxmania/mania010.dsk.gz
+Disk;1985;original;Software Projects;CTRL;Philips_NMS_8250;Platform;Jet Set Willy 2;SOFTWARE/msxmania/mania010.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Nuts & Milk;SOFTWARE/msxmania/mania010.dsk.gz
+Disk;1988;original;Zafiro;CTRL;Philips_NMS_8250;Arcade;The A Team;SOFTWARE/msxmania/mania010.dsk.gz
+Disk;1986;original;Bug Byte;CTRL;Philips_NMS_8250;Arcade;Zoot;SOFTWARE/msxmania/mania010.dsk.gz
+Disk;1986;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Adventure;Avenger;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Breaker Breaker;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;1985;original;Mastertronic;CTRL;Philips_NMS_8250;Platform;Chiller;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;unknown;original;Orpheus;CTRL;Philips_NMS_8250;Adventure;Elidon;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Flash Gordon;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;1983;original;SVI;CTRL;Philips_NMS_8250;Shoot'm Up;Super Cross Force;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Gambling;Slot Machine;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;1987;original;Domark;CTRL;Philips_NMS_8250;Arcade;The Living Daylights;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Shoot'm Up;Void Runner;SOFTWARE/msxmania/mania011.dsk.gz
+Disk;1986;original;Orpheus;CTRL;Philips_NMS_8250;Arcade;Boulderdash;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;1983;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Donpan;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;1985;original;Quicksilva;CTRL;Philips_NMS_8250;Arcade;Glass;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Feud;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;1985;original;Terminal Software;CTRL;Philips_NMS_8250;Arcade;Lazy Jones;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;1985;original;DK Tronics;CTRL;Philips_NMS_8250;Arcade;Maziacs;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;unknown;original;Melbourne House;CTRL;Philips_NMS_8250;Text Adventure;The Hobbit;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;1986;original;Toshiba;CTRL;Philips_NMS_8250;Cards;Trumpaid;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;1985;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Zipper;SOFTWARE/msxmania/mania012.dsk.gz
+Disk;1985;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Apeman Strikes Again;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1985;original;Alligata;CTRL;Philips_NMS_8250;Platform;Blagger;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1989;original;Animagic;CTRL;Philips_NMS_8250;Arcade;Cyberbig;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1989;original;Ocean;CTRL;Philips_NMS_8250;Arcade;Hostages;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;Kick It;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Pai Panic;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1984;original;SVI;CTRL;Philips_NMS_8250;Shoot'm Up;Roger Rubbish;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Shoot'm Up;Warhead;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1986;original;Codemasters;CTRL;Philips_NMS_8250;Adventure;Vampire;SOFTWARE/msxmania/mania013.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Puzzle;Confused?;SOFTWARE/msxmania/mania014.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Sports;Darts 180;SOFTWARE/msxmania/mania014.dsk.gz
+Disk;1983;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Eric and the Floaters;SOFTWARE/msxmania/mania014.dsk.gz
+Disk;1990;original;Microprose;CTRL;Philips_NMS_8250;Simulation;F15 Strike Eagle;SOFTWARE/msxmania/mania014.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Galaxians;SOFTWARE/msxmania/mania014.dsk.gz
+Disk;1989;original;Activision;CTRL;Philips_NMS_8250;Arcade;Ghostbusters 2;SOFTWARE/msxmania/mania014.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Outland;SOFTWARE/msxmania/mania014.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Quasar;SOFTWARE/msxmania/mania014.dsk.gz
+Disk;1986;original;Orpheus;CTRL;Philips_NMS_8250;Arcade;Boulderdash 2;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1987;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Colt 36;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1985;original;Livewire;CTRL;Philips_NMS_8250;Arcade;Gridtrap;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1987;original;Activision;CTRL;Philips_NMS_8250;Arcade;Howard the Duck;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1989;original;Firebird;CTRL;Philips_NMS_8250;Billiards;Maltese Joe's Pool Challenge;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Molecule Man;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1986;original;US Gold;CTRL;Philips_NMS_8250;Racing;Outrun;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1986;original;Martech;CTRL;Philips_NMS_8250;Adult;Samantha Fox Strippoker;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1991;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Zona 0;SOFTWARE/msxmania/mania015.dsk.gz
+Disk;1985;original;Blue Ribbon Software;CTRL;Philips_NMS_8250;Arcade;Astro Plumber;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Sports;Decathlon;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;1985;original;A.C.G.;CTRL;Philips_NMS_8250;Arcade;Gunfright;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;1985;original;Nice Ideas;CTRL;Philips_NMS_8250;Arcade;Illusions;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;1986;original;Centralsoft;CTRL;Philips_NMS_8250;Arcade;Panic Junction;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;1987;original;A.C.G.;CTRL;Philips_NMS_8250;Adventure;Martianoids;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;1985;original;Activision;CTRL;Philips_NMS_8250;Arcade;Master of the Lamps;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;unknown;original;Dro Soft;CTRL;Philips_NMS_8250;Simulation;Ocean Conqueror;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;West Bank;SOFTWARE/msxmania/mania016.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Ale Hop;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1985;original;Bubble Bus;CTRL;Philips_NMS_8250;Boardgame;Boardello;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1987;original;Tyne Soft;CTRL;Philips_NMS_8250;Arcade;Cetus;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Arcade;Deathwish 3;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1986;original;Eaglesoft;CTRL;Philips_NMS_8250;Arcade;Hopper;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1985;original;Bug Byte;CTRL;Philips_NMS_8250;Arcade;Ole;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1985;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Robofrog;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Streaker;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1984;original;Kuma;CTRL;Philips_NMS_8250;Chess;Superchess;SOFTWARE/msxmania/mania017.dsk.gz
+Disk;1986;original;Livewire;CTRL;Philips_NMS_8250;Puzzle;Can of Worms;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;1986;original;CDS;CTRL;Philips_NMS_8250;Chess;Colosus Chess 4;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;1986;original;Krypton Force;CTRL;Philips_NMS_8250;Arcade;Forbidden Fruit;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;1984;original;Colpax;CTRL;Philips_NMS_8250;Shoot'm Up;Gyro Adventure;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;1987;original;Ocean;CTRL;Philips_NMS_8250;Sports;Matchday 2;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Mr. Jaws;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;1984;original;Electric Software;CTRL;Philips_NMS_8250;Arcade;Norseman;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Sports;Pelota Vasca;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;1986;original;Domark;CTRL;Philips_NMS_8250;Adventure;A View To A Kill;SOFTWARE/msxmania/mania018.dsk.gz
+Disk;1984;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Astro Rocks;SOFTWARE/msxmania/mania019.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Arcade;Bounder;SOFTWARE/msxmania/mania019.dsk.gz
+Disk;1988;original;G.S.E.;CTRL;Philips_NMS_8250;Arcade;Chubby Gristle;SOFTWARE/msxmania/mania019.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Knight Tyme;SOFTWARE/msxmania/mania019.dsk.gz
+Disk;1990;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Mad Mix 2;SOFTWARE/msxmania/mania019.dsk.gz
+Disk;1982;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Night Flight;SOFTWARE/msxmania/mania019.dsk.gz
+Disk;1983;original;Micro Cabin;CTRL;Philips_NMS_8250;Arcade;Pico Pico;SOFTWARE/msxmania/mania019.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Arcade;Spartan X;SOFTWARE/msxmania/mania019.dsk.gz
+Disk;1984;original;OEC;CTRL;Philips_NMS_8250;Arcade;Carjamboree;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1984;original;Orpheus;CTRL;Philips_NMS_8250;Sports;Darts;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1987;original;Endurance;CTRL;Philips_NMS_8250;Sports;Football Manager;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1985;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Fruity Frank;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1985;original;Anirog Software;CTRL;Philips_NMS_8250;Simulation;Flight Path 737;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1984;original;Bubble Bus;CTRL;Philips_NMS_8250;Billiards;Hustler;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1985;original;T&E Soft;CTRL;Philips_NMS_8250;RPG;Hydlide;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1986;original;T&E Soft;CTRL;Philips_NMS_8250;Pinball;Trick Boy;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1986;original;Epyx;CTRL;Philips_NMS_8250;Sports;Winter Games;SOFTWARE/msxmania/mania020.dsk.gz
+Disk;1984;original;Victor;CTRL;Philips_NMS_8250;Arcade;Amida;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1989;original;Mastertronic;CTRL;Philips_NMS_8250;Racing;Continental Circus;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1986;original;Ocean;CTRL;Philips_NMS_8250;Arcade;Donkey Kong;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Jackle & Wide;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1984;original;Zap;CTRL;Philips_NMS_8250;Arcade;Pine Applin;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1986;original;Nice Ideas;CTRL;Philips_NMS_8250;Arcade;Pyroman;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Racing;Speed King;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1986;original;Mirrorsoft;CTRL;Philips_NMS_8250;Simulation;Spitfire 40;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1987;original;Martech;CTRL;Philips_NMS_8250;Sports;Uchimata;SOFTWARE/msxmania/mania021.dsk.gz
+Disk;1986;original;Colin Jones;CTRL;Philips_NMS_8250;Arcade;Bop!;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1989;original;Microtac;CTRL;Philips_NMS_8250;Adventure;Dr. Archie;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1987;original;Dinamic;CTRL;Philips_NMS_8250;Adventure;Dustin;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1986;original;Players;CTRL;Philips_NMS_8250;Arcade;Foot Volley;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1989;original;Screen 7;CTRL;Philips_NMS_8250;Adventure;Jaws;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1986;original;Erbe Soft;CTRL;Philips_NMS_8250;Arcade;Las tres Luces de Glaurung;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1985;original;Ere Informatique;CTRL;Philips_NMS_8250;Pinball;Macadam Bumper;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1984;original;PSS;CTRL;Philips_NMS_8250;Shoot'm Up;Maxima;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1985;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Shoot'm Up;Valkyr;SOFTWARE/msxmania/mania022.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Chick Fighter;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;1984;original;Pony;CTRL;Philips_NMS_8250;Arcade;Fruit Panic;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Micky Lucky;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Ninjya Kage;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;1988;original;Zigurat;CTRL;Philips_NMS_8250;Racing;Paris Dakar;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Pretty Sheep;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Starbuggy;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Star Trek;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;1990;original;Imageworks;CTRL;Philips_NMS_8250;Adventure;Teenage Mutant Ninja Turtles;SOFTWARE/msxmania/mania023.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Break In;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;1986;original;Leisure Genius;CTRL;Philips_NMS_8250;Boardgame;Cluedo;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;1984;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;Dungeon Adventure;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;1985;original;Indescomp;CTRL;Philips_NMS_8250;Sports;Futbol;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;1984;original;unknown;CTRL;Philips_NMS_8250;Arcade;Ghostmaze;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Shoot'm Up;Hype;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;1985;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Jump Land;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;1985;original;Comptiq;CTRL;Philips_NMS_8250;Arcade;The Heist;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;unknown;original;Anco;CTRL;Philips_NMS_8250;Sports;Winter Events;SOFTWARE/msxmania/mania024.dsk.gz
+Disk;1988;original;Activision;CTRL;Philips_NMS_8250;Adventure;Aliens;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1984;original;SVI;CTRL;Philips_NMS_8250;Shoot'm Up;Castle Combat;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1985;original;Toshiba;CTRL;Philips_NMS_8250;Chess;Checkmate!;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1984;original;Neptune-Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Defender Foxx;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1984;original;Pony;CTRL;Philips_NMS_8250;Arcade;Dizzy Ball;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1986;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Adventure;Jack the Nipper;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1984;original;Electric Software;CTRL;Philips_NMS_8250;Arcade;Shark Hunter;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Skooter;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1988;original;Grandslam;CTRL;Philips_NMS_8250;Adventure;Terramex;SOFTWARE/msxmania/mania025.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;Eat It;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;1986;original;German Soft Comp;CTRL;Philips_NMS_8250;Arcade;Enemy Trap;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Sports;Footballer of the Year;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Gangman;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;unknown;original;Sony;CTRL;Philips_NMS_8250;Arcade;Hades;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Iaire;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Ice;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;1989;original;Diabolic;CTRL;Philips_NMS_8250;Arcade;Mach 3;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Cards;Video Poker;SOFTWARE/msxmania/mania026.dsk.gz
+Disk;1984;original;Electric Software;CTRL;Philips_NMS_8250;Arcade;Buzz Off!;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Chess;Chess Player;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1983;original;Sega;CTRL;Philips_NMS_8250;Arcade;Congo Bongo;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1986;original;Radarsoft;CTRL;Philips_NMS_8250;Puzzle;De Grotten van Oberon;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1985;original;Micro Cabin;CTRL;Philips_NMS_8250;Platform;Happy Fret;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1989;original;Players;CTRL;Philips_NMS_8250;Arcade;Joe Blade;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Life in the Fast Lane;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Mike Gunner;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1987;original;Mirrorsoft;CTRL;Philips_NMS_8250;Puzzle;Tetris;SOFTWARE/msxmania/mania027.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Cannon Ball;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;1986;original;Policy;CTRL;Philips_NMS_8250;Arcade;Cannon Fighter;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;1989;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;Curro Jimenez;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;1989;original;Mind Games;CTRL;Philips_NMS_8250;Arcade;Juega;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;unknown;original;PSS;CTRL;Philips_NMS_8250;Arcade;Les Flics;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Sports;Manchester United;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Hercules;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;1985;original;unknown;CTRL;Philips_NMS_8250;Arcade;Dream Runaway;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;1985;original;Orpheus;CTRL;Philips_NMS_8250;Boardgame;Triversi;SOFTWARE/msxmania/mania028.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Adventure;Jack the Nipper 2;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Arcade;Krak Out;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1985;original;CDS;CTRL;Philips_NMS_8250;Arcade;Leucocyt;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Mac Attack;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1985;original;Yellow Horn;CTRL;Philips_NMS_8250;Arcade;Red Zone;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;Scentipede;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1986;original;Orpheus;CTRL;Philips_NMS_8250;Arcade;Spy vs. Spy 2;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1989;original;Grandslam;CTRL;Philips_NMS_8250;Simulation;The Hunt for Red October;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;The Spider;SOFTWARE/msxmania/mania029.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Racing;Aspar Grand Prix Master;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1986;original;Quicksilva;CTRL;Philips_NMS_8250;Arcade;Booga-Boo;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1987;original;Juliet Software;CTRL;Philips_NMS_8250;Arcade;Cavern of Death;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1988;original;Imagine;CTRL;Philips_NMS_8250;Arcade;Dragon Ninja;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1989;original;M&E Soft;CTRL;Philips_NMS_8250;Arcade;Ghost Time;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1990;original;Nagi-P Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Mars 2;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1989;original;Positive;CTRL;Philips_NMS_8250;Racing;Mountain Bike Racer;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;Oh Shit!;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1984;original;Bug Byte;CTRL;Philips_NMS_8250;Platform;Turmoil;SOFTWARE/msxmania/mania030.dsk.gz
+Disk;1984;original;T&E Soft;CTRL;Philips_NMS_8250;Golf;3D Golf Simulation;SOFTWARE/msxmania/mania031.dsk.gz
+Disk;1987;original;Arcadia;CTRL;Philips_NMS_8250;Arcade;Arkos;SOFTWARE/msxmania/mania031.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;Bytebusters;SOFTWARE/msxmania/mania031.dsk.gz
+Disk;unknown;original;T.M.;CTRL;Philips_NMS_8250;Arcade;Carry;SOFTWARE/msxmania/mania031.dsk.gz
+Disk;1985;original;Orpheus;CTRL;Philips_NMS_8250;Boardgame;Draughts;SOFTWARE/msxmania/mania031.dsk.gz
+Disk;1985;original;Loriciels;CTRL;Philips_NMS_8250;Arcade;Mazemax;SOFTWARE/msxmania/mania031.dsk.gz
+Disk;1984;original;Sierra On-Line;CTRL;Philips_NMS_8250;Arcade;Oil's Well;SOFTWARE/msxmania/mania031.dsk.gz
+Disk;1984;original;Grandslam;CTRL;Philips_NMS_8250;Arcade;Pac Land;SOFTWARE/msxmania/mania031.dsk.gz
+Disk;1990;original;OMK Software;CTRL;Philips_NMS_8250;Arcade;Buran;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;1985;original;Casio;CTRL;Philips_NMS_8250;Arcade;Ice World;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Mad Mix;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Meteor Storm;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;1985;original;Ce-Tec International;CTRL;Philips_NMS_8250;Chess;Schach;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Sky Vision;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;1984;original;Jaleco;CTRL;Philips_NMS_8250;Arcade;Top Roller;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;1987;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Whopper Chase;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;1988;original;Animagic;CTRL;Philips_NMS_8250;Arcade;Xenon;SOFTWARE/msxmania/mania032.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Billiards;Angle Ball;SOFTWARE/msxmania/mania033.dsk.gz
+Disk;1987;original;Juliet Software;CTRL;Philips_NMS_8250;Shoot'm Up;Antares;SOFTWARE/msxmania/mania033.dsk.gz
+Disk;1984;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Coco Castle;SOFTWARE/msxmania/mania033.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Coliseum;SOFTWARE/msxmania/mania033.dsk.gz
+Disk;1984;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Fire Rescue;SOFTWARE/msxmania/mania033.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Arcade;Hero;SOFTWARE/msxmania/mania033.dsk.gz
+Disk;1987;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;The Last Mission;SOFTWARE/msxmania/mania033.dsk.gz
+Disk;1986;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Fighting;The Way of the Tiger;SOFTWARE/msxmania/mania033.dsk.gz
+Disk;1987;original;A.C.G.;CTRL;Philips_NMS_8250;Adventure;Bubbler;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1984;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Colorball;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Comet Tail;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1985;original;Mirrorsoft;CTRL;Philips_NMS_8250;Arcade;Here & There with the Mr. Men;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1987;original;US Gold;CTRL;Philips_NMS_8250;Arcade;Indiana Jones Temple of Doom;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Arcade;Pitfall;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1987;original;Ocean;CTRL;Philips_NMS_8250;Arcade;Robocop;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Arcade;River Raid;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1984;original;Casio;CTRL;Philips_NMS_8250;Arcade;Ski Command;SOFTWARE/msxmania/mania034.dsk.gz
+Disk;1987;original;Imageworks;CTRL;Philips_NMS_8250;Arcade;Blasteroids;SOFTWARE/msxmania/mania035.dsk.gz
+Disk;unknown;original;PJ Soft;CTRL;Philips_NMS_8250;Arcade;Contra;SOFTWARE/msxmania/mania035.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Arcade;Crusader;SOFTWARE/msxmania/mania035.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Capitan Sevilla;SOFTWARE/msxmania/mania035.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Killer Station;SOFTWARE/msxmania/mania035.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Theseus;SOFTWARE/msxmania/mania035.dsk.gz
+Disk;unknown;original;Codemasters;CTRL;Philips_NMS_8250;Sports;Wacky Darts;SOFTWARE/msxmania/mania035.dsk.gz
+Disk;1986;original;Electric Software;CTRL;Philips_NMS_8250;Arcade;Barnstormer;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;1989;original;Animagic;CTRL;Philips_NMS_8250;Fighting;Bronx;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;1984;original;Micro Art;CTRL;Philips_NMS_8250;Arcade;Lonesome Tank;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;unknown;original;Leisure Genius;CTRL;Philips_NMS_8250;Boardgame;Monopoly;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Pinball;Pinball Blaster;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;1984;original;Micro Cabin;CTRL;Philips_NMS_8250;Shoot'm Up;Polar Star;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;1986;original;Idealogic;CTRL;Philips_NMS_8250;Arcade;Skate Dragon;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;1985;original;Bubble Bus;CTRL;Philips_NMS_8250;Adventure;Starquake;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;1984;original;dB-Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Zexas;SOFTWARE/msxmania/mania036.dsk.gz
+Disk;1986;original;Mirrorsoft;CTRL;Philips_NMS_8250;Platform;Dynamite Dan;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;1985;original;Bothtec;CTRL;Philips_NMS_8250;Arcade;Eggy;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;unknown;original;Mr. Micro;CTRL;Philips_NMS_8250;Arcade;Mayhem;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Sports;Milk Race;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;1985;original;VB Soft;CTRL;Philips_NMS_8250;Arcade;Moon Race;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Arcade;Pitfall 2;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Shoot'm Up;Skramble;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;1985;original;Virgin;CTRL;Philips_NMS_8250;Adventure;Sorcery;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;1989;original;Mastertronic;CTRL;Philips_NMS_8250;Sports;World Cup Italia '90;SOFTWARE/msxmania/mania037.dsk.gz
+Disk;1985;original;A.C.G.;CTRL;Philips_NMS_8250;Arcade;Cyberun;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1984;original;Longman Group;CTRL;Philips_NMS_8250;Shoot'm Up;Hot Shoe;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1990;original;Zigurat;CTRL;Philips_NMS_8250;Adventure;Jungle Warrior;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1984;original;Electric Software;CTRL;Philips_NMS_8250;Racing;Le Mans;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1985;original;Crossmedia Soft;CTRL;Philips_NMS_8250;Puzzle;Mole Mole;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1991;original;Dinamic;CTRL;Philips_NMS_8250;Shoot'm Up;Megaphoenix;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1986;original;Livewire;CTRL;Philips_NMS_8250;Text Adventure;Salvage;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Simulation;Search and Rescue;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Platform;The Meaning of Life;SOFTWARE/msxmania/mania038.dsk.gz
+Disk;1985;original;Orpheus;CTRL;Philips_NMS_8250;Boardgame;Backgammon;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;1985;original;Infogrames;CTRL;Philips_NMS_8250;Adventure;Mandragore;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;1986;original;Eaglesoft;CTRL;Philips_NMS_8250;Arcade;Moon Rider;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Racing;Indy 500;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Star Fighter;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;unknown;original;CDS;CTRL;Philips_NMS_8250;Billiards;Steve Davis Snooker;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;1984;original;Quicksilva;CTRL;Philips_NMS_8250;Platform;The Snowman;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;1985;original;Monser;CTRL;Philips_NMS_8250;Arcade;Tragamanzanas;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Spiderzoid;SOFTWARE/msxmania/mania039.dsk.gz
+Disk;1986;original;Leben Pro;CTRL;Philips_NMS_8250;Sports;Animal Basketball;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1983;original;Falcom;CTRL;Philips_NMS_8250;RPG;Dragon Slayer;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Drome;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1986;original;Taito;CTRL;Philips_NMS_8250;Shoot'm Up;Gyrodine;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1992;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Hammer Boy;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Arcade;Keystone Kapers;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1983;original;Waylimit;CTRL;Philips_NMS_8250;Arcade;Midnight Building;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1985;original;Seibu;CTRL;Philips_NMS_8250;Shoot'm Up;Scion;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1986;original;Bubble Bus;CTRL;Philips_NMS_8250;Adventure;Wizard's Lair;SOFTWARE/msxmania/mania040.dsk.gz
+Disk;1984;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Actman;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;1984;original;HAL;CTRL;Philips_NMS_8250;Arcade;Balance;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;1988;original;Idealogic;CTRL;Philips_NMS_8250;Arcade;Bouncing Block;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Indian No Bouken;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Sinbad;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Arcade;Warp Warp;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;1984;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Wedding Bells;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;1991;original;Topo Soft;CTRL;Philips_NMS_8250;Sports;Tour 91;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;1988;original;unknown;CTRL;Philips_NMS_8250;Arcade;Trantor;SOFTWARE/msxmania/mania041.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Astro Marine Corps;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;unknown;original;Cross Talk;CTRL;Philips_NMS_8250;Arcade;Con-dori;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;1984;original;Programmers-3;CTRL;Philips_NMS_8250;Shoot'm Up;Exa Innova;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Shoot'm Up;Galaxian;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;1983;original;Waylimit;CTRL;Philips_NMS_8250;Arcade;Highway Star;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Arcade;Pastfinder;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Puzzle;Popcummi;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;1985;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;Space Busters;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;1985;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;The Secret Diary of Adrian Mole;SOFTWARE/msxmania/mania042.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Commando Tracer;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Cyclon;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;1986;original;Micro MSX;CTRL;Philips_NMS_8250;Shoot'm Up;Docteur Galaxie;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;1985;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;Emerald Isle;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Adventure;Masters of the Universe;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Platform;Rise Out;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;1986;original;ASCII;CTRL;Philips_NMS_8250;Racing;TZR Grand Prix Rider;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;1986;original;Indescomp;CTRL;Philips_NMS_8250;Arcade;Wrangler;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Arcade;Zoom 909;SOFTWARE/msxmania/mania043.dsk.gz
+Disk;1984;original;Activision;CTRL;Philips_NMS_8250;Arcade;Beamrider;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1985;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Buster Block;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Racing;Grand Prix World;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Hundra;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1984;original;Bandai;CTRL;Philips_NMS_8250;Arcade;Mobile Suit Gundam;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1985;original;Zap;CTRL;Philips_NMS_8250;Arcade;Payload;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1984;original;Tehkan;CTRL;Philips_NMS_8250;Shoot'm Up;Senyjo;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1989;original;Xortrapa Soft;CTRL;Philips_NMS_8250;Adventure;Vampire's Empire;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1986;original;Alligata;CTRL;Philips_NMS_8250;Arcade;Who Dares Wins 2;SOFTWARE/msxmania/mania044.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Arcade;Bank Panic;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;1990;original;unknown;CTRL;Philips_NMS_8250;Simulation;Chuck Yeager's Aft;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;1984;original;Jaleco;CTRL;Philips_NMS_8250;Shoot'm Up;D-Day;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;1984;original;Irem;CTRL;Philips_NMS_8250;Arcade;Moon Patrol;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;1986;original;Sony;CTRL;Philips_NMS_8250;Sports;Playball;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;1984;original;HAL;CTRL;Philips_NMS_8250;Pinball;Rollerball;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;1986;original;Ocean;CTRL;Philips_NMS_8250;Arcade;Tai-Pan;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;unknown;original;Comptiq;CTRL;Philips_NMS_8250;Simulation;The Dam Busters;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;1985;original;Sony;CTRL;Philips_NMS_8250;Arcade;Traffic;SOFTWARE/msxmania/mania045.dsk.gz
+Disk;1986;original;unknown;CTRL;Philips_NMS_8250;Arcade;Bomberman Special;SOFTWARE/msxmania/mania046.dsk.gz
+Disk;1985;original;Comptiq;CTRL;Philips_NMS_8250;Arcade;Bruce Lee;SOFTWARE/msxmania/mania046.dsk.gz
+Disk;1984;original;Taito;CTRL;Philips_NMS_8250;Arcade;Chack 'n Pop;SOFTWARE/msxmania/mania046.dsk.gz
+Disk;unknown;original;Casio;CTRL;Philips_NMS_8250;Arcade;Ilchon;SOFTWARE/msxmania/mania046.dsk.gz
+Disk;1989;original;US Gold;CTRL;Philips_NMS_8250;Arcade;Indiana Jones The Last Crusade;SOFTWARE/msxmania/mania046.dsk.gz
+Disk;1984;original;Taito;CTRL;Philips_NMS_8250;Arcade;Sweet Acorn;SOFTWARE/msxmania/mania046.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Shoot'm Up;Time Curb;SOFTWARE/msxmania/mania046.dsk.gz
+Disk;1983;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Turboat;SOFTWARE/msxmania/mania046.dsk.gz
+Disk;1988;original;Iber Soft;CTRL;Philips_NMS_8250;Arcade;Cosme Estible;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1984;original;Nexa Corporation;CTRL;Philips_NMS_8250;Simulation;F16 Fighting Falcon;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1985;original;Alligata;CTRL;Philips_NMS_8250;Boxing;Knockout;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1987;original;Opera Soft;CTRL;Philips_NMS_8250;Adventure;La Abadia del Crimen;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1985;original;Electric Software;CTRL;Philips_NMS_8250;Racing;Le Mans 2;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1987;original;JCC;CTRL;Philips_NMS_8250;Arcade;Merlin;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1985;original;Namcot;CTRL;Philips_NMS_8250;Golf;Mini Golf;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1985;original;Artic Computing;CTRL;Philips_NMS_8250;Platform;Mutant Monty;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1985;original;Colpax;CTRL;Philips_NMS_8250;Pinball;Pingball Maker;SOFTWARE/msxmania/mania047.dsk.gz
+Disk;1985;original;Ample;CTRL;Philips_NMS_8250;Platform;Boogie Woogie Jungle;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;1985;original;Broderbund;CTRL;Philips_NMS_8250;Arcade;Choplifter;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;1984;original;UPL;CTRL;Philips_NMS_8250;Arcade;Dorodon;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;1983;original;Jaleco;CTRL;Philips_NMS_8250;Shoot'm Up;Exerion;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;1986;original;Compile;CTRL;Philips_NMS_8250;Shoot'm Up;Guardic;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;1987;original;Endurance;CTRL;Philips_NMS_8250;Puzzle;The Eye;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;1988;original;Imagine;CTRL;Philips_NMS_8250;Racing;Wec Le Mans;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;1986;original;Tynesoft;CTRL;Philips_NMS_8250;Sports;Winter Olympics;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;unknown;original;Sega;CTRL;Philips_NMS_8250;Arcade;Zaxxon;SOFTWARE/msxmania/mania048.dsk.gz
+Disk;1985;original;Sein;CTRL;Philips_NMS_8250;RPG;Aramo;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;1984;original;HAL;CTRL;Philips_NMS_8250;Golf;Hole In One;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;1986;original;CDS;CTRL;Philips_NMS_8250;Adventure;Ice King;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;1990;original;Dro Soft;CTRL;Philips_NMS_8250;Sports;Magic Johnson's Basketball;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;1982;original;Star Craft;CTRL;Philips_NMS_8250;Shoot'm Up;Star Blazer;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;1984;original;Nexa Corporation;CTRL;Philips_NMS_8250;Simulation;Starship Simulator;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;1987;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Survivor;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Sports;MSX Swimming Game;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;1985;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Warroid;SOFTWARE/msxmania/mania049.dsk.gz
+Disk;1987;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Army Moves;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Boxing;Champion Boxing;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Ghost Flipper;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;1986;original;Bothtec;CTRL;Philips_NMS_8250;Shoot'm Up;Macross;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;1985;original;Zap;CTRL;Philips_NMS_8250;Arcade;Fairy;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;unknown;original;Crossmedia Soft;CTRL;Philips_NMS_8250;Arcade;Pegasus;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Arcade;Tank Battalion;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;1988;original;Proein Softline;CTRL;Philips_NMS_8250;Arcade;Thor;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Arcade;Zaxxon '85;SOFTWARE/msxmania/mania050.dsk.gz
+Disk;1989;original;Renato Degiovani;CTRL;Philips_NMS_8250;Text Adventure;Amazonia;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Bestial Warrior;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Machinegun Joe;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1989;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Metropolis;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1985;original;Hard Software;CTRL;Philips_NMS_8250;Billiards;Tournament Snooker;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1986;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Turmoil;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1985;original;Aackosoft;CTRL;Philips_NMS_8250;Chess;Ultra Chess;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1986;original;Pony;CTRL;Philips_NMS_8250;Shoot'm Up;Zanac;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1985;original;dB-Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Zexas Limited;SOFTWARE/msxmania/mania051.dsk.gz
+Disk;1986;original;Dinamic;CTRL;Philips_NMS_8250;Adventure;Cobra's Arc;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;1986;original;PAR;CTRL;Philips_NMS_8250;Arcade;Fly Boat;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;unknown;original;Idealogic;CTRL;Philips_NMS_8250;Arcade;Comecocos;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;1984;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Peetan;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;unknown;original;UPL;CTRL;Philips_NMS_8250;Arcade;Pipi;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;1985;original;Indescomp;CTRL;Philips_NMS_8250;Sports;Slapshot;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;1983;original;HAL;CTRL;Philips_NMS_8250;Arcade;Space Maze Attack;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Terminus;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;1989;original;Domark;CTRL;Philips_NMS_8250;Arcade;Xybots;SOFTWARE/msxmania/mania052.dsk.gz
+Disk;1986;original;Telenet;CTRL;Philips_NMS_8250;Golf;Albatross;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;1986;original;Dinamic;CTRL;Philips_NMS_8250;Text Adventure;Arquimedes XXI;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;1989;original;Iber Soft;CTRL;Philips_NMS_8250;Adventure;Casanova;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;1986;original;Bothtec;CTRL;Philips_NMS_8250;Arcade;Chima Chima;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;unknown;original;Els;CTRL;Philips_NMS_8250;Platform;Jetalf Strikes Back;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Missile Command;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;1986;original;Sega;CTRL;Philips_NMS_8250;Arcade;Ninja Princess;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Golf;Queen's Golf;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;1985;original;Indescomp;CTRL;Philips_NMS_8250;Arcade;Supertripper;SOFTWARE/msxmania/mania053.dsk.gz
+Disk;1984;original;Tecno Soft;CTRL;Philips_NMS_8250;Boardgame;Backgammon;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Boxing;Boxing;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1986;original;Radarsoft;CTRL;Philips_NMS_8250;Text Adventure;De Nachtwacht;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1987;original;Lucasfilm;CTRL;Philips_NMS_8250;Shoot'm Up;Droids;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Finders Keepers;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1984;original;Taito;CTRL;Philips_NMS_8250;Arcade;Frontline;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Shoot'm Up;Galaga;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1986;original;A.C.G.;CTRL;Philips_NMS_8250;Adventure;Pentagram;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1986;original;Konami;CTRL;Philips_NMS_8250;Arcade;Q'Bert;SOFTWARE/msxmania/mania054.dsk.gz
+Disk;1985;original;Toshiba;CTRL;Philips_NMS_8250;Shoot'm Up;Ae;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;1984;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Angelo;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;1988;original;Players;CTRL;Philips_NMS_8250;Gambling;Dizzy Dice;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;1986;original;Konami;CTRL;Philips_NMS_8250;Arcade;Green Beret;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;1986;original;Sega;CTRL;Philips_NMS_8250;Shoot'm Up;Gulkave;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;1983;original;HAL;CTRL;Philips_NMS_8250;Arcade;Super Snake;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Arcade;Thing Bounces Back;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;1986;original;Konami;CTRL;Philips_NMS_8250;Shoot'm Up;Twinbee;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;unknown;original;Infogrames;CTRL;Philips_NMS_8250;Adventure;Vera Cruz;SOFTWARE/msxmania/mania055.dsk.gz
+Disk;1985;original;Activision;CTRL;Philips_NMS_8250;Arcade;Alcazar;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1986;original;Dinamic;CTRL;Philips_NMS_8250;Adventure;Camelot Warrior;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Arcade;Circus Charlie;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Arcade;Come on Picot;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1987;original;Dro Soft;CTRL;Philips_NMS_8250;Adventure;El Cid;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1987;original;Oba Soft;CTRL;Philips_NMS_8250;Text Adventure;Platoon;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1986;original;Sprites;CTRL;Philips_NMS_8250;Arcade;Sprites Man;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1987;original;Methodic Solutions;CTRL;Philips_NMS_8250;Arcade;Time Bomb;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Turbo Girl;SOFTWARE/msxmania/mania056.dsk.gz
+Disk;1985;original;Toshiba;CTRL;Philips_NMS_8250;Arcade;B.C.'s Quest;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1986;original;Bug Byte;CTRL;Philips_NMS_8250;Arcade;Chicken Chase;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1990;original;Positive;CTRL;Philips_NMS_8250;Fighting;Choy Lee Fut Kung Fu Warrior;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1988;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;El Poder Oscuro;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1986;original;Konami;CTRL;Philips_NMS_8250;Arcade;Knightmare;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1983;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;Lords of Time;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1989;original;Robware;CTRL;Philips_NMS_8250;Arcade;Penguin Crown;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Railway;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1986;original;Taito;CTRL;Philips_NMS_8250;Arcade;The Legend of Kage;SOFTWARE/msxmania/mania057.dsk.gz
+Disk;1984;original;OEC;CTRL;Philips_NMS_8250;Shoot'm Up;Battle Cross;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Arcade;Checkers in Tan Tan;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1985;original;Vortex Software;CTRL;Philips_NMS_8250;Arcade;Highway Encounter;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1984;original;Infogrames;CTRL;Philips_NMS_8250;Arcade;Hercule;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1989;original;Imagine;CTRL;Philips_NMS_8250;Arcade;Renegade III;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1984;original;Takara;CTRL;Philips_NMS_8250;Tennis;Super Tennis;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1987;original;Juliet Software;CTRL;Philips_NMS_8250;Arcade;The Breaker;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1986;original;Dro Soft;CTRL;Philips_NMS_8250;Chess;The Chess Master 2000;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Sports;Trial Ski;SOFTWARE/msxmania/mania058.dsk.gz
+Disk;1988;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;Afteroids;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;1986;original;Omikron;CTRL;Philips_NMS_8250;Adventure;El Descubrimiento de America;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Arcade;Comic Bakery;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;unknown;original;Matsushita;CTRL;Philips_NMS_8250;Sports;MSX Baseball;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Arcade;Pippols;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Shoot'm Up;Scope On;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;1986;original;HAL;CTRL;Philips_NMS_8250;Arcade;Mobile Planet;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;unknown;original;Sein;CTRL;Philips_NMS_8250;RPG;Tritorn;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;unknown;original;Cosmos Computer;CTRL;Philips_NMS_8250;Arcade;Zaider;SOFTWARE/msxmania/mania059.dsk.gz
+Disk;1987;original;Methodic Solutions;CTRL;Philips_NMS_8250;Sports;Alpine Ski;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Arcade;Amaurote;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;1983;original;Think Soft;CTRL;Philips_NMS_8250;Arcade;Bee & Flower;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;1985;original;System Copax;CTRL;Philips_NMS_8250;Arcade;Captain Chef;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;1986;original;Juliet Software;CTRL;Philips_NMS_8250;Arcade;Johny Comomolo in 321 Fire;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;unknown;original;dB-Soft;CTRL;Philips_NMS_8250;Arcade;Flappy;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Kaeru Shooter;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;1989;original;Domark;CTRL;Philips_NMS_8250;Arcade;Licence to Kill;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;1988;original;Animagic;CTRL;Philips_NMS_8250;Strategic;War in Middle Earth;SOFTWARE/msxmania/mania060.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Arcade;Athletic Land;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;1986;original;Sony;CTRL;Philips_NMS_8250;Racing;Coaster Race;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;1987;original;Mind Games;CTRL;Philips_NMS_8250;Arcade;FX-15;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Game Over;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;1986;original;Proeco;CTRL;Philips_NMS_8250;Arcade;Globiblod;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;1985;original;Toho;CTRL;Philips_NMS_8250;Arcade;Godzilla;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;1986;original;Casio;CTRL;Philips_NMS_8250;Sports;Jockey;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Chess;Master Chess;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;1983;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Sasa;SOFTWARE/msxmania/mania061.dsk.gz
+Disk;unknown;original;Rolf Fokkens;CTRL;Philips_NMS_8250;Arcade;Break Free;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;1987;original;Gen Soft;CTRL;Philips_NMS_8250;Arcade;Cutdown;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Kinasai;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Arcade;King's Valley;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;1985;original;VB Soft;CTRL;Philips_NMS_8250;Arcade;Miraculus;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;1989;original;US Gold;CTRL;Philips_NMS_8250;Arcade;Moonwalker;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Racing;Road Fighter;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Shoot'm Up;Submarine Shooter;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Waterfalls;SOFTWARE/msxmania/mania062.dsk.gz
+Disk;1985;original;Idealogic;CTRL;Philips_NMS_8250;Arcade;Boing Boing;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1983;original;Konami;CTRL;Philips_NMS_8250;Billiards;Computer Billiards;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1984;original;Jaleco;CTRL;Philips_NMS_8250;Arcade;Dino Sourcers;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1988;original;OMK Software;CTRL;Philips_NMS_8250;Arcade;Fire Star;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Sports;Hyper Olympic 1;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1990;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Ice Breaker;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;Jet Bomber;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1984;original;Jaleco;CTRL;Philips_NMS_8250;Arcade;Ninja Kun;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1987;original;Mister Chip;CTRL;Philips_NMS_8250;Adventure;Rex Hard;SOFTWARE/msxmania/mania063.dsk.gz
+Disk;1985;original;Nice Ideas;CTRL;Philips_NMS_8250;Cards;Bridge;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1986;original;Mind Games;CTRL;Philips_NMS_8250;Arcade;Destroyer;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1985;original;Micro Land;CTRL;Philips_NMS_8250;Arcade;Hurricane;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Strategic;Invasion;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1986;original;Zap;CTRL;Philips_NMS_8250;Arcade;Midnight Brothers;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1986;original;Dinamic;CTRL;Philips_NMS_8250;Adventure;Profanation;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1984;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Tetra Horror;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1983;original;Konami;CTRL;Philips_NMS_8250;Shoot'm Up;Time Pilot;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Fighting;Yie Ar Kung Fu;SOFTWARE/msxmania/mania064.dsk.gz
+Disk;1986;original;Load N Run;CTRL;Philips_NMS_8250;Arcade;Aguas Bravas;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;1990;original;Aventuras AD;CTRL;Philips_NMS_8250;Adventure;Espacial;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;1986;original;Livewire;CTRL;Philips_NMS_8250;Arcade;Jumping Jack;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;1985;original;Activision;CTRL;Philips_NMS_8250;Arcade;Rockbolt;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;1985;original;Taito;CTRL;Philips_NMS_8250;Shoot'm Up;Space Invaders;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Strategic;Square Battle;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;1989;original;Domark;CTRL;Philips_NMS_8250;Arcade;Toobin;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;unknown;original;Skorpyd;CTRL;Philips_NMS_8250;Adventure;Underground;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;1984;original;Taito;CTRL;Philips_NMS_8250;Arcade;Xyxolog;SOFTWARE/msxmania/mania065.dsk.gz
+Disk;1990;original;Aventuras AD;CTRL;Philips_NMS_8250;Text Adventure;Diosa de Cozumel;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1989;original;Zigurat;CTRL;Philips_NMS_8250;Tennis;Emilio Sanchez Vicario;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1985;original;Comptiq;CTRL;Philips_NMS_8250;Arcade;Grog's Revenge;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1988;original;MSX Magazine;CTRL;Philips_NMS_8250;Shoot'm Up;Legion;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1985;original;Infogrames;CTRL;Philips_NMS_8250;Arcade;Les Voitures dans Autoroute;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1986;original;Eaglesoft;CTRL;Philips_NMS_8250;Arcade;Panique;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1984;original;Mr. Micro;CTRL;Philips_NMS_8250;Arcade;Punchy;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1986;original;Juliet Software;CTRL;Philips_NMS_8250;Arcade;Venganza;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1986;original;Crossmedia Soft;CTRL;Philips_NMS_8250;Arcade;Venus Fire;SOFTWARE/msxmania/mania066.dsk.gz
+Disk;1990;original;Opera Soft;CTRL;Philips_NMS_8250;Racing;Angel Nieto Pole 500;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1986;original;Taito;CTRL;Philips_NMS_8250;Arcade;Arkanoid;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Crazy Bullet;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1988;original;Addictive Games;CTRL;Philips_NMS_8250;Sports;Football Manager World Cup Ed.;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Shoot'm Up;Gutt Blaster;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Arcade;Magical Tree;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1983;original;Konami;CTRL;Philips_NMS_8250;Shoot'm Up;Super Cobra;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1983;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Telebunnie;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1988;original;Xortrapa Soft;CTRL;Philips_NMS_8250;Arcade;Triple Comando;SOFTWARE/msxmania/mania067.dsk.gz
+Disk;1990;original;Positive;CTRL;Philips_NMS_8250;Sports;African Trail Simulator;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1989;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;Comando Quatro;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1984;original;Zap;CTRL;Philips_NMS_8250;Arcade;Funky Mouse;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1985;original;Sprites;CTRL;Philips_NMS_8250;Platform;Infernal Miner;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1989;original;Experience Software;CTRL;Philips_NMS_8250;Arcade;Maze of the Black Spider;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1984;original;Longman Group;CTRL;Philips_NMS_8250;Arcade;Oh Mummy;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1987;original;Nippon Dexter;CTRL;Philips_NMS_8250;Arcade;Strange Loop;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1986;original;Bug Byte;CTRL;Philips_NMS_8250;Adventure;Time Trax;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Fighting;Yie Ar Kung Fu 2;SOFTWARE/msxmania/mania068.dsk.gz
+Disk;1986;original;Ocean;CTRL;Philips_NMS_8250;Adventure;Batman;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Freddy Hardest South Manhattan;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;1985;original;Philips;CTRL;Philips_NMS_8250;Arcade;Geometrias;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;1985;original;A.C.G.;CTRL;Philips_NMS_8250;Adventure;Night Shade;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;1986;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Pashka;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;1983;original;T&E Soft;CTRL;Philips_NMS_8250;Arcade;Pyramid Warp;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;1985;original;Dinamic;CTRL;Philips_NMS_8250;Boxing;Rocky;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Shoot'm Up;Sky Jaguar;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Pinball;Score 3020;SOFTWARE/msxmania/mania069.dsk.gz
+Disk;unknown;original;Gary James Gray;CTRL;Philips_NMS_8250;Arcade;Attacked;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Demand;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Sports;Hyper Olympic 2;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;1985;original;Mind Games;CTRL;Philips_NMS_8250;Sports;Hyperball;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;1985;original;Toshiba;CTRL;Philips_NMS_8250;Shoot'm Up;Moonsweeper;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Navy Moves;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Pharao's Revenge;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;1983;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Poppaq the Fish;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;1986;original;Bug Byte;CTRL;Philips_NMS_8250;Shoot'm Up;Sky Hawk;SOFTWARE/msxmania/mania070.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Strategic;Bokosuka Wars;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;1989;original;Positive;CTRL;Philips_NMS_8250;Pinball;Enchanted;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;unknown;original;Dk Tronics;CTRL;Philips_NMS_8250;Simulation;Minder;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;1985;original;Pixel Co.;CTRL;Philips_NMS_8250;Adventure;Neo-Z;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;1990;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;Power and Magic;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;1985;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Spooks and Ladders;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Arcade;Survivors;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Tennis;Tennis;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;unknown;original;ASCII;CTRL;Philips_NMS_8250;RPG;The Black Onyx;SOFTWARE/msxmania/mania071.dsk.gz
+Disk;1984;original;Casio;CTRL;Philips_NMS_8250;Sports;Baseball;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1984;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Binary Land;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1986;original;Martech;CTRL;Philips_NMS_8250;Arcade;Cosmic Shock Absorber;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Sports;Emilio Butraguevo Futbol;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Sports;Hyper Sports 1;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1987;original;Mind Games;CTRL;Philips_NMS_8250;Racing;Indoor Race;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1986;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Nonamed;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1986;original;Eaglesoft;CTRL;Philips_NMS_8250;Arcade;Snake It;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Wells & Fargo;SOFTWARE/msxmania/mania072.dsk.gz
+Disk;1987;original;Genesis Soft;CTRL;Philips_NMS_8250;Arcade;Bloody;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;1984;original;Taito;CTRL;Philips_NMS_8250;Arcade;Choro Q;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;1985;original;Indescomp;CTRL;Philips_NMS_8250;Arcade;Dip Dip;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Shoot'm Up;Final Justice;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;1993;original;Electromagic;CTRL;Philips_NMS_8250;Arcade;Gunstreet;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;unknown;original;Matias MSX Software;CTRL;Philips_NMS_8250;Text Adventure;Horror en Amityville;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;1990;original;Grandslam;CTRL;Philips_NMS_8250;Arcade;Running Man;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Adventure;Temptations;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;1989;original;Accolade;CTRL;Philips_NMS_8250;Racing;Test Drive 2;SOFTWARE/msxmania/mania073.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Arcade;Antarctic Adventure;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;1984;original;B.U.G.;CTRL;Philips_NMS_8250;Chess;Chess;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Cosmic Sheriff;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Shoot'm Up;Danger X4;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Adventure;El Mundo Perdido;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;unknown;original;OMK Software;CTRL;Philips_NMS_8250;Arcade;Lady Safari;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;1985;original;Hudson;CTRL;Philips_NMS_8250;Shoot'm Up;Star Force;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Star Wars;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;1986;original;unknown;CTRL;Philips_NMS_8250;Arcade;Trebol;SOFTWARE/msxmania/mania074.dsk.gz
+Disk;1984;original;Bothtec;CTRL;Philips_NMS_8250;Arcade;Anty;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;1984;original;Tsuburaya;CTRL;Philips_NMS_8250;Arcade;Bandai;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;1987;original;Juliet Software;CTRL;Philips_NMS_8250;Shoot'm Up;Eagle;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;1986;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;El Misterio del Nilo;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;1985;original;Kuma;CTRL;Philips_NMS_8250;Shoot'm Up;Galaxia;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;unknown;original;Manhattan Transfer;CTRL;Philips_NMS_8250;Shoot'm Up;Marcianos;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Arcade;Mopi Ranger;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Police Academy;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Robot Wars;SOFTWARE/msxmania/mania075.dsk.gz
+Disk;1987;original;Fangsoft;CTRL;Philips_NMS_8250;Arcade;Acrobatas;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1984;original;Compile;CTRL;Philips_NMS_8250;Arcade;Chumy Chustle;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1984;original;Toshiba;CTRL;Philips_NMS_8250;Shoot'm Up;Flash Splash;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Golf;Golf;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1988;original;Iber Soft;CTRL;Philips_NMS_8250;Arcade;Habilit;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1984;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;O'Mac Farmer;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1983;original;Sony;CTRL;Philips_NMS_8250;Boardgame;Othello;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Rock'n Roller;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1990;original;Delta;CTRL;Philips_NMS_8250;Arcade;Tuma 7;SOFTWARE/msxmania/mania076.dsk.gz
+Disk;1984;original;Aackosoft;CTRL;Philips_NMS_8250;Shoot'm Up;Alpha Blaster;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;1984;original;Hudson;CTRL;Philips_NMS_8250;Sports;Baseball Craze;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;1986;original;Casio;CTRL;Philips_NMS_8250;Shoot'm Up;Exoide-Z;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;unknown;original;Dro Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Hypsys;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;1986;original;Sony;CTRL;Philips_NMS_8250;Arcade;MSX Panic;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Cards;Poker;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;unknown;original;Software Projects;CTRL;Philips_NMS_8250;Sports;Show and Jump;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Star Road;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Arcade;The Police Story;SOFTWARE/msxmania/mania077.dsk.gz
+Disk;1989;original;Loriciels;CTRL;Philips_NMS_8250;Arcade;Bumpy;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1989;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Gonzalez;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Racing;Hyper Rally;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Arcade;Monkey Academy;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Panel Panic;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1985;original;ASCII;CTRL;Philips_NMS_8250;Golf;Queen's Golf Training Center;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1983;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;Snowball;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1986;original;Policy;CTRL;Philips_NMS_8250;Shoot'm Up;Skull;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Squish'em;SOFTWARE/msxmania/mania078.dsk.gz
+Disk;1990;original;Positive;CTRL;Philips_NMS_8250;Arcade;Amo del Mundo;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;1984;original;Toshiba;CTRL;Philips_NMS_8250;Arcade;Blockade Runner;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;1985;original;Philips;CTRL;Philips_NMS_8250;Chess;Chessmaster;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Sports;Hyper Sports 2;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;North Sea Helicopter;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;1986;original;Players;CTRL;Philips_NMS_8250;Arcade;Sea King;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;1984;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Suparobo;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Takeru Densetsu;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;1989;original;Icon Design;CTRL;Philips_NMS_8250;Arcade;Terrorpods;SOFTWARE/msxmania/mania079.dsk.gz
+Disk;1986;original;Martech;CTRL;Philips_NMS_8250;Sports;Brain Jacks Superstar Challenge;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1985;original;unknown;CTRL;Philips_NMS_8250;Arcade;Fighting Rider;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1987;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Freddy Hardest;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1983;original;Konami;CTRL;Philips_NMS_8250;Arcade;Frogger;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1983;original;Nabu Network;CTRL;Philips_NMS_8250;Arcade;Helitank;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1984;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Jump Coaster;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1987;original;Artificial Inc;CTRL;Philips_NMS_8250;Arcade;Splash;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1987;original;Erbe Soft;CTRL;Philips_NMS_8250;Arcade;The Wall;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1988;original;Iber Soft;CTRL;Philips_NMS_8250;Arcade;Zond;SOFTWARE/msxmania/mania080.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Cosmo;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;1986;original;SVI;CTRL;Philips_NMS_8250;Arcade;Diamond Luis 1;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;1988;original;Genesis Soft;CTRL;Philips_NMS_8250;Chess;Mega Chess;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;1984;original;Compile;CTRL;Philips_NMS_8250;Arcade;Megalopolis SOS;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Arcade;Pac Man;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Planet Earth;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;1988;original;Iber Soft;CTRL;Philips_NMS_8250;Arcade;Sabrina;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;1990;original;Opera Soft;CTRL;Philips_NMS_8250;Adventure;Sirwood;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Shoot'm Up;Space Busters;SOFTWARE/msxmania/mania081.dsk.gz
+Disk;1986;original;Max B.C.C.;CTRL;Philips_NMS_8250;Adventure;Alien 8;SOFTWARE/msxmania/mania082.dsk.gz
+Disk;1989;original;Nemesis Soft;CTRL;Philips_NMS_8250;Text Adventure;Danger Mouse;SOFTWARE/msxmania/mania082.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Exchanger;SOFTWARE/msxmania/mania082.dsk.gz
+Disk;1985;original;Lothorien;CTRL;Philips_NMS_8250;Strategic;Panzer Attack;SOFTWARE/msxmania/mania082.dsk.gz
+Disk;1990;original;The Sales Curve;CTRL;Philips_NMS_8250;Shoot'm Up;Saint Dragon;SOFTWARE/msxmania/mania082.dsk.gz
+Disk;1986;original;Visiogame;CTRL;Philips_NMS_8250;Platform;Small Jones;SOFTWARE/msxmania/mania082.dsk.gz
+Disk;1984;original;Kuma;CTRL;Philips_NMS_8250;Shoot'm Up;Star Avenger;SOFTWARE/msxmania/mania082.dsk.gz
+Disk;1988;original;Grandslam;CTRL;Philips_NMS_8250;Arcade;The Flintstones;SOFTWARE/msxmania/mania082.dsk.gz
+Disk;1988;original;Palace Software;CTRL;Philips_NMS_8250;Arcade;Barbarian 2;SOFTWARE/msxmania/mania083.dsk.gz
+Disk;1988;original;MSX Gids;CTRL;Philips_NMS_8250;Boardgame;Het Damspel;SOFTWARE/msxmania/mania083.dsk.gz
+Disk;1984;original;Zap;CTRL;Philips_NMS_8250;Arcade;Manes;SOFTWARE/msxmania/mania083.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Shoot'm Up;Science Fiction;SOFTWARE/msxmania/mania083.dsk.gz
+Disk;1987;original;Topo Soft;CTRL;Philips_NMS_8250;Adventure;Spirits;SOFTWARE/msxmania/mania083.dsk.gz
+Disk;1985;original;Electra;CTRL;Philips_NMS_8250;Racing;Super Racer;SOFTWARE/msxmania/mania083.dsk.gz
+Disk;1988;original;System 4;CTRL;Philips_NMS_8250;Arcade;Tension;SOFTWARE/msxmania/mania083.dsk.gz
+Disk;1988;original;Genesis Soft;CTRL;Philips_NMS_8250;Arcade;The Rampart;SOFTWARE/msxmania/mania083.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Alcyon;SOFTWARE/msxmania/mania084.dsk.gz
+Disk;1983;original;Melbourne House;CTRL;Philips_NMS_8250;Text Adventure;Classic Adventure;SOFTWARE/msxmania/mania084.dsk.gz
+Disk;1990;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Gremlins 2;SOFTWARE/msxmania/mania084.dsk.gz
+Disk;1987;original;Omikron;CTRL;Philips_NMS_8250;Pinball;Magic Pinball;SOFTWARE/msxmania/mania084.dsk.gz
+Disk;1984;original;Universal;CTRL;Philips_NMS_8250;Arcade;Mr. Do's Wildride;SOFTWARE/msxmania/mania084.dsk.gz
+Disk;1984;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Pinky Chase;SOFTWARE/msxmania/mania084.dsk.gz
+Disk;1988;original;PJ Soft;CTRL;Philips_NMS_8250;Arcade;Sabotaje;SOFTWARE/msxmania/mania084.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Tawara;SOFTWARE/msxmania/mania084.dsk.gz
+Disk;1983;original;MIA;CTRL;Philips_NMS_8250;Arcade;Becky;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;1984;original;Enix;CTRL;Philips_NMS_8250;Arcade;Doordoor;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;1984;original;Colpax;CTRL;Philips_NMS_8250;Boardgame;Mr. Gomoku;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;1988;original;Animagic;CTRL;Philips_NMS_8250;Arcade;Obliterator;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;1991;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Poogaboo;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;1988;original;Iber Soft;CTRL;Philips_NMS_8250;Adventure;Post Mortem;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;1987;original;Arcadia;CTRL;Philips_NMS_8250;Arcade;Road Wars;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Space Rescue;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Sports;Volley Ball;SOFTWARE/msxmania/mania085.dsk.gz
+Disk;1989;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Corsarios;SOFTWARE/msxmania/mania086.dsk.gz
+Disk;1990;original;Opera Soft;CTRL;Philips_NMS_8250;Boxing;Boxeo Poli Diaz;SOFTWARE/msxmania/mania086.dsk.gz
+Disk;1988;original;US Gold;CTRL;Philips_NMS_8250;Arcade;Psycho Pig;SOFTWARE/msxmania/mania086.dsk.gz
+Disk;1989;original;Realtime Software;CTRL;Philips_NMS_8250;Shoot'm Up;Space Shot;SOFTWARE/msxmania/mania086.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Racing;Speedboat Racer;SOFTWARE/msxmania/mania086.dsk.gz
+Disk;1990;original;Makottoto;CTRL;Philips_NMS_8250;Shoot'm Up;Spirit Power;SOFTWARE/msxmania/mania086.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Star Soldier;SOFTWARE/msxmania/mania086.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Super Doors;SOFTWARE/msxmania/mania086.dsk.gz
+Disk;1983;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Candoo Ninja;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Cytoplasm;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;1984;original;Toshiba;CTRL;Philips_NMS_8250;Boardgame;Go;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;1986;original;Micros ID;CTRL;Philips_NMS_8250;Arcade;Micro Man;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Mutant Zone;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;1985;original;Load N Run;CTRL;Philips_NMS_8250;Platform;Phantasma;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Sailors Delight;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Smack Wacker;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;1986;original;Philips;CTRL;Philips_NMS_8250;Simulation;La Coupe de l'America;SOFTWARE/msxmania/mania087.dsk.gz
+Disk;unknown;original;Cosmos Computer;CTRL;Philips_NMS_8250;RPG;Courageous Perseus;SOFTWARE/msxmania/mania088.dsk.gz
+Disk;unknown;original;dB-Soft;CTRL;Philips_NMS_8250;Arcade;Flappy;SOFTWARE/msxmania/mania088.dsk.gz
+Disk;1985;original;Bug Byte;CTRL;Philips_NMS_8250;Text Adventure;Journey Centre of the Earth;SOFTWARE/msxmania/mania088.dsk.gz
+Disk;1988;original;Iber Soft;CTRL;Philips_NMS_8250;Arcade;Legend;SOFTWARE/msxmania/mania088.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Mateo;SOFTWARE/msxmania/mania088.dsk.gz
+Disk;1988;original;Firebird;CTRL;Philips_NMS_8250;Arcade;Pasteman;SOFTWARE/msxmania/mania088.dsk.gz
+Disk;1986;original;Idealogic;CTRL;Philips_NMS_8250;Adventure;Roma;SOFTWARE/msxmania/mania088.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Arcade;The Protector;SOFTWARE/msxmania/mania088.dsk.gz
+Disk;1986;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Cosa Nostra;SOFTWARE/msxmania/mania089.dsk.gz
+Disk;1990;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;RAM;SOFTWARE/msxmania/mania089.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Arcade;Raster Scan;SOFTWARE/msxmania/mania089.dsk.gz
+Disk;1985;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;Red Moon;SOFTWARE/msxmania/mania089.dsk.gz
+Disk;1987;original;Action Soft;CTRL;Philips_NMS_8250;Arcade;Starbyte;SOFTWARE/msxmania/mania089.dsk.gz
+Disk;1984;original;PMCG Soft;CTRL;Philips_NMS_8250;Racing;Trans-Europe Rallye;SOFTWARE/msxmania/mania089.dsk.gz
+Disk;1987;original;Leisure Genius;CTRL;Philips_NMS_8250;Boardgame;Trivial Pursuit;SOFTWARE/msxmania/mania089.dsk.gz
+Disk;1985;original;Casio;CTRL;Philips_NMS_8250;Golf;World Open;SOFTWARE/msxmania/mania089.dsk.gz
+Disk;1985;original;VB Soft;CTRL;Philips_NMS_8250;Arcade;Break Out;SOFTWARE/msxmania/mania090.dsk.gz
+Disk;1984;original;Pony;CTRL;Philips_NMS_8250;Arcade;Dizzy Balloon;SOFTWARE/msxmania/mania090.dsk.gz
+Disk;1987;original;Dinamic;CTRL;Philips_NMS_8250;Text Adventure;Don Quijote;SOFTWARE/msxmania/mania090.dsk.gz
+Disk;1985;original;unknown;CTRL;Philips_NMS_8250;Arcade;MSX-PAC4;SOFTWARE/msxmania/mania090.dsk.gz
+Disk;1984;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;Return to Eden;SOFTWARE/msxmania/mania090.dsk.gz
+Disk;1987;original;Mastertronic;CTRL;Philips_NMS_8250;Adventure;Stormbringer;SOFTWARE/msxmania/mania090.dsk.gz
+Disk;1986;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;The Price of Magik;SOFTWARE/msxmania/mania090.dsk.gz
+Disk;1989;original;Topo Soft;CTRL;Philips_NMS_8250;Sports;Drazen Petrovic Basket;SOFTWARE/msxmania/mania091.dsk.gz
+Disk;1985;original;Broderbund;CTRL;Philips_NMS_8250;Platform;Loderunner;SOFTWARE/msxmania/mania091.dsk.gz
+Disk;1986;original;Adam Waring;CTRL;Philips_NMS_8250;Chess;MSX Chess;SOFTWARE/msxmania/mania091.dsk.gz
+Disk;1984;original;unknown;CTRL;Philips_NMS_8250;Arcade;Pachinko;SOFTWARE/msxmania/mania091.dsk.gz
+Disk;1988;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Sol Negro;SOFTWARE/msxmania/mania091.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Target Plus;SOFTWARE/msxmania/mania091.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Una's Lair;SOFTWARE/msxmania/mania091.dsk.gz
+Disk;1984;original;Colpax;CTRL;Philips_NMS_8250;Racing;Water Driver;SOFTWARE/msxmania/mania091.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Capitan Trueno;SOFTWARE/msxmania/mania092.dsk.gz
+Disk;1985;original;Level 9 Computing;CTRL;Philips_NMS_8250;Text Adventure;Colossal Adventure;SOFTWARE/msxmania/mania092.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Marine Battle;SOFTWARE/msxmania/mania092.dsk.gz
+Disk;1991;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;Piso Zero;SOFTWARE/msxmania/mania092.dsk.gz
+Disk;1986;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Arcade;Trailblazer;SOFTWARE/msxmania/mania092.dsk.gz
+Disk;unknown;original;Bazar Catalunya;CTRL;Philips_NMS_8250;Arcade;Visitor;SOFTWARE/msxmania/mania092.dsk.gz
+Disk;1983;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Kung Fu Master;SOFTWARE/msxmania/mania093.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Pairs;SOFTWARE/msxmania/mania093.dsk.gz
+Disk;1985;original;Tecno Soft;CTRL;Philips_NMS_8250;Arcade;Panda;SOFTWARE/msxmania/mania093.dsk.gz
+Disk;1989;original;Topo Soft;CTRL;Philips_NMS_8250;Sports;Perico Delgado;SOFTWARE/msxmania/mania093.dsk.gz
+Disk;1988;original;Iber Soft;CTRL;Philips_NMS_8250;Arcade;Race City;SOFTWARE/msxmania/mania093.dsk.gz
+Disk;1982;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Saurusland;SOFTWARE/msxmania/mania093.dsk.gz
+Disk;1986;original;Idealogic;CTRL;Philips_NMS_8250;Chess;War Chess;SOFTWARE/msxmania/mania093.dsk.gz
+Disk;1988;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;Humphrey;SOFTWARE/msxmania/mania094.dsk.gz
+Disk;1985;original;Eaglesoft;CTRL;Philips_NMS_8250;Arcade;Oh No!;SOFTWARE/msxmania/mania094.dsk.gz
+Disk;1990;original;Dinamic;CTRL;Philips_NMS_8250;Tennis;Proffesional Tennis Simulator;SOFTWARE/msxmania/mania094.dsk.gz
+Disk;1986;original;Nice Ideas;CTRL;Philips_NMS_8250;Cards;Tarot;SOFTWARE/msxmania/mania094.dsk.gz
+Disk;1990;original;Infogrames;CTRL;Philips_NMS_8250;Arcade;The Light Corridor;SOFTWARE/msxmania/mania094.dsk.gz
+Disk;1989;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Ulises;SOFTWARE/msxmania/mania094.dsk.gz
+Disk;1989;original;Aventuras AD;CTRL;Philips_NMS_8250;Text Adventure;Aventura Original;SOFTWARE/msxmania/mania095.dsk.gz
+Disk;1985;original;Leisure Genius;CTRL;Philips_NMS_8250;Boardgame;Computer Scrabble;SOFTWARE/msxmania/mania095.dsk.gz
+Disk;1985;original;Bandai;CTRL;Philips_NMS_8250;Fighting;Muscle Man;SOFTWARE/msxmania/mania095.dsk.gz
+Disk;1987;original;Dinamic;CTRL;Philips_NMS_8250;Shoot'm Up;Phantis;SOFTWARE/msxmania/mania095.dsk.gz
+Disk;1986;original;Stratford;CTRL;Philips_NMS_8250;Shoot'm Up;Skygaldo;SOFTWARE/msxmania/mania095.dsk.gz
+Disk;1986;original;Toshiba;CTRL;Philips_NMS_8250;Pinball;Square Dancer;SOFTWARE/msxmania/mania095.dsk.gz
+Disk;1988;original;Pisc Soft;CTRL;Philips_NMS_8250;Text Adventure;A Maldicao da Vila Sinistra;SOFTWARE/msxmania/mania096.dsk.gz
+Disk;1985;original;Zap;CTRL;Philips_NMS_8250;Shoot'm Up;Cosmo-Explorer;SOFTWARE/msxmania/mania096.dsk.gz
+Disk;1987;original;Walther Miller;CTRL;Philips_NMS_8250;Arcade;Ewoks and the Bandelion Warriors;SOFTWARE/msxmania/mania096.dsk.gz
+Disk;1990;original;Topo Soft;CTRL;Philips_NMS_8250;Adventure;La Espada Sagrada;SOFTWARE/msxmania/mania096.dsk.gz
+Disk;1986;original;Zigurat;CTRL;Philips_NMS_8250;Adventure;Sir Fred;SOFTWARE/msxmania/mania096.dsk.gz
+Disk;1985;original;Toshiba;CTRL;Philips_NMS_8250;Arcade;Tensai Rabbian;SOFTWARE/msxmania/mania096.dsk.gz
+Disk;1985;original;Broderbund;CTRL;Philips_NMS_8250;Platform;Loderunner 2;SOFTWARE/msxmania/mania097.dsk.gz
+Disk;1985;original;Stratford;CTRL;Philips_NMS_8250;Arcade;Outroyd;SOFTWARE/msxmania/mania097.dsk.gz
+Disk;1985;original;Budgies;CTRL;Philips_NMS_8250;Sports;Superbowl;SOFTWARE/msxmania/mania097.dsk.gz
+Disk;unknown;original;Revolution Software;CTRL;Philips_NMS_8250;Arcade;Super Gallo;SOFTWARE/msxmania/mania097.dsk.gz
+Disk;1989;original;Topo Soft;CTRL;Philips_NMS_8250;Adventure;Viaje al Centro de la Tierra;SOFTWARE/msxmania/mania097.dsk.gz
+Disk;1986;original;Mind Games;CTRL;Philips_NMS_8250;Arcade;Adel;SOFTWARE/msxmania/mania098.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Sports;Champion Soccer;SOFTWARE/msxmania/mania098.dsk.gz
+Disk;1989;original;Positive;CTRL;Philips_NMS_8250;Arcade;Dimension Omega;SOFTWARE/msxmania/mania098.dsk.gz
+Disk;1987;original;Hot-B;CTRL;Philips_NMS_8250;Shoot'm Up;Kaleidoscope Special;SOFTWARE/msxmania/mania098.dsk.gz
+Disk;1986;original;Casio;CTRL;Philips_NMS_8250;Arcade;The Seal of Hades;SOFTWARE/msxmania/mania098.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Pinball;Thunder Ball;SOFTWARE/msxmania/mania098.dsk.gz
+Disk;1988;original;Magic Bytes;CTRL;Philips_NMS_8250;Arcade;Tom & Jerry;SOFTWARE/msxmania/mania098.dsk.gz
+Disk;1989;original;Erbe Soft;CTRL;Philips_NMS_8250;Sports;Butragueno 2 Campeonato;SOFTWARE/msxmania/mania099.dsk.gz
+Disk;1986;original;HAL;CTRL;Philips_NMS_8250;Arcade;Inspecteur Z;SOFTWARE/msxmania/mania099.dsk.gz
+Disk;1989;original;Activision;CTRL;Philips_NMS_8250;Racing;Power Drift;SOFTWARE/msxmania/mania099.dsk.gz
+Disk;1986;original;Animagic;CTRL;Philips_NMS_8250;Arcade;Soldier of Light;SOFTWARE/msxmania/mania099.dsk.gz
+Disk;1987;original;Juliet Software;CTRL;Philips_NMS_8250;Arcade;Stop Ball;SOFTWARE/msxmania/mania099.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Adventure;Tuareg;SOFTWARE/msxmania/mania099.dsk.gz
+Disk;1985;original;Broderbund;CTRL;Philips_NMS_8250;Platform;Championship Loderunner;SOFTWARE/msxmania/mania100.dsk.gz
+Disk;1986;original;Namcot;CTRL;Philips_NMS_8250;Arcade;Druaga;SOFTWARE/msxmania/mania100.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Arcade;Flicky;SOFTWARE/msxmania/mania100.dsk.gz
+Disk;1986;original;Mind Games;CTRL;Philips_NMS_8250;Arcade;Leonard;SOFTWARE/msxmania/mania100.dsk.gz
+Disk;1987;original;Dinamic;CTRL;Philips_NMS_8250;Adventure;Phantomas 2;SOFTWARE/msxmania/mania100.dsk.gz
+Disk;1990;original;Zigurat;CTRL;Philips_NMS_8250;Racing;Sito Pons;SOFTWARE/msxmania/mania100.dsk.gz
+Disk;1988;original;Zafiro;CTRL;Philips_NMS_8250;Arcade;Time Out;SOFTWARE/msxmania/mania100.dsk.gz
+Disk;1988;original;Proein Softline;CTRL;Philips_NMS_8250;Text Adventure;Abracadabra;SOFTWARE/msxmania/mania101.dsk.gz
+Disk;1984;original;Colpax;CTRL;Philips_NMS_8250;Arcade;Boggy'84;SOFTWARE/msxmania/mania101.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Sports;Champion Ice Hockey;SOFTWARE/msxmania/mania101.dsk.gz
+Disk;1986;original;Casio;CTRL;Philips_NMS_8250;Arcade;Haunted Mansion;SOFTWARE/msxmania/mania101.dsk.gz
+Disk;1986;original;Game Arts;CTRL;Philips_NMS_8250;Arcade;Thexder;SOFTWARE/msxmania/mania101.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Titanic;SOFTWARE/msxmania/mania101.dsk.gz
+Disk;1988;original;Titus;CTRL;Philips_NMS_8250;Racing;Crazy Cars;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1985;original;Nu Wave;CTRL;Philips_NMS_8250;Arcade;Deus ex Machina;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1986;original;Konami;CTRL;Philips_NMS_8250;Arcade;Game Master;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1983;original;HAL;CTRL;Philips_NMS_8250;Boxing;Heavy Boxing;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1985;original;MSX Magazine;CTRL;Philips_NMS_8250;Arcade;J.P. Winkle;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1986;original;Sega;CTRL;Philips_NMS_8250;Fighting;Kendo;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1985;original;Terminal Software;CTRL;Philips_NMS_8250;Arcade;Lazy Jones Game Hall;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1987;original;Xortrapa Soft;CTRL;Philips_NMS_8250;Arcade;Mortadelo y Filemon;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Arcade;Pooyan;SOFTWARE/msxmania/mania102.dsk.gz
+Disk;1986;original;HAL;CTRL;Philips_NMS_8250;Sports;Dunkshot;SOFTWARE/msxmania/mania103.dsk.gz
+Disk;1986;original;Casio;CTRL;Philips_NMS_8250;Arcade;Kitty's Great Adventure;SOFTWARE/msxmania/mania103.dsk.gz
+Disk;1989;original;Zemina;CTRL;Philips_NMS_8250;Arcade;Super Boy 2;SOFTWARE/msxmania/mania103.dsk.gz
+Disk;1985;original;Sony;CTRL;Philips_NMS_8250;Sports;Super Soccer;SOFTWARE/msxmania/mania103.dsk.gz
+Disk;1989;original;Iber Soft;CTRL;Philips_NMS_8250;Arcade;Toi Acid Game;SOFTWARE/msxmania/mania103.dsk.gz
+Disk;1989;original;Iber Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Defcom 1;SOFTWARE/msxmania/mania104.dsk.gz
+Disk;1986;original;Dinamic;CTRL;Philips_NMS_8250;Sports;Fernando Martin Basket;SOFTWARE/msxmania/mania104.dsk.gz
+Disk;1986;original;Casio;CTRL;Philips_NMS_8250;Arcade;Battle of the Mooncastle;SOFTWARE/msxmania/mania104.dsk.gz
+Disk;1990;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Soviet;SOFTWARE/msxmania/mania104.dsk.gz
+Disk;1986;original;Hudson;CTRL;Philips_NMS_8250;Arcade;Wonder Boy;SOFTWARE/msxmania/mania104.dsk.gz
+Disk;1984;original;ICM;CTRL;Philips_NMS_8250;Arcade;Alibaba and 40 Thieves;SOFTWARE/msxmania/mania105.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Alfaroid;SOFTWARE/msxmania/mania105.dsk.gz
+Disk;1987;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Desperado;SOFTWARE/msxmania/mania105.dsk.gz
+Disk;1984;original;unknown;CTRL;Philips_NMS_8250;RPG;Hyde;SOFTWARE/msxmania/mania105.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Sports;Michel Futbol Master;SOFTWARE/msxmania/mania105.dsk.gz
+Disk;1986;original;Irem;CTRL;Philips_NMS_8250;Sports;10 Yard Fight;SOFTWARE/msxmania/mania106.dsk.gz
+Disk;unknown;original;Kawaguchi;CTRL;Philips_NMS_8250;Arcade;3D Bomberman;SOFTWARE/msxmania/mania106.dsk.gz
+Disk;1988;original;System 4;CTRL;Philips_NMS_8250;Arcade;Amoto's Puf;SOFTWARE/msxmania/mania106.dsk.gz
+Disk;1986;original;ASCII;CTRL;Philips_NMS_8250;RPG;Dungeon Master;SOFTWARE/msxmania/mania106.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Arcade;Mappy;SOFTWARE/msxmania/mania106.dsk.gz
+Disk;1989;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;MOT;SOFTWARE/msxmania/mania106.dsk.gz
+Disk;1985;original;Jaleco;CTRL;Philips_NMS_8250;Shoot'm Up;Formation Z;SOFTWARE/msxmania/mania107.dsk.gz
+Disk;1990;original;Topo Soft;CTRL;Philips_NMS_8250;Arcade;Lorna;SOFTWARE/msxmania/mania107.dsk.gz
+Disk;1985;original;Pack In Video;CTRL;Philips_NMS_8250;Arcade;Rambo;SOFTWARE/msxmania/mania107.dsk.gz
+Disk;1983;original;Takara;CTRL;Philips_NMS_8250;Arcade;Step Up;SOFTWARE/msxmania/mania107.dsk.gz
+Disk;1984;original;Ample;CTRL;Philips_NMS_8250;Arcade;Super Drinker;SOFTWARE/msxmania/mania107.dsk.gz
+Disk;1986;original;Konami;CTRL;Philips_NMS_8250;Arcade;The Goonies;SOFTWARE/msxmania/mania107.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Glider;SOFTWARE/msxmania/mania108.dsk.gz
+Disk;1989;original;Aventuras AD;CTRL;Philips_NMS_8250;Text Adventure;Jabato;SOFTWARE/msxmania/mania108.dsk.gz
+Disk;1985;original;A.C.G.;CTRL;Philips_NMS_8250;Arcade;Knight Lore;SOFTWARE/msxmania/mania108.dsk.gz
+Disk;1989;original;Opera Soft;CTRL;Philips_NMS_8250;Arcade;Livingstone 2;SOFTWARE/msxmania/mania108.dsk.gz
+Disk;unknown;original;Toshiba;CTRL;Philips_NMS_8250;Demo;Merry X'mas;SOFTWARE/msxmania/mania108.dsk.gz
+Disk;1986;original;Irem;CTRL;Philips_NMS_8250;Arcade;Spelunker;SOFTWARE/msxmania/mania108.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Arcade;Cabbage Patch Kids;SOFTWARE/msxmania/mania109.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Arcade;Dig Dug;SOFTWARE/msxmania/mania109.dsk.gz
+Disk;1983;original;HAL;CTRL;Philips_NMS_8250;Arcade;Fruit Search;SOFTWARE/msxmania/mania109.dsk.gz
+Disk;1990;original;Opera Soft;CTRL;Philips_NMS_8250;Sports;Mundial de Futbol;SOFTWARE/msxmania/mania109.dsk.gz
+Disk;unknown;original;Infogrames;CTRL;Philips_NMS_8250;Adventure;Murder on the Atlantic;SOFTWARE/msxmania/mania109.dsk.gz
+Disk;1984;original;HAL;CTRL;Philips_NMS_8250;Arcade;Mr. Chin;SOFTWARE/msxmania/mania109.dsk.gz
+Disk;unknown;original;Electric Software;CTRL;Philips_NMS_8250;Arcade;The Wreck;SOFTWARE/msxmania/mania109.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;After the War;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;1984;original;Ample;CTRL;Philips_NMS_8250;Platform;Banana;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Sports;Baseball;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;1983;original;HAL;CTRL;Philips_NMS_8250;Arcade;Butan Pants;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;1985;original;Casio;CTRL;Philips_NMS_8250;Arcade;Car Fighter;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;unknown;original;Ample;CTRL;Philips_NMS_8250;Racing;Car Race;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;unknown;original;S. Weigel;CTRL;Philips_NMS_8250;Shoot'm Up;MSX Scramble;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;1989;original;Dinamic;CTRL;Philips_NMS_8250;Arcade;Satan;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;1986;original;Toshiba;CTRL;Philips_NMS_8250;Shoot'm Up;Scarlet 7;SOFTWARE/msxmania/mania110.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Shoot'm Up;Boom;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1985;original;Toshiba;CTRL;Philips_NMS_8250;Adventure;Break Out!;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1983;original;Konami;CTRL;Philips_NMS_8250;Shoot'm Up;Juno First;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Shoot'm Up;King and Balloon;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1985;original;Irem;CTRL;Philips_NMS_8250;Fighting;Kung Fu Master;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1986;original;Sony;CTRL;Philips_NMS_8250;Adventure;Magical Kid Wiz;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1985;original;Idealogic;CTRL;Philips_NMS_8250;Arcade;Mil Caras;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1984;original;Broderbund;CTRL;Philips_NMS_8250;Arcade;Raid On Bungeling Bay;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1988;original;System 4;CTRL;Philips_NMS_8250;Adventure;The Munsters;SOFTWARE/msxmania/mania116.dsk.gz
+Disk;1986;original;Ayrton;CTRL;Philips_NMS_8250;Shoot'm Up;Aguia de Fogo;SOFTWARE/msxmania/mania117.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Arcade;Back to the Future;SOFTWARE/msxmania/mania117.dsk.gz
+Disk;1986;original;Korea Soft Bank;CTRL;Philips_NMS_8250;Arcade;Bomberman;SOFTWARE/msxmania/mania117.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Boomerang;SOFTWARE/msxmania/mania117.dsk.gz
+Disk;1985;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Arcade;Gauntlet;SOFTWARE/msxmania/mania117.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Racing;Hang On;SOFTWARE/msxmania/mania117.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Rotors;SOFTWARE/msxmania/mania117.dsk.gz
+Disk;1983;original;ASCII;CTRL;Philips_NMS_8250;RPG;Warrior;SOFTWARE/msxmania/mania117.dsk.gz
+Disk;1987;original;Alligata;CTRL;Philips_NMS_8250;Arcade;Addicta Ball;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1986;original;Jaleco;CTRL;Philips_NMS_8250;Arcade;City Connection;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1984;original;Jaleco;CTRL;Philips_NMS_8250;Shoot'm Up;Exerion 2 Zorni;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1986;original;Mastertronic;CTRL;Philips_NMS_8250;Racing;Formule 1 Simulator;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1986;original;Aackosoft;CTRL;Philips_NMS_8250;Arcade;Jet Fighter;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1985;original;ASCII;CTRL;Philips_NMS_8250;Arcade;Penguin Wars;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1985;original;Mastertronic;CTRL;Philips_NMS_8250;Arcade;Soul of a Robot;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1986;original;Pack In Video;CTRL;Philips_NMS_8250;Arcade;Space Camp;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1986;original;Bothtec;CTRL;Philips_NMS_8250;Arcade;Topple Zip;SOFTWARE/msxmania/mania118.dsk.gz
+Disk;1984;original;AG Corp.;CTRL;Philips_NMS_8250;Shoot'm Up;Alpha Squadron;SOFTWARE/msxmania/mania119.dsk.gz
+Disk;1985;original;Orpheus;CTRL;Philips_NMS_8250;Arcade;Beach Head;SOFTWARE/msxmania/mania119.dsk.gz
+Disk;unknown;original;Anirog Software;CTRL;Philips_NMS_8250;Simulation;Jump Jet;SOFTWARE/msxmania/mania119.dsk.gz
+Disk;1983;original;UPL;CTRL;Philips_NMS_8250;Arcade;Mouser;SOFTWARE/msxmania/mania119.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Sports;Ping Pong;SOFTWARE/msxmania/mania119.dsk.gz
+Disk;1988;original;Topo Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Silent Shadow;SOFTWARE/msxmania/mania119.dsk.gz
+Disk;1991;original;ANMA;CTRL;Philips_NMS_8250;Arcade;Squeek;SOFTWARE/msxmania/mania119.dsk.gz
+Disk;1986;original;Manfredi D.;CTRL;Philips_NMS_8250;Arcade;Break Out;SOFTWARE/msxmania/mania120.dsk.gz
+Disk;1984;original;A&F Software;CTRL;Philips_NMS_8250;Arcade;Chuckie Egg;SOFTWARE/msxmania/mania120.dsk.gz
+Disk;1983;original;HAL;CTRL;Philips_NMS_8250;Arcade;Dragon Attack;SOFTWARE/msxmania/mania120.dsk.gz
+Disk;1991;original;ANMA;CTRL;Philips_NMS_8250;Puzzle;No Fuss;SOFTWARE/msxmania/mania120.dsk.gz
+Disk;1988;original;Magic Bytes;CTRL;Philips_NMS_8250;Arcade;Pink Panther;SOFTWARE/msxmania/mania120.dsk.gz
+Disk;1983;original;Konami;CTRL;Philips_NMS_8250;Arcade;Sparkie;SOFTWARE/msxmania/mania120.dsk.gz
+Disk;1985;original;ASCII;CTRL;Philips_NMS_8250;Adventure;The Castle;SOFTWARE/msxmania/mania120.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Shoot'm Up;Bosconian;SOFTWARE/msxmania/mania121.dsk.gz
+Disk;1985;original;Pony;CTRL;Philips_NMS_8250;Platform;C So!;SOFTWARE/msxmania/mania121.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;David II;SOFTWARE/msxmania/mania121.dsk.gz
+Disk;1988;original;Animagic;CTRL;Philips_NMS_8250;Arcade;Double Dragon 2;SOFTWARE/msxmania/mania121.dsk.gz
+Disk;1985;original;Cia & Pmm;CTRL;Philips_NMS_8250;Arcade;Field Master;SOFTWARE/msxmania/mania121.dsk.gz
+Disk;1984;original;SVI;CTRL;Philips_NMS_8250;Shoot'm Up;Sea Hunter;SOFTWARE/msxmania/mania121.dsk.gz
+Disk;1984;original;HAL;CTRL;Philips_NMS_8250;Shoot'm Up;Space Trouble;SOFTWARE/msxmania/mania121.dsk.gz
+Disk;1986;original;Telenet;CTRL;Philips_NMS_8250;Racing;American Truck;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1986;original;Teknopiste Oy;CTRL;Philips_NMS_8250;Adventure;Bomulus and the lost Crown;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1986;original;ASCII;CTRL;Philips_NMS_8250;Adventure;Castle Excellent;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1985;original;Taito;CTRL;Philips_NMS_8250;Arcade;Elevator Action;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1985;original;dB-Soft;CTRL;Philips_NMS_8250;Arcade;Loptick 2;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1988;original;Grandslam;CTRL;Philips_NMS_8250;Arcade;Pacmania;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Arcade;Penguinland;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1987;original;Players;CTRL;Philips_NMS_8250;Arcade;Reflex;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1984;original;ASCII;CTRL;Philips_NMS_8250;Puzzle;Sokoban;SOFTWARE/msxmania/mania122.dsk.gz
+Disk;1985;original;Sega;CTRL;Philips_NMS_8250;Fighting;Champion Pro Wrestling;SOFTWARE/msxmania/mania123.dsk.gz
+Disk;1987;original;Dinamic;CTRL;Philips_NMS_8250;Sports;Fernando Martin Executive;SOFTWARE/msxmania/mania123.dsk.gz
+Disk;1989;original;Animagic;CTRL;Philips_NMS_8250;Arcade;Mortadelo y Filemon 2;SOFTWARE/msxmania/mania123.dsk.gz
+Disk;1986;original;Boram Software;CTRL;Philips_NMS_8250;Arcade;Pachicom;SOFTWARE/msxmania/mania123.dsk.gz
+Disk;1987;original;Topo Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Stardust;SOFTWARE/msxmania/mania123.dsk.gz
+Disk;1984;original;Comtec;CTRL;Philips_NMS_8250;Golf;Super Golf;SOFTWARE/msxmania/mania123.dsk.gz
+Disk;1987;original;Dinamic;CTRL;Philips_NMS_8250;Adventure;Jony y el Trono del Jaguar;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1984;original;MIA;CTRL;Philips_NMS_8250;Cards;Mahjong;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1988;original;Dinamic;CTRL;Philips_NMS_8250;Shoot'm Up;Meganova;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1984;original;Universal;CTRL;Philips_NMS_8250;Platform;Mr. Do vs. Unicorns;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1984;original;Artic Computing;CTRL;Philips_NMS_8250;Arcade;Mr. Wongs Loopy Laundry;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1988;original;Imageworks;CTRL;Philips_NMS_8250;Tennis;Passing Shot;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1987;original;Grandslam;CTRL;Philips_NMS_8250;Sports;Peter Beardsley's Int. Football;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1983;original;HAL;CTRL;Philips_NMS_8250;Puzzle;Picture Puzzle;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1984;original;Ample;CTRL;Philips_NMS_8250;Shoot'm Up;Scramble Eggs;SOFTWARE/msxmania/mania124.dsk.gz
+Disk;1988;original;Xortrapa Soft;CTRL;Philips_NMS_8250;Arcade;Alien Syndrome;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1983;original;Konami;CTRL;Philips_NMS_8250;Puzzle;Crazy Train;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1985;original;HAL;CTRL;Philips_NMS_8250;Puzzle;Eggerland Mystery;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1986;original;Jaleco;CTRL;Philips_NMS_8250;Arcade;Injag;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1984;original;Toho;CTRL;Philips_NMS_8250;Arcade;Monster's Fair;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1984;original;Namcot;CTRL;Philips_NMS_8250;Arcade;Rally X;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1989;original;Positive;CTRL;Philips_NMS_8250;Shoot'm Up;Rath-Tha;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1986;original;Dempa;CTRL;Philips_NMS_8250;Arcade;The Demon Crystal;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1986;original;Casio;CTRL;Philips_NMS_8250;RPG;The Stone of Wisdom;SOFTWARE/msxmania/mania125.dsk.gz
+Disk;1987;original;Methodic Solutions;CTRL;Philips_NMS_8250;Shoot'm Up;Battle Chopper;SOFTWARE/msxmania/mania111.dsk.gz
+Disk;1986;original;Systemsoft;CTRL;Philips_NMS_8250;Adventure;Dota;SOFTWARE/msxmania/mania111.dsk.gz
+Disk;1987;original;Firebird;CTRL;Philips_NMS_8250;Simulation;Elite;SOFTWARE/msxmania/mania111.dsk.gz
+Disk;1987;original;Methodic Solutions;CTRL;Philips_NMS_8250;Adventure;Hard Boiled;SOFTWARE/msxmania/mania111.dsk.gz
+Disk;1988;original;Zemina;CTRL;Philips_NMS_8250;Arcade;New Boggle Boggle;SOFTWARE/msxmania/mania111.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Sports;Soccer;SOFTWARE/msxmania/mania111.dsk.gz
+Disk;1986;original;Activision;CTRL;Philips_NMS_8250;Simulation;Space Shuttle;SOFTWARE/msxmania/mania111.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Adventure;Haunted House;SOFTWARE/msxmania/mania112.dsk.gz
+Disk;1986;original;HAL;CTRL;Philips_NMS_8250;Golf;Hole In One Professional;SOFTWARE/msxmania/mania112.dsk.gz
+Disk;1985;original;Konami;CTRL;Philips_NMS_8250;Sports;Hyper Sports 3;SOFTWARE/msxmania/mania112.dsk.gz
+Disk;1986;original;Eaglesoft;CTRL;Philips_NMS_8250;Adventure;Inca 1;SOFTWARE/msxmania/mania112.dsk.gz
+Disk;1985;original;Kuma;CTRL;Philips_NMS_8250;Arcade;Kubus;SOFTWARE/msxmania/mania112.dsk.gz
+Disk;1986;original;Opera Soft;CTRL;Philips_NMS_8250;Adventure;Livingstone;SOFTWARE/msxmania/mania112.dsk.gz
+Disk;1987;original;Methodic Solutions;CTRL;Philips_NMS_8250;Racing;TT Racer;SOFTWARE/msxmania/mania112.dsk.gz
+Disk;1985;original;dB-Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Volguard;SOFTWARE/msxmania/mania112.dsk.gz
+Disk;1985;original;Eaglesoft;CTRL;Philips_NMS_8250;Simulation;Flight Deck 1;SOFTWARE/msxmania/mania113.dsk.gz
+Disk;1985;original;unknown;CTRL;Philips_NMS_8250;Adventure;Inheritance;SOFTWARE/msxmania/mania113.dsk.gz
+Disk;1987;original;Methodic Solutions;CTRL;Philips_NMS_8250;Arcade;Police Academy 2;SOFTWARE/msxmania/mania113.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Vortex Raider;SOFTWARE/msxmania/mania113.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Attilio Tubicini;SOFTWARE/msxmania/mania114.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Booty;SOFTWARE/msxmania/mania114.dsk.gz
+Disk;1987;original;Zemina;CTRL;Philips_NMS_8250;Arcade;Brother Adventure;SOFTWARE/msxmania/mania114.dsk.gz
+Disk;1986;original;Bytebusters;CTRL;Philips_NMS_8250;Simulation;Dawn Patrol;SOFTWARE/msxmania/mania114.dsk.gz
+Disk;1984;original;Konami;CTRL;Philips_NMS_8250;Cards;Mahjong;SOFTWARE/msxmania/mania114.dsk.gz
+Disk;1988;original;Crazysoft;CTRL;Philips_NMS_8250;Platform;Maliop Nuctonetob;SOFTWARE/msxmania/mania114.dsk.gz
+Disk;1988;original;Crazysoft;CTRL;Philips_NMS_8250;Platform;Nuctonetob Ha Babone;SOFTWARE/msxmania/mania114.dsk.gz
+Disk;1985;original;Toshiba;CTRL;Philips_NMS_8250;Boardgame;Shogi;SOFTWARE/msxmania/mania114.dsk.gz
+Disk;1987;original;Methodic Solutions;CTRL;Philips_NMS_8250;Arcade;Bounce;SOFTWARE/msxmania/mania115.dsk.gz
+Disk;1985;original;Intelligent Chess Software;CTRL;Philips_NMS_8250;Chess;Cyrus 2;SOFTWARE/msxmania/mania115.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Discovery;SOFTWARE/msxmania/mania115.dsk.gz
+Disk;1987;original;Bytebusters;CTRL;Philips_NMS_8250;Arcade;Exterminator;SOFTWARE/msxmania/mania115.dsk.gz
+Disk;1985;original;Aackosoft;CTRL;Philips_NMS_8250;Simulation;Flight Deck 2;SOFTWARE/msxmania/mania115.dsk.gz
+Disk;1988;original;Crazysoft;CTRL;Philips_NMS_8250;Arcade;Gosgpawehlie Ha Semnio;SOFTWARE/msxmania/mania115.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Maze Master;SOFTWARE/msxmania/mania115.dsk.gz
+Disk;1983;original;Magicsoft;CTRL;Philips_NMS_8250;Shoot'm Up;Midway;SOFTWARE/msxmania/mania115.dsk.gz
+Disk;1987;original;Epyx;CTRL;Philips_NMS_8250;Sports;California Games;SOFTWARE/msxmania/maniaSP1.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Arcade;Mask 2;SOFTWARE/msxmania/maniaSP1.dsk.gz
+Disk;1990;original;Zigurat;CTRL;Philips_NMS_8250;Arcade;Smaily;SOFTWARE/msxmania/maniaSP1.dsk.gz
+Disk;1988;original;Epyx;CTRL;Philips_NMS_8250;Sports;The Games Winter Edition;SOFTWARE/msxmania/maniaSP1.dsk.gz
+Disk;1988;original;US Gold;CTRL;Philips_NMS_8250;Shoot'm Up;Thunder Blade;SOFTWARE/msxmania/maniaSP1.dsk.gz
+Disk;1987;original;Epyx;CTRL;Philips_NMS_8250;Racing;4x4 Off-Road Racing;SOFTWARE/msxmania/maniaSP2.dsk.gz
+Disk;1988;original;Activision;CTRL;Philips_NMS_8250;Shoot'm Up;Afterburner;SOFTWARE/msxmania/maniaSP2.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Strategic;Laser Squad;SOFTWARE/msxmania/maniaSP2.dsk.gz
+Disk;1988;original;Ocean;CTRL;Philips_NMS_8250;Adventure;Rambo 3;SOFTWARE/msxmania/maniaSP2.dsk.gz
+Disk;1987;original;Epyx;CTRL;Philips_NMS_8250;Sports;World Games;SOFTWARE/msxmania/maniaSP2.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Shoot'm Up;Astro Blaster;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1987;original;Lucasfilm;CTRL;Philips_NMS_8250;Arcade;Ballblazer;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Burgerkill;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1988;original;Nemesis Soft;CTRL;Philips_NMS_8250;Text Adventure;Conde de Monte Cristo;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Simulation;Eagle Control;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Frog;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1985;original;Policy;CTRL;Philips_NMS_8250;Arcade;Safari X;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1987;original;Renato Degiovani;CTRL;Philips_NMS_8250;Text Adventure;Serra Pelada;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Shoot'm Up;Time Rider;SOFTWARE/msxmania/mania126.dsk.gz
+Disk;1986;original;S. Ogawa;CTRL;Philips_NMS_8250;Shoot'm Up;Attack Mosquiton;SOFTWARE/msxmania/mania127.dsk.gz
+Disk;1989;original;Mastertronic;CTRL;Philips_NMS_8250;Shoot'm Up;Gemini Wing;SOFTWARE/msxmania/mania127.dsk.gz
+Disk;1984;original;RAM Soft;CTRL;Philips_NMS_8250;Cards;Gostop Godori;SOFTWARE/msxmania/mania127.dsk.gz
+Disk;1985;original;Mass Tael;CTRL;Philips_NMS_8250;Arcade;Jump;SOFTWARE/msxmania/mania127.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Boardgame;Othello Competicao;SOFTWARE/msxmania/mania127.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Shoot'm Up;Galleon;SOFTWARE/msxmania/mania129.dsk.gz
+Disk;1983;original;Hudson;CTRL;Philips_NMS_8250;Shoot'm Up;MJ-05;SOFTWARE/msxmania/mania129.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Arcade;Mongas;SOFTWARE/msxmania/mania129.dsk.gz
+Disk;unknown;original;Mastertronic;CTRL;Philips_NMS_8250;Arcade;Space Walk;SOFTWARE/msxmania/mania129.dsk.gz
+Disk;1989;original;Melody Soft;CTRL;Philips_NMS_8250;Shoot'm Up;Star Laser;SOFTWARE/msxmania/mania129.dsk.gz
+Disk;1988;original;Grandslam;CTRL;Philips_NMS_8250;Adventure;Thunderbirds;SOFTWARE/msxmania/mania129.dsk.gz
+Disk;1990;original;Zemina;CTRL;Philips_NMS_8250;Puzzle;Block Hole;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;1986;original;Blue Ribbon Software;CTRL;Philips_NMS_8250;Arcade;Diamond Mine 2;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;1987;original;Gremlin Graphics;CTRL;Philips_NMS_8250;Sports;Gary Lineker's Super Star Soccer;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Penguin;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Arcade;Quebert;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;1984;original;Toshiba;CTRL;Philips_NMS_8250;Arcade;Sewer Sam;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;unknown;original;unknown;CTRL;Philips_NMS_8250;Puzzle;Tetris;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;1989;original;Best;CTRL;Philips_NMS_8250;Arcade;Twin Hammer;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;1987;original;Pony;CTRL;Philips_NMS_8250;Shoot'm Up;Zanac '87;SOFTWARE/msxmania/mania130.dsk.gz
+Disk;1997;original;Lieves!Tuore;CTRL;Philips_NMS_8250;Demo;Aatnos demo;SOFTWARE/msxmania/mania128.dsk.gz
+Disk;1997;original;Lieves!Tuore;CTRL;Philips_NMS_8250;Demo;Aekrus demo;SOFTWARE/msxmania/mania128.dsk.gz
+Disk;1986;original;Bits Art;CTRL;Philips_NMS_8250;Puzzle;Crux;SOFTWARE/msxmania/mania128.dsk.gz
+Disk;1985;original;dB-Soft;CTRL;Philips_NMS_8250;Arcade;Flappy '85;SOFTWARE/msxmania/mania128.dsk.gz
+Disk;unknown;original;Crossmedia Soft;CTRL;Philips_NMS_8250;Puzzle;Mole Mole 2;SOFTWARE/msxmania/mania128.dsk.gz
+Disk;1988;original;Eurosoft;CTRL;Philips_NMS_8250;Adult;Playhouse Strippoker;SOFTWARE/msxmania/mania128.dsk.gz
+Disk;1983;original;HAL;CTRL;Philips_NMS_8250;Billiards;Super Billiards;SOFTWARE/msxmania/mania128.dsk.gz
+Disk;unknown;Original;Compjoetania;unknown;msx2;Demo;DeathTrack;SOFTWARE/pd/compjoet/deathtrk.di2.gz
+Disk;unknown;Original;Compjoetania;unknown;msx2;Demo;Sample Mania;SOFTWARE/pd/compjoet/smania.di1.gz
+Disk;unknown;Original;Compjoetania;unknown;msx2;Demo;Sample Mania II;SOFTWARE/pd/compjoet/smaniaii.di1.gz
+Disk;unknown;Original;C-TNG;unknown;msx2;Demo;Calculus;SOFTWARE/pd/ctng/calculus-release.dsk.gz
+Disk;unknown;Original;Fac;mbstereo,scca;msx2;Demo;FAC Soundtracker musicdisk #3;SOFTWARE/pd/fac/music3.di2.gz
+Disk;unknown;Original;Fac;mbstereo,scca;msx2;Demo;Revolution;SOFTWARE/pd/fac/revolutn.di2.gz
+Disk;unknown;Original;Fac;mbstereo,scca;msx2;Demo;FAC Soundtracker Sampledisk #1;SOFTWARE/pd/fac/sample1.di2.gz
+Disk;unknown;Original;Fac;mbstereo,scca;msx2;Demo;FAC Soundtracker Sampledisk #2;SOFTWARE/pd/fac/sample2.di2.gz
+Disk;unknown;Original;Fac;mbstereo,scca;msx2;Demo;FAC Soundtracker Sampledisk #2;SOFTWARE/pd/fac/sample2.di2.gz
+Disk;unknown;Original;Fac;mbstereo,scca;msx2;Demo;FAC Soundtracker Sampledisk #4;SOFTWARE/pd/fac/sample4.di2.gz
+Disk;unknown;Original;Fcs;mbstereo,scca;msx2;Demo;Playboy;SOFTWARE/pd/fcs/playboy.di2.gz
+Disk;unknown;Original;Fcs;unknown;msx2;Demo;Quattro;SOFTWARE/pd/fcs/quattro.di2.gz
+Disk;unknown;Original;Fcs;mbstereo,scca;msx2;Demo;Synsation;SOFTWARE/pd/fcs/synsat.di2.gz
+Disk;unknown;Original;Fcs;mbstereo,scca;msx2;Demo;Turnix;SOFTWARE/pd/fcs/turnix.di2.gz
+Disk;unknown;Original;Fcs;mbstereo,scca;msx2;Demo;C-Qensr;SOFTWARE/pd/fcs/c-qensr.di2.gz
+Disk;unknown;Original;Fcs;mbstereo,scca;msx2;unknown;Megadoom, disk 1;SOFTWARE/pd/fcs/megadoo1.di2.gz
+Disk;unknown;Original;Fcs;mbstereo,scca;msx2;unknown;Megadoom, disk 2;SOFTWARE/pd/fcs/megadoo2.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 2;SOFTWARE/pd/genic/clguid02.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 3;SOFTWARE/pd/genic/clguid03.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 4;SOFTWARE/pd/genic/clguid04.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 5;SOFTWARE/pd/genic/clguid05.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 6;SOFTWARE/pd/genic/clguid06.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 8;SOFTWARE/pd/genic/clguid08.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 9;SOFTWARE/pd/genic/clguid09.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 10;SOFTWARE/pd/genic/clguid10.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 11;SOFTWARE/pd/genic/clguid11.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 12;SOFTWARE/pd/genic/clguid12.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide Special 2;SOFTWARE/pd/genic/clspec02.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;unknown;First Rate Music Hall replayer;SOFTWARE/pd/genic/fm-play.di1.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 1;SOFTWARE/pd/genic/picdsk01.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 3;SOFTWARE/pd/genic/picdsk03.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 4;SOFTWARE/pd/genic/picdsk04.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 5;SOFTWARE/pd/genic/picdsk05.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 6;SOFTWARE/pd/genic/picdsk06.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 7;SOFTWARE/pd/genic/picdsk07.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 9;SOFTWARE/pd/genic/picdsk09.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 10;SOFTWARE/pd/genic/picdsk10.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 11;SOFTWARE/pd/genic/picdsk11.di2.gz
+Disk;unknown;Original;Genic;unknown;msx2;Demo;Clubguide Compilation;SOFTWARE/pd/genic/clguicmp.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 1;SOFTWARE/pd/genic/clguid01.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide 7;SOFTWARE/pd/genic/clguid07.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;DiskMagazine;Clubguide Special 1;SOFTWARE/pd/genic/clspec01.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 2;SOFTWARE/pd/genic/picdsk02.di2.gz
+Disk;unknown;Original;Genic;mbstereo,scca;msx2;Demo;Picture disk 8;SOFTWARE/pd/genic/picdsk08.di2.gz
+Disk;unknown;Original;Impact;mbstereo;msx2;Demo;Impact Musicdisk 2;SOFTWARE/pd/impact/impact2.di2.gz
+Disk;unknown;Original;Impact;mbstereo;msx2;Demo;Impact Musicdisk 3;SOFTWARE/pd/impact/impact3.di2.gz
+Disk;unknown;Original;Impact;mbstereo;msx2;Demo;Impact Musicdisk 4;SOFTWARE/pd/impact/impact4.di2.gz
+Disk;unknown;Original;Impact;mbstereo;msx2;Demo;Impact Musicdisk 5;SOFTWARE/pd/impact/impact5.di2.gz
+Disk;unknown;Original;Impact;mbstereo;msx2;Demo;Impaccable;SOFTWARE/pd/impact/impcable.di2.gz
+Disk;unknown;Original;Impact;ssca,sccb;msx2;Demo;Impact SCC Musix disk 1;SOFTWARE/pd/impact/muzix1.di2.gz
+Disk;unknown;Original;Impact;mbstereo;msx2;Demo;Impaccen en wegwezen;SOFTWARE/pd/impact/impaccen.di2.gz
+Disk;unknown;Original;Impact;mbstereo;msx2;Demo;Impact Musicdisk 1;SOFTWARE/pd/impact/impact1.di2.gz
+Disk;unknown;Original;Impact;mbstereo;msx2;Demo;Impact Housedisk 1;SOFTWARE/pd/impact/imphous1.di2.gz
+Disk;unknown;Original;Nop;unknown;msx2;Demo;Unknown Reality, disk 2;SOFTWARE/pd/nop/UR-2.dsk.gz
+Disk;unknown;Original;Nop;unknown;msx2;Demo;Unknown Reality, disk 3;SOFTWARE/pd/nop/UR-3.dsk.gz
+Disk;unknown;Original;Nop;unknown;msx2;Game;Lemmings on MSX !!!;SOFTWARE/pd/nop/mmm.di2.gz
+Disk;unknown;Original;Nop;unknown;msx2;Demo;Unknown Reality, disk 1;SOFTWARE/pd/nop/UR-1.dsk.gz
+Disk;unknown;Original;Parallax;fmpac;msx2;Game;Coredump promo disk;SOFTWARE/pd/parallax/coredump.dsk.gz
+Disk;unknown;Original;Shuqair;mbstereo,scca;msx2;unknown;THE PLAYING FIELDS;SOFTWARE/pd/shuqair/finspace.di1.gz
+Disk;unknown;Original;Shuqair;mbstereo,scca;msx2;unknown;FM Sampler;SOFTWARE/pd/shuqair/fmsamplr.di1.gz
+Disk;unknown;Original;Station;mbstereo;msx2;Demo;Madness;SOFTWARE/pd/station/madness.di2.gz
+Disk;unknown;Original;Station;mbstereo;msx2;Demo;New Sensation;SOFTWARE/pd/station/newsensa.di1.gz
+Disk;unknown;Original;Station;mbstereo;msx2;Demo;Starship;SOFTWARE/pd/station/starship.di2.gz
+Disk;unknown;Original;Station;mbstereo;msx2;Demo;The Freak;SOFTWARE/pd/station/thefreak.di2.gz
+Disk;unknown;Original;Station;mbstereo;msx2;Demo;Dawn of Time;SOFTWARE/pd/station/dawntime.di2.gz
+Disk;unknown;Original;Station;mbstereo;msx2;Demo;Decalogue;SOFTWARE/pd/station/decalog.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 1;SOFTWARE/pd/sunrise/mgzn-01.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 2;SOFTWARE/pd/sunrise/mgzn-02.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 3;SOFTWARE/pd/sunrise/mgzn-03.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 4;SOFTWARE/pd/sunrise/mgzn-04.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 5;SOFTWARE/pd/sunrise/mgzn-05.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 6;SOFTWARE/pd/sunrise/mgzn-06.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 7;SOFTWARE/pd/sunrise/mgzn-07.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 8;SOFTWARE/pd/sunrise/mgzn-08.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 9;SOFTWARE/pd/sunrise/mgzn-09.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 10;SOFTWARE/pd/sunrise/mgzn-10.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 11;SOFTWARE/pd/sunrise/mgzn-11.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 12;SOFTWARE/pd/sunrise/mgzn-12.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 13;SOFTWARE/pd/sunrise/mgzn-13.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 14;SOFTWARE/pd/sunrise/mgzn-14.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 15;SOFTWARE/pd/sunrise/mgzn-15.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 16a;SOFTWARE/pd/sunrise/mgzn-16a.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 16b;SOFTWARE/pd/sunrise/mgzn-16b.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 17a;SOFTWARE/pd/sunrise/mgzn-17a.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 17b;SOFTWARE/pd/sunrise/mgzn-17b.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Magazine 18b;SOFTWARE/pd/sunrise/mgzn-18b.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 1;SOFTWARE/pd/sunrise/picdsk01.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 2;SOFTWARE/pd/sunrise/picdsk02.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 3;SOFTWARE/pd/sunrise/picdsk03.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 4;SOFTWARE/pd/sunrise/picdsk04.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 5;SOFTWARE/pd/sunrise/picdsk05.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 6;SOFTWARE/pd/sunrise/picdsk06.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 7;SOFTWARE/pd/sunrise/picdsk07.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 8;SOFTWARE/pd/sunrise/picdsk08.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 9;SOFTWARE/pd/sunrise/picdsk09.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 10;SOFTWARE/pd/sunrise/picdsk10.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 11;SOFTWARE/pd/sunrise/picdsk11.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 12;SOFTWARE/pd/sunrise/picdsk12.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 13;SOFTWARE/pd/sunrise/picdsk13.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 14;SOFTWARE/pd/sunrise/picdsk14.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;Demo;Sunrise Picturedisk 15;SOFTWARE/pd/sunrise/picdsk15.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Special 1;SOFTWARE/pd/sunrise/special1.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Special 2;SOFTWARE/pd/sunrise/special2.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Special 3;SOFTWARE/pd/sunrise/special3.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Special 4;SOFTWARE/pd/sunrise/special4.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Special 5;SOFTWARE/pd/sunrise/special4.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Special 6;SOFTWARE/pd/sunrise/special6.di2.gz
+Disk;unknown;Original;Sunrise;mbstereo,scca;msx2;DiskMagazine;Sunrise Special 7;SOFTWARE/pd/sunrise/special7.di2.gz
+;unknown;unknown;unknown;unknown;unknown;unknown;elmstree;SOFTWARE/pd/unicorn/elmstree.di2.gz
+;unknown;unknown;unknown;unknown;unknown;unknown;eon;SOFTWARE/pd/unicorn/eon.di2.gz
+;unknown;unknown;unknown;unknown;unknown;unknown;fmpac1;SOFTWARE/pd/unicorn/fmpac1.di2.gz
+;unknown;unknown;unknown;unknown;unknown;unknown;founda-1;SOFTWARE/pd/unicorn/founda-1.di2.gz
+;unknown;unknown;unknown;unknown;unknown;unknown;founda-2;SOFTWARE/pd/unicorn/founda-2.di2.gz
+;unknown;unknown;unknown;unknown;unknown;unknown;foundn2b;SOFTWARE/pd/unicorn/foundn2b.di2.gz
+;unknown;unknown;unknown;unknown;unknown;unknown;ironmaid;SOFTWARE/pd/unicorn/ironmaid.di2.gz
+;unknown;unknown;unknown;unknown;unknown;unknown;librari1;SOFTWARE/pd/unicorn/librari1.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;A NIGHTMARE ON ELMSTREET 4;SOFTWARE/pd/unicorn/elmstree.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;EON (THE ETERNAL SOUND OF MUSIC);SOFTWARE/pd/unicorn/eon.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;FM-PAC LIBRARY SERIES # 1;SOFTWARE/pd/unicorn/fmpac1.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;FOUNDATION, disk 1;SOFTWARE/pd/unicorn/founda-1.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;FOUNDATION, disk 2;SOFTWARE/pd/unicorn/founda-2.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;FOUNDATION II, disk B;SOFTWARE/pd/unicorn/foundn2b.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;IRON MAIDEN (WASTED YEARS) DEMO;SOFTWARE/pd/unicorn/ironmaid.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;Library 1;SOFTWARE/pd/unicorn/librari1.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;WAR WORLD DEMO DISK A;SOFTWARE/pd/unicorn/warwrlda.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;WAR WORLD DEMO DISK B;SOFTWARE/pd/unicorn/warwrldb.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;CYBER DEMO;SOFTWARE/pd/unicorn/cyberdmo.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;DEVESTATOR DEMO;SOFTWARE/pd/unicorn/devstatr.di2.gz
+Disk;unknown;Original;Unicorn;fmpac;msx2;Music;FOUNDATION II, disk A;SOFTWARE/pd/unicorn/foundn2a.di2.gz
+Disk;unknown;Original;Xelasoft;unknown;msx2;utils;Utility's, disk 1;SOFTWARE/pd/xelasoft/util1.di1.gz
+Disk;unknown;Original;Xelasoft;unknown;msx2;utils;Utility's, disk 2;SOFTWARE/pd/xelasoft/util2.di1.gz
+Disk;unknown;Original;Xelasoft;unknown;msx2;demo;Demo's;SOFTWARE/pd/xelasoft/demoos.di1.gz
+Disk;unknown;Original;Xelasoft;unknown;msx2;utils;XGU demo;SOFTWARE/pd/xelasoft/xgudemo.di2.gz
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;10thfram.rom;SOFTWARE/ROMS/10thfram.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;DISK.ROM;SOFTWARE/ROMS/DISK.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;FMPAC.ROM;SOFTWARE/ROMS/FMPAC.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;KANJI.ROM;SOFTWARE/ROMS/KANJI.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;KMARE.ROM;SOFTWARE/ROMS/KMARE.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;KNIGHTMARESCC.ROM;SOFTWARE/ROMS/KNIGHTMARESCC.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;MSX.ROM;SOFTWARE/ROMS/MSX.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;MUSIC.ROM;SOFTWARE/ROMS/MUSIC.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;NEMESCC.ROM;SOFTWARE/ROMS/NEMESCC.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;NEMESCCP.ROM;SOFTWARE/ROMS/NEMESCCP.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;NEMESIS.ROM;SOFTWARE/ROMS/NEMESIS.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;NEMESIS2.ROM;SOFTWARE/ROMS/NEMESIS2.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;PENGUIN.ROM;SOFTWARE/ROMS/PENGUIN.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;Road_Fighter_SD_Snatcher_SCC.rom;SOFTWARE/ROMS/Road_Fighter_SD_Snatcher_SCC.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;Road_Fighter_The_Snatcher_SCC.rom;SOFTWARE/ROMS/Road_Fighter_The_Snatcher_SCC.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;TRACK1.ROM;SOFTWARE/ROMS/TRACK1.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;TWINSCC.ROM;SOFTWARE/ROMS/TWINSCC.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;TWINSCCP.ROM;SOFTWARE/ROMS/TWINSCCP.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;WIZ.ROM;SOFTWARE/ROMS/WIZ.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;YIE1SCC.ROM;SOFTWARE/ROMS/YIE1SCC.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;YIE1SCCP.ROM;SOFTWARE/ROMS/YIE1SCCP.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;YIE2SCC.ROM;SOFTWARE/ROMS/YIE2SCC.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;YIE2SCCP.ROM;SOFTWARE/ROMS/YIE2SCCP.ROM
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;adrian.rom;SOFTWARE/ROMS/adrian.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;aliens.rom;SOFTWARE/ROMS/aliens.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;apeman.rom;SOFTWARE/ROMS/apeman.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;archie.rom;SOFTWARE/ROMS/archie.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;barbaria.rom;SOFTWARE/ROMS/barbaria.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;batman.rom;SOFTWARE/ROMS/batman.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;battlech.rom;SOFTWARE/ROMS/battlech.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;blaim.rom;SOFTWARE/ROMS/blaim.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;blowup.rom;SOFTWARE/ROMS/blowup.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;breakin.rom;SOFTWARE/ROMS/breakin.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;bubbler.rom;SOFTWARE/ROMS/bubbler.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;demonia.rom;SOFTWARE/ROMS/demonia.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;dos_22.rom;SOFTWARE/ROMS/dos_22.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;dquest2.rom;SOFTWARE/ROMS/dquest2.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;dragking.rom;SOFTWARE/ROMS/dragking.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;fanzone2.rom;SOFTWARE/ROMS/fanzone2.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;feud.rom;SOFTWARE/ROMS/feud.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;galforce.rom;SOFTWARE/ROMS/galforce.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;hauntedh.rom;SOFTWARE/ROMS/hauntedh.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;hydlide2.rom;SOFTWARE/ROMS/hydlide2.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;i-karate.rom;SOFTWARE/ROMS/i-karate.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;ikari.rom;SOFTWARE/ROMS/ikari.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;ishitar.rom;SOFTWARE/ROMS/ishitar.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;jelda.rom;SOFTWARE/ROMS/jelda.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;k-tyme.rom;SOFTWARE/ROMS/k-tyme.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;p-wars2.rom;SOFTWARE/ROMS/p-wars2.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;royal.rom;SOFTWARE/ROMS/royal.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;turtles.rom;SOFTWARE/ROMS/turtles.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;valis.rom;SOFTWARE/ROMS/valis.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;vortex.rom;SOFTWARE/ROMS/vortex.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;war-dead.rom;SOFTWARE/ROMS/war-dead.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;warotded.rom;SOFTWARE/ROMS/warotded.rom
+Cart;unknown;not-so-original;Unknown;fmpac;msx2;Game;xevious.rom;SOFTWARE/ROMS/xevious.rom
+Disk;unknown;Translated;unknown;unknown;msx2;Game;alesteen;SOFTWARE/translated/aleste/alesteen.dsk.gz
+Disk;1997;Translated;TEMPEST;fmpac;msx2;Game;Be-Bop Bout;SOFTWARE/translated/bbb/bbb.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;Big Strategy 2, data disk (English);SOFTWARE/translated/bigstrategy2/big_strategy_2_-_data_disk_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;Big Strategy 2, start disk (English);SOFTWARE/translated/bigstrategy2/big_strategy_2_-_start_disk_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;runemaster_1_-_english;SOFTWARE/translated/discstaionspecial5/runemaster_1_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;dragon_slayer_6_-_disk_c_-_english;SOFTWARE/translated/dragonslayer6/dragon_slayer_6_-_disk_c_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;dragon_slayer_6_-_disk_d_-_english;SOFTWARE/translated/dragonslayer6/dragon_slayer_6_-_disk_d_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;dragon_slayer_6_-_disk_a_-_english;SOFTWARE/translated/dragonslayer6/dragon_slayer_6_-_disk_a_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;dragon_slayer_6_-_disk_b_-_english;SOFTWARE/translated/dragonslayer6/dragon_slayer_6_-_disk_b_-_english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;ds6 disk 3;SOFTWARE/translated/ds6complete/ds6eng3.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;ds6 disk 4;SOFTWARE/translated/ds6complete/ds6eng4.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;ds6 disk 1;SOFTWARE/translated/ds6complete/ds6eng1.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;ds6 disk 2;SOFTWARE/translated/ds6complete/ds6eng2.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Fray, disk 3 (MSX2);SOFTWARE/translated/fray-msx2/fray-disk3-english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Fray, disk 4 (MSX2);SOFTWARE/translated/fray-msx2/fray-disk4-english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Fray, disk 1 (MSX2);SOFTWARE/translated/fray-msx2/fray-disk1-english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Fray, disk 2 (MSX2);SOFTWARE/translated/fray-msx2/fray-disk2-english.dsk.gz
+Disk;1991;Translated;Cabin;fmpac;msx2;Game;Xak3, The Tower of Gazzel disk1;SOFTWARE/translated/gazel/xak3-disk1-english.dsk.gz
+Disk;1991;Translated;Cabin;fmpac;msx2;Game;Xak3, The Tower of Gazzel disk2;SOFTWARE/translated/gazel/xak3-disk2-english.dsk.gz
+Disk;1991;Translated;Cabin;fmpac;msx2;Game;Xak3, The Tower of Gazzel disk3;SOFTWARE/translated/gazel/xak3-disk3-english.dsk.gz
+Disk;1991;Translated;Cabin;fmpac;msx2;Game;Xak3, The Tower of Gazzel disk4;SOFTWARE/translated/gazel/xak3-disk4-english.dsk.gz
+Cart;unknown;Translated;unknown;unknown;msx2;Game;King Kong 2 (english);SOFTWARE/translated/kk2/kinkong2.rom.gz
+Disk;unknown;Translated;unknown;scca,sccb;msx2;Game;King Kong 2 (english diskversion);SOFTWARE/translated/kk2/kinkong2.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;nyancle;SOFTWARE/translated/nyancle/nyancle.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;parodius;SOFTWARE/translated/parodius/parodius.rom.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;Pennant Race 2;SOFTWARE/translated/pennantrace2/pennantrace2-eng.rom.gz
+Disk;1992;Translated;Cabin;fmpac;msx2;Game;Princess Maker disk1;SOFTWARE/translated/pmaker/pmakeng1.dsk.gz
+Disk;1992;Translated;Cabin;fmpac;msx2;Game;Princess Maker disk2;SOFTWARE/translated/pmaker/pmakeng2.dsk.gz
+Disk;1992;Translated;Cabin;fmpac;msx2;Game;Princess Maker disk3;SOFTWARE/translated/pmaker/pmakeng3.dsk.gz
+Disk;1992;Translated;Cabin;fmpac;msx2;Game;Princess Maker disk4;SOFTWARE/translated/pmaker/pmakeng4.dsk.gz
+Disk;1992;Translated;Cabin;fmpac;msx2;Game;Princess Maker disk5;SOFTWARE/translated/pmaker/pmakeng5.dsk.gz
+Disk;1992;Translated;Cabin;fmpac;msx2;Game;Princess Maker disk6;SOFTWARE/translated/pmaker/pmakeng6.dsk.gz
+Disk;1992;Translated;Cabin;fmpac;msx2;Game;Princess Maker disk7;SOFTWARE/translated/pmaker/pmakeng7.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;Runemaster 3, disk 3 (English);SOFTWARE/translated/runemaster3/runemaster_3_-_disk_3_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;Runemaster 3, disk 1 (English);SOFTWARE/translated/runemaster3/runemaster_3_-_disk_1_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;Runemaster 3, disk 2 (English);SOFTWARE/translated/runemaster3/runemaster_3_-_disk_2_-_english.dsk.gz
+Disk;unknown;Translated;unknown;scca;msx2;Game;English SD Snatcher, disk 2 (SCC version);SOFTWARE/translated/sdsnatcher/sd2usscc.dsk.gz
+Disk;unknown;Translated;unknown;sccpa;msx2;Game;English SD Snatcher, disk 2 (SCC+ version);SOFTWARE/translated/sdsnatcher/sd2usscp.dsk.gz
+Disk;unknown;Translated;unknown;scca;msx2;Game;English SD Snatcher, disk 3 (SCC version);SOFTWARE/translated/sdsnatcher/sd3usscc.dsk.gz
+Disk;unknown;Translated;unknown;sccpa;msx2;Game;English SD Snatcher, disk 3 (SCC+ version);SOFTWARE/translated/sdsnatcher/sd3usscp.dsk.gz
+Disk;unknown;Translated;unknown;scca;msx2;Game;English SD Snatcher, disk 1 (SCC version);SOFTWARE/translated/sdsnatcher/sd1usscc.dsk.gz
+Disk;unknown;Translated;unknown;sccpa;msx2;Game;English SD Snatcher, disk 1 (SCC+ version);SOFTWARE/translated/sdsnatcher/sd1usscp.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;Shalome (English);SOFTWARE/translated/shalome/shalome.rom.gz.gz
+Disk;1988;Translated;Konami;scc+;msx2;Game;Snatcher english disk1;SOFTWARE/translated/snatcher/eng-0.6.0/snatche0.dsk.gz
+Disk;1988;Translated;Konami;scc+;msx2;Game;Snatcher english disk2;SOFTWARE/translated/snatcher/eng-0.6.0/Snatche1.dsk.gz
+Disk;1988;Translated;Konami;scc+;msx2;Game;Snatcher english disk3;SOFTWARE/translated/snatcher/eng-0.6.0/Snatche2.dsk.gz
+Disk;1988;Translated;Konami;scc+;msx2;Game;Snatcher english disk4;SOFTWARE/translated/snatcher/eng-0.6.0/Snatche3.dsk.gz
+Disk;unknown;Translated;unknown;unknown;msx2;Game;Translated megarom;SOFTWARE/translated/solidsnake/solide12.rom.gz
+Disk;unknown;Translated;unknown;scca;msx2;Game;Disk version;SOFTWARE/translated/solidsnake/solide12.dsk.gz
+Disk;1988;Translated;Victor;fmpac;msx2;Game;War of the Dead disk1;SOFTWARE/translated/warotdead2/warofthedead2-english-disk1.dsk.gz
+Disk;1988;Translated;Victor;fmpac;msx2;Game;War of the Dead disk2;SOFTWARE/translated/warotdead2/warofthedead2-english-disk2.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Ys Vanished Omen;SOFTWARE/translated/ys1/ys_vanished_omen_-_english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Ys Vanished Omen 2, disk b;SOFTWARE/translated/ys2/ys_vanished_omen_2_-_disk_b_-_english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Ys Vanished Omen 2, disk a;SOFTWARE/translated/ys2/ys_vanished_omen_2_-_disk_a_-_english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Ys Vanished Omen, disk 2;SOFTWARE/translated/ys3/ys_vanished_omen_3_-_disk_2_-_english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Ys Vanished Omen, disk 3;SOFTWARE/translated/ys3/ys_vanished_omen_3_-_disk_3_-_english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Ys Vanished Omen, disk 1;SOFTWARE/translated/ys3/ys_vanished_omen_3_-_disk_1_-_english.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Ys Vanished Omen, scenario disk;SOFTWARE/translated/ys3/ys_vanished_omen_3_-_scenario_disk_-_english.dsk.gz
+Disk;unknown;Translated;unknown;unknown;turbor;Game;Illusion City, disk 1(English);SOFTWARE/translated/illusioncity/illusioncity1_en.dsk.gz
+Disk;unknown;Translated;unknown;unknown;turbor;Game;Illusion City, disk 2(English);SOFTWARE/translated/illusioncity/illusioncity2_en.dsk.gz
+Disk;unknown;Translated;unknown;unknown;turbor;Game;Illusion City, disk 3(English);SOFTWARE/translated/illusioncity/illusioncity3_en.dsk.gz
+Disk;unknown;Translated;unknown;unknown;turbor;Game;Illusion City, disk 4(English);SOFTWARE/translated/illusioncity/illusioncity4_en.dsk.gz
+Disk;unknown;Original;unknown;unknown;turbor;game;mls;SOFTWARE/turbo-software/mls.dsk.gz
+Disk;unknown;Original;unknown;unknown;turbor;game;multiple;SOFTWARE/turbo-software/multiple.dsk.gz
+Disk;unknown;Original;unknown;unknown;turbor;game;nowaste;SOFTWARE/turbo-software/nowaste.dsk.gz
+Disk;unknown;Original;unknown;unknown;turbor;game;Seed of Dragon disk1;SOFTWARE/turbo-software/seedofda.dsk.gz
+Disk;unknown;Original;unknown;unknown;turbor;game;Seed of Dragon disk2;SOFTWARE/turbo-software/seedofdb.dsk.gz
+Disk;unknown;Original;unknown;unknown;turbor;game;Seed of Dragon disk3;SOFTWARE/turbo-software/seedofdc.dsk.gz
+Disk;unknown;Original;unknown;unknown;turbor;game;Stone;SOFTWARE/turbo-software/stone.dsk.gz
+Disk;unknown;Original;unknown;unknown;turbor;Demo;Swiss demo;SOFTWARE/turbo-software/swiss.dsk.gz
+Disk;unknown;Original;xela soft;unknown;turbor;game;Zone Terra;SOFTWARE/turbo-software/zonterra.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Xak1, demo disk;SOFTWARE/not-to-distribute/translated/xak1/Xak1-demo.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Xak1, disk 1;SOFTWARE/not-to-distribute/translated/xak1/Xak1-disk1.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Xak1, disk 2;SOFTWARE/not-to-distribute/translated/xak1/Xak1-disk2.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Randar 1;SOFTWARE/not-to-distribute/translated/randar1/randar1.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;Randar 2;SOFTWARE/not-to-distribute/translated/randar2/randar2.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;FireHawk, disk A;SOFTWARE/not-to-distribute/translated/firehawk/fireh-1.dsk.gz
+Disk;unknown;Translated;unknown;fmpac;msx2;Game;FireHawk, disk B;SOFTWARE/not-to-distribute/translated/firehawk/fireh-2.dsk.gz
+Cart;2003;Original;Robsy;unknown;msx1;Game;Guru Logic;SOFTWARE/not-to-distribute/msxdev03/guru.rom
+Disk;unknown;unknown;ram;mbstereo,tetris2-protection;msx2plus;Game;Tetris 2 special edition, disk1;SOFTWARE/not-to-distribute/ram/T2SE-disk1.dsk.gz
+Disk;unknown;unknown;ram;mbstereo,tetris2-protection;msx2plus;Game;Tetris 2 special edition, disk2;SOFTWARE/not-to-distribute/ram/T2SE-disk2.dsk.gz
+Disk;unknown;unknown;ram;mbstereo,tetris2-protection;msx2plus;Game;Tetris 2 special edition, disk3;SOFTWARE/not-to-distribute/ram/T2SE-disk3.dsk.gz
