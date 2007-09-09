@@ -28,19 +28,40 @@ class Cheatfinder(object):
 
 			# Connect signals.
 			connect(ui.FindCheatLess, 'clicked()', self.findCheatLess)
+			connect(ui.FindCheatLessEqual, 'clicked()', self.findCheatLessEqual)
+			connect(ui.FindCheatEqual, 'clicked()', self.findCheatEqual)
+			connect(ui.FindCheatNotEqual, 'clicked()', self.findCheatNotEqual)
+			connect(ui.FindCheatMoreEqual, 'clicked()', self.findCheatMoreEqual)
+			connect(ui.FindCheatMore, 'clicked()', self.findCheatMore)
+			connect(ui.FindCheatRestart, 'clicked()', self.findCheatRestart)
 
-			# TODOzz
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
 
 	def findCheatLess(self):
-			print 'Hello world'
-			self.__bridge.command('findcheat', 'less')(self.__CheatListReply)
-			
+		self.__bridge.command('findcheat', 'less')(self.__CheatListReply)
+
+	def findCheatLessEqual(self):
+		self.__bridge.command('findcheat', 'loe')(self.__CheatListReply)
+
+	def findCheatEqual(self):
+		self.__bridge.command('findcheat', 'equal')(self.__CheatListReply)
+
+	def findCheatNotEqual(self):
+		self.__bridge.command('findcheat', 'notequal')(self.__CheatListReply)
+
+	def findCheatMoreEqual(self):
+		self.__bridge.command('findcheat', 'moe')(self.__CheatListReply)
+
+	def findCheatMore(self):
+		self.__bridge.command('findcheat', 'more')(self.__CheatListReply)
+
+	def findCheatRestart(self):
+		self.__bridge.command('findcheat', '-start')(self.__CheatListReply)
+
 	def __CheatListReply(self, *lines):
+		#todo: format output in the window
 		for line in lines:
 			text = self.__ui.cheatResults
 			text.append(line)
-			print line
-			
