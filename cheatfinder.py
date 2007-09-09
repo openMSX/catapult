@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtGui
 #import os.path
 
-from qt_utils import QtSignal, connect
+from qt_utils import connect
 
 class Cheatfinder(object):
 
@@ -34,7 +34,8 @@ class Cheatfinder(object):
 			connect(ui.FindCheatMoreEqual, 'clicked()', self.findCheatMoreEqual)
 			connect(ui.FindCheatMore, 'clicked()', self.findCheatMore)
 			connect(ui.FindCheatRestart, 'clicked()', self.findCheatRestart)
-
+			connect(ui.FindCheatValue, 'clicked()', self.findCheatValue)
+			
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
@@ -59,6 +60,11 @@ class Cheatfinder(object):
 
 	def findCheatRestart(self):
 		self.__bridge.command('findcheat', '-start')(self.__CheatListReply)
+
+	def findCheatValue(self):
+		cheatValue = self.__ui.cheatVal.text()
+		print cheatValue
+		self.__bridge.command('findcheat', cheatValue)(self.__CheatListReply)
 
 	def __CheatListReply(self, *lines):
 		#todo: format output in the window
