@@ -1731,7 +1731,7 @@
   </action>
   <action name="action_Diskmanipulator" >
    <property name="text" >
-    <string>Diskmanipulator</string>
+    <string>Disk Manipulator...</string>
    </property>
   </action>
   <action name="action_SoftwareDB" >
