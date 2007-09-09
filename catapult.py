@@ -34,6 +34,7 @@ from extension import ExtensionManager
 from media import MediaSwitcher
 from audio import AudioMixer
 from diskmanipulator import Diskmanipulator
+from cheatfinder import Cheatfinder
 from softwaredb import SoftwareDB
 from openmsx_control import ControlBridge
 from player import PlayState
@@ -86,6 +87,7 @@ class MainWindow(QtGui.QMainWindow):
 		bridge.registerInitial(self.__interceptExit)
 
 		self.__diskmanipulator = Diskmanipulator(bridge)
+		self.__cheatfinder = Cheatfinder(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
 
 		self.__connectMenuActions(ui)
@@ -134,6 +136,7 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_Quit, QtGui.qApp.closeAllWindows ),
 			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
+			( ui.action_CheatFinder, self.__cheatfinder.show ),
 			( ui.action_SoftwareDB, self.__softwaredb.show ),
 			( ui.action_HelpSetup, self.showHelpSetup ),
 			( ui.action_HelpUser, self.showHelpUser ),

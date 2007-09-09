@@ -1,5 +1,9 @@
 $Id$
 
+2007-09-09 Manuel Bilderbeek <manuel@msxnet.org>
+	* Moved Vampier's cheatfinder tab into a separate dialog and made some
+	  skeleton code so that it can be implemented.
+
 2007-09-07 David Heremans <david.heremans@gnu-linux.net>
 	* Big WIP commit
 	* fixed blocking tablewidget issue in the diskmanipulator
