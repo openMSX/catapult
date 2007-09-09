@@ -41,6 +41,17 @@ All source code and other works of openMSX Catapult are licensed under the
 GNU Public License (GPL) version 2, of which you can find a copy in the
 file 'GPL'.
 
+Win32/MSYS  Section
+-!-  I assume you have python 2.5 and QT installed in C:\Python25\  if this is not the case adjust your paths accordingly-!-
+
+Make sure the python.exe file is accessible through your path (set path in my computer->Advanced->Environment Variables->(go to lower 
+window and add something like ;C:\Python25 to the path.
+
+- Please create a file in your Python root director called pyuic
+- Put the following line into the code
+- python.exe c:\\Python25\\Lib\\site-packages\\PyQt4\\uic\\pyuic.py ${1+"$@"}
+- chmod this file so it's executable from within msys: chmod +x /c/Python25/pyuic
+
 For more information, visit our home page:
     http://www.openmsx.org/
 
