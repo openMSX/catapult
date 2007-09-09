@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtGui
 #import os.path
 
-#from qt_utils import QtSignal, connect
+from qt_utils import QtSignal, connect
 
 class Cheatfinder(object):
 
@@ -27,7 +27,20 @@ class Cheatfinder(object):
 			self.__ui = ui
 
 			# Connect signals.
-			# TODO
+			connect(ui.FindCheatLess, 'clicked()', self.findCheatLess)
+
+			# TODOzz
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
+
+	def findCheatLess(self):
+			print 'Hello world'
+			self.__bridge.command('findcheat', 'less')(self.__CheatListReply)
+			
+	def __CheatListReply(self, *lines):
+		for line in lines:
+			text = ui.cheatResults
+			text.append(line)
+			print line
+			
