@@ -40,7 +40,7 @@ class Cheatfinder(object):
 			
 	def __CheatListReply(self, *lines):
 		for line in lines:
-			text = ui.cheatResults
+			text = self.__ui.cheatResults
 			text.append(line)
 			print line
 			
