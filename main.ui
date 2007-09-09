@@ -1665,7 +1665,7 @@
    </widget>
    <widget class="QMenu" name="menuConfiguration" >
     <property name="title" >
-     <string>Edit</string>
+     <string>&amp;Edit</string>
     </property>
     <addaction name="action_EditConfiguration" />
    </widget>
@@ -1677,7 +1677,7 @@
    </widget>
    <widget class="QMenu" name="menuTools" >
     <property name="title" >
-     <string>Tools</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="action_Start_Debugger" />
     <addaction name="action_Diskmanipulator" />
@@ -1718,7 +1718,7 @@
   </action>
   <action name="action_EditConfiguration" >
    <property name="text" >
-    <string>&amp;Configuration</string>
+    <string>&amp;Configuration...</string>
    </property>
   </action>
   <action name="action_Start_Debugger" >
@@ -1726,12 +1726,12 @@
     <bool>false</bool>
    </property>
    <property name="text" >
-    <string>Start Debugger...</string>
+    <string>Start De&amp;bugger...</string>
    </property>
   </action>
   <action name="action_Diskmanipulator" >
    <property name="text" >
-    <string>Disk Manipulator...</string>
+    <string>&amp;Disk Manipulator...</string>
    </property>
   </action>
   <action name="action_SoftwareDB" >
