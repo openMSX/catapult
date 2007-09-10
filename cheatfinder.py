@@ -67,7 +67,7 @@ class Cheatfinder(object):
 		self.__bridge.command('findcheat', cheatValue)(self.__CheatListReply)
 
 	def __CheatListReply(self, *lines):
-		#todo: format output in the window
+		#TODO: format output in the window
 		for line in lines:
 			text = self.__ui.cheatResults
 			text.append(line)
