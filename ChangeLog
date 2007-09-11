@@ -1,5 +1,14 @@
 $Id$
 
+2007-09-11 David Heremans <david.heremans@gnu-linux.net>
+	* Another WIP, no pylint yet but more  it-works-thus-I-commit code:
+	  - you can navigate MSX images and localdirectories
+	  - importing files works
+	  - exporting the current MSX dir works
+	  - opening images to be used with the virtual_drive works if the
+	    emulated MSX has a diskdrive (this is another TODO for
+	    openMSX itself :-)
+
 2007-09-10 Patrick van Arkel <vampiermsx@gmail.com>
 	* Implemented initial cheat finder with the help of Manuel and Maarten.
 

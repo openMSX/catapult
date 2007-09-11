@@ -18,7 +18,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		bridge.registerUpdate('media', self.__updateMedium)
 		bridge.registerUpdatePrefix(
 			'hardware',
-			( 'cart', 'disk', 'cassette', 'hd', 'cd' ),
+			( 'virtual_drive', 'cart', 'disk', 'cassette', 'hd', 'cd' ),
 			self.__updateHardware
 			)
 
@@ -27,7 +27,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		#       openMSX crashes. So, we should go back to knowing nothing about
 		#       the openMSX state.
 		#self.__mediaSlots = []
-		for pattern in ( 'cart?', 'disk?', 'cassetteplayer', 'hd?', 'cd?' ):
+		for pattern in ( 'cart?', 'disk?', 'virtual_drive', 'cassetteplayer', 'hd?', 'cd?' ):
 			# Query medium slots.
 			self.__bridge.command('info', 'command', pattern)(
 				self.__mediumListReply
@@ -38,7 +38,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		'''
 		if len(slots) == 0:
 			return
-		for medium in ( 'cart', 'disk', 'cassette', 'hd', 'cd' ):
+		for medium in ( 'virtual_drive', 'cart', 'disk', 'cassette', 'hd', 'cd' ):
 			if slots[0].startswith(medium):
 				break
 		else:
