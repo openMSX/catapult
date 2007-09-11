@@ -63,11 +63,11 @@ class Cheatfinder(object):
 
 	def findCheatValue(self):
 		cheatValue = self.__ui.cheatVal.text()
-		print cheatValue
 		self.__bridge.command('findcheat', cheatValue)(self.__CheatListReply)
 
-	def __CheatListReply(self, *lines):
+	def __CheatListReply(self, *words):
 		#TODO: format output in the window
-		for line in lines:
-			text = self.__ui.cheatResults
-			text.append(line)
+		line = ' '.join(words)
+		text = self.__ui.cheatResults
+		text.append('------- New Command -------')
+		text.append(line)
