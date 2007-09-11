@@ -5,9 +5,9 @@ $Id$
 	  - you can navigate MSX images and localdirectories
 	  - importing files works
 	  - exporting the current MSX dir works
-	  - opening images to be used with the virtual_drive works if the
-	    emulated MSX has a diskdrive (this is another TODO for
-	    openMSX itself :-)
+	  - Make sure to use a version of openMSx more recent then 2007-08-11,
+	    otherwise opening images to be used with the virtual_drive works
+	    only if the emulated MSX has a diskdrive
 
 2007-09-10 Patrick van Arkel <vampiermsx@gmail.com>
 	* Implemented initial cheat finder with the help of Manuel and Maarten.
