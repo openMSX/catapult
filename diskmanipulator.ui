@@ -81,19 +81,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="openImageButton" >
-           <property name="toolTip" >
-            <string>Open disk image</string>
-           </property>
-           <property name="text" >
-            <string>...</string>
-           </property>
-           <property name="icon" >
-            <iconset>openfile.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QToolButton" name="newImageButton" >
            <property name="toolTip" >
             <string>Create new diskimage</string>
@@ -103,6 +90,19 @@
            </property>
            <property name="icon" >
             <iconset>newfile.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="openImageButton" >
+           <property name="toolTip" >
+            <string>Open disk image</string>
+           </property>
+           <property name="text" >
+            <string>...</string>
+           </property>
+           <property name="icon" >
+            <iconset>openfile.png</iconset>
            </property>
           </widget>
          </item>
@@ -199,6 +199,16 @@
          <column/>
          <column/>
          <column/>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="saveasnewButton" >
+         <property name="text" >
+          <string>Save current media to new diskimage</string>
+         </property>
+         <property name="icon" >
+          <iconset>disk.png</iconset>
+         </property>
         </widget>
        </item>
       </layout>

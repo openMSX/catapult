@@ -1,10 +1,6 @@
 # $Id:$
 
 from PyQt4 import QtCore, QtGui
-from bisect import bisect
-import os.path
-
-from qt_utils import QtSignal, connect
 
 class SoftwareDB:
 
@@ -84,12 +80,12 @@ class SoftwareDB:
 				ui.typeComboBox,
 				ui.yearComboBox
 				):
-				connect(combox, 'currentIndexChanged(int)',self.findMatches)
+				connect(combox, 'currentIndexChanged(int)', self.findMatches)
 			# connect regular buttons
-			connect(ui.nextPushButton, 'clicked()',self.on_nextPushButton_clicked)
-			connect(ui.nextPushButton, 'clicked()',self.on_nextPushButton_clicked)
-			connect(ui.previousPushButton, 'clicked()',self.on_previousPushButton_clicked)
-			connect(ui.gamelistView, 'cellClicked(int,int)',self.gamelistView_cellClicked)
+			connect(ui.nextPushButton, 'clicked()', self.on_nextPushButton_clicked)
+			connect(ui.nextPushButton, 'clicked()', self.on_nextPushButton_clicked)
+			connect(ui.previousPushButton, 'clicked()', self.on_previousPushButton_clicked)
+			connect(ui.gamelistView, 'cellClicked(int,int)', self.gamelistView_cellClicked)
 		self.__ui.gamelistView.setSortingEnabled(0)
 		self.__ui.gamelistView.horizontalHeader().setResizeMode( 0, QtGui.QHeaderView.Stretch)
 		self.__ui.gamelistView.horizontalHeader().hide()
@@ -118,10 +114,10 @@ class SoftwareDB:
 		for gui, sqlstatement in (
 			(ui.compagnyComboBox, 'Compagny'),
 			(ui.genreComboBox, 'Genre'),
-			(ui.machineComboBox,'Machine'),
-			(ui.patchedComboBox,'Patched'),
-			(ui.typeComboBox,'Type'),
-			(ui.yearComboBox,'Year')
+			(ui.machineComboBox, 'Machine'),
+			(ui.patchedComboBox, 'Patched'),
+			(ui.typeComboBox, 'Type'),
+			(ui.yearComboBox, 'Year')
 			):
 			if gui.currentIndex() != 0:
 				where.append( str(sqlstatement) + " = '" + str(gui.currentText() ) + "'" )
@@ -151,7 +147,7 @@ class SoftwareDB:
 		query = 'SELECT * ' + self.constructFromPartQuery() + ' ORDER BY Info'
 		cursor = self.__cursor
 		cursor.execute(query)
-		self.__selectedgameid=[]
+		self.__selectedgameid = []
 		index = 0
 		for row in cursor:
 			print row
@@ -175,7 +171,6 @@ class SoftwareDB:
 		print query
 		cursor = self.__cursor
 		cursor.execute(query)
-		index = 0
 		for row in cursor:
 			print row
 			self.__ui.label_name.setText( QtCore.QString( row[8] ))
