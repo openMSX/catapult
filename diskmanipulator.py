@@ -126,6 +126,11 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 				self.upLocalDir 
 				)
 			connect(
+				ui.hostDirNewButton,
+				'clicked()',
+				self.mklocaldir
+				)
+			connect(
 				ui.hostDirView,
 				'doubleClicked(QModelIndex)',
 				self.doubleClickedLocalDir 
@@ -360,7 +365,44 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		self.__cwd[self.__media] = path
 		self.refreshDir()
 
+	def mklocaldir(self):
+		title = 'New directory'
+		newdir ,ok = QtGui.QInputDialog.getText(
+			self.__ui.dirNewButton,
+			title,
+			'Enter folder name',
+			QtGui.QLineEdit.Normal,
+			)
+		if not ok:
+			return
+
+		if self.__localDir.mkdir(newdir):
+			self.__localDir.cd(newdir)
+		self.setLocalDir(self.__localDir.path())
+
 	def mkdir(self):
+		title = 'New directory on MSX media'
+		newdir ,ok = QtGui.QInputDialog.getText(
+			self.__ui.dirNewButton,
+			title,
+			'Enter folder name',
+			QtGui.QLineEdit.Normal,
+			)
+		if not ok:
+			return
+
+		self.__bridge.command(
+			'diskmanipulator', 'chdir',
+			self.__media, self.__cwd[self.__media]
+			)()
+		self.__bridge.command(
+			'diskmanipulator', 'mkdir',
+			self.__media, str( newdir )
+			)() 
+
+		if self.__cwd[self.__media] != '/':
+			self.__cwd[self.__media] += '/'
+		self.__cwd[self.__media] += str( newdir )
 		self.refreshDir()
 
 	def importFiles(self):

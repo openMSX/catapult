@@ -1,5 +1,8 @@
 $Id$
 
+2007-09-14 David Heremans <david.heremans@gnu-linux.net>
+	* creating subdirs now works, both for MSX and local OS.
+
 2007-09-11 David Heremans <david.heremans@gnu-linux.net>
 	* Another WIP, no pylint yet but more  it-works-thus-I-commit code:
 	  - you can navigate MSX images and localdirectories
