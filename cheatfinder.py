@@ -1,9 +1,8 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-#import os.path
-
 from qt_utils import connect
+#import os.path
 
 class Cheatfinder(object):
 
@@ -66,8 +65,51 @@ class Cheatfinder(object):
 		self.__bridge.command('findcheat', cheatValue)(self.__CheatListReply)
 
 	def __CheatListReply(self, *words):
-		#TODO: format output in the window
 		line = ' '.join(words)
 		text = self.__ui.cheatResults
-		text.append('------- New Command -------')
-		text.append(line)
+		
+		#Check if no results are found (clear table and display message)
+		if line.find('results')>1:
+			self.__ui.CheatTable.setRowCount(0)
+			text.append(line)
+
+		#Check if results are found
+		if line.find('results')<1:
+			#Format output to be put into an array
+			line = line.replace('->',' ')
+			line = line.replace(':',' ')
+			line = line.replace('  ',' ')
+			line = line.replace(' ',';')
+			line = line.replace(';;',';')
+			#Put resultset into array
+			cheatArray = line.split('\n')
+
+			#Create The Table to be filled / Disable sorting and set Gridsize
+			self.__ui.CheatTable.setRowCount( len(cheatArray) - 1 )
+			self.__ui.CheatTable.setSortingEnabled(0)
+			self.__ui.CheatTable.verticalHeader().setResizeMode( QtGui.QHeaderView.ResizeToContents )
+
+			row = 0
+			for cheatLine in cheatArray[ : -1]:
+				#Create Sub Array
+				cheatVal = cheatLine.split(';')
+
+				#Fill Address Value Item
+				addrItem = QtGui.QTableWidgetItem(cheatVal[0])
+				addrItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+				self.__ui.CheatTable.setItem(row, 0, addrItem)
+
+				#Fill Old Value Item
+				oldValItem = QtGui.QTableWidgetItem(cheatVal[1])
+				oldValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+				self.__ui.CheatTable.setItem(row, 1, oldValItem)
+
+				#Fill New Value Item
+				newValItem = QtGui.QTableWidgetItem(cheatVal[2])
+				newValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+				self.__ui.CheatTable.setItem(row, 2, newValItem)
+
+				row += 1
+
+			#Enable Sorting
+			self.__ui.CheatTable.setSortingEnabled(1)
