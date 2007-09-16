@@ -6,193 +6,232 @@
     <x>0</x>
     <y>0</y>
     <width>606</width>
-    <height>471</height>
+    <height>518</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Cheat Finder</string>
   </property>
-  <widget class="QTextEdit" name="cheatResults" >
-   <property name="geometry" >
-    <rect>
-     <x>9</x>
-     <y>9</y>
-     <width>589</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="html" >
-    <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+  <property name="windowIcon" >
+   <iconset>logo.png</iconset>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QTextEdit" name="cheatResults" >
+     <property name="toolTip" >
+      <string>Cheat Result Comments</string>
+     </property>
+     <property name="html" >
+      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;">Welcome to the Cheat Finder&lt;/p>&lt;/body>&lt;/html></string>
-   </property>
-  </widget>
-  <widget class="QTableWidget" name="CheatTable" >
-   <property name="geometry" >
-    <rect>
-     <x>9</x>
-     <y>78</y>
-     <width>589</width>
-     <height>331</height>
-    </rect>
-   </property>
-   <property name="sizePolicy" >
-    <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="frameShape" >
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow" >
-    <enum>QFrame::Sunken</enum>
-   </property>
-   <property name="alternatingRowColors" >
-    <bool>true</bool>
-   </property>
-   <property name="gridStyle" >
-    <enum>Qt::DotLine</enum>
-   </property>
-   <property name="sortingEnabled" >
-    <bool>true</bool>
-   </property>
-   <property name="rowCount" >
-    <number>0</number>
-   </property>
-   <property name="columnCount" >
-    <number>3</number>
-   </property>
-   <column>
-    <property name="text" >
-     <string>Addr</string>
-    </property>
-   </column>
-   <column>
-    <property name="text" >
-     <string>Old Value</string>
-    </property>
-   </column>
-   <column>
-    <property name="text" >
-     <string>New Value</string>
-    </property>
-   </column>
-  </widget>
-  <widget class="QWidget" name="" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>410</y>
-     <width>601</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" >
-    <item row="0" column="0" >
-     <widget class="QLineEdit" name="cheatVal" >
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QTableWidget" name="CheatTable" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip" >
+      <string>Cheat Results</string>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="alternatingRowColors" >
+      <bool>true</bool>
+     </property>
+     <property name="gridStyle" >
+      <enum>Qt::DotLine</enum>
+     </property>
+     <property name="sortingEnabled" >
+      <bool>true</bool>
+     </property>
+     <property name="rowCount" >
+      <number>0</number>
+     </property>
+     <property name="columnCount" >
+      <number>3</number>
+     </property>
+     <column>
       <property name="text" >
-       <string>Value</string>
+       <string>Addr</string>
       </property>
-     </widget>
-    </item>
-    <item row="0" column="1" >
-     <widget class="QPushButton" name="FindCheatValue" >
+     </column>
+     <column>
       <property name="text" >
-       <string>Find Value</string>
+       <string>Old Value</string>
       </property>
-     </widget>
-    </item>
-    <item row="0" column="2" >
-     <widget class="QPushButton" name="FindCheatRestart" >
+     </column>
+     <column>
       <property name="text" >
-       <string>New Search</string>
+       <string>New Value</string>
       </property>
-     </widget>
-    </item>
-    <item row="0" column="3" >
-     <spacer>
-      <property name="orientation" >
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" >
-       <size>
-        <width>171</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>440</y>
-     <width>601</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" >
-    <item row="0" column="0" >
-     <widget class="QPushButton" name="FindCheatLess" >
-      <property name="text" >
-       <string>&lt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" >
-     <widget class="QPushButton" name="FindCheatLessEqual" >
-      <property name="text" >
-       <string>&lt;=</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2" >
-     <widget class="QPushButton" name="FindCheatEqual" >
-      <property name="text" >
-       <string>==</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="3" >
-     <widget class="QPushButton" name="FindCheatNotEqual" >
-      <property name="text" >
-       <string>!=</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="4" >
-     <widget class="QPushButton" name="FindCheatMoreEqual" >
-      <property name="text" >
-       <string>=></string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="5" >
-     <widget class="QPushButton" name="FindCheatMore" >
-      <property name="text" >
-       <string>></string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="6" >
-     <spacer>
-      <property name="orientation" >
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" >
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-   </layout>
-  </widget>
+     </column>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <layout class="QGridLayout" >
+     <item row="0" column="0" >
+      <widget class="QLineEdit" name="cheatVal" >
+       <property name="text" >
+        <string>Value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <widget class="QPushButton" name="FindCheatValue" >
+       <property name="toolTip" >
+        <string>Find a Specific Value</string>
+       </property>
+       <property name="text" >
+        <string>Find Value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2" >
+      <widget class="QPushButton" name="FindCheatRestart" >
+       <property name="toolTip" >
+        <string>Initiate New Search</string>
+       </property>
+       <property name="whatsThis" >
+        <string/>
+       </property>
+       <property name="text" >
+        <string>New Search</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3" >
+      <widget class="QPushButton" name="EmulationTogglePause" >
+       <property name="toolTip" >
+        <string>Toggle Pause State</string>
+       </property>
+       <property name="text" >
+        <string/>
+       </property>
+       <property name="icon" >
+        <iconset>pause.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4" >
+      <widget class="QPushButton" name="EmulationReset" >
+       <property name="toolTip" >
+        <string>Reset the Emulation</string>
+       </property>
+       <property name="text" >
+        <string>Reset MSX</string>
+       </property>
+       <property name="icon" >
+        <iconset/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5" >
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>171</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0" >
+    <layout class="QGridLayout" >
+     <item row="0" column="0" >
+      <widget class="QPushButton" name="FindCheatLess" >
+       <property name="toolTip" >
+        <string>Less</string>
+       </property>
+       <property name="text" >
+        <string>&lt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <widget class="QPushButton" name="FindCheatLessEqual" >
+       <property name="toolTip" >
+        <string>Less or Equal</string>
+       </property>
+       <property name="text" >
+        <string>&lt;=</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2" >
+      <widget class="QPushButton" name="FindCheatEqual" >
+       <property name="toolTip" >
+        <string>Equal</string>
+       </property>
+       <property name="text" >
+        <string>==</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3" >
+      <widget class="QPushButton" name="FindCheatNotEqual" >
+       <property name="toolTip" >
+        <string>Not Equal</string>
+       </property>
+       <property name="text" >
+        <string>!=</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4" >
+      <widget class="QPushButton" name="FindCheatMoreEqual" >
+       <property name="toolTip" >
+        <string>More or Equal</string>
+       </property>
+       <property name="statusTip" >
+        <string/>
+       </property>
+       <property name="text" >
+        <string>=></string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5" >
+      <widget class="QPushButton" name="FindCheatMore" >
+       <property name="toolTip" >
+        <string>More</string>
+       </property>
+       <property name="text" >
+        <string>></string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6" >
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="8" />
  <includes/>

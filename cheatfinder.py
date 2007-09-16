@@ -2,6 +2,8 @@
 
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect
+from player import PlayState
+
 #import os.path
 
 class Cheatfinder(object):
@@ -34,10 +36,20 @@ class Cheatfinder(object):
 			connect(ui.FindCheatMore, 'clicked()', self.findCheatMore)
 			connect(ui.FindCheatRestart, 'clicked()', self.findCheatRestart)
 			connect(ui.FindCheatValue, 'clicked()', self.findCheatValue)
+			connect(ui.EmulationTogglePause, 'clicked()', self.emulationTogglePause)
+			connect(ui.EmulationReset, 'clicked()', self.emulationReset)
 			
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
+
+	def emulationTogglePause(self):
+		self.__bridge.command('toggle', 'pause')(self.__CheatListReply)
+		#TODO: play
+
+	def emulationReset(self):
+		self.__bridge.command('reset')(self.__CheatListReply)		
+		#TODO: Pause
 
 	def findCheatLess(self):
 		self.__bridge.command('findcheat', 'less')(self.__CheatListReply)
@@ -87,7 +99,7 @@ class Cheatfinder(object):
 			#Create The Table to be filled / Disable sorting and set Gridsize
 			self.__ui.CheatTable.setRowCount( len(cheatArray) - 1 )
 			self.__ui.CheatTable.setSortingEnabled(0)
-			self.__ui.CheatTable.verticalHeader().setResizeMode( QtGui.QHeaderView.ResizeToContents )
+			self.__ui.CheatTable.verticalHeader().setResizeMode(QtGui.QHeaderView.ResizeToContents )
 
 			row = 0
 			for cheatLine in cheatArray[ : -1]:
@@ -99,17 +111,18 @@ class Cheatfinder(object):
 				addrItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 				self.__ui.CheatTable.setItem(row, 0, addrItem)
 
-				#Fill Old Value Item
+				#Fill Old Value Item (dec)
 				oldValItem = QtGui.QTableWidgetItem(cheatVal[1])
 				oldValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 				self.__ui.CheatTable.setItem(row, 1, oldValItem)
 
-				#Fill New Value Item
+				#Fill New Value Item (dec)
 				newValItem = QtGui.QTableWidgetItem(cheatVal[2])
 				newValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 				self.__ui.CheatTable.setItem(row, 2, newValItem)
 
 				row += 1
+				#text.append(row+" Results found: Displayed")
 
 			#Enable Sorting
 			self.__ui.CheatTable.setSortingEnabled(1)
