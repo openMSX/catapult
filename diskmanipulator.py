@@ -283,7 +283,7 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		#TODO create wizard to select different sizes/hd images
 		self.__bridge.command(
 			'diskmanipulator', 'create',
-			str(path), size.split(' ')
+			str(path), *size.split(' ')
 			)()
 		# insert the selected image in the 'virtual drive'
 		self.__media = 'virtual_drive'

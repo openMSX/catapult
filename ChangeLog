@@ -2,7 +2,6 @@ $Id$
 
 2007-09-17 David Heremans <david.heremans@gnu-linux.net>
 	* First attempt to have a size-wizard when a new dsk image is created.
-	  some small problems with passing partition sizes are present.
 
 2007-09-14 David Heremans <david.heremans@gnu-linux.net>
 	* creating subdirs now works, both for MSX and local OS.
