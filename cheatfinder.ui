@@ -203,7 +203,7 @@
     </rect>
    </property>
    <property name="title" >
-    <string>GroupBox</string>
+    <string>Results</string>
    </property>
    <widget class="QTableWidget" name="CheatTable" >
     <property name="geometry" >
