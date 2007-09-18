@@ -65,6 +65,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize" >
+           <size>
+            <width>250</width>
+            <height>16</height>
+           </size>
+          </property>
           <property name="frameShape" >
            <enum>QFrame::Box</enum>
           </property>
