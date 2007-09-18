@@ -372,7 +372,7 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 
 	def mklocaldir(self):
 		title = 'New directory'
-		newdir ,ok = QtGui.QInputDialog.getText(
+		newdir, ok = QtGui.QInputDialog.getText(
 			self.__ui.dirNewButton,
 			title,
 			'Enter folder name',
@@ -387,7 +387,7 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 
 	def mkdir(self):
 		title = 'New directory on MSX media'
-		newdir ,ok = QtGui.QInputDialog.getText(
+		newdir, ok = QtGui.QInputDialog.getText(
 			self.__ui.dirNewButton,
 			title,
 			'Enter folder name',

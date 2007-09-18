@@ -1,6 +1,7 @@
 # $Id:$
 
 from PyQt4 import QtCore, QtGui
+from qt_utils import connect
 
 class SoftwareDB:
 
@@ -80,14 +81,36 @@ class SoftwareDB:
 				ui.typeComboBox,
 				ui.yearComboBox
 				):
-				connect(combox, 'currentIndexChanged(int)', self.findMatches)
+				connect(
+					combox,
+					'currentIndexChanged(int)',
+					self.findMatches
+					)
 			# connect regular buttons
-			connect(ui.nextPushButton, 'clicked()', self.on_nextPushButton_clicked)
-			connect(ui.nextPushButton, 'clicked()', self.on_nextPushButton_clicked)
-			connect(ui.previousPushButton, 'clicked()', self.on_previousPushButton_clicked)
-			connect(ui.gamelistView, 'cellClicked(int,int)', self.gamelistView_cellClicked)
+			connect(
+				ui.nextPushButton,
+				'clicked()',
+				self.on_nextPushButton_clicked
+				)
+			connect(
+				ui.nextPushButton,
+				'clicked()',
+				self.on_nextPushButton_clicked
+				)
+			connect(
+				ui.previousPushButton,
+				'clicked()',
+				self.on_previousPushButton_clicked
+				)
+			connect(
+				ui.gamelistView,
+				'cellClicked(int,int)',
+				self.gamelistView_cellClicked
+				)
 		self.__ui.gamelistView.setSortingEnabled(0)
-		self.__ui.gamelistView.horizontalHeader().setResizeMode( 0, QtGui.QHeaderView.Stretch)
+		self.__ui.gamelistView.horizontalHeader().setResizeMode(
+			0, QtGui.QHeaderView.Stretch
+			)
 		self.__ui.gamelistView.horizontalHeader().hide()
 		self.__ui.gamelistView.verticalHeader().hide()
 
@@ -166,8 +189,8 @@ class SoftwareDB:
 		self.__ui.gamelistView.setRowCount(index + 1)
 		self.showGameinfo( self.__selectedgameid[0] )
 
-	def showGameinfo( self , id ):
-		query = "SELECT * FROM software WHERE id = '" + str(id) + "'"
+	def showGameinfo( self , softid ):
+		query = "SELECT * FROM software WHERE id = '" + str(softid) + "'"
 		print query
 		cursor = self.__cursor
 		cursor.execute(query)
@@ -179,7 +202,6 @@ class SoftwareDB:
 			self.__ui.label_machine.setText( QtCore.QString( row[6] ))
 			self.__ui.label_genre.setText( QtCore.QString( row[7] ))
 		
-
 	def gamelistView_cellClicked( self , row , column ):
 		self.showGameinfo( self.__selectedgameid[row] )
 
