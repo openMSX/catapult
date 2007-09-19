@@ -31,6 +31,7 @@ from editconfig import configDialog
 from custom import docDir
 from machine import MachineManager
 from extension import ExtensionManager
+from mediamodel import MediaModel
 from media import MediaSwitcher
 from audio import AudioMixer
 from diskmanipulator import Diskmanipulator
@@ -56,6 +57,7 @@ class MainWindow(QtGui.QMainWindow):
 		QtGui.QMainWindow.__init__(self)
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
+		self.__mediaModel = mediaModel = MediaModel(bridge)
 		ui.setupUi(self)
 		# Added stuff that at the moment will be exclusive to 
 		# the openMSX-CD
@@ -86,13 +88,22 @@ class MainWindow(QtGui.QMainWindow):
 		# in place before the output window is opened.
 		bridge.registerInitial(self.__interceptExit)
 
-		self.__diskmanipulator = Diskmanipulator(bridge)
+		settingsManager = settings.SettingsManager(bridge)
+		self.__extensionManager = extensionManager = ExtensionManager(
+			self, ui, bridge
+			)
+		self.__machineManager = machineManager = MachineManager(
+			self, ui.machineBox, bridge
+			)
+
+		self.__diskmanipulator = Diskmanipulator(ui, settingsManager,
+			machineManager, extensionManager, bridge, mediaModel
+			)
 		self.__cheatfinder = Cheatfinder(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
 
 		self.__connectMenuActions(ui)
 
-		settingsManager = settings.SettingsManager(bridge)
 		bridge.logLine.connect(self.logLine)
 		settingsManager.registerSetting('scanline', settings.IntegerSetting)
 		settingsManager.connectSetting('scanline', ui.scanlineSlider)
@@ -106,18 +117,12 @@ class MainWindow(QtGui.QMainWindow):
 
 		self.__playState = PlayState(settingsManager, ui)
 
-		self.__extensionManager = extensionManager = ExtensionManager(
-			self, ui, bridge
-			)
 		connect(ui.extensionButton, 'clicked()',
 			extensionManager.chooseExtension)
 
-		self.__machineManager = machineManager = MachineManager(
-			self, ui.machineBox, bridge
-			)
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
-		self.__mediaSwitcher = MediaSwitcher(ui, bridge)
+		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager,
 			machineManager, extensionManager, bridge
 			)

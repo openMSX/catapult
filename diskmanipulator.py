@@ -1,16 +1,22 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from qt_utils import QtSignal, connect
+from qt_utils import Signal, connect
+from mediamodel import MediaModel
+import settings
 
-class Diskmanipulator(QtCore.QAbstractListModel):
-	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
+class Diskmanipulator(QtCore.QObject):
 
-	def __init__(self, bridge):
-		QtCore.QAbstractListModel.__init__(self)
+	def __init__(self, ui, settingsManager, machineManager, extensionManager,
+			bridge, mediaModel
+			):
+		#QtCore.QAbstractListModel.__init__(self)
+		QtCore.QObject.__init__(self)
+
 		self.__dmDialog = None
 		self.__ui = None
 		self.__combobox = None
+		self.__mediaModel = mediaModel
 		self.__bridge = bridge
 		self.__mediaSlots = []
 		self.__cwd = {}
@@ -18,11 +24,29 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 		self.__localDir = QtCore.QDir.home()
 		self.__dirModel = QtGui.QDirModel()
 
+		#mediaModel.updated.connect(self.__rebuildUI)
+		mediaModel.dataChanged.connect(self.__rebuildUI)
+
 		#quick hack to have some values available
 		self.__cwd['virtual_drive'] = '/'
 		self.__cwd['diska'] = '/'
 		self.__cwd['diskb'] = '/'
 		self.__cwd['hda'] = '/'
+
+	def __rebuildUI(self):
+		# Only if ui is initialized
+		if self.__combobox != None:
+			combo = self.__combobox
+			#clear all items first
+			while combo.count() > 0:
+				combo.removeItem( combo.count() - 1 )
+			devices = self.__mediaModel.getDriveNames()
+			for device in devices:
+				combo.addItem(QtCore.QString(device))
+			#quick hack
+			#combo.addItem(QtCore.QString('diska'))
+			#combo.addItem(QtCore.QString('diskb'))
+			#combo.addItem(QtCore.QString('hda'))
 
 	def show(self):
 		dialog = self.__dmDialog
@@ -47,11 +71,6 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 			#	)
 			# TODO: how are handling the 'virtual_drive' in the above case ??
 
-			#quick hack to have some values available
-			self.__combobox.addItem(QtCore.QString('virtual_drive'))
-			self.__combobox.addItem(QtCore.QString('diska'))
-			self.__combobox.addItem(QtCore.QString('diskb'))
-			self.__combobox.addItem(QtCore.QString('hda'))
 
 			# Set the msxDirTable as needed
 			msxDir = self.__ui.msxDirTable
@@ -169,6 +188,11 @@ class Diskmanipulator(QtCore.QAbstractListModel):
 				'editingFinished()',
 				self.editedLocalDir
 				)
+		self.__mediaModel.doUpdateAll()
+		# quick hack to have some values visible in case doUpdateAll doesn't need
+		# to emmit a datachanged and only now ui is initialized
+		self.__rebuildUI()
+
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
