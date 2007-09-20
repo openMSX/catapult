@@ -1,5 +1,10 @@
 $Id$
 
+2007-09-20 David Heremans <david.heremans@gnu-linux.net>
+	* Added a (not working yet) renderer-combobox on the videotab
+	  values are asked to openMSX but selecting them doesn't change
+	  the active one
+
 2007-09-17 David Heremans <david.heremans@gnu-linux.net>
 	* First attempt to have a size-wizard when a new dsk image is created.
 

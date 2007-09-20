@@ -64,7 +64,8 @@ class MainWindow(QtGui.QMainWindow):
 		if openmsxcd:
 			ui.action_SoftwareDB = QtGui.QAction(self)
 			ui.action_SoftwareDB.setObjectName("action_SoftwareDB")
-			ui.action_SoftwareDB.setText(QtGui.QApplication.translate("MainWindow", "Software DB", None, QtGui.QApplication.UnicodeUTF8))
+			ui.action_SoftwareDB.setText(QtGui.QApplication.translate("MainWindow",
+				"Software DB", None, QtGui.QApplication.UnicodeUTF8))
 			ui.menuTools.addAction(ui.action_SoftwareDB)
 
 		# Resources that are loaded on demand.
@@ -105,6 +106,15 @@ class MainWindow(QtGui.QMainWindow):
 		self.__connectMenuActions(ui)
 
 		bridge.logLine.connect(self.logLine)
+		#
+		#settingsManager.registerSetting('renderer', settings.EnumSetting)
+		#settingsManager.connectSetting('renderer', ui.rendererComboBox)
+		#
+		#This doesn't work the settingsManager complains that it is already registered
+		#which is true: player.py has taken control of the renderer already :-\
+		#TODO: alter player so that it emmits a nice signal so that
+		#we can update the combobox if needed
+
 		settingsManager.registerSetting('scanline', settings.IntegerSetting)
 		settingsManager.connectSetting('scanline', ui.scanlineSlider)
 		settingsManager.connectSetting('scanline', ui.scanlineSpinBox)
@@ -126,6 +136,25 @@ class MainWindow(QtGui.QMainWindow):
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager,
 			machineManager, extensionManager, bridge
 			)
+
+	def afterConnectionMade(self): 
+		self.__bridge.command('openmsx_info', 'setting', 'renderer'
+			)(
+			self.__fillRendererComboBox, self.__infofailed
+			)
+
+	def __infofailed(self, name, message):
+		print 'Failed to get info about %s : %s' % (
+			name, message
+			)
+
+	def __fillRendererComboBox(self, *items):
+		print '------------------------------------'
+		print items
+		print '------------------------------------'
+		for item in items[2].split(' '):
+			combo = self.__ui.rendererComboBox
+			combo.addItem(QtCore.QString(item))
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
@@ -294,5 +323,12 @@ if __name__ == '__main__':
 	controlBridge = ControlBridge()
 	mainWindow = MainWindow(controlBridge)
 	controlBridge.openConnection()
+	#quick hack TODO: get this is in beter place!
+	#Question: if we open the connection before we
+	# create the mainwindow, will this work?
+	# I think I need to look into this beacuse of
+	# the exit/Tcl remark at line 86
+	mainWindow.afterConnectionMade()
 	mainWindow.show()
+
 	sys.exit(app.exec_())

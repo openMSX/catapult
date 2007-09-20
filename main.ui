@@ -1153,36 +1153,18 @@
        <attribute name="title" >
         <string>Video</string>
        </attribute>
-       <widget class="QWidget" name="widget" >
+       <widget class="QWidget" name="" >
         <property name="geometry" >
          <rect>
-          <x>51</x>
-          <y>44</y>
-          <width>251</width>
-          <height>364</height>
+          <x>50</x>
+          <y>20</y>
+          <width>281</width>
+          <height>395</height>
          </rect>
         </property>
-        <layout class="QGridLayout" >
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
-          <number>0</number>
-         </property>
-         <property name="horizontalSpacing" >
-          <number>0</number>
-         </property>
-         <property name="verticalSpacing" >
-          <number>0</number>
-         </property>
-         <item row="1" column="0" >
-          <layout class="QVBoxLayout" >
+        <layout class="QVBoxLayout" >
+         <item>
+          <layout class="QHBoxLayout" >
            <property name="spacing" >
             <number>0</number>
            </property>
@@ -1199,306 +1181,367 @@
             <number>6</number>
            </property>
            <item>
-            <widget class="QLabel" name="blurLabel" >
+            <widget class="QLabel" name="label_2" >
              <property name="text" >
-              <string>Blur:</string>
+              <string>Renderer: </string>
+             </property>
+             <property name="alignment" >
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="blurSlider" >
-             <property name="maximum" >
-              <number>100</number>
-             </property>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition" >
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval" >
-              <number>10</number>
-             </property>
-            </widget>
+            <widget class="QComboBox" name="rendererComboBox" />
            </item>
           </layout>
          </item>
-         <item row="1" column="1" >
-          <widget class="QSpinBox" name="blurSpinBox" >
-           <property name="maximum" >
-            <number>100</number>
-           </property>
-           <property name="singleStep" >
-            <number>5</number>
+         <item>
+          <widget class="Line" name="line" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
-         <item row="3" column="0" >
-          <layout class="QVBoxLayout" >
-           <property name="spacing" >
+         <item>
+          <layout class="QGridLayout" >
+           <property name="leftMargin" >
             <number>0</number>
            </property>
-           <property name="leftMargin" >
-            <number>6</number>
-           </property>
            <property name="topMargin" >
-            <number>6</number>
+            <number>0</number>
            </property>
            <property name="rightMargin" >
-            <number>6</number>
+            <number>0</number>
            </property>
            <property name="bottomMargin" >
-            <number>6</number>
+            <number>0</number>
            </property>
-           <item>
-            <widget class="QLabel" name="gammaLabel" >
-             <property name="text" >
-              <string>Gamma Correction:</string>
+           <property name="horizontalSpacing" >
+            <number>0</number>
+           </property>
+           <property name="verticalSpacing" >
+            <number>0</number>
+           </property>
+           <item row="1" column="0" >
+            <layout class="QVBoxLayout" >
+             <property name="spacing" >
+              <number>0</number>
              </property>
-            </widget>
+             <property name="leftMargin" >
+              <number>6</number>
+             </property>
+             <property name="topMargin" >
+              <number>6</number>
+             </property>
+             <property name="rightMargin" >
+              <number>6</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="blurLabel" >
+               <property name="text" >
+                <string>Blur:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="blurSlider" >
+               <property name="maximum" >
+                <number>100</number>
+               </property>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition" >
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval" >
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
-           <item>
-            <widget class="QSlider" name="gammaSlider" >
+           <item row="1" column="1" >
+            <widget class="QSpinBox" name="blurSpinBox" >
              <property name="maximum" >
               <number>100</number>
              </property>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition" >
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval" >
-              <number>10</number>
+             <property name="singleStep" >
+              <number>5</number>
              </property>
             </widget>
            </item>
-          </layout>
-         </item>
-         <item row="2" column="1" >
-          <widget class="QSpinBox" name="glowSpinBox" >
-           <property name="maximum" >
-            <number>100</number>
-           </property>
-           <property name="singleStep" >
-            <number>5</number>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0" >
-          <layout class="QVBoxLayout" >
-           <property name="spacing" >
-            <number>0</number>
-           </property>
-           <property name="leftMargin" >
-            <number>6</number>
-           </property>
-           <property name="topMargin" >
-            <number>6</number>
-           </property>
-           <property name="rightMargin" >
-            <number>6</number>
-           </property>
-           <property name="bottomMargin" >
-            <number>6</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="contrastLabel" >
-             <property name="text" >
-              <string>Contrast:</string>
+           <item row="3" column="0" >
+            <layout class="QVBoxLayout" >
+             <property name="spacing" >
+              <number>0</number>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="contrastSlider" >
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+             <property name="leftMargin" >
+              <number>6</number>
              </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="2" column="0" >
-          <layout class="QVBoxLayout" >
-           <property name="spacing" >
-            <number>0</number>
-           </property>
-           <property name="leftMargin" >
-            <number>6</number>
-           </property>
-           <property name="topMargin" >
-            <number>6</number>
-           </property>
-           <property name="rightMargin" >
-            <number>6</number>
-           </property>
-           <property name="bottomMargin" >
-            <number>6</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="glowLabel" >
-             <property name="text" >
-              <string>Glow:</string>
+             <property name="topMargin" >
+              <number>6</number>
              </property>
-            </widget>
+             <property name="rightMargin" >
+              <number>6</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="gammaLabel" >
+               <property name="text" >
+                <string>Gamma Correction:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="gammaSlider" >
+               <property name="maximum" >
+                <number>100</number>
+               </property>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition" >
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval" >
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
-           <item>
-            <widget class="QSlider" name="glowSlider" >
+           <item row="2" column="1" >
+            <widget class="QSpinBox" name="glowSpinBox" >
              <property name="maximum" >
               <number>100</number>
              </property>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition" >
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval" >
-              <number>10</number>
+             <property name="singleStep" >
+              <number>5</number>
              </property>
             </widget>
            </item>
-          </layout>
-         </item>
-         <item row="6" column="1" >
-          <widget class="QDoubleSpinBox" name="noiseSpinBox" />
-         </item>
-         <item row="4" column="0" >
-          <layout class="QVBoxLayout" >
-           <property name="spacing" >
-            <number>0</number>
-           </property>
-           <property name="leftMargin" >
-            <number>6</number>
-           </property>
-           <property name="topMargin" >
-            <number>6</number>
-           </property>
-           <property name="rightMargin" >
-            <number>6</number>
-           </property>
-           <property name="bottomMargin" >
-            <number>6</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="brightnessLabel" >
-             <property name="text" >
-              <string>Brightness:</string>
+           <item row="5" column="0" >
+            <layout class="QVBoxLayout" >
+             <property name="spacing" >
+              <number>0</number>
+             </property>
+             <property name="leftMargin" >
+              <number>6</number>
+             </property>
+             <property name="topMargin" >
+              <number>6</number>
+             </property>
+             <property name="rightMargin" >
+              <number>6</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="contrastLabel" >
+               <property name="text" >
+                <string>Contrast:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="contrastSlider" >
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0" >
+            <layout class="QVBoxLayout" >
+             <property name="spacing" >
+              <number>0</number>
+             </property>
+             <property name="leftMargin" >
+              <number>6</number>
+             </property>
+             <property name="topMargin" >
+              <number>6</number>
+             </property>
+             <property name="rightMargin" >
+              <number>6</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="glowLabel" >
+               <property name="text" >
+                <string>Glow:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="glowSlider" >
+               <property name="maximum" >
+                <number>100</number>
+               </property>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition" >
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval" >
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="6" column="1" >
+            <widget class="QDoubleSpinBox" name="noiseSpinBox" />
+           </item>
+           <item row="4" column="0" >
+            <layout class="QVBoxLayout" >
+             <property name="spacing" >
+              <number>0</number>
+             </property>
+             <property name="leftMargin" >
+              <number>6</number>
+             </property>
+             <property name="topMargin" >
+              <number>6</number>
+             </property>
+             <property name="rightMargin" >
+              <number>6</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="brightnessLabel" >
+               <property name="text" >
+                <string>Brightness:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="brightnessSlider" >
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="1" >
+            <widget class="QDoubleSpinBox" name="gammaSpinBox" >
+             <property name="minimum" >
+              <double>0.000000000000000</double>
+             </property>
+             <property name="maximum" >
+              <double>5.000000000000000</double>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QSlider" name="brightnessSlider" >
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+           <item row="6" column="0" >
+            <layout class="QVBoxLayout" >
+             <property name="spacing" >
+              <number>0</number>
              </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="3" column="1" >
-          <widget class="QDoubleSpinBox" name="gammaSpinBox" >
-           <property name="minimum" >
-            <double>0.000000000000000</double>
-           </property>
-           <property name="maximum" >
-            <double>5.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0" >
-          <layout class="QVBoxLayout" >
-           <property name="spacing" >
-            <number>0</number>
-           </property>
-           <property name="leftMargin" >
-            <number>6</number>
-           </property>
-           <property name="topMargin" >
-            <number>6</number>
-           </property>
-           <property name="rightMargin" >
-            <number>6</number>
-           </property>
-           <property name="bottomMargin" >
-            <number>6</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="noiseLabel" >
-             <property name="text" >
-              <string>Noise:</string>
+             <property name="leftMargin" >
+              <number>6</number>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="noiseSlider" >
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+             <property name="topMargin" >
+              <number>6</number>
              </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="0" column="0" >
-          <layout class="QVBoxLayout" >
-           <property name="spacing" >
-            <number>0</number>
-           </property>
-           <property name="leftMargin" >
-            <number>6</number>
-           </property>
-           <property name="topMargin" >
-            <number>6</number>
-           </property>
-           <property name="rightMargin" >
-            <number>6</number>
-           </property>
-           <property name="bottomMargin" >
-            <number>6</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="scanlineLabel" >
-             <property name="text" >
-              <string>Scanline:</string>
+             <property name="rightMargin" >
+              <number>6</number>
              </property>
-            </widget>
+             <property name="bottomMargin" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="noiseLabel" >
+               <property name="text" >
+                <string>Noise:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="noiseSlider" >
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
-           <item>
-            <widget class="QSlider" name="scanlineSlider" >
+           <item row="0" column="0" >
+            <layout class="QVBoxLayout" >
+             <property name="spacing" >
+              <number>0</number>
+             </property>
+             <property name="leftMargin" >
+              <number>6</number>
+             </property>
+             <property name="topMargin" >
+              <number>6</number>
+             </property>
+             <property name="rightMargin" >
+              <number>6</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="scanlineLabel" >
+               <property name="text" >
+                <string>Scanline:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="scanlineSlider" >
+               <property name="maximum" >
+                <number>100</number>
+               </property>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition" >
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval" >
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="4" column="1" >
+            <widget class="QDoubleSpinBox" name="brightnessSpinBox" />
+           </item>
+           <item row="5" column="1" >
+            <widget class="QDoubleSpinBox" name="contrastSpinBox" />
+           </item>
+           <item row="0" column="1" >
+            <widget class="QSpinBox" name="scanlineSpinBox" >
              <property name="maximum" >
               <number>100</number>
              </property>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+             <property name="singleStep" >
+              <number>5</number>
              </property>
-             <property name="tickPosition" >
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval" >
-              <number>10</number>
+             <property name="value" >
+              <number>0</number>
              </property>
             </widget>
            </item>
           </layout>
-         </item>
-         <item row="4" column="1" >
-          <widget class="QDoubleSpinBox" name="brightnessSpinBox" />
-         </item>
-         <item row="5" column="1" >
-          <widget class="QDoubleSpinBox" name="contrastSpinBox" />
-         </item>
-         <item row="0" column="1" >
-          <widget class="QSpinBox" name="scanlineSpinBox" >
-           <property name="maximum" >
-            <number>100</number>
-           </property>
-           <property name="singleStep" >
-            <number>5</number>
-           </property>
-           <property name="value" >
-            <number>0</number>
-           </property>
-          </widget>
          </item>
         </layout>
        </widget>
