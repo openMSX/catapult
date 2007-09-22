@@ -1153,7 +1153,7 @@
        <attribute name="title" >
         <string>Video</string>
        </attribute>
-       <widget class="QWidget" name="" >
+       <widget class="QWidget" name="layoutWidget" >
         <property name="geometry" >
          <rect>
           <x>50</x>
@@ -1699,7 +1699,7 @@
      <x>0</x>
      <y>0</y>
      <width>716</width>
-     <height>28</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help" >
@@ -1731,6 +1731,7 @@
     <addaction name="action_Start_Debugger" />
     <addaction name="action_Diskmanipulator" />
     <addaction name="action_CheatFinder" />
+    <addaction name="action_PaletteEditor" />
    </widget>
    <addaction name="menu_File" />
    <addaction name="menuConfiguration" />
@@ -1792,6 +1793,11 @@
   <action name="action_CheatFinder" >
    <property name="text" >
     <string>Cheat Finder...</string>
+   </property>
+  </action>
+  <action name="action_PaletteEditor" >
+   <property name="text" >
+    <string>Palette Editor</string>
    </property>
   </action>
  </widget>
