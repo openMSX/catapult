@@ -38,6 +38,7 @@ from diskmanipulator import Diskmanipulator
 from cheatfinder import Cheatfinder
 from softwaredb import SoftwareDB
 from openmsx_control import ControlBridge
+from paletteeditor import paletteEditor
 from player import PlayState
 from qt_utils import connect
 import settings
@@ -102,7 +103,7 @@ class MainWindow(QtGui.QMainWindow):
 			)
 		self.__cheatfinder = Cheatfinder(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
-
+		self.__paletteeditor = paletteEditor(bridge)
 		self.__connectMenuActions(ui)
 
 		bridge.logLine.connect(self.logLine)
@@ -171,6 +172,7 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
 			( ui.action_CheatFinder, self.__cheatfinder.show ),
+			( ui.action_PaletteEditor, self.__paletteeditor.show ),
 			( ui.action_SoftwareDB, self.__softwaredb.show ),
 			( ui.action_HelpSetup, self.showHelpSetup ),
 			( ui.action_HelpUser, self.showHelpUser ),

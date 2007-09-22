@@ -22,12 +22,24 @@ class paletteEditor(object):
 					| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
 					)
 				# Setup UI made in Qt Designer.
-				print "-------------------------------------------- Hello World"
 				from ui_paletteeditor import Ui_paletteEditor
 				ui = Ui_paletteEditor()
 				ui.setupUi(dialog)
 				self.__ui = ui
+				
+				# Connect signals.
+				connect(ui.GetMSXColors, 'clicked()', self.getMSXColors)
+				#connect(ui.SavePalette, 'clicked()', self.savePalette)
+				#connect(ui.LoadPalette, 'clicked()', self.loadPalette)
 
 			dialog.show()
 			dialog.raise_()
 			dialog.activateWindow()
+
+		def getMSXColors(self):
+			a=self.__bridge.command('getcolor',0,1,2,3,4)(self.__ParseColors)
+			#self.__bridge.command('palette', '')(self.__ParseColors)
+
+		def __ParseColors(self, *words):
+			line = ' '.join(words)
+			print line
