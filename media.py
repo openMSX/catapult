@@ -1,14 +1,9 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from bisect import bisect
-import os.path
 
 from preferences import preferences
-from qt_utils import QtSignal, connect
-
-from mediamodel import MediaModel
-
+from qt_utils import connect
 
 def addToHistory(comboBox, path):
 	# TODO: Do we really need this?
@@ -46,6 +41,7 @@ class MediaSwitcher(QtCore.QObject):
 			'hd': ( ui.hdPage, self.__updateHarddiskPage ),
 			'cd': ( ui.cdPage, self.__updateCDROMPage ),
 			}
+		self.__cartPageInited = False
 		# Connect to media model and view:
 		ui.mediaList.setModel(mediaModel)
 		mediaModel.dataChanged.connect(self.mediaPathChanged)
@@ -105,6 +101,18 @@ class MediaSwitcher(QtCore.QObject):
 		ui.cartDescriptionLabel.setText(description)
 
 		ui.cartHistoryBox.lineEdit().setText(path)
+		
+		if not self.__cartPageInited:
+			# the next query might be empty, if it happens too soon
+			mapperTypes = self.__mediaModel.getRomTypes()
+			if len(mapperTypes) != 0:
+				self.__cartPageInited = True 
+				ui.mapperTypeCombo.addItem('Auto Detect')
+				for item in mapperTypes:
+					ui.mapperTypeCombo.addItem(QtCore.QString(item))
+			else:
+				print 'Interesting! We are preventing a race\
+					condition here!'
 
 	def __updateDrivePage(self, mediaSlot, identifier):
 		ui = self.__ui
@@ -268,7 +276,8 @@ class MediaSwitcher(QtCore.QObject):
 		if self.__mediaSlot == mediaSlot:
 			return
 		#quick hack to ignore VIRTUAL_DRIVE selection
-		#TODO: find out how to register virtual drive as slot but not display it in the selection list
+		# TODO: find out how to register virtual drive as slot but not
+		# display it in the selection list
 		if  mediaSlot == 'virtual_drive':
 			return
 		self.__mediaSlot = mediaSlot
@@ -281,7 +290,8 @@ class MediaSwitcher(QtCore.QObject):
 		# Find out which media entry has become active.
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
 		#quick hack to ignore VIRTUAL_DRIVE selection
-		#TODO: find out how to register virtual drive as slot but not display it in the selection list
+		# TODO: find out how to register virtual drive as slot but not
+		# display it in the selection list
 		if  mediaSlot == 'virtual_drive':
 			return
 		medium, identifier_ = parseMediaSlot(mediaSlot)
@@ -304,13 +314,14 @@ class MediaSwitcher(QtCore.QObject):
 		if self.__mediaSlot == mediaSlot:
 			self.__updateMediaPage(mediaSlot)
 
-	def setPath(self, path):
+	def setPath(self, path, *options):
 		'''Sets a new path for the currently selected medium.
 		'''
 		self.__mediaModel.setInserted(self.__mediaSlot, path,
 			lambda message: self.__mediaChangeErrorHandler(
 				self.__mediaSlot, message
 				)
+				, *options
 			)
 
 	def __mediaChangeErrorHandler(self, mediaSlot, message):
@@ -420,6 +431,59 @@ class CartHandler(MediaHandler):
 	medium = 'cart'
 	browseTitle = 'Select ROM Image'
 	imageSpec = 'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)'
+	mapperType = 'Auto Detect'
+
+	def __init__(self, ui, switcher):
+		MediaHandler.__init__(self, ui, switcher)
+
+		# Look up UI elements.
+		self._mapperTypeCombo = ui.mapperTypeCombo
+
+		# Connect signals.
+		connect(self._mapperTypeCombo, 'activated(QString)', 
+			self.__mapperTypeSelected)
+	
+	def __mapperTypeSelected(self, mapperType):
+		# reinsert to set the mappertype
+		self.mapperType = mapperType
+		path = self._historyBox.currentText()
+		self._switcher.setPath('')
+		self.insert(path)
+
+	def insert(self, path):
+		'''Tells the model to insert a new cart with the given path.
+		'''
+		# TODO: remove code duplication with base class
+		print 'selected:', path or '<nothing>'
+		if not path:
+			return
+
+		historyBox = self._historyBox
+		# Insert path at the top of the list.
+		historyBox.insertItem(0, path)
+		historyBox.setCurrentIndex(0)
+		# Remove duplicates of the path from the history.
+		index = 1
+		while index < historyBox.count():
+			if historyBox.itemText(index) == path:
+				historyBox.removeItem(index)
+			else:
+				index += 1
+
+		# Update the model.
+		if (self.mapperType == 'Auto Detect'):
+			self._switcher.setPath(str(path))
+		else:
+			self._switcher.setPath(str(path), '-romtype', 
+				self.mapperType)
+
+		# Persist history.
+		history = QtCore.QStringList()
+		for index in range(historyBox.count()):
+			history.append(historyBox.itemText(index))
+		preferences[self.medium + '/history'] = history
+
+		# TODO: persist history of mapperTypes with carts
 
 class CassetteHandler(MediaHandler):
 	medium = 'cassette'

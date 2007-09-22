@@ -1,5 +1,10 @@
 $Id$
 
+2007-09-22 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added mapper type selector to cartridge page
+	  Note: sometimes openMSX really doesn't like that you choose a
+	  certain wrong mapper.
+
 2007-09-20 David Heremans <david.heremans@gnu-linux.net>
 	* Added a (not working yet) renderer-combobox on the videotab
 	  values are asked to openMSX but selecting them doesn't change

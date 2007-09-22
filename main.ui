@@ -454,23 +454,8 @@
              </layout>
             </widget>
             <widget class="QWidget" name="cartPage" >
-             <layout class="QVBoxLayout" >
-              <property name="spacing" >
-               <number>6</number>
-              </property>
-              <property name="leftMargin" >
-               <number>9</number>
-              </property>
-              <property name="topMargin" >
-               <number>9</number>
-              </property>
-              <property name="rightMargin" >
-               <number>9</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>9</number>
-              </property>
-              <item>
+             <layout class="QGridLayout" >
+              <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
@@ -520,100 +505,131 @@
                 </item>
                </layout>
               </item>
-              <item>
-               <widget class="QLabel" name="cartDescriptionLabel" >
-                <property name="font" >
-                 <font>
-                  <family>Sans Serif</family>
-                  <pointsize>12</pointsize>
-                  <weight>50</weight>
-                  <italic>false</italic>
-                  <bold>false</bold>
-                  <underline>false</underline>
-                  <strikeout>false</strikeout>
-                 </font>
-                </property>
-                <property name="text" >
-                 <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">ROM image of 256K&lt;/p>&lt;/body>&lt;/html></string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" >
-                <property name="spacing" >
-                 <number>6</number>
-                </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
-                 <number>0</number>
-                </property>
+              <item row="1" column="0" >
+               <layout class="QVBoxLayout" >
                 <item>
-                 <widget class="QPushButton" name="cartBrowseImageButton" >
+                 <widget class="QLabel" name="cartDescriptionLabel" >
+                  <property name="font" >
+                   <font>
+                    <family>Sans Serif</family>
+                    <pointsize>12</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                    <underline>false</underline>
+                    <strikeout>false</strikeout>
+                   </font>
+                  </property>
                   <property name="text" >
-                   <string>Browse ROM &amp;Images...</string>
+                   <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:12pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">ROM image of 256K&lt;/p>&lt;/body>&lt;/html></string>
                   </property>
                  </widget>
                 </item>
                 <item>
+                 <layout class="QHBoxLayout" >
+                  <property name="spacing" >
+                   <number>6</number>
+                  </property>
+                  <property name="leftMargin" >
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin" >
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin" >
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin" >
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QPushButton" name="cartBrowseImageButton" >
+                    <property name="text" >
+                     <string>Browse ROM &amp;Images...</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer>
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="cartHistoryBox" >
+                  <property name="sizePolicy" >
+                   <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="editable" >
+                   <bool>true</bool>
+                  </property>
+                  <property name="maxCount" >
+                   <number>100</number>
+                  </property>
+                  <property name="insertPolicy" >
+                   <enum>QComboBox::InsertAtTop</enum>
+                  </property>
+                  <property name="sizeAdjustPolicy" >
+                   <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+                  </property>
+                  <property name="minimumContentsLength" >
+                   <number>20</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" >
+                  <item>
+                   <widget class="QLabel" name="label_3" >
+                    <property name="text" >
+                     <string>ROM Mapper Type:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="mapperTypeCombo" />
+                  </item>
+                  <item>
+                   <spacer>
+                    <property name="orientation" >
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" >
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
                  <spacer>
                   <property name="orientation" >
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Vertical</enum>
                   </property>
                   <property name="sizeHint" >
                    <size>
-                    <width>40</width>
-                    <height>20</height>
+                    <width>414</width>
+                    <height>16</height>
                    </size>
                   </property>
                  </spacer>
                 </item>
                </layout>
-              </item>
-              <item>
-               <widget class="QComboBox" name="cartHistoryBox" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="editable" >
-                 <bool>true</bool>
-                </property>
-                <property name="maxCount" >
-                 <number>100</number>
-                </property>
-                <property name="insertPolicy" >
-                 <enum>QComboBox::InsertAtTop</enum>
-                </property>
-                <property name="sizeAdjustPolicy" >
-                 <enum>QComboBox::AdjustToMinimumContentsLength</enum>
-                </property>
-                <property name="minimumContentsLength" >
-                 <number>20</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer>
-                <property name="orientation" >
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" >
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
              </layout>
             </widget>
@@ -1699,7 +1715,7 @@
      <x>0</x>
      <y>0</y>
      <width>716</width>
-     <height>21</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help" >

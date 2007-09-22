@@ -1,9 +1,8 @@
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
 from bisect import bisect
 import os.path
 
-from preferences import preferences
-from qt_utils import QtSignal, connect
+from qt_utils import QtSignal
 
 class MediaModel(QtCore.QAbstractListModel):
 	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
@@ -12,6 +11,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		QtCore.QAbstractListModel.__init__(self)
 		self.__bridge = bridge
 		self.__mediaSlots = []
+		self.__romTypes = []
 		bridge.registerInitial(self.__updateAll)
 		bridge.registerUpdate('media', self.__updateMedium)
 		bridge.registerUpdatePrefix(
@@ -21,18 +21,25 @@ class MediaModel(QtCore.QAbstractListModel):
 			)
 
 	def doUpdateAll(self):
-		self.__updateAll
+		self.__updateAll()
 
 	def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with
 		#       openMSX crashes. So, we should go back to knowing nothing about
 		#       the openMSX state.
 		#self.__mediaSlots = []
-		for pattern in ( 'cart?', 'disk?', 'virtual_drive', 'cassetteplayer', 'hd?', 'cd?' ):
+		for pattern in ( 'cart?', 'disk?', 'virtual_drive', 'cassetteplayer', 'hd?',
+				'cd?' 
+			       ):
 			# Query medium slots.
 			self.__bridge.command('info', 'command', pattern)(
 				self.__mediumListReply
 				)
+		self.__bridge.command('openmsx_info', 'romtype')(self.__romTypeReply)
+
+	def __romTypeReply(self, *romTypes):
+		for romType in romTypes:
+			self.__romTypes.append(romType)
 
 	def __mediumListReply(self, *slots):
 		'''Callback to list the initial media slots of a particular type.
@@ -128,7 +135,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		else:
 			raise KeyError(mediaSlot)
 
-	def setInserted(self, mediaSlot, path, errorHandler):
+	def setInserted(self, mediaSlot, path, errorHandler, *options):
 		'''Sets the path of the medium currently inserted in the given slot.
 		Raises KeyError if no media slot exists by the given name.
 		'''
@@ -140,7 +147,7 @@ class MediaModel(QtCore.QAbstractListModel):
 					)
 			else:
 				self.__bridge.command(mediaSlot, 'insert',
-					path)(None, errorHandler)
+					path, *options)(None, errorHandler)
 
 	def rowCount(self, parent):
 		# TODO: What does this mean?
@@ -192,3 +199,5 @@ class MediaModel(QtCore.QAbstractListModel):
 				driveNames.append(name)
 		return driveNames
 
+	def getRomTypes(self):
+		return self.__romTypes
