@@ -12,6 +12,7 @@ class PaletteEditor(object):
 		self.__cfDialog = None
 		self.__ui = None
 		self.__bridge = bridge
+		self.__colorWidgets = []
 
 	def show(self):
 		dialog = self.__cfDialog
@@ -26,25 +27,14 @@ class PaletteEditor(object):
 			ui = Ui_paletteEditor()
 			ui.setupUi(dialog)
 			self.__ui = ui
+			self.__colorWidgets = [ getattr(ui, 'Col%d' % index) for index in range(16) ]
 
 			# Connect signals.
 			connect(ui.GetMSXColors, 'clicked()', self.__getMSXColors)
-			connect(ui.Col0, 'clicked()', self.__clickedColor0)
-			connect(ui.Col1, 'clicked()', self.__clickedColor1)
-			connect(ui.Col2, 'clicked()', self.__clickedColor2)
-			connect(ui.Col3, 'clicked()', self.__clickedColor3)
-			connect(ui.Col4, 'clicked()', self.__clickedColor4)
-			connect(ui.Col5, 'clicked()', self.__clickedColor5)
-			connect(ui.Col6, 'clicked()', self.__clickedColor6)
-			connect(ui.Col7, 'clicked()', self.__clickedColor7)
-			connect(ui.Col8, 'clicked()', self.__clickedColor8)
-			connect(ui.Col9, 'clicked()', self.__clickedColor9)
-			connect(ui.Col10, 'clicked()', self.__clickedColor10)
-			connect(ui.Col11, 'clicked()', self.__clickedColor11)
-			connect(ui.Col12, 'clicked()', self.__clickedColor12)
-			connect(ui.Col13, 'clicked()', self.__clickedColor13)
-			connect(ui.Col14, 'clicked()', self.__clickedColor14)
-			connect(ui.Col15, 'clicked()', self.__clickedColor15)
+			
+			for index in range(16):
+				connect(self.__colorWidgets[index], 'clicked()',
+					lambda index = index: self.__clickedColor(index))
 
 			connect(ui.RVal, 'valueChanged(int)', self.__changeR)
 			connect(ui.GVal, 'valueChanged(int)', self.__changeG)
@@ -56,6 +46,7 @@ class PaletteEditor(object):
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
+		self.__getMSXColors()
 
 	def __getMSXColors(self):
 		for index in range(16):
@@ -92,107 +83,21 @@ class PaletteEditor(object):
 		color.setRgb( (red*255)/7, (green*255)/7, (blue*255)/7 )
 		self.__ui.ColorPickerLabel.setPalette(QPalette(color))
 
-		colorWidgets = [ 
-		self.__ui.Col0, self.__ui.Col1, self.__ui.Col2, self.__ui.Col3,
-		self.__ui.Col4, self.__ui.Col5, self.__ui.Col6, self.__ui.Col7,
-		self.__ui.Col8, self.__ui.Col9, self.__ui.Col10, self.__ui.Col11,
-		self.__ui.Col12, self.__ui.Col13, self.__ui.Col14, self.__ui.Col15
-		]
-
-		colorWidgets[index].setPalette(QPalette(color))
+		self.__colorWidgets[index].setPalette(QPalette(color))
 
 		self.__bridge.sendCommandRaw(rgbCol)
 
 # Button handeling
-# TODO: Kill redundant code
-
-	def __clickedColor0(self):
-		index = 0
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor1(self):
-		index = 1
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor2(self):
-		index = 2
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor3(self):
-		index = 3
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor4(self):
-		index = 4
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor5(self):
-		index = 5
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor6(self):
-		index = 6
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor7(self):
-		index = 7
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor8(self):
-		index = 8
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor9(self):
-		index = 9
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor10(self):
-		index = 10
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor11(self):
-		index = 11
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor12(self):
-		index = 12
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor13(self):
-		index = 13
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor14(self):
-		index = 14
-		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
-			self.__parseColors(index, rgb))
-
-	def __clickedColor15(self):
-		index = 15
+	def __clickedColor(self, index):
 		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
 			self.__parseColors(index, rgb))
 
 # Color Change handeling
-# TODO: Kill redundant code
 	def __parseColors(self, index, col):
 
 		red, green, blue = [int(ch) for ch in col]
 
-		self.__ui.ColorPickerLabel.value=index
+		self.__ui.ColorPickerLabel.value = index
 
 		#TODO: Find a way to refresh form upon Palette Editor Window Creation
 		self.__ui.RVal.setEnabled(True)
@@ -212,11 +117,4 @@ class PaletteEditor(object):
 		color.setRgb( (red*255)/7, (green*255)/7, (blue*255)/7 )
 		self.__ui.ColorPickerLabel.setPalette(QPalette(color))
 
-		colorWidgets = [ 
-		self.__ui.Col0, self.__ui.Col1, self.__ui.Col2, self.__ui.Col3,
-		self.__ui.Col4, self.__ui.Col5, self.__ui.Col6, self.__ui.Col7,
-		self.__ui.Col8, self.__ui.Col9, self.__ui.Col10, self.__ui.Col11,
-		self.__ui.Col12, self.__ui.Col13, self.__ui.Col14, self.__ui.Col15
-		]
-
-		colorWidgets[index].setPalette(QPalette(color))
+		self.__colorWidgets[index].setPalette(QPalette(color))
