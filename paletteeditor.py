@@ -92,54 +92,14 @@ class PaletteEditor(object):
 		color.setRgb( (red*255)/7, (green*255)/7, (blue*255)/7 )
 		self.__ui.ColorPickerLabel.setPalette(QPalette(color))
 
-		if index == 0:
-			self.__ui.Col0.setAutoFillBackground(True)
-			self.__ui.Col0.setPalette(QPalette(color))
-		if index == 1:
-			self.__ui.Col1.setAutoFillBackground(True)
-			self.__ui.Col1.setPalette(QPalette(color))
-		if index == 2:
-			self.__ui.Col2.setAutoFillBackground(True)
-			self.__ui.Col2.setPalette(QPalette(color))
-		if index == 3:
-			self.__ui.Col3.setAutoFillBackground(True)
-			self.__ui.Col3.setPalette(QPalette(color))
-		if index == 4:
-			self.__ui.Col4.setAutoFillBackground(True)
-			self.__ui.Col4.setPalette(QPalette(color))
-		if index == 5:
-			self.__ui.Col5.setAutoFillBackground(True)
-			self.__ui.Col5.setPalette(QPalette(color))
-		if index == 6:
-			self.__ui.Col6.setAutoFillBackground(True)
-			self.__ui.Col6.setPalette(QPalette(color))
-		if index == 7:
-			self.__ui.Col7.setAutoFillBackground(True)
-			self.__ui.Col7.setPalette(QPalette(color))
-		if index == 8:
-			self.__ui.Col8.setAutoFillBackground(True)
-			self.__ui.Col8.setPalette(QPalette(color))
-		if index == 9:
-			self.__ui.Col9.setAutoFillBackground(True)
-			self.__ui.Col9.setPalette(QPalette(color))
-		if index == 10:
-			self.__ui.Col10.setAutoFillBackground(True)
-			self.__ui.Col10.setPalette(QPalette(color))
-		if index == 11:
-			self.__ui.Col11.setAutoFillBackground(True)
-			self.__ui.Col11.setPalette(QPalette(color))
-		if index == 12:
-			self.__ui.Col12.setAutoFillBackground(True)
-			self.__ui.Col12.setPalette(QPalette(color))
-		if index == 13:
-			self.__ui.Col13.setAutoFillBackground(True)
-			self.__ui.Col13.setPalette(QPalette(color))
-		if index == 14:
-			self.__ui.Col14.setAutoFillBackground(True)
-			self.__ui.Col14.setPalette(QPalette(color))
-		if index == 15:
-			self.__ui.Col15.setAutoFillBackground(True)
-			self.__ui.Col15.setPalette(QPalette(color))
+		colorWidgets = [ 
+		self.__ui.Col0, self.__ui.Col1, self.__ui.Col2, self.__ui.Col3,
+		self.__ui.Col4, self.__ui.Col5, self.__ui.Col6, self.__ui.Col7,
+		self.__ui.Col8, self.__ui.Col9, self.__ui.Col10, self.__ui.Col11,
+		self.__ui.Col12, self.__ui.Col13, self.__ui.Col14, self.__ui.Col15
+		]
+
+		colorWidgets[index].setPalette(QPalette(color))
 
 		self.__bridge.sendCommandRaw(rgbCol)
 
@@ -248,56 +208,15 @@ class PaletteEditor(object):
 		self.__ui.lineEditGreen.setText(str(green))
 		self.__ui.lineEditBlue.setText(str(blue))
 
-		self.__ui.ColorPickerLabel.setAutoFillBackground(True)
 		color = QColor()
 		color.setRgb( (red*255)/7, (green*255)/7, (blue*255)/7 )
 		self.__ui.ColorPickerLabel.setPalette(QPalette(color))
 
-		if index == 0:
-			self.__ui.Col0.setAutoFillBackground(True)
-			self.__ui.Col0.setPalette(QPalette(color))
-		if index == 1:
-			self.__ui.Col1.setAutoFillBackground(True)
-			self.__ui.Col1.setPalette(QPalette(color))
-		if index == 2:
-			self.__ui.Col2.setAutoFillBackground(True)
-			self.__ui.Col2.setPalette(QPalette(color))
-		if index == 3:
-			self.__ui.Col3.setAutoFillBackground(True)
-			self.__ui.Col3.setPalette(QPalette(color))
-		if index == 4:
-			self.__ui.Col4.setAutoFillBackground(True)
-			self.__ui.Col4.setPalette(QPalette(color))
-		if index == 5:
-			self.__ui.Col5.setAutoFillBackground(True)
-			self.__ui.Col5.setPalette(QPalette(color))
-		if index == 6:
-			self.__ui.Col6.setAutoFillBackground(True)
-			self.__ui.Col6.setPalette(QPalette(color))
-		if index == 7:
-			self.__ui.Col7.setAutoFillBackground(True)
-			self.__ui.Col7.setPalette(QPalette(color))
-		if index == 8:
-			self.__ui.Col8.setAutoFillBackground(True)
-			self.__ui.Col8.setPalette(QPalette(color))
-		if index == 9:
-			self.__ui.Col9.setAutoFillBackground(True)
-			self.__ui.Col9.setPalette(QPalette(color))
-		if index == 10:
-			self.__ui.Col10.setAutoFillBackground(True)
-			self.__ui.Col10.setPalette(QPalette(color))
-		if index == 11:
-			self.__ui.Col11.setAutoFillBackground(True)
-			self.__ui.Col11.setPalette(QPalette(color))
-		if index == 12:
-			self.__ui.Col12.setAutoFillBackground(True)
-			self.__ui.Col12.setPalette(QPalette(color))
-		if index == 13:
-			self.__ui.Col13.setAutoFillBackground(True)
-			self.__ui.Col13.setPalette(QPalette(color))
-		if index == 14:
-			self.__ui.Col14.setAutoFillBackground(True)
-			self.__ui.Col14.setPalette(QPalette(color))
-		if index == 15:
-			self.__ui.Col15.setAutoFillBackground(True)
-			self.__ui.Col15.setPalette(QPalette(color))
+		colorWidgets = [ 
+		self.__ui.Col0, self.__ui.Col1, self.__ui.Col2, self.__ui.Col3,
+		self.__ui.Col4, self.__ui.Col5, self.__ui.Col6, self.__ui.Col7,
+		self.__ui.Col8, self.__ui.Col9, self.__ui.Col10, self.__ui.Col11,
+		self.__ui.Col12, self.__ui.Col13, self.__ui.Col14, self.__ui.Col15
+		]
+
+		colorWidgets[index].setPalette(QPalette(color))
