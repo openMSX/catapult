@@ -34,10 +34,11 @@ class _SignalWrapper(object):
 			raise TypeError('Slot type not callable: %s' % type(slot))
 		if not isbuiltin(slot):
 			# Slot is implemented in Python; check arguments.
-			args = getargspec(slot)[0]
+			args, varargs_, varkw_, defaults = getargspec(slot)
 			numSlotArgs = len(args)
 			if numSlotArgs != 0 and args[0] == 'self':
 				numSlotArgs -= 1
+			numSlotArgs -= len(defaults)
 			if numSlotArgs > self.__numArgs:
 				raise TypeError(
 					'Slot requires %d arguments, while signal only supplies %d'
