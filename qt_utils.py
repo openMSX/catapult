@@ -38,7 +38,8 @@ class _SignalWrapper(object):
 			numSlotArgs = len(args)
 			if numSlotArgs != 0 and args[0] == 'self':
 				numSlotArgs -= 1
-			numSlotArgs -= len(defaults)
+			if defaults is not None:
+				numSlotArgs -= len(defaults)
 			if numSlotArgs > self.__numArgs:
 				raise TypeError(
 					'Slot requires %d arguments, while signal only supplies %d'
