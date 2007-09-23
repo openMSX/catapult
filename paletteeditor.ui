@@ -186,6 +186,11 @@
          <height>100</height>
         </size>
        </property>
+       <property name="font" >
+        <font>
+         <pointsize>21</pointsize>
+        </font>
+       </property>
        <property name="autoFillBackground" >
         <bool>true</bool>
        </property>

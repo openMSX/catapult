@@ -1,7 +1,6 @@
 # $Id: cheatfinder.py 7020 2007-09-16 06:17:50Z vampier $
 
 from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import QString
 from PyQt4.QtGui import QColor, QPalette, QFileDialog
 
 from qt_utils import connect
@@ -33,7 +32,7 @@ class PaletteEditor(object):
 
 # Connect signals.
 			connect(ui.GetMSXColors, 'clicked()', self.__getMSXColors)
-			
+
 			for index in range(16):
 				connect(self.__colorWidgets[index], 'clicked()',
 					lambda index = index: self.__clickedColor(index))
@@ -49,7 +48,7 @@ class PaletteEditor(object):
 		dialog.raise_()
 		dialog.activateWindow()
 		self.__getMSXColors()
-		
+
 #Palette Save/Load dialog and functions
 	def __savePalette(self):
 		browseTitle = 'Save Palette File'
@@ -78,7 +77,7 @@ class PaletteEditor(object):
 		self.__loadPalFile(path)
 
 	def __savePalFile(self, palFileName):
-		f=open(palFileName, 'w')
+		f = open(palFileName, 'w')
 		for index in range(16):
 			red = self.__colorWidgets[index].red
 			green = self.__colorWidgets[index].green
@@ -86,12 +85,11 @@ class PaletteEditor(object):
 			f.write (('%d%d%d' % (red, green, blue))+'\n')
 		f.write ('Catapult Palette File')
 		f.close()
-	
+
 	def __loadPalFile(self, palFileName):
-		f=open(palFileName, 'r')
+		f = open(palFileName, 'r')
 		for index in range(16):
-			rgb = str(f.readline())
-			rgb = str(rgb[0:3])
+			rgb = f.readline().strip()
 			self.__bridge.command('setcolor', index, rgb)()
 			self.__parseColors(index,rgb)
 		f.close()
@@ -137,7 +135,7 @@ class PaletteEditor(object):
 		self.__ui.ColorPickerLabel.setText(str(index))
 
 		red, green, blue = [int(ch) for ch in col]
-		
+
 		self.__ui.ColorPickerLabel.value = index
 #set buttons enables after 1st search
 		self.__ui.RVal.setEnabled(True)
@@ -158,6 +156,6 @@ class PaletteEditor(object):
 		self.__ui.ColorPickerLabel.setPalette(QPalette(color))
 #Set button color
 		self.__colorWidgets[index].setPalette(QPalette(color))
-		self.__colorWidgets[index].red=red
-		self.__colorWidgets[index].green=green
-		self.__colorWidgets[index].blue=blue
+		self.__colorWidgets[index].red = red
+		self.__colorWidgets[index].green = green
+		self.__colorWidgets[index].blue = blue
