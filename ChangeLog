@@ -1,5 +1,8 @@
 $Id$
 
+2007-09-22 Patrick van Arkel <vampiermsx@gmail.com>
+	* Added WIP Palette Editor Main Code, (very redundant code)
+
 2007-09-22 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added mapper type selector to cartridge page
 	  Note: sometimes openMSX really doesn't like that you choose a

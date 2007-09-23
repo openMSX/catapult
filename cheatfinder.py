@@ -78,12 +78,7 @@ class Cheatfinder(object):
 	def __CheatListReply(self, *words):
 		line = ' '.join(words)
 		text = self.__ui.cheatResults
-		
-		palette = self.palette()
-		col = QColor()
-		col.setRgb( 0xaa, 0xbe, 0xff )
-		#self.__ui.label.setPalette( QPalette( col ) )
-		
+
 		#Check if no results are found (clear table and display message)
 		if line.find('results')>1:
 			self.__ui.CheatTable.setRowCount(0)
