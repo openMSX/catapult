@@ -174,16 +174,16 @@ class PaletteEditor(object):
 	def __parseColors(self, index, col):
 
 		red, green, blue = [int(ch) for ch in col]
-
-		#self.__ui.RVal.setValue(red)
-		#self.__ui.GVal.setValue(green)
-		#self.__ui.BVal.setValue(blue)
+		
+		self.__ui.ColorPickerLabel.value = index
+		
+		self.__ui.RVal.setValue(red)
+		self.__ui.GVal.setValue(green)
+		self.__ui.BVal.setValue(blue)
 
 		self.__ui.lineEditRed.setText(str(red))
 		self.__ui.lineEditGreen.setText(str(green))
 		self.__ui.lineEditBlue.setText(str(blue))
-
-		self.__ui.ColorPickerLabel.value = index
 
 		self.__ui.ColorPickerLabel.setAutoFillBackground(True)
 		color = QColor()
