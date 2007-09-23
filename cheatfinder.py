@@ -1,11 +1,7 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-#from PyQt4.QtGui import *
 from qt_utils import connect
-from player import PlayState
-
-#import os.path
 
 class Cheatfinder(object):
 
@@ -98,7 +94,9 @@ class Cheatfinder(object):
 			#Create The Table to be filled / Disable sorting and set Gridsize
 			self.__ui.CheatTable.setRowCount( len(cheatArray) - 1 )
 			self.__ui.CheatTable.setSortingEnabled(0)
-			self.__ui.CheatTable.verticalHeader().setResizeMode(QtGui.QHeaderView.ResizeToContents )
+			self.__ui.CheatTable.verticalHeader().setResizeMode(
+				QtGui.QHeaderView.ResizeToContents 
+				)
 
 			row = 0
 			for cheatLine in cheatArray[ : -1]:
