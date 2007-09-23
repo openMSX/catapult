@@ -735,7 +735,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="LoanPalette" >
+        <widget class="QPushButton" name="LoadPalette" >
          <property name="text" >
           <string>Load</string>
          </property>
