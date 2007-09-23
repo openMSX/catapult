@@ -1,7 +1,7 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from qt_utils import Signal, connect
+from qt_utils import Signal
 import settings
 #import gc
 
@@ -12,22 +12,22 @@ class AudioModel(QtCore.QAbstractListModel):
 
 	__firstTime = True
 
-	def __init__(self, bridge, settingsManager, machineManager, extensionManager):
+	def __init__(self, bridge, settingsManager):
 		QtCore.QAbstractListModel.__init__(self)
 		self.__bridge = bridge
 		self.__settingsManager = settingsManager
 		self.__audioChannels = []
 		bridge.registerInitial(self.__updateAll)
-		# update the list of channels when extensions or machines changed
-		connect(machineManager, 'machineChanged()', self.__updateAll)
-		connect(extensionManager, 'extensionChanged()', self.__updateAll)
-		
-		#bridge.registerUpdate('audio', self.__updateAudio)
+		bridge.registerUpdate('sounddevice', self.__updateSounddevice)
 
 	def __updateAll(self):
 		self.__bridge.command('machine_info', 'sounddevice')(
 			self.__soundDeviceListReply
 			)
+
+	def __updateSounddevice(self, device, updateType):
+		# TODO: use device and type to make updating more subtle :)
+		self.__updateAll()
 	
 	def __soundDeviceListReply(self, *devices):
 		# first unregister possible existing audio channels.
@@ -56,13 +56,9 @@ class AudioModel(QtCore.QAbstractListModel):
 # amounts of channels
 class AudioMixer(QtCore.QObject):
 
-	def __init__(self, ui, settingsManager, machineManager, extensionManager,
-			bridge
-			):
+	def __init__(self, ui, settingsManager, bridge):
 		QtCore.QObject.__init__(self)
-		self.__audioModel = AudioModel(bridge, settingsManager, machineManager, 
-			extensionManager
-			)
+		self.__audioModel = AudioModel(bridge, settingsManager)
 		self.__ui = ui
 		self.__settingsManager = settingsManager
 		self.__audioModel.updated.connect(self.__rebuildUI)

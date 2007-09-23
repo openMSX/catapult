@@ -134,9 +134,7 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
-		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager,
-			machineManager, extensionManager, bridge
-			)
+		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
 
 	def afterConnectionMade(self): 
 		self.__bridge.command('openmsx_info', 'setting', 'renderer'
