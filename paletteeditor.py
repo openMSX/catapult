@@ -78,7 +78,6 @@ class PaletteEditor(object):
 
 		rgbCol = 'setcolor ' + str(index) + ' ' + str(red) + str(green) + str(blue)
 
-		self.__ui.ColorPickerLabel.setAutoFillBackground(True)
 		color = QColor()
 		color.setRgb( (red*255)/7, (green*255)/7, (blue*255)/7 )
 		self.__ui.ColorPickerLabel.setPalette(QPalette(color))
@@ -89,17 +88,19 @@ class PaletteEditor(object):
 
 # Button handeling
 	def __clickedColor(self, index):
+		self.__ui.ColorPickerLabel.setText(str(index))
 		self.__bridge.command('getcolor', index)(lambda rgb, index = index:
 			self.__parseColors(index, rgb))
 
 # Color Change handeling
 	def __parseColors(self, index, col):
 
+		self.__ui.ColorPickerLabel.setText(str(index))
+
 		red, green, blue = [int(ch) for ch in col]
 
 		self.__ui.ColorPickerLabel.value = index
 
-		#TODO: Find a way to refresh form upon Palette Editor Window Creation
 		self.__ui.RVal.setEnabled(True)
 		self.__ui.GVal.setEnabled(True)
 		self.__ui.BVal.setEnabled(True)
