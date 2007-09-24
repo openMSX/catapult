@@ -9,6 +9,7 @@ class Setting(QtCore.QObject):
 	'''
 	# Note: Will be overridden with real signature.
 	valueChanged = Signal('?')
+	settingChanged = Signal('?','?')
 
 	# TODO: Make these static methods?
 
@@ -60,6 +61,7 @@ class Setting(QtCore.QObject):
 		if value != self.__value:
 			self.__value = value
 			self.valueChanged.emit(value)
+			self.settingChanged.emit(self.__name,value)
 
 	def revert(self):
 		'''Revert to the default value.
@@ -75,12 +77,14 @@ class Setting(QtCore.QObject):
 		if value != self.__value:
 			self.__value = value
 			self.valueChanged.emit(value)
+			self.settingChanged.emit(self.__name,value)
 			self.__bridge.command(
 				'set', self.__name, self._convertToStr(value)
 				)()
 
 class BooleanSetting(Setting):
 	valueChanged = Signal('bool')
+	settingChanged = Signal('QString','bool')
 
 	def _convertFromStr(self, valueStr):
 		return valueStr in ('on', 'true', 'yes')
@@ -93,6 +97,7 @@ class BooleanSetting(Setting):
 
 class EnumSetting(Setting):
 	valueChanged = Signal('QString')
+	settingChanged = Signal('QString','QString')
 
 	def _convertFromStr(self, valueStr):
 		return valueStr
@@ -102,6 +107,7 @@ class EnumSetting(Setting):
 
 class IntegerSetting(Setting):
 	valueChanged = Signal('int')
+	settingChanged = Signal('QString','int')
 
 	def _convertFromStr(self, valueStr):
 		return int(valueStr)
@@ -122,9 +128,14 @@ class SettingsManager(QtCore.QObject):
 		return self.__settings[key]
 
 	def registerSetting(self, name, settingClass):
-		assert name not in self.__settings # setting may not be registered twice
-		self.__settings[name] = settingClass(name, self.__bridge)
-		self.__bridge.command('set', name)(self.__settings[name].updateValue)
+		'''Register the name of the setting once at the bridge.
+		If multiple objects want to listen to updates the can still 
+		call this method, otherwise one would start depending on
+		the order of instantiating
+		'''
+		if name not in self.__settings: # setting may not be registered twice
+			self.__settings[name] = settingClass(name, self.__bridge)
+			self.__bridge.command('set', name)(self.__settings[name].updateValue)
 
 	# this method probably needs an unconnectSetting method for robustness
 	def unregisterSetting(self, name):

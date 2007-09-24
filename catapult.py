@@ -108,13 +108,9 @@ class MainWindow(QtGui.QMainWindow):
 
 		bridge.logLine.connect(self.logLine)
 		#
-		#settingsManager.registerSetting('renderer', settings.EnumSetting)
-		#settingsManager.connectSetting('renderer', ui.rendererComboBox)
-		#
-		#This doesn't work the settingsManager complains that it is already registered
-		#which is true: player.py has taken control of the renderer already :-\
-		#TODO: alter player so that it emmits a nice signal so that
-		#we can update the combobox if needed
+		settingsManager.registerSetting('renderer', settings.EnumSetting)
+		setting = settingsManager['renderer'] 
+		connect(setting , 'settingChanged(QString,Qstring)', self.__settingsChanged)
 
 		settingsManager.registerSetting('scanline', settings.IntegerSetting)
 		settingsManager.connectSetting('scanline', ui.scanlineSlider)
@@ -137,9 +133,34 @@ class MainWindow(QtGui.QMainWindow):
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
 
 	def afterConnectionMade(self): 
-		self.__bridge.command('openmsx_info', 'setting', 'renderer'
+		self.__afterConList=[]
+		self.__afterConList.append('renderer')
+		self.__bridge.command('openmsx_info',
+			'setting', 'renderer'
 			)(
-			self.__fillRendererComboBox, self.__infofailed
+			self.__fillComboBox,
+			self.__infofailed
+			)
+		self.__afterConList.append('display_deform')
+		self.__bridge.command('openmsx_info',
+			'setting', 'display_deform'
+			)(
+			self.__fillComboBox,
+			self.__infofailed
+			)
+		self.__afterConList.append('videosource')
+		self.__bridge.command('openmsx_info',
+			'setting', 'videosource'
+			)(
+			self.__fillComboBox,
+			self.__infofailed
+			)
+		self.__afterConList.append('scale_algorithm')
+		self.__bridge.command('openmsx_info',
+			'setting', 'scale_algorithm'
+			)(
+			self.__fillComboBox,
+			self.__infofailed
 			)
 
 	def __infofailed(self, name, message):
@@ -147,13 +168,23 @@ class MainWindow(QtGui.QMainWindow):
 			name, message
 			)
 
-	def __fillRendererComboBox(self, *items):
+	def __fillComboBox(self, *items):
+		element= self.__afterConList.pop(0) 
 		print '------------------------------------'
+		print element
 		print items
 		print '------------------------------------'
+		uimap = {
+			'renderer': self.__ui.rendererComboBox,
+			'display_deform': self.__ui.displaydeformComboBox,
+			'scale_algorithm': self.__ui.scalealgorithmComboBox,
+			'videosource': self.__ui.videosourceComboBox
+			}
+		uiElement=uimap[ element ]
 		for item in items[2].split(' '):
-			combo = self.__ui.rendererComboBox
-			combo.addItem(QtCore.QString(item))
+			#combo = self.__ui.rendererComboBox
+			#combo.addItem(QtCore.QString(item))
+			uiElement.addItem(QtCore.QString(item))
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
@@ -200,6 +231,11 @@ class MainWindow(QtGui.QMainWindow):
 		self.logLine('command', reply)
 
 	# Slots:
+
+	#@QtCore.pyqtSignature('QString','QString')
+	@QtCore.pyqtSignature('QString')
+	def __settingsChanged(self, name, value):
+		self.__ui.rendererComboBox.addItem(value)
 
 	@QtCore.pyqtSignature('')
 	def on_playButton_clicked(self):
