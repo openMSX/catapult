@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>325</width>
-    <height>258</height>
+    <width>320</width>
+    <height>246</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -48,7 +48,7 @@
          <item>
           <widget class="QLineEdit" name="lineEditRed" >
            <property name="enabled" >
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
@@ -64,6 +64,9 @@
            </property>
            <property name="text" >
             <string>0</string>
+           </property>
+           <property name="readOnly" >
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -97,7 +100,7 @@
          <item>
           <widget class="QLineEdit" name="lineEditGreen" >
            <property name="enabled" >
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
@@ -113,6 +116,9 @@
            </property>
            <property name="text" >
             <string>0</string>
+           </property>
+           <property name="readOnly" >
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -146,7 +152,7 @@
          <item>
           <widget class="QLineEdit" name="lineEditBlue" >
            <property name="enabled" >
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
@@ -162,6 +168,9 @@
            </property>
            <property name="text" >
             <string>0</string>
+           </property>
+           <property name="readOnly" >
+            <bool>true</bool>
            </property>
           </widget>
          </item>
