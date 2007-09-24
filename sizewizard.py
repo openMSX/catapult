@@ -1,54 +1,62 @@
 import sys
 
 from PyQt4 import QtCore, QtGui
-from qt_utils import QtSignal, connect
+from qt_utils import connect
 
-class sizewizard2(QtGui.QDialog):
+class Sizewizardtwo(QtGui.QDialog):
 	def __init__(self, parent=None):
 		QtGui.QDialog.__init__(self, parent)
-		Dialog=self
 
-	        self.resize(QtCore.QSize(QtCore.QRect(0,0,192,182).size()).expandedTo(self.minimumSizeHint()))
+		self.resize(
+			QtCore.QSize(
+				QtCore.QRect(0, 0, 192, 182).size()
+			).expandedTo(self.minimumSizeHint()))
 
-        	self.vboxlayout = QtGui.QVBoxLayout(self)
-	        self.hboxlayout = QtGui.QHBoxLayout()
+		self.vboxlayout = QtGui.QVBoxLayout(self)
+		self.hboxlayout = QtGui.QHBoxLayout()
 
-        	self.label = QtGui.QLabel(self)
-        	self.hboxlayout.addWidget(self.label)
+		self.label = QtGui.QLabel(self)
+		self.hboxlayout.addWidget(self.label)
 
-	        self.spinBox = QtGui.QSpinBox(self)
-        	self.spinBox.setMinimum(1)
-	        self.spinBox.setMaximum(32)
-        	self.spinBox.setProperty("value",QtCore.QVariant(3))
+		self.spinBox = QtGui.QSpinBox(self)
+		self.spinBox.setMinimum(1)
+		self.spinBox.setMaximum(32)
+		self.spinBox.setProperty("value", QtCore.QVariant(3))
 		self.nr_partitions = 3
-        	self.hboxlayout.addWidget(self.spinBox)
-	        self.vboxlayout.addLayout(self.hboxlayout)
+		self.hboxlayout.addWidget(self.spinBox)
+		self.vboxlayout.addLayout(self.hboxlayout)
 
-	        self.listWidget = QtGui.QListWidget(self)
-	        self.vboxlayout.addWidget(self.listWidget)
+		self.listWidget = QtGui.QListWidget(self)
+		self.vboxlayout.addWidget(self.listWidget)
 
-        	self.buttonBox = QtGui.QDialogButtonBox(self)
-	        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        	self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.NoButton|QtGui.QDialogButtonBox.Ok)
-        	self.vboxlayout.addWidget(self.buttonBox)
+		self.buttonBox = QtGui.QDialogButtonBox(self)
+		self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
+		self.buttonBox.setStandardButtons(
+			QtGui.QDialogButtonBox.Cancel | \
+			QtGui.QDialogButtonBox.NoButton | \
+			QtGui.QDialogButtonBox.Ok
+			)
+		self.vboxlayout.addWidget(self.buttonBox)
 
-	        connect(self.buttonBox,"accepted()",self.accept)
-        	connect(self.buttonBox,"rejected()",self.reject)
-        	connect(self.spinBox,"valueChanged(int)",self.setNrPartitions)
+		connect(self.buttonBox, "accepted()", self.accept)
+		connect(self.buttonBox, "rejected()", self.reject)
+		connect(self.spinBox, "valueChanged(int)", self.setNrPartitions)
 
-        	self.label.setText(QtGui.QApplication.translate("Dialog", "Number of partitions", None, QtGui.QApplication.UnicodeUTF8))
-	        self.listWidget.clear()
+		self.label.setText(QtGui.QApplication.translate(
+			"Dialog", "Number of partitions", None, 
+			QtGui.QApplication.UnicodeUTF8)
+			)
+		self.listWidget.clear()
 	
-		hide = 0
 		index = 0
 		while index < 32:
-	        	item = QtGui.QListWidgetItem(self.listWidget)
-	        	item.setFlags(
+			widgetItem = QtGui.QListWidgetItem(self.listWidget)
+			widgetItem.setFlags(
 				QtCore.Qt.ItemIsSelectable | \
 				QtCore.Qt.ItemIsEditable | \
 				QtCore.Qt.ItemIsEnabled
 				)
-		        item.setText(
+			item.setText(
 				QtGui.QApplication.translate(
 					"Dialog", "32M", None, 
 					QtGui.QApplication.UnicodeUTF8
@@ -58,33 +66,32 @@ class sizewizard2(QtGui.QDialog):
 		self.hideItems()
 
 	def getPartitionsList(self):
-		list = []
+		partList = []
 		index = 0
 		while index < self.nr_partitions:
-			item = self.listWidget.item(index)
-			list.append( str(item.text()) )
+			widgetItem = self.listWidget.item(index)
+			partList.append( str(widgetItem.text()) )
 			index += 1
-		return ' '.join(list)
+		return ' '.join(partList)
 
 	def getNrPartitions(self):
 		return 	str(self.nr_partitions)
 
-	def setNrPartitions(self,i):
-		self.nr_partitions= i
+	def setNrPartitions(self, i):
+		self.nr_partitions = i
 		self.hideItems()
 
 	def hideItems(self):
 		hide = 0
 		index = 0
 		while index < 32:
-			item = self.listWidget.item(index)
+			widgetItem = self.listWidget.item(index)
 			if index == self.nr_partitions:
 				hide = 1
-			item.setHidden(hide)
+			widgetItem.setHidden(hide)
 			index += 1
 
-	
-class sizewizard(QtGui.QDialog):
+class Sizewizard(QtGui.QDialog):
 	def __init__(self, parent=None):
 		QtGui.QDialog.__init__(self, parent)
 		self.__dmDialog = None
@@ -127,12 +134,12 @@ class sizewizard(QtGui.QDialog):
 	def changePartionSizes(self):
 		cpd = self.__changePartitionsDialog
 		if cpd is None:
-			self.__changePartitionsDialog = cpd = sizewizard2()
+			self.__changePartitionsDialog = cpd = Sizewizardtwo()
 		cpd.exec_()
 		nr = cpd.getNrPartitions()
-		list = cpd.getPartitionsList()
-		self.__partitionsList = list
-		self.__ui.partedLabel.setText( nr + " partitions: " + list )
+		partList = cpd.getPartitionsList()
+		self.__partitionsList = partList
+		self.__ui.partedLabel.setText( nr + " partitions: " + partList )
 
 	def getSizes(self):
 		ui = self.__ui
@@ -145,7 +152,7 @@ class sizewizard(QtGui.QDialog):
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
-	item= sizewizard()
+	item = Sizewizard()
 	#item.exec_()
 	item.show()
 	sys.exit(app.exec_())

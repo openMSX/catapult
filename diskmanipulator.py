@@ -299,8 +299,8 @@ class Diskmanipulator(QtCore.QObject):
 			)
 		if not path:
 			return
-		from sizewizard import sizewizard
-		wizard = sizewizard()
+		from sizewizard import Sizewizard
+		wizard = Sizewizard()
 		wizard.exec_()
 		size = wizard.getSizes()
 		print 'wizard.getSizes()' + size
