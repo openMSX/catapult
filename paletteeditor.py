@@ -1,7 +1,7 @@
 # $Id: cheatfinder.py 7020 2007-09-16 06:17:50Z vampier $
 
 from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QColor, QPalette, QFileDialog
+from PyQt4.QtGui import QColor, QPalette
 
 from qt_utils import connect
 
@@ -77,22 +77,22 @@ class PaletteEditor(object):
 		self.__loadPalFile(path)
 
 	def __savePalFile(self, palFileName):
-		f = open(palFileName, 'w')
+		palfile = open(palFileName, 'w')
 		for index in range(16):
 			red = self.__colorWidgets[index].red
 			green = self.__colorWidgets[index].green
 			blue = self.__colorWidgets[index].blue
-			f.write (('%d%d%d' % (red, green, blue))+'\n')
-		f.write ('Catapult Palette File')
-		f.close()
+			palfile.write (('%d%d%d' % (red, green, blue))+'\n')
+		palfile.write ('Catapult Palette File')
+		palfile.close()
 
 	def __loadPalFile(self, palFileName):
-		f = open(palFileName, 'r')
+		palfile = open(palFileName, 'r')
 		for index in range(16):
-			rgb = f.readline().strip()
+			rgb = palfile.readline().strip()
 			self.__bridge.command('setcolor', index, rgb)()
-			self.__parseColors(index,rgb)
-		f.close()
+			self.__parseColors(index, rgb)
+		palfile.close()
 
 #Color handeling
 	def __getMSXColors(self):

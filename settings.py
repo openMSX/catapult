@@ -43,7 +43,7 @@ class Setting(QtCore.QObject):
 		the object's valueChanged from this setting's setValue.
 		'''
 		self.valueChanged.disconnect(obj.setValue)
-		disconnect(obj, self.valueChanged.signature, self.setValue)
+		# TODO: disconnect(obj, self.valueChanged.signature, self.setValue)
 
 	def getValue(self):
 		'''Returns the current value of this setting.
@@ -61,7 +61,7 @@ class Setting(QtCore.QObject):
 		if value != self.__value:
 			self.__value = value
 			self.valueChanged.emit(value)
-			self.settingChanged.emit(self.__name,value)
+			self.settingChanged.emit(self.__name, value)
 
 	def revert(self):
 		'''Revert to the default value.
@@ -77,7 +77,7 @@ class Setting(QtCore.QObject):
 		if value != self.__value:
 			self.__value = value
 			self.valueChanged.emit(value)
-			self.settingChanged.emit(self.__name,value)
+			self.settingChanged.emit(self.__name, value)
 			self.__bridge.command(
 				'set', self.__name, self._convertToStr(value)
 				)()

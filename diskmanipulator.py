@@ -1,15 +1,12 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from qt_utils import Signal, connect
-from mediamodel import MediaModel
-import settings
+from qt_utils import connect
+#from mediamodel import MediaModel
 
 class Diskmanipulator(QtCore.QObject):
 
-	def __init__(self, ui, settingsManager, machineManager, extensionManager,
-			bridge, mediaModel
-			):
+	def __init__(self, mediaModel, bridge):
 		#QtCore.QAbstractListModel.__init__(self)
 		QtCore.QObject.__init__(self)
 

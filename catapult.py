@@ -43,7 +43,6 @@ from player import PlayState
 from qt_utils import connect
 import settings
 from ui_main import Ui_MainWindow
-from preferences import preferences
 
 class MainWindow(QtGui.QMainWindow):
 	# Colors used for different types of log messages:
@@ -58,6 +57,7 @@ class MainWindow(QtGui.QMainWindow):
 		QtGui.QMainWindow.__init__(self)
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
+		self.__afterConList = []
 		self.__mediaModel = mediaModel = MediaModel(bridge)
 		ui.setupUi(self)
 		# Added stuff that at the moment will be exclusive to 
@@ -98,9 +98,7 @@ class MainWindow(QtGui.QMainWindow):
 			self, ui.machineBox, bridge
 			)
 
-		self.__diskmanipulator = Diskmanipulator(ui, settingsManager,
-			machineManager, extensionManager, bridge, mediaModel
-			)
+		self.__diskmanipulator = Diskmanipulator(mediaModel, bridge)
 		self.__cheatfinder = Cheatfinder(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
 		self.__paletteeditor = PaletteEditor(bridge)
@@ -133,7 +131,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
 
 	def afterConnectionMade(self): 
-		self.__afterConList=[]
+		self.__afterConList = []
 		self.__afterConList.append('renderer')
 		self.__bridge.command('openmsx_info',
 			'setting', 'renderer'
@@ -169,7 +167,7 @@ class MainWindow(QtGui.QMainWindow):
 			)
 
 	def __fillComboBox(self, *items):
-		element= self.__afterConList.pop(0) 
+		element = self.__afterConList.pop(0) 
 		print '------------------------------------'
 		print element
 		print items
@@ -180,7 +178,7 @@ class MainWindow(QtGui.QMainWindow):
 			'scale_algorithm': self.__ui.scalealgorithmComboBox,
 			'videosource': self.__ui.videosourceComboBox
 			}
-		uiElement=uimap[ element ]
+		uiElement = uimap[ element ]
 		for item in items[2].split(' '):
 			#combo = self.__ui.rendererComboBox
 			#combo.addItem(QtCore.QString(item))
