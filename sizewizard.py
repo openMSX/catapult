@@ -56,7 +56,7 @@ class Sizewizardtwo(QtGui.QDialog):
 				QtCore.Qt.ItemIsEditable | \
 				QtCore.Qt.ItemIsEnabled
 				)
-			item.setText(
+			widgetItem.setText(
 				QtGui.QApplication.translate(
 					"Dialog", "32M", None, 
 					QtGui.QApplication.UnicodeUTF8
@@ -119,6 +119,11 @@ class Sizewizard(QtGui.QDialog):
 			'clicked()',
 			self.changePartionSizes
 			)
+		connect(
+			ui.unpartedSize,
+			'valueChanged(int)',
+			self.changedDiskSize
+			)
 	
 	def setWidgetstate(self):
 		print 'def setWidgetstate():'
@@ -130,6 +135,27 @@ class Sizewizard(QtGui.QDialog):
 		state = not state
 		ui.unpartedSize.setEnabled(state)
 		ui.unpartedLabel.setEnabled(state)
+
+	def changedDiskSize(self, size):
+		bold = 1 
+		if  size > 32767:
+			txt = 'Maximum sized FAT12 disk fo IDE extention'
+		elif size == 720:
+			txt = 'Regular 720KB DD-DS disk '+ \
+			'(double density, double sided)'
+		elif size == 360:
+			txt = 'Regular 360KB DD-SS disk '+ \
+			'(double density, single sided)'
+		elif size > 720:
+			txt = 'big disk for IDE extention' + \
+			'with size ' + str(size/1024) + "MB"
+			bold = 0 
+		else:
+			txt = "disk with custom size of " + \
+			str(size) + "KB"
+			bold = 0 
+		self.__ui.unpartedLabel.setText(txt)
+		self.__ui.unpartedLabel.font().setBold(bold)
 
 	def changePartionSizes(self):
 		cpd = self.__changePartitionsDialog

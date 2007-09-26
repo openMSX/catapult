@@ -1,5 +1,11 @@
 $Id$
 
+2007-09-26 David Heremans <david.heremans@gnu-linux.net>
+	* The diskmanipulator now only shows the available drives,
+	  knows when there is no disk in the drive and reacts to
+	  machine/disk changes. Order of signals and commands is
+	  currently caussing an issue though... 
+
 2007-09-24 David Heremans <david.heremans@gnu-linux.net>
 	* More WIP code for the comboboxes in the video tab
 

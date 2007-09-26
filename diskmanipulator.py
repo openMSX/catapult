@@ -2,7 +2,7 @@
 
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect
-#from mediamodel import MediaModel
+from mediamodel import MediaModel
 
 class Diskmanipulator(QtCore.QObject):
 
@@ -17,18 +17,21 @@ class Diskmanipulator(QtCore.QObject):
 		self.__bridge = bridge
 		self.__mediaSlots = []
 		self.__cwd = {}
-		self.__media = 'diska'
+		self.__media = 'virtual_drive'
 		self.__localDir = QtCore.QDir.home()
 		self.__dirModel = QtGui.QDirModel()
 
-		#mediaModel.updated.connect(self.__rebuildUI)
-		mediaModel.dataChanged.connect(self.__rebuildUI)
+		##mediaModel.updated.connect(self.__rebuildUI)
+		#mediaModel.dataChanged.connect(self.__rebuildUI)
+		mediaModel.mediumChanged.connect(self.__diskChanged)
+		mediaModel.mediaSlotAdded.connect(self.__driveAdded)
+		mediaModel.mediaSlotRemoved.connect(self.__driveRemoved)
 
-		#quick hack to have some values available
-		self.__cwd['virtual_drive'] = '/'
-		self.__cwd['diska'] = '/'
-		self.__cwd['diskb'] = '/'
-		self.__cwd['hda'] = '/'
+		self.__cwd['virtual_drive'] = ''
+		##quick hack to have some values available
+		#self.__cwd['diska'] = '/'
+		#self.__cwd['diskb'] = '/'
+		#self.__cwd['hda'] = '/'
 
 	def __rebuildUI(self):
 		# Only if ui is initialized
@@ -40,10 +43,7 @@ class Diskmanipulator(QtCore.QObject):
 			devices = self.__mediaModel.getDriveNames()
 			for device in devices:
 				combo.addItem(QtCore.QString(device))
-			#quick hack
-			#combo.addItem(QtCore.QString('diska'))
-			#combo.addItem(QtCore.QString('diskb'))
-			#combo.addItem(QtCore.QString('hda'))
+			self.refreshDir()
 
 	def show(self):
 		dialog = self.__dmDialog
@@ -122,6 +122,11 @@ class Diskmanipulator(QtCore.QObject):
 				self.newImage
 				)
 			connect(
+				ui.dirReloadButton,
+				'clicked()',
+				self.refreshDir
+				)
+			connect(
 				ui.dirUpButton,
 				'clicked()',
 				self.updir
@@ -185,7 +190,9 @@ class Diskmanipulator(QtCore.QObject):
 				'editingFinished()',
 				self.editedLocalDir
 				)
-		self.__mediaModel.doUpdateAll()
+		#self.__mediaModel.doUpdateAll() <-  not anymore
+		#since we do not longer listen to datachange
+		#
 		# quick hack to have some values visible in case doUpdateAll doesn't need
 		# to emmit a datachanged and only now ui is initialized
 		self.__rebuildUI()
@@ -339,16 +346,65 @@ class Diskmanipulator(QtCore.QObject):
 		self.__media = str(media)
 		self.refreshDir()
 
+	def __diskChanged(self, name, imagepath):
+		driveId = str(name)
+		path = str(imagepath)
+		if driveId.startswith('disk') or driveId.startswith('hd'):
+			print 'disk "%s" now contains image "%s" '% (driveId, path)
+			if path == '':
+				self.__cwd[driveId] = ''
+			else: 
+				self.__cwd[driveId] = '/'
+			print ' driveId == self.__media "%s" == "%s":' % (driveId, self.__media)
+			# only if gui is visible ofcourse
+			if driveId == self.__media and self.__combobox != None:
+				self.refreshDir()
+
+
+	def __driveAdded(self, name):
+		driveId = str(name)
+		if driveId.startswith('disk') or driveId.startswith('hd'):
+			print 'drive "%s" added '% name
+			self.__cwd[driveId] = '/'
+			# only if gui is visible ofcourse
+			if self.__combobox != None:
+				self.__combobox.addItem(QtCore.QString(driveId))
+
+	def __driveRemoved(self, name):
+		driveId = str(name)
+		if driveId.startswith('disk') or driveId.startswith('hd'):
+			print 'drive "%s" removed'% name
+			combo = self.__combobox
+			# only if gui is visible ofcourse
+			if combo != None:
+				index = combo.findText(QtCore.QString(driveId))
+				combo.removeItem(index)
+				if driveId == self.__media:
+					self.__media = 'virtual_drive'
+					self.refreshDir()
+
+
 	def refreshDir(self):
-		self.__ui.cwdLine.setText(self.__cwd[self.__media])
-		self.__bridge.command(
-			'diskmanipulator', 'chdir',
-			self.__media, self.__cwd[self.__media]
-			)()
-		self.__bridge.command(
-			'diskmanipulator', 'dir',
-			self.__media
-			)( self.displayDir)
+		path = self.__cwd[self.__media]
+		if path != '' :
+			self.__ui.cwdLine.setReadOnly(0)
+			self.__ui.cwdLine.font().setItalic(0)
+			self.__ui.cwdLine.setText(self.__cwd[self.__media])
+			self.__bridge.command(
+				'diskmanipulator', 'chdir',
+				self.__media, self.__cwd[self.__media]
+				)()
+			self.__bridge.command(
+				'diskmanipulator', 'dir',
+				self.__media
+				)( self.displayDir)
+		else:
+			#no disk inserted
+			self.__ui.cwdLine.setReadOnly(1)
+			self.__ui.cwdLine.font().setItalic(1)
+			self.__ui.cwdLine.setText("<No disk inserted>")
+			# clear will also erase the labels!
+			self.__ui.msxDirTable.setRowCount(0)
 
 	def displayDir(self, *value):
 		'''Fills in the tablewidget with the output of the
@@ -385,9 +441,10 @@ class Diskmanipulator(QtCore.QObject):
 		lijst = path.rsplit('/', 1)
 		if lijst[1] == '': # maybe last character was already '/'...
 			lijst = lijst[0].rsplit('/', 1)
-		path = lijst[0]
-		if path == '':
+		if path != '' and lijst[0] == '' :
 			path = '/'
+		else:
+			path = lijst[0]
 		self.__cwd[self.__media] = path
 		self.refreshDir()
 

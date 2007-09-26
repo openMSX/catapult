@@ -2,10 +2,13 @@ from PyQt4 import QtCore
 from bisect import bisect
 import os.path
 
-from qt_utils import QtSignal
+from qt_utils import QtSignal, connect, Signal
 
 class MediaModel(QtCore.QAbstractListModel):
 	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
+	mediumChanged = Signal('QString', 'QString')
+	mediaSlotRemoved = Signal('QString')
+	mediaSlotAdded = Signal('QString')
 
 	def __init__(self, bridge):
 		QtCore.QAbstractListModel.__init__(self)
@@ -66,6 +69,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		self.beginInsertRows(parent, index, index)
 		self.__mediaSlots.insert(index, newEntry)
 		self.endInsertRows()
+		self.mediaSlotAdded.emit(slot)
 		self.queryMedium(slot)
 
 	def __mediaSlotRemoved(self, slot):
@@ -76,6 +80,7 @@ class MediaModel(QtCore.QAbstractListModel):
 			self.beginRemoveRows(parent, index, index)
 			del self.__mediaSlots[index]
 			self.endRemoveRows()
+			self.mediaSlotRemoved.emit(slot)
 		else:
 			print 'removed slot "%s" did not exist' % slot
 
@@ -90,6 +95,7 @@ class MediaModel(QtCore.QAbstractListModel):
 					self.__mediaSlots[index] = name, path
 					modelIndex = self.createIndex(index, 0)
 					self.dataChanged.emit(modelIndex, modelIndex)
+					self.mediumChanged.emit(name, path)
 					return True
 			index += 1
 		else:
