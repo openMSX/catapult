@@ -68,8 +68,8 @@
        <property name="html" >
         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:11pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:8pt;">Welcome to the Cheat Finder&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;">Welcome to the Cheat Finder&lt;/p>&lt;/body>&lt;/html></string>
        </property>
       </widget>
      </item>
@@ -234,6 +234,9 @@ p, li { white-space: pre-wrap; }
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QComboBox" name="cheatSelector" />
+              </item>
              </layout>
             </item>
            </layout>
@@ -270,13 +273,20 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="GetCheats" >
+               <property name="text" >
+                <string>Get Cheats</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <spacer>
                <property name="orientation" >
                 <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" >
                 <size>
-                 <width>20</width>
+                 <width>82</width>
                  <height>40</height>
                 </size>
                </property>
@@ -291,8 +301,8 @@ p, li { white-space: pre-wrap; }
              </property>
              <property name="sizeHint" >
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>112</width>
+               <height>106</height>
               </size>
              </property>
             </spacer>

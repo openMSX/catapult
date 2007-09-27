@@ -35,13 +35,17 @@ class Cheatfinder(object):
 			connect(ui.FindCheatValue, 'clicked()', self.findCheatValue)
 			connect(ui.EmulationTogglePause, 'clicked()', self.emulationTogglePause)
 			connect(ui.EmulationReset, 'clicked()', self.emulationReset)
+			connect(ui.GetCheats,'clicked()', self.getCheats)
 			
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
+		
+	def getCheats(self):
+		self.__bridge.command('gettrainers')(self.__CheatListReply)
 
 	def emulationTogglePause(self):
-		self.__bridge.command('toggle', 'pause')(self.__CheatListReply)
+		self.__bridge.command('toggle', 'pause')(self.__DisplayCheats)
 
 	def emulationReset(self):
 		self.__bridge.command('reset')(self.__CheatListReply)
@@ -72,8 +76,15 @@ class Cheatfinder(object):
 		self.__bridge.command('findcheat', cheatValue)(self.__CheatListReply)
 
 	def __CheatListReply(self, *words):
+		text = self.__ui.cheatSelector
+		for cheats in words[ : -1]:
+			text.addItem(cheats)
+		print 'Selected Index :: ' + text.currentIndex()
+
+	def __DisplayCheats(self, *words):
 		line = ' '.join(words)
 		text = self.__ui.cheatResults
+		text.append(line)
 
 		#Check if no results are found (clear table and display message)
 		if line.find('results')>1:
