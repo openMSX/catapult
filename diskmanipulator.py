@@ -21,8 +21,6 @@ class Diskmanipulator(QtCore.QObject):
 		self.__localDir = QtCore.QDir.home()
 		self.__dirModel = QtGui.QDirModel()
 
-		##mediaModel.updated.connect(self.__rebuildUI)
-		#mediaModel.dataChanged.connect(self.__rebuildUI)
 		mediaModel.mediumChanged.connect(self.__diskChanged)
 		mediaModel.mediaSlotAdded.connect(self.__driveAdded)
 		mediaModel.mediaSlotRemoved.connect(self.__driveRemoved)
@@ -43,6 +41,10 @@ class Diskmanipulator(QtCore.QObject):
 			devices = self.__mediaModel.getDriveNames()
 			for device in devices:
 				combo.addItem(QtCore.QString(device))
+			#rebuilding the combobox will show 'virtual drive'
+			#selected so we set this as current media and
+			#update the directory listing
+			self.__media = 'virtual_drive'
 			self.refreshDir()
 
 	def show(self):
@@ -346,16 +348,21 @@ class Diskmanipulator(QtCore.QObject):
 		self.__media = str(media)
 		self.refreshDir()
 
+	def isUsableDisk(self, name):
+		if name.startswith('disk') or name.startswith('hd') or name == 'virtual_drive':
+			return True
+		else:
+			return False
+
 	def __diskChanged(self, name, imagepath):
 		driveId = str(name)
 		path = str(imagepath)
-		if driveId.startswith('disk') or driveId.startswith('hd'):
+		if self.isUsableDisk(driveId):
 			print 'disk "%s" now contains image "%s" '% (driveId, path)
 			if path == '':
 				self.__cwd[driveId] = ''
 			else: 
 				self.__cwd[driveId] = '/'
-			print ' driveId == self.__media "%s" == "%s":' % (driveId, self.__media)
 			# only if gui is visible ofcourse
 			if driveId == self.__media and self.__combobox != None:
 				self.refreshDir()
@@ -363,7 +370,7 @@ class Diskmanipulator(QtCore.QObject):
 
 	def __driveAdded(self, name):
 		driveId = str(name)
-		if driveId.startswith('disk') or driveId.startswith('hd'):
+		if self.isUsableDisk(driveId):
 			print 'drive "%s" added '% name
 			self.__cwd[driveId] = '/'
 			# only if gui is visible ofcourse
@@ -372,7 +379,7 @@ class Diskmanipulator(QtCore.QObject):
 
 	def __driveRemoved(self, name):
 		driveId = str(name)
-		if driveId.startswith('disk') or driveId.startswith('hd'):
+		if self.isUsableDisk(driveId):
 			print 'drive "%s" removed'% name
 			combo = self.__combobox
 			# only if gui is visible ofcourse

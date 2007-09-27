@@ -95,7 +95,6 @@ class MediaModel(QtCore.QAbstractListModel):
 					self.__mediaSlots[index] = name, path
 					modelIndex = self.createIndex(index, 0)
 					self.dataChanged.emit(modelIndex, modelIndex)
-					self.mediumChanged.emit(name, path)
 					return True
 			index += 1
 		else:
@@ -103,7 +102,8 @@ class MediaModel(QtCore.QAbstractListModel):
 
 	def __updateMedium(self, mediaSlot, path):
 		try:
-			self.__setMedium(mediaSlot, path)
+			if self.__setMedium(mediaSlot, path):
+				self.mediumChanged.emit(mediaSlot, path)
 		except KeyError:
 			# This can happen if we don't monitor the creation of new media
 			# slots.
@@ -154,6 +154,7 @@ class MediaModel(QtCore.QAbstractListModel):
 			else:
 				self.__bridge.command(mediaSlot, 'insert',
 					path, *options)(None, errorHandler)
+			self.mediumChanged.emit(mediaSlot, path)
 
 	def rowCount(self, parent):
 		# TODO: What does this mean?

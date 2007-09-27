@@ -1,5 +1,9 @@
 $Id$
 
+2007-09-27 David Heremans <david.heremans@gnu-linux.net>
+	* Diskmanipulator is now correctly syncing to all media changes
+	  both from within openMSX or done by catapult itself.
+
 2007-09-26 David Heremans <david.heremans@gnu-linux.net>
 	* The diskmanipulator now only shows the available drives,
 	  knows when there is no disk in the drive and reacts to
