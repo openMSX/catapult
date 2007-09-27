@@ -35,14 +35,11 @@ class Cheatfinder(object):
 			connect(ui.FindCheatValue, 'clicked()', self.findCheatValue)
 			connect(ui.EmulationTogglePause, 'clicked()', self.emulationTogglePause)
 			connect(ui.EmulationReset, 'clicked()', self.emulationReset)
-			connect(ui.GetCheats,'clicked()', self.getCheats)
-			
+
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
-		
-	def getCheats(self):
-		self.__bridge.command('gettrainers')(self.__CheatListReply)
+		self.getCheats()
 
 	def emulationTogglePause(self):
 		self.__bridge.command('toggle', 'pause')(self.__DisplayCheats)
@@ -71,20 +68,23 @@ class Cheatfinder(object):
 	def findCheatRestart(self):
 		self.__bridge.command('findcheat', '-start')(self.__CheatListReply)
 
+	def getCheats(self):
+		self.__bridge.command('gettrainers')(self.__fillCheats)
+
+	def __fillCheats(self, *words):
+		text = self.__ui.cheatSelector
+		for cheats in words[ : -1]:
+			text.addItem(cheats)
+		#print 'Selected Index :: ' + text.currentIndex()
+
 	def findCheatValue(self):
 		cheatValue = self.__ui.cheatVal.text()
 		self.__bridge.command('findcheat', cheatValue)(self.__CheatListReply)
 
 	def __CheatListReply(self, *words):
-		text = self.__ui.cheatSelector
-		for cheats in words[ : -1]:
-			text.addItem(cheats)
-		print 'Selected Index :: ' + text.currentIndex()
-
-	def __DisplayCheats(self, *words):
 		line = ' '.join(words)
 		text = self.__ui.cheatResults
-		text.append(line)
+		#text.append(line)
 
 		#Check if no results are found (clear table and display message)
 		if line.find('results')>1:
@@ -130,7 +130,7 @@ class Cheatfinder(object):
 				self.__ui.CheatTable.setItem(row, 2, newValItem)
 
 				row += 1
-				#text.append(row+" Results found: Displayed")
+			text.append(str(row)+" results found -> Displayed in table")
 
 			#Enable Sorting
 			self.__ui.CheatTable.setSortingEnabled(1)

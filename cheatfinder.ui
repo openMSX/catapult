@@ -235,7 +235,13 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="cheatSelector" />
+               <widget class="QComboBox" name="cheatSelector" >
+                <item>
+                 <property name="text" >
+                  <string>None</string>
+                 </property>
+                </item>
+               </widget>
               </item>
              </layout>
             </item>
@@ -269,13 +275,6 @@ p, li { white-space: pre-wrap; }
                </property>
                <property name="icon" >
                 <iconset/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="GetCheats" >
-               <property name="text" >
-                <string>Get Cheats</string>
                </property>
               </widget>
              </item>
