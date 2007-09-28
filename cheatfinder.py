@@ -35,11 +35,22 @@ class Cheatfinder(object):
 			connect(ui.FindCheatValue, 'clicked()', self.findCheatValue)
 			connect(ui.EmulationTogglePause, 'clicked()', self.emulationTogglePause)
 			connect(ui.EmulationReset, 'clicked()', self.emulationReset)
+			connect(ui.cheatSelector, 'activated(QString)', self.fillCheats)
 
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
 		self.getCheats()
+
+	def fillCheats(self):
+		selected = self.__ui.cheatSelector.currentText()
+		#self.__ui.CheatDisplay.addColumn("item")
+		self.__bridge.command('trainer',str(selected))(self.__output)
+		
+	def __output(self, *words):
+		line = ' '.join(words)
+		text = self.__ui.cheatResults
+		text.append(line)
 
 	def emulationTogglePause(self):
 		self.__bridge.command('toggle', 'pause')(self.__DisplayCheats)
@@ -69,10 +80,11 @@ class Cheatfinder(object):
 		self.__bridge.command('findcheat', '-start')(self.__CheatListReply)
 
 	def getCheats(self):
-		self.__bridge.command('gettrainers')(self.__fillCheats)
+		self.__bridge.command('array','names','::__trainers')(self.__fillCheats)
 
 	def __fillCheats(self, *words):
-		text = self.__ui.cheatSelector
+		words = sorted(words)
+		text = self.__ui.cheatSelector 
 		for cheats in words[ : -1]:
 			text.addItem(cheats)
 		#print 'Selected Index :: ' + text.currentIndex()
