@@ -1,5 +1,9 @@
 $Id$
 
+2007-09-29 Patrick van Arkel <vampiermsx@gmail.com>
+	* Implemented the base for the Trainer Selector. 
+	  And made some improvements on the Cheatfinder.
+
 2007-09-27 David Heremans <david.heremans@gnu-linux.net>
 	* Diskmanipulator is now correctly syncing to all media changes
 	  both from within openMSX or done by catapult itself.

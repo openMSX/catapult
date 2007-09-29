@@ -39,7 +39,7 @@
    <property name="title" >
     <string>Trainer Selector</string>
    </property>
-   <widget class="QWidget" name="" >
+   <widget class="QWidget" name="layoutWidget" >
     <property name="geometry" >
      <rect>
       <x>10</x>
@@ -62,7 +62,35 @@
       </widget>
      </item>
      <item>
-      <widget class="QTableView" name="tableView" />
+      <widget class="QTableWidget" name="TrainerTable" >
+       <property name="alternatingRowColors" >
+        <bool>true</bool>
+       </property>
+       <property name="showGrid" >
+        <bool>false</bool>
+       </property>
+       <property name="wordWrap" >
+        <bool>false</bool>
+       </property>
+       <property name="cornerButtonEnabled" >
+        <bool>false</bool>
+       </property>
+       <column>
+        <property name="text" >
+         <string>Index</string>
+        </property>
+       </column>
+       <column>
+        <property name="text" >
+         <string>Active</string>
+        </property>
+       </column>
+       <column>
+        <property name="text" >
+         <string>Desc</string>
+        </property>
+       </column>
+      </widget>
      </item>
     </layout>
    </widget>

@@ -39,6 +39,10 @@ class Cheatfinder(object):
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
+		self.__ui.CheatTable.verticalHeader().hide()
+		self.__ui.CheatTable.horizontalHeader().setStretchLastSection(True)
+		self.__ui.CheatTable.setColumnWidth(0,64)
+		self.__ui.CheatTable.setColumnWidth(1,64)
 
 	def emulationTogglePause(self):
 		self.__bridge.command('toggle', 'pause')(self.__DisplayCheats)
