@@ -36,6 +36,7 @@ from media import MediaSwitcher
 from audio import AudioMixer
 from diskmanipulator import Diskmanipulator
 from cheatfinder import Cheatfinder
+from trainerselect import TrainerSelect
 from softwaredb import SoftwareDB
 from openmsx_control import ControlBridge
 from paletteeditor import PaletteEditor
@@ -100,6 +101,7 @@ class MainWindow(QtGui.QMainWindow):
 
 		self.__diskmanipulator = Diskmanipulator(mediaModel, bridge)
 		self.__cheatfinder = Cheatfinder(bridge)
+		self.__trainerselect = TrainerSelect(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
 		self.__paletteeditor = PaletteEditor(bridge)
 		self.__connectMenuActions(ui)
@@ -199,6 +201,7 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
 			( ui.action_CheatFinder, self.__cheatfinder.show ),
+			( ui.action_TrainerSelect, self.__trainerselect.show ),			
 			( ui.action_PaletteEditor, self.__paletteeditor.show ),
 			( ui.action_SoftwareDB, self.__softwaredb.show ),
 			( ui.action_HelpSetup, self.showHelpSetup ),

@@ -1,0 +1,91 @@
+<ui version="4.0" >
+ <class>trainerSelect</class>
+ <widget class="QDialog" name="trainerSelect" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>500</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize" >
+   <size>
+    <width>500</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>Trainer Selection</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset>logo.png</iconset>
+  </property>
+  <widget class="QGroupBox" name="TrainerSelect" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>481</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <property name="title" >
+    <string>Trainer Selector</string>
+   </property>
+   <widget class="QWidget" name="" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>461</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" >
+     <item>
+      <widget class="QComboBox" name="cheatSelector" >
+       <property name="maxVisibleItems" >
+        <number>15</number>
+       </property>
+       <item>
+        <property name="text" >
+         <string>None</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableView" name="tableView" />
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="8" />
+ <resources/>
+ <connections/>
+ <designerdata>
+  <property name="gridDeltaX" >
+   <number>10</number>
+  </property>
+  <property name="gridDeltaY" >
+   <number>10</number>
+  </property>
+  <property name="gridSnapX" >
+   <bool>true</bool>
+  </property>
+  <property name="gridSnapY" >
+   <bool>true</bool>
+  </property>
+  <property name="gridVisible" >
+   <bool>true</bool>
+  </property>
+ </designerdata>
+</ui>

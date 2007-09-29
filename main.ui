@@ -1834,7 +1834,7 @@ Press the Apply button to activate new settings</string>
      <x>0</x>
      <y>0</y>
      <width>625</width>
-     <height>28</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help" >
@@ -1867,6 +1867,7 @@ Press the Apply button to activate new settings</string>
     <addaction name="action_Diskmanipulator" />
     <addaction name="action_CheatFinder" />
     <addaction name="action_PaletteEditor" />
+    <addaction name="action_TrainerSelect" />
    </widget>
    <addaction name="menu_File" />
    <addaction name="menuConfiguration" />
@@ -1933,6 +1934,11 @@ Press the Apply button to activate new settings</string>
   <action name="action_PaletteEditor" >
    <property name="text" >
     <string>Color Editor...</string>
+   </property>
+  </action>
+  <action name="action_TrainerSelect" >
+   <property name="text" >
+    <string>Trainer Selector</string>
    </property>
   </action>
  </widget>
