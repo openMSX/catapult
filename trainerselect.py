@@ -61,4 +61,10 @@ class TrainerSelect(object):
 		line = ' '.join(words)
 		#text = self.__ui.cheatResults
 		#text.append(line)
-		print line
+		#print line
+		trainerArray = line.split('\n')
+		for trainerLine in trainerArray[ : -1]:
+			trainerIndex 	= trainerLine.rstrip()[:trainerLine.find('[')]
+			trainerActive 	= trainerLine.rstrip()[trainerLine.find('['):trainerLine.find(']')+1]
+			trainerDesc 	= trainerLine.rstrip()[trainerLine.find(']')+1:]
+		
