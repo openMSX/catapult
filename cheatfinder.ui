@@ -389,12 +389,12 @@ p, li { white-space: pre-wrap; }
            </column>
            <column>
             <property name="text" >
-             <string>Old (Bin)</string>
+             <string>Old (Dec)</string>
             </property>
            </column>
            <column>
             <property name="text" >
-             <string>New (Bin)</string>
+             <string>New (Dec)</string>
             </property>
            </column>
            <column>
