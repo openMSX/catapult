@@ -2,7 +2,6 @@
 
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect
-from mediamodel import MediaModel
 
 class Diskmanipulator(QtCore.QObject):
 
@@ -347,7 +346,9 @@ class Diskmanipulator(QtCore.QObject):
 		self.refreshDir()
 
 	def isUsableDisk(self, name):
-		if name.startswith('disk') or name.startswith('hd') or name == 'virtual_drive':
+		if name.startswith('disk') or \
+			name.startswith('hd') or \
+			name == 'virtual_drive':
 			return True
 		else:
 			return False
@@ -521,12 +522,12 @@ class Diskmanipulator(QtCore.QObject):
 			'diskmanipulator', 'chdir',
 			self.__media, self.__cwd[self.__media] )()
 		# currently the diskmanipultor extracts entire subdirs... :-)
-		dir =  self.__ui.msxDirTable
+		msxdir =  self.__ui.msxDirTable
 		index = 0
-		while index < dir.rowCount():
-			if dir.item(index, 0).isSelected():
+		while index < msxdir.rowCount():
+			if msxdir.item(index, 0).isSelected():
 				item = str(
-					dir.item(index, 0).text()
+					msxdir.item(index, 0).text()
 					)
 				self.__bridge.command(
 					'diskmanipulator', 'export',
