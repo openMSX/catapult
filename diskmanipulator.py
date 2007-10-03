@@ -175,8 +175,6 @@ class Diskmanipulator(QtCore.QObject):
 				self.exportFiles
 				)
 
-			#connect(ui.exportButton, 'clicked()', self.refreshDir)
-
 			connect(
 				ui.mediaComboBox,
 				'activated(QString)',
@@ -523,10 +521,20 @@ class Diskmanipulator(QtCore.QObject):
 			'diskmanipulator', 'chdir',
 			self.__media, self.__cwd[self.__media] )()
 		# currently the diskmanipultor extracts entire subdirs... :-)
-		self.__bridge.command(
-			'diskmanipulator', 'export',
-			diskimage , str( self.__localDir.path())
-			)( self.refreshLocalDir )
+		dir =  self.__ui.msxDirTable
+		index = 0
+		while index < dir.rowCount():
+			if dir.item(index, 0).isSelected():
+				item = str(
+					dir.item(index, 0).text()
+					)
+				self.__bridge.command(
+					'diskmanipulator', 'export',
+					diskimage ,
+					str( self.__localDir.path()) ,
+					item
+					)( self.refreshLocalDir )
+			index += 1
 
 	def __ListReply(self, *lines):
 		for line in lines:

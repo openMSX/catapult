@@ -273,7 +273,7 @@
          <item>
           <widget class="QToolButton" name="exportButton" >
            <property name="toolTip" >
-            <string>export entire directory from diskimage</string>
+            <string>export from diskimage</string>
            </property>
            <property name="text" >
             <string>>></string>
