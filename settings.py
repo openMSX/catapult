@@ -115,6 +115,18 @@ class IntegerSetting(Setting):
 	def _convertToStr(self, value):
 		return str(value)
 
+class FloatSetting(Setting):
+	valueChanged = Signal('double')
+	settingChanged = Signal('QString','double')
+
+	def _convertFromStr(self, valueStr):
+		print 'from str',valueStr
+		return float(valueStr)
+
+	def _convertToStr(self, value):
+		print 'to str',value
+		return str(value)
+
 class SettingsManager(QtCore.QObject):
 
 	def __init__(self, bridge):

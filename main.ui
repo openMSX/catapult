@@ -1437,7 +1437,10 @@ Press the Apply button to activate new settings</string>
             <item>
              <widget class="QSlider" name="gammaSlider" >
               <property name="maximum" >
-               <number>100</number>
+               <number>5</number>
+              </property>
+              <property name="singleStep" >
+               <number>1</number>
               </property>
               <property name="orientation" >
                <enum>Qt::Horizontal</enum>
@@ -1446,7 +1449,7 @@ Press the Apply button to activate new settings</string>
                <enum>QSlider::TicksBelow</enum>
               </property>
               <property name="tickInterval" >
-               <number>10</number>
+               <number>1</number>
               </property>
              </widget>
             </item>

@@ -121,6 +121,18 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.registerSetting('glow', settings.IntegerSetting)
 		settingsManager.connectSetting('glow', ui.glowSlider)
 		settingsManager.connectSetting('glow', ui.glowSpinBox)
+		settingsManager.registerSetting('gamma', settings.FloatSetting)
+		settingsManager.connectSetting('gamma', ui.gammaSlider)
+		settingsManager.connectSetting('gamma', ui.gammaSpinBox)
+		settingsManager.registerSetting('brightness', settings.FloatSetting)
+		settingsManager.connectSetting('brightness', ui.brightnessSlider)
+		settingsManager.connectSetting('brightness', ui.brightnessSpinBox)
+		settingsManager.registerSetting('contrast', settings.FloatSetting)
+		settingsManager.connectSetting('contrast', ui.contrastSlider)
+		settingsManager.connectSetting('contrast', ui.contrastSpinBox)
+		settingsManager.registerSetting('noise', settings.FloatSetting)
+		settingsManager.connectSetting('noise', ui.noiseSlider)
+		settingsManager.connectSetting('noise', ui.noiseSpinBox)
 
 		self.__playState = PlayState(settingsManager, ui)
 
