@@ -42,9 +42,11 @@ class MediaSwitcher(QtCore.QObject):
 			'cd': ( ui.cdPage, self.__updateCDROMPage ),
 			}
 		self.__cartPageInited = False
-		# Connect to media model and view:
+		# Connect to media model:
 		ui.mediaList.setModel(mediaModel)
 		mediaModel.dataChanged.connect(self.mediaPathChanged)
+		mediaModel.mediaSlotRemoved.connect(self.setInfoPage)
+		# Connect view:
 		connect(
 			ui.mediaList.selectionModel(),
 			'currentChanged(QModelIndex, QModelIndex)',
@@ -273,6 +275,9 @@ class MediaSwitcher(QtCore.QObject):
 	def updateMedia(self, index):
 		# Find out which media entry has become active.
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
+		#print "***********"
+		#print "mediaslot has currently become active:"
+		#print mediaSlot
 		if self.__mediaSlot == mediaSlot:
 			return
 		#quick hack to ignore VIRTUAL_DRIVE selection
@@ -313,6 +318,15 @@ class MediaSwitcher(QtCore.QObject):
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
 		if self.__mediaSlot == mediaSlot:
 			self.__updateMediaPage(mediaSlot)
+
+	def setInfoPage(self):
+		# TODO : this is called for each media hardware that is added or removed, 
+		# since switching machines will sent this event for each and 
+		# every drive/hd/cd/... this will be called several times in a row
+		# do we need to handel this in a better way ?
+		self.__ui.mediaStack.setCurrentWidget(self.__ui.infoPage)
+		self.__ui.mediaList.selectionModel().clear()
+
 
 	def setPath(self, path, *options):
 		'''Sets a new path for the currently selected medium.
