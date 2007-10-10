@@ -35,7 +35,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget" >
       <property name="currentIndex" >
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="mediaTab" >
        <attribute name="title" >
@@ -1164,7 +1164,7 @@
        <attribute name="title" >
         <string>Input</string>
        </attribute>
-       <widget class="QWidget" name="" >
+       <widget class="QWidget" name="layoutWidget" >
         <property name="geometry" >
          <rect>
           <x>0</x>
@@ -1243,8 +1243,7 @@
                </font>
               </property>
               <property name="text" >
-               <string>Following setting are not immediately aplied to the current openMSX.
-Press the Apply button to activate new settings</string>
+               <string/>
               </property>
               <property name="wordWrap" >
                <bool>true</bool>
@@ -1325,30 +1324,6 @@ Press the Apply button to activate new settings</string>
                <widget class="QCheckBox" name="fullscreen" >
                 <property name="text" >
                  <string>Fullscreen</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" >
-              <item>
-               <spacer>
-                <property name="orientation" >
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" >
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton" >
-                <property name="text" >
-                 <string>Apply</string>
                 </property>
                </widget>
               </item>

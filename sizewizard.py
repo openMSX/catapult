@@ -139,7 +139,7 @@ class Sizewizard(QtGui.QDialog):
 	def changedDiskSize(self, size):
 		bold = 1 
 		if  size > 32767:
-			txt = 'Maximum sized FAT12 disk fo IDE extention'
+			txt = 'Maximum sized FAT12 disk fo IDE extension'
 		elif size == 720:
 			txt = 'Regular 720KB DD-DS disk '+ \
 			'(double density, double sided)'
@@ -147,7 +147,7 @@ class Sizewizard(QtGui.QDialog):
 			txt = 'Regular 360KB DD-SS disk '+ \
 			'(double density, single sided)'
 		elif size > 720:
-			txt = 'big disk for IDE extention' + \
+			txt = 'big disk for IDE extension' + \
 			'with size ' + str(size/1024) + "MB"
 			bold = 0 
 		else:

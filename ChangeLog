@@ -1,5 +1,8 @@
 $Id$
 
+2007-10-10 David Heremans <david.heremans@gnu-linux.net>
+	* All comboboxes in the video tab are now synced with openMSX
+
 2007-10-08 David Heremans <david.heremans@gnu-linux.net>
 	* Trying to fix a problem that arose when you had a drive
 	  selected in the medialist and switched to a C-Bios machine

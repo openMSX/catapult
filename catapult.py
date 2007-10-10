@@ -108,9 +108,6 @@ class MainWindow(QtGui.QMainWindow):
 
 		bridge.logLine.connect(self.logLine)
 		#
-		settingsManager.registerSetting('renderer', settings.EnumSetting)
-		setting = settingsManager['renderer'] 
-		connect(setting , 'settingChanged(QString,Qstring)', self.__settingsChanged)
 
 		settingsManager.registerSetting('scanline', settings.IntegerSetting)
 		settingsManager.connectSetting('scanline', ui.scanlineSlider)
@@ -134,6 +131,21 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.connectSetting('noise', ui.noiseSlider)
 		settingsManager.connectSetting('noise', ui.noiseSpinBox)
 
+		# Some enum settings
+		ui = self.__ui
+		for setting, widget in (
+				('videosource', ui.videosourceComboBox),
+				('scale_algorithm', ui.scalealgorithmComboBox),
+				('display_deform', ui.displaydeformComboBox),
+				('renderer', ui.rendererComboBox)
+				):
+			settingsManager.registerSetting(setting, 
+				settings.EnumSetting)
+			settingsManager.registerForUpdates(setting, self)
+			connect(widget, 'currentIndexChanged(QString)',
+				lambda x, setting = setting: self.__dispatchCombo(setting,x) )
+
+
 		self.__playState = PlayState(settingsManager, ui)
 
 		connect(ui.extensionButton, 'clicked()',
@@ -143,8 +155,36 @@ class MainWindow(QtGui.QMainWindow):
 
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
+	def __dispatchCombo(self, name, value):
+		print "combox initiated command: set " + name + "  " + value
+		self.__bridge.command('set',
+			name, value
+			)()
 
-	def afterConnectionMade(self): 
+	def updatedBoolean(self, name, value):
+		print "Boolean setting changed :" + name +" = " + value
+
+	def updatedEnum(self, name, value):
+		print "Enum setting changed :" + name +" = " + value
+		uimap = {	'renderer': self.__ui.rendererComboBox,
+			'scale_algorithm': self.__ui.scalealgorithmComboBox,
+			'display_deform': self.__ui.displaydeformComboBox,
+			'videosource': self.__ui.videosourceComboBox
+			}
+		widget = uimap[str(name)]
+		index = widget.findText(value)
+		if index == -1:
+			widget.addItem(value)
+		else:
+			widget.setCurrentIndex(index)
+
+	def updatedInt(self, name, value):
+		print "Int setting changed :" + name +" = " + value
+
+	def updatedFloat(self, name, value):
+		print "setting changed :" + name +" = " + value
+
+	def afterConnectionMade(self):
 		self.__afterConList = []
 		self.__afterConList.append('renderer')
 		self.__bridge.command('openmsx_info',
@@ -195,8 +235,11 @@ class MainWindow(QtGui.QMainWindow):
 		uiElement = uimap[ element ]
 		for item in items[2].split(' '):
 			#combo = self.__ui.rendererComboBox
-			#combo.addItem(QtCore.QString(item))
-			uiElement.addItem(QtCore.QString(item))
+			qitem = QtCore.QString(item)
+			#maybe element is already in combobox due
+			#to settingchanged signal
+			if uiElement.findText(qitem) == -1:
+				uiElement.addItem(qitem)
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
@@ -244,11 +287,6 @@ class MainWindow(QtGui.QMainWindow):
 		self.logLine('command', reply)
 
 	# Slots:
-
-	#@QtCore.pyqtSignature('QString','QString')
-	@QtCore.pyqtSignature('QString')
-	def __settingsChanged(self, name, value):
-		self.__ui.rendererComboBox.addItem(value)
 
 	@QtCore.pyqtSignature('')
 	def on_playButton_clicked(self):

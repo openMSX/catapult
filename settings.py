@@ -95,6 +95,10 @@ class BooleanSetting(Setting):
 		else:
 			return 'off'
 
+	def connectUpdates(self, obj):
+		self.settingChanged.connect(obj.updatedBoolean)
+		print "self.settingChanged.connect(obj.updatedBoolean)"
+
 class EnumSetting(Setting):
 	valueChanged = Signal('QString')
 	settingChanged = Signal('QString','QString')
@@ -105,6 +109,10 @@ class EnumSetting(Setting):
 	def _convertToStr(self, value):
 		return value
 
+	def connectUpdates(self, obj):
+		self.settingChanged.connect(obj.updatedEnum)
+		print 'self.settingChanged.connect(obj.updatedEnum)'
+
 class IntegerSetting(Setting):
 	valueChanged = Signal('int')
 	settingChanged = Signal('QString','int')
@@ -114,6 +122,10 @@ class IntegerSetting(Setting):
 
 	def _convertToStr(self, value):
 		return str(value)
+
+	def connectUpdates(self, obj):
+		print 'self.settingChanged.connect(obj.updatedInt)'
+		self.settingChanged.connect(obj.updatedInt)
 
 class FloatSetting(Setting):
 	valueChanged = Signal('double')
@@ -126,6 +138,10 @@ class FloatSetting(Setting):
 	def _convertToStr(self, value):
 		print 'to str',value
 		return str(value)
+
+	def connectUpdates(self, obj):
+		print 'self.settingChanged.connect(obj.updatedFloat)'
+		self.settingChanged.connect(obj.updatedFloat)
 
 class SettingsManager(QtCore.QObject):
 
@@ -157,6 +173,10 @@ class SettingsManager(QtCore.QObject):
 
 	def disconnectSetting(self, name, obj):
 		self.__settings[name].disconnectSync(obj)
+
+	def registerForUpdates(self, name, obj):
+		print "+++++registerForUpdates"
+		self.__settings[name].connectUpdates(obj)
 
 	def connectSetting(self, name, obj):
 		self.__settings[name].connectSync(obj)
