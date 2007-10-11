@@ -61,7 +61,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__afterConList = []
 		self.__mediaModel = mediaModel = MediaModel(bridge)
 		ui.setupUi(self)
-		# Added stuff that at the moment will be exclusive to 
+		# Added stuff that at the moment will be exclusive to
 		# the openMSX-CD
 		if openmsxcd:
 			ui.action_SoftwareDB = QtGui.QAction(self)
@@ -139,7 +139,7 @@ class MainWindow(QtGui.QMainWindow):
 				('display_deform', ui.displaydeformComboBox),
 				('renderer', ui.rendererComboBox)
 				):
-			settingsManager.registerSetting(setting, 
+			settingsManager.registerSetting(setting,
 				settings.EnumSetting)
 			settingsManager.registerForUpdates(setting, self)
 			connect(widget, 'currentIndexChanged(QString)',
@@ -152,6 +152,9 @@ class MainWindow(QtGui.QMainWindow):
 			extensionManager.chooseExtension)
 
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
+
+		connect(ui.sendButton,'clicked()', self.__typeInputText)
+		connect(ui.clearButton,'clicked()', self.__clearInputText)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
@@ -221,7 +224,7 @@ class MainWindow(QtGui.QMainWindow):
 			)
 
 	def __fillComboBox(self, *items):
-		element = self.__afterConList.pop(0) 
+		element = self.__afterConList.pop(0)
 		print '------------------------------------'
 		print element
 		print items
@@ -280,6 +283,17 @@ class MainWindow(QtGui.QMainWindow):
 		self.__bridge.sendCommandRaw(
 			'proc exit {} { set ::renderer none ; set ::power off }'
 			)
+
+	def __typeInputText(self):
+		#TODO: fix multiple line paste to openMSX. In openmsx_control.py
+		#      add .replace('\r', '\\n') to the end of line 105 to get this to work
+		#
+        #TODO: Capture Regular expressions chars like { [ at the beginning of a line
+		strText = self.__ui.inputText.toPlainText()
+		self.__bridge.command('type',strText)()
+
+	def __clearInputText(self):
+		self.__ui.inputText.clear()
 
 	def consoleReply(self, reply):
 		if reply.endswith('\n'):
