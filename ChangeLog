@@ -1,5 +1,10 @@
 $Id$
 
+2007-10-11 David Heremans <david.heremans@gnu-linux.net>
+	* Toggling fullscreen checkbox will actually do something :-)
+	* First attempt to enable the sliders with the float values on
+	  the video tab to be in sync with openMSX.
+
 2007-10-10 David Heremans <david.heremans@gnu-linux.net>
 	* All comboboxes in the video tab are now synced with openMSX
 

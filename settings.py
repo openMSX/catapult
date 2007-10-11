@@ -197,3 +197,10 @@ class SettingsManager(QtCore.QObject):
 		else:
 			setting.updateValue(message)
 
+	def set(self, name, message):
+		setting = self.__settings.get(str(name))
+		if setting is None:
+			print 'setting %s not registered' % name
+		else:
+			setting.setValue(message)
+

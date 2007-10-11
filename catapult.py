@@ -91,7 +91,7 @@ class MainWindow(QtGui.QMainWindow):
 		# in place before the output window is opened.
 		bridge.registerInitial(self.__interceptExit)
 
-		settingsManager = settings.SettingsManager(bridge)
+		self.__settingsManager = settingsManager = settings.SettingsManager(bridge)
 		self.__extensionManager = extensionManager = ExtensionManager(
 			self, ui, bridge
 			)
@@ -118,21 +118,32 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.registerSetting('glow', settings.IntegerSetting)
 		settingsManager.connectSetting('glow', ui.glowSlider)
 		settingsManager.connectSetting('glow', ui.glowSpinBox)
-		settingsManager.registerSetting('gamma', settings.FloatSetting)
-		settingsManager.connectSetting('gamma', ui.gammaSlider)
-		settingsManager.connectSetting('gamma', ui.gammaSpinBox)
-		settingsManager.registerSetting('brightness', settings.FloatSetting)
-		settingsManager.connectSetting('brightness', ui.brightnessSlider)
-		settingsManager.connectSetting('brightness', ui.brightnessSpinBox)
-		settingsManager.registerSetting('contrast', settings.FloatSetting)
-		settingsManager.connectSetting('contrast', ui.contrastSlider)
-		settingsManager.connectSetting('contrast', ui.contrastSpinBox)
-		settingsManager.registerSetting('noise', settings.FloatSetting)
-		settingsManager.connectSetting('noise', ui.noiseSlider)
-		settingsManager.connectSetting('noise', ui.noiseSpinBox)
 
-		# Some enum settings
+		settingsManager.registerSetting('fullscreen', settings.BooleanSetting)
+		settingsManager.registerForUpdates('fullscreen', self)
 		ui = self.__ui
+		connect(ui.fullscreen, 'stateChanged(int)', self.__goFullscreen)
+
+		# Some float settings
+		for setting, slider, spinner in (
+			# due to a wrong behavior of 'info_openmsx settings gamma'
+			# this one is temporarly disabled
+			('gamma', ui.gammaSlider, ui.gammaSpinBox),
+			('brightness', ui.brightnessSlider, ui.brightnessSpinBox),
+			('contrast', ui.contrastSlider, ui.contrastSpinBox),
+			('noise', ui.noiseSlider, ui.noiseSpinBox)
+			):
+			settingsManager.registerSetting(setting,
+                                settings.FloatSetting)
+			settingsManager.registerForUpdates(setting, self)
+			connect(slider, 'valueChanged(int)',
+				lambda x, setting = setting:
+					self.__dispatchFloatSlider(setting,x) )
+			connect(spinner, 'valueChanged(double)',
+				lambda x, setting = setting:
+					self.__dispatchFloatSpinBox(setting,x) )
+		
+		# Some enum settings
 		for setting, widget in (
 				('videosource', ui.videosourceComboBox),
 				('scale_algorithm', ui.scalealgorithmComboBox),
@@ -153,11 +164,20 @@ class MainWindow(QtGui.QMainWindow):
 
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
-		connect(ui.sendButton,'clicked()', self.__typeInputText)
-		connect(ui.clearButton,'clicked()', self.__clearInputText)
+		connect(ui.sendButton, 'clicked()', self.__typeInputText)
+		connect(ui.clearButton, 'clicked()', self.__clearInputText)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
+
+	def __dispatchFloatSpinBox(self, name, value):
+		print "spinbox initiated command: set " + str(name) + "  " + str(value)
+		self.__settingsManager.set(name, float(value))
+
+	def __dispatchFloatSlider(self, name, value):
+		print "slider initiated command: set " + str(name) + "  " + str(float(value)/100)
+		self.__settingsManager.set(name, float(value)/100)
+
 	def __dispatchCombo(self, name, value):
 		print "combox initiated command: set " + name + "  " + value
 		self.__bridge.command('set',
@@ -165,11 +185,16 @@ class MainWindow(QtGui.QMainWindow):
 			)()
 
 	def updatedBoolean(self, name, value):
-		print "Boolean setting changed :" + name +" = " + value
+		print "Boolean setting changed :" + str(name) +" = " + str(value)
+		if str(name) == 'fullscreen':
+			state = QtCore.Qt.Unchecked
+			if value:
+				state = QtCore.Qt.Checked
+			self.__ui.fullscreen.setCheckState(state)
 
 	def updatedEnum(self, name, value):
 		print "Enum setting changed :" + name +" = " + value
-		uimap = {	'renderer': self.__ui.rendererComboBox,
+		uimap = {'renderer': self.__ui.rendererComboBox,
 			'scale_algorithm': self.__ui.scalealgorithmComboBox,
 			'display_deform': self.__ui.displaydeformComboBox,
 			'videosource': self.__ui.videosourceComboBox
@@ -182,41 +207,64 @@ class MainWindow(QtGui.QMainWindow):
 			widget.setCurrentIndex(index)
 
 	def updatedInt(self, name, value):
-		print "Int setting changed :" + name +" = " + value
+		print "Int setting changed :" + str(name) + " = " + str(value)
 
 	def updatedFloat(self, name, value):
-		print "setting changed :" + name +" = " + value
+		print "Float setting changed :" + str(name) + " = " + str(value)
+		ui = self.__ui
+		uimap = {
+			'gamma': ( ui.gammaSlider, ui.gammaSpinBox),
+			'brightness': ( ui.brightnessSlider, ui.brightnessSpinBox),
+			'contrast': ( ui.contrastSlider, ui.contrastSpinBox),
+			'noise': ( ui.noiseSlider, ui.noiseSpinBox)
+			}
+		slider, spinner = uimap[str(name)]
+		val = float(value)
+		spinner.setValue(val)
+		slider.setValue(int(val*100))
+
+
+	def __goFullscreen(self,value):
+		if self.__ui.fullscreen.isChecked():
+			reply = QtGui.QMessageBox.warning(self,
+				self.tr("Going fullscreen"),
+				self.tr(
+				"<p>Do you really want to go fullscreen?</p>"
+				"<p>This will hide catapult, so make sure"
+				" that you know how to disable fullscreen"
+				" later on</p>"
+				),
+				self.tr("&Cancel"),
+				self.tr("Continue"))
+			if reply == 0:
+				self.__ui.fullscreen.setChecked(False)
+				#TODO find out why we need to activate the
+				#checbox twice before we see this dialog again
+				#if we respond with 'Cancel'
+			else:
+				self.__bridge.sendCommandRaw('set fullscreen on')
 
 	def afterConnectionMade(self):
 		self.__afterConList = []
-		self.__afterConList.append('renderer')
-		self.__bridge.command('openmsx_info',
-			'setting', 'renderer'
-			)(
-			self.__fillComboBox,
-			self.__infofailed
-			)
-		self.__afterConList.append('display_deform')
-		self.__bridge.command('openmsx_info',
-			'setting', 'display_deform'
-			)(
-			self.__fillComboBox,
-			self.__infofailed
-			)
-		self.__afterConList.append('videosource')
-		self.__bridge.command('openmsx_info',
-			'setting', 'videosource'
-			)(
-			self.__fillComboBox,
-			self.__infofailed
-			)
-		self.__afterConList.append('scale_algorithm')
-		self.__bridge.command('openmsx_info',
-			'setting', 'scale_algorithm'
-			)(
-			self.__fillComboBox,
-			self.__infofailed
-			)
+		#eunmsettings for comboboxes
+		for item in ('renderer', 'display_deform',
+			'videosource', 'scale_algorithm'):
+			self.__afterConList.append(item)
+			self.__bridge.command('openmsx_info',
+				'setting', item
+				)(
+				self.__fillComboBox,
+				self.__infofailed
+				)
+		#floatsettings for sliders+spinboxes
+		for item in ('gamma', 'brightness', 'contrast', 'noise'): 
+			self.__afterConList.append(item)
+			self.__bridge.command('openmsx_info',
+				'setting', item
+				)(
+				self.__configSliders,
+				self.__infofailed
+				)
 
 	def __infofailed(self, name, message):
 		print 'Failed to get info about %s : %s' % (
@@ -225,10 +273,6 @@ class MainWindow(QtGui.QMainWindow):
 
 	def __fillComboBox(self, *items):
 		element = self.__afterConList.pop(0)
-		print '------------------------------------'
-		print element
-		print items
-		print '------------------------------------'
 		uimap = {
 			'renderer': self.__ui.rendererComboBox,
 			'display_deform': self.__ui.displaydeformComboBox,
@@ -243,6 +287,35 @@ class MainWindow(QtGui.QMainWindow):
 			#to settingchanged signal
 			if uiElement.findText(qitem) == -1:
 				uiElement.addItem(qitem)
+
+	def __configSliders(self, *items):
+		element = self.__afterConList.pop(0)
+		print '------------------------------------'
+		print element
+		print items
+		print '------------------------------------'
+		uimap = {
+			'gamma': (self.__ui.gammaSlider,
+				self.__ui.gammaSpinBox ),
+			'brightness': (self.__ui.brightnessSlider,
+				self.__ui.brightnessSpinBox ),
+			'contrast': (self.__ui.contrastSlider,
+				self.__ui.contrastSpinBox ),
+			'noise': (self.__ui.noiseSlider,
+				self.__ui.noiseSpinBox )
+			}
+		uiSlider, uiSpinner = uimap[ element ]
+		mini, maxi = items[2].split(' ')
+		curval = float(items[1])
+		uiSlider.setMinimum( int(float(mini)*100) )
+		uiSlider.setMaximum( int(float(maxi)*100) )
+		uiSlider.setValue( int(curval*100) )
+		uiSpinner.setMinimum( float(mini) )
+		uiSpinner.setMaximum( float(maxi) )
+		uiSpinner.setMaximum( float(maxi) )
+		uiSpinner.setSingleStep( 0.01 )
+		uiSpinner.setValue( curval )
+
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
@@ -288,9 +361,9 @@ class MainWindow(QtGui.QMainWindow):
 		#TODO: fix multiple line paste to openMSX. In openmsx_control.py
 		#      add .replace('\r', '\\n') to the end of line 105 to get this to work
 		#
-        #TODO: Capture Regular expressions chars like { [ at the beginning of a line
+		#TODO: Capture Regular expressions chars like { [ at the beginning of a line
 		strText = self.__ui.inputText.toPlainText()
-		self.__bridge.command('type',strText)()
+		self.__bridge.command('type', strText)()
 
 	def __clearInputText(self):
 		self.__ui.inputText.clear()
