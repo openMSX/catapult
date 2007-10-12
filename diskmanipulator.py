@@ -307,19 +307,47 @@ class Diskmanipulator(QtCore.QObject):
 		wizard.exec_()
 		size = wizard.getSizes()
 		print 'wizard.getSizes()' + size
-		#TODO create wizard to select different sizes/hd images
+		# Ask if user is really ,really sure
+		if size.find(" ") == -1:
+			text = self.tr(
+				"<p>Are you sure you want to create this "
+				"new disk?</p>"
+				"<p>This new disk image will automatically "
+				"be inserted into the virtual drive</p>"
+				)
+		else:
+			text = self.tr(
+				"<p>Are you sure you want to create this "
+				"new partitioned disk?</p>"
+				"<p>You can use this new diskimage as a "
+				"harddisk for the IDE extension.<br>"
+				"Don't forget that changing the HD will "
+				"only work if you power off the emulated "
+				"MSX first!</p>"
+				)
+
+		reply = QtGui.QMessageBox.question(
+				self.__dmDialog,
+				self.tr("Creating a new disk image"),
+				text,
+				QtGui.QMessageBox.Yes,
+				QtGui.QMessageBox.Cancel)
+		if reply == 0:
+			return
+		
 		self.__bridge.command(
 			'diskmanipulator', 'create',
 			str(path), *size.split(' ')
 			)()
-		# insert the selected image in the 'virtual drive'
-		self.__media = 'virtual_drive'
-		self.__cwd[self.__media] = '/'
-		self.__bridge.command('virtual_drive', path)(self.refreshDir)
-		# set the combobox to the virtual_drive entrie
-		# go to the root of this disk and get the files,l output
-		# after the we get the reply stating that the diskimage is
-		# inserted in the virtual_drive
+		if size.find(" ") == -1:
+			# insert the selected image in the 'virtual drive'
+			self.__media = 'virtual_drive'
+			self.__cwd[self.__media] = '/'
+			self.__bridge.command('virtual_drive', path)(self.refreshDir)
+			# set the combobox to the virtual_drive entrie
+			# go to the root of this disk and get the files,l output
+			# after the we get the reply stating that the diskimage is
+			# inserted in the virtual_drive
 
 	def browseImage(self):
 		browseTitle = 'Select Disk Image'

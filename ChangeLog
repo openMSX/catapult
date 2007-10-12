@@ -1,5 +1,9 @@
 $Id$
 
+2007-10-12 David Heremans <david.heremans@gnu-linux.net>
+	* Diskmanipulator only uses virtual drive  for new images if 
+	  there are no partitions on it.
+
 2007-10-11 David Heremans <david.heremans@gnu-linux.net>
 	* Toggling fullscreen checkbox will actually do something :-)
 	* First attempt to enable the sliders with the float values on
