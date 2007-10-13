@@ -124,25 +124,6 @@ class MainWindow(QtGui.QMainWindow):
 		ui = self.__ui
 		connect(ui.fullscreen, 'stateChanged(int)', self.__goFullscreen)
 
-		# Some float settings
-		for setting, slider, spinner in (
-			# due to a wrong behavior of 'info_openmsx settings gamma'
-			# this one is temporarly disabled
-			('gamma', ui.gammaSlider, ui.gammaSpinBox),
-			('brightness', ui.brightnessSlider, ui.brightnessSpinBox),
-			('contrast', ui.contrastSlider, ui.contrastSpinBox),
-			('noise', ui.noiseSlider, ui.noiseSpinBox)
-			):
-			settingsManager.registerSetting(setting,
-                                settings.FloatSetting)
-			settingsManager.registerForUpdates(setting, self)
-			connect(slider, 'valueChanged(int)',
-				lambda x, setting = setting:
-					self.__dispatchFloatSlider(setting,x) )
-			connect(spinner, 'valueChanged(double)',
-				lambda x, setting = setting:
-					self.__dispatchFloatSpinBox(setting,x) )
-		
 		# Some enum settings
 		for setting, widget in (
 				('videosource', ui.videosourceComboBox),
@@ -265,6 +246,32 @@ class MainWindow(QtGui.QMainWindow):
 				self.__configSliders,
 				self.__infofailed
 				)
+		# Some float settings
+		# we need to register them here since we need to have the
+		# sliders set to the correct minimum/maximum by the
+		# openmsx_info command first. Otherwise it is possible that the
+		# setting will try to set the slider to a value not yet allowed
+		# triggerring an valuechanged signal that sets the openmsx to
+		# the wrong value. This was the case when the noise was set to
+		# 3.0 and the slider only went up until 0.99 since the
+		# openmsx_info was not yet used...
+		ui = self.__ui
+		for setting, slider, spinner in (
+			('gamma', ui.gammaSlider, ui.gammaSpinBox),
+			('brightness', ui.brightnessSlider, ui.brightnessSpinBox),
+			('contrast', ui.contrastSlider, ui.contrastSpinBox),
+			('noise', ui.noiseSlider, ui.noiseSpinBox)
+			):
+			self.__settingsManager.registerSetting(setting,
+                                settings.FloatSetting)
+			self.__settingsManager.registerForUpdates(setting, self)
+			connect(slider, 'valueChanged(int)',
+				lambda x, setting = setting:
+					self.__dispatchFloatSlider(setting,x) )
+			connect(spinner, 'valueChanged(double)',
+				lambda x, setting = setting:
+					self.__dispatchFloatSpinBox(setting,x) )
+		
 
 	def __infofailed(self, name, message):
 		print 'Failed to get info about %s : %s' % (

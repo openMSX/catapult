@@ -1,5 +1,10 @@
 $Id$
 
+2007-10-13 David Heremans <david.heremans@gnu-linux.net>
+	* The videotab sliders/spinboxes now use the value from openMSX
+	  itself, instead of resetting them to the default as returned 
+	  by the openmsx_info command
+
 2007-10-12 David Heremans <david.heremans@gnu-linux.net>
 	* Diskmanipulator only uses virtual drive  for new images if 
 	  there are no partitions on it.
