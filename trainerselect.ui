@@ -62,34 +62,13 @@
       </widget>
      </item>
      <item>
-      <widget class="QTableWidget" name="TrainerTable" >
-       <property name="alternatingRowColors" >
-        <bool>true</bool>
+      <widget class="QWidget" native="1" name="emptywidget" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="showGrid" >
-        <bool>false</bool>
-       </property>
-       <property name="wordWrap" >
-        <bool>false</bool>
-       </property>
-       <property name="cornerButtonEnabled" >
-        <bool>false</bool>
-       </property>
-       <column>
-        <property name="text" >
-         <string>Index</string>
-        </property>
-       </column>
-       <column>
-        <property name="text" >
-         <string>Active</string>
-        </property>
-       </column>
-       <column>
-        <property name="text" >
-         <string>Desc</string>
-        </property>
-       </column>
       </widget>
      </item>
     </layout>

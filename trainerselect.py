@@ -9,6 +9,9 @@ class TrainerSelect(object):
 		self.__cfDialog = None
 		self.__ui = None
 		self.__bridge = bridge
+		self.__selected = ""
+		self.__checkbox = []
+		self.__spacerItem = None
 
 	def show(self):
 		dialog = self.__cfDialog
@@ -37,18 +40,27 @@ class TrainerSelect(object):
 			#connect(ui.EmulationReset, 'clicked()', self.emulationReset)
 			connect(ui.cheatSelector, 'activated(QString)', self.fillCheats)
 
+			self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
+			self.__ui.vboxlayout.setObjectName("vboxlayout")
+
+			spacerItem = QtGui.QSpacerItem(20, 40,
+				QtGui.QSizePolicy.Minimum,
+				QtGui.QSizePolicy.Expanding
+				)
+			self.__spacerItem = spacerItem
+			self.__ui.vboxlayout.addItem(self.__spacerItem)
+
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
 		self.getCheats()
-		self.__ui.TrainerTable.hideColumn(2)
-		self.__ui.TrainerTable.horizontalHeader().setStretchLastSection(True)
-		self.__ui.TrainerTable.horizontalHeader().hide()
-		self.__ui.TrainerTable.verticalHeader().hide()
-		self.__ui.TrainerTable.setColumnWidth(0,24)
 
 	def getCheats(self):
-		self.__bridge.command('array','names','::__trainers')(self.__fillCheats)
+		self.__bridge.command(
+			'array',
+			'names',
+			'::__trainers'
+			)(self.__fillCheats)
 		
 	def __fillCheats(self, *words):
 		words = sorted(words)
@@ -58,12 +70,14 @@ class TrainerSelect(object):
 		#print 'Selected Index :: ' + text.currentIndex()
 
 	def fillCheats(self):
-		selected = self.__ui.cheatSelector.currentText()
+		self.__selected = self.__ui.cheatSelector.currentText()
 		#self.__ui.CheatDisplay.addColumn("item")
-		self.__bridge.command('trainer',str(selected))(self.__output)
+		self.__bridge.command(
+			'trainer',
+			str(self.__selected)
+			)(self.__output)
 
 	def __output(self, *words):
-
 		line = ' '.join(words)
 		#text = self.__ui.cheatResults
 		#text.append(line)
@@ -71,27 +85,50 @@ class TrainerSelect(object):
 		trainerArray = line.split('\n')
 		
 		trainerArray = sorted(trainerArray)
-		#Create The Table to be filled / Disable sorting and set Gridsize
-		self.__ui.TrainerTable.setRowCount( len(trainerArray) - 1 )
-		self.__ui.TrainerTable.setSortingEnabled(0)
-		self.__ui.TrainerTable.verticalHeader().setResizeMode(
-			QtGui.QHeaderView.ResizeToContents 
-			)
+		#remove all items in the vboxlayout
+		for widget in self.__checkbox[:]:
+			self.__ui.vboxlayout.removeWidget(widget)
+			#TODO: find out if this close() also
+			#deletes/free the objects
+			widget.close()
+		self.__ui.vboxlayout.removeItem(self.__spacerItem)
+		self.__checkbox = []
 
-		row = 0
+		i = 0
 		for trainerLine in trainerArray[ : -1]:
-			trainerIndex 	= trainerLine.rstrip()[:trainerLine.find('[')]
-			trainerActive 	= trainerLine.rstrip()[trainerLine.find('['):trainerLine.find(']')+1]
-			trainerDesc 	= trainerLine.rstrip()[trainerLine.find(']')+1:]
-			
-			#oldValItem = QtGui.QTableWidgetItem(cheatVal[1])
+			trainerIndex = trainerLine.rstrip()\
+			[:trainerLine.find('[')]
 
-			self.__ui.TrainerTable.setItem(row, 2, QtGui.QTableWidgetItem(trainerIndex.title()))
-			self.__ui.TrainerTable.setItem(row, 0, QtGui.QTableWidgetItem(trainerActive.title()))
-			self.__ui.TrainerTable.setItem(row, 1, QtGui.QTableWidgetItem(trainerDesc.title()))
+			trainerIndex = trainerIndex.rstrip()
 
-			row += 1
-			print row
+			trainerActive = trainerLine.rstrip()\
+			[trainerLine.find('['):trainerLine.find(']')+1]
 
+			trainerDesc = trainerLine.rstrip()\
+			[trainerLine.find(']')+1:]
 
-		self.__ui.TrainerTable.setSortingEnabled(1)
+			checkbox = QtGui.QCheckBox()
+			checkbox.setText(trainerDesc)
+			checkbox.setChecked( trainerActive == '[x]')
+			checkbox.setObjectName( trainerIndex )
+			self.__checkbox.append( checkbox )
+			connect(self.__checkbox[i],
+				'stateChanged(int)',
+				lambda x , trainerIndex=trainerIndex:
+					self.__toggle(trainerIndex)
+				)
+			self.__ui.vboxlayout.addWidget(checkbox)
+			i = i + 1
+
+		self.__ui.vboxlayout.addItem(self.__spacerItem)
+
+	def __toggle(self, index ):
+		print "toggled "+str(self.__selected) +" "+str(index)
+		self.__bridge.command('trainer',
+			str(self.__selected),
+			str(index))()
+		#Maybe we need to create an __update so that we
+		#read ALL vlues again and set the checkboxes ?
+		#This would catch also all cases of manual (de)selection in 
+		#the openMSX console which we do ignore at the moment...
+		#self.__bridge.command('trainer',str(self.__selected))(self.__update)
