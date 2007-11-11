@@ -150,6 +150,8 @@ class MainWindow(QtGui.QMainWindow):
 
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
+		# the following property is missing in Designer somehow
+		ui.inputText.setWordWrapMode(QtGui.QTextOption.WrapAnywhere)
 
 	def __dispatchFloatSpinBox(self, name, value):
 		print "spinbox initiated command: set " + str(name) + "  " + str(value)
@@ -365,12 +367,12 @@ class MainWindow(QtGui.QMainWindow):
 			)
 
 	def __typeInputText(self):
-		#TODO: fix multiple line paste to openMSX. In openmsx_control.py
-		#      add .replace('\r', '\\n') to the end of line 105 to get this to work
-		#
 		#TODO: Capture Regular expressions chars like { [ at the beginning of a line
 		strText = self.__ui.inputText.toPlainText()
-		self.__bridge.command('type', strText)()
+		strText.replace('\\', '\\\\')
+		strText.replace('\n', '\\r').replace('$', '\$')
+		strText.replace('"', '\\"').replace('\'', '\\\'')
+		self.__bridge.sendCommandRaw('type "%s"' % strText)
 
 	def __clearInputText(self):
 		self.__ui.inputText.clear()

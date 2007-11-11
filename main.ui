@@ -1168,7 +1168,14 @@
         <item row="0" column="0" >
          <layout class="QVBoxLayout" >
           <item>
-           <widget class="QTextEdit" name="inputText" />
+           <widget class="QTextEdit" name="inputText" >
+            <property name="toolTip" >
+             <string>Text to paste into the MSX</string>
+            </property>
+            <property name="acceptRichText" >
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" >
