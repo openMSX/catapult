@@ -64,12 +64,31 @@
      <item>
       <widget class="QWidget" native="1" name="emptywidget" >
        <property name="sizePolicy" >
-        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+        <sizepolicy vsizetype="Minimum" hsizetype="MinimumExpanding" >
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize" >
+        <size>
+         <width>0</width>
+         <height>13</height>
+        </size>
+       </property>
       </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>

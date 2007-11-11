@@ -27,28 +27,12 @@ class TrainerSelect(object):
 			ui.setupUi(dialog)
 			self.__ui = ui
 
-			# Connect signals.
-			#connect(ui.FindCheatLess, 'clicked()', self.findCheatLess)
-			#connect(ui.FindCheatLessEqual, 'clicked()', self.findCheatLessEqual)
-			#connect(ui.FindCheatEqual, 'clicked()', self.findCheatEqual)
-			#connect(ui.FindCheatNotEqual, 'clicked()', self.findCheatNotEqual)
-			#connect(ui.FindCheatMoreEqual, 'clicked()', self.findCheatMoreEqual)
-			#connect(ui.FindCheatMore, 'clicked()', self.findCheatMore)
-			#connect(ui.FindCheatRestart, 'clicked()', self.findCheatRestart)
-			#connect(ui.FindCheatValue, 'clicked()', self.findCheatValue)
-			#connect(ui.EmulationTogglePause, 'clicked()', self.emulationTogglePause)
-			#connect(ui.EmulationReset, 'clicked()', self.emulationReset)
-			connect(ui.cheatSelector, 'activated(QString)', self.fillCheats)
-
 			self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
 			self.__ui.vboxlayout.setObjectName("vboxlayout")
 
-			spacerItem = QtGui.QSpacerItem(20, 40,
-				QtGui.QSizePolicy.Minimum,
-				QtGui.QSizePolicy.Expanding
-				)
-			self.__spacerItem = spacerItem
-			self.__ui.vboxlayout.addItem(self.__spacerItem)
+			# Connect signals.
+			connect(ui.cheatSelector, 'activated(QString)', self.fillCheats)
+
 
 		dialog.show()
 		dialog.raise_()
@@ -67,11 +51,9 @@ class TrainerSelect(object):
 		text = self.__ui.cheatSelector 
 		for cheats in words[ : -1]:
 			text.addItem(cheats)
-		#print 'Selected Index :: ' + text.currentIndex()
 
 	def fillCheats(self):
 		self.__selected = self.__ui.cheatSelector.currentText()
-		#self.__ui.CheatDisplay.addColumn("item")
 		self.__bridge.command(
 			'trainer',
 			str(self.__selected)
@@ -79,9 +61,6 @@ class TrainerSelect(object):
 
 	def __output(self, *words):
 		line = ' '.join(words)
-		#text = self.__ui.cheatResults
-		#text.append(line)
-		#print line
 		trainerArray = line.split('\n')
 		
 		trainerArray = sorted(trainerArray)
@@ -91,7 +70,6 @@ class TrainerSelect(object):
 			#TODO: find out if this close() also
 			#deletes/free the objects
 			widget.close()
-		self.__ui.vboxlayout.removeItem(self.__spacerItem)
 		self.__checkbox = []
 
 		i = 0
@@ -119,8 +97,6 @@ class TrainerSelect(object):
 				)
 			self.__ui.vboxlayout.addWidget(checkbox)
 			i = i + 1
-
-		self.__ui.vboxlayout.addItem(self.__spacerItem)
 
 	def __toggle(self, index ):
 		print "toggled "+str(self.__selected) +" "+str(index)
