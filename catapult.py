@@ -372,6 +372,7 @@ class MainWindow(QtGui.QMainWindow):
 		strText.replace('\\', '\\\\')
 		strText.replace('\n', '\\r').replace('$', '\$')
 		strText.replace('"', '\\"').replace('\'', '\\\'')
+		strText.replace('[', '\[')
 		self.__bridge.sendCommandRaw('type "%s"' % strText)
 
 	def __clearInputText(self):
