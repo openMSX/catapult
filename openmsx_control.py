@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtXml
 
 from preferences import preferences
-from openmsx_utils import parseTclValue
+from openmsx_utils import parseTclValue, escapedStr
 from qt_utils import Signal, connect
 
 class PrefixDemux(object):
@@ -101,10 +101,21 @@ class ControlBridge(QtCore.QObject):
 		'''
 		if len(words) == 0:
 			raise TypeError('command must contain at least one word')
-		line = u' '.join(
-			unicode(word).replace('\\', '\\\\').replace(' ', '\\ ')
-			for word in words
-			)
+		#TODO refactor this code to something more Pythonesque like
+		#     previous version (see commented out code below)
+		line = ''
+		for word in words:
+			if isinstance(word, escapedStr):
+				line += unicode(word).replace(' ', '\\ ') + ' '
+			else:
+				line += unicode(word).replace('\\', '\\\\').replace(' ', '\\ ') + ' '
+		line = line[ : -1]
+
+
+		#line = u' '.join(
+		#	unicode(word).replace('\\', '\\\\').replace(' ', '\\ ')
+		#	for word in words
+		#	)
 
 		def execute(callback = None, errback = None):
 			if callback is None:

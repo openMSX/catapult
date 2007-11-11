@@ -1,5 +1,6 @@
 from PyQt4 import QtCore
 from bisect import bisect
+from openmsx_utils import tclEscape, escapedStr
 import os.path
 
 from qt_utils import QtSignal, connect, Signal
@@ -153,7 +154,9 @@ class MediaModel(QtCore.QAbstractListModel):
 					)
 			else:
 				self.__bridge.command(mediaSlot, 'insert',
-					path, *options)(None, errorHandler)
+					escapedStr(tclEscape(path)), *options)(
+					None, errorHandler
+					)
 			self.mediumChanged.emit(mediaSlot, path)
 
 	def rowCount(self, parent):

@@ -76,3 +76,17 @@ if __name__ == '__main__':
 		else:
 			if result != out:
 				print 'ERROR:', inp, '->', result, '!=', out
+
+def tclEscape(string):
+	'''Escape strings so that they don't trigger Tcl functionality.'''
+	newString = string.replace('\\', '\\\\')
+	newString = newString.replace('\n', '\\r').replace('$', '\$')
+	newString = newString.replace('"', '\\"').replace('\'', '\\\'')
+	newString = newString.replace('[', '\[').replace(']', '\]')
+	return newString
+
+# this class is used to mark a string as being already escaped
+class escapedStr(str):
+	pass
+
+	

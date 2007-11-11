@@ -2,6 +2,7 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
+from openmsx_utils import tclEscape
 import os.path, sys
 
 #Is this a version for the openMSX-CD ?
@@ -368,11 +369,7 @@ class MainWindow(QtGui.QMainWindow):
 
 	def __typeInputText(self):
 		#TODO: Capture Regular expressions chars like { [ at the beginning of a line
-		strText = self.__ui.inputText.toPlainText()
-		strText.replace('\\', '\\\\')
-		strText.replace('\n', '\\r').replace('$', '\$')
-		strText.replace('"', '\\"').replace('\'', '\\\'')
-		strText.replace('[', '\[')
+		strText = tclEscape(self.__ui.inputText.toPlainText())
 		self.__bridge.sendCommandRaw('type "%s"' % strText)
 
 	def __clearInputText(self):
