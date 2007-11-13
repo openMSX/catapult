@@ -12,6 +12,8 @@ class TrainerSelect(object):
 		self.__selected = ""
 		self.__checkbox = []
 		self.__spacerItem = None
+		self.wdgtspacing = 0
+		self.wdgtmargin = 9
 
 	def show(self):
 		dialog = self.__cfDialog
@@ -26,9 +28,18 @@ class TrainerSelect(object):
 			ui = Ui_trainerSelect()
 			ui.setupUi(dialog)
 			self.__ui = ui
-
+			self.__ui.emptywidget = QtGui.QWidget()
+			self.__ui.somewidget = QtGui.QScrollArea(self.__ui.containeremptywidget)
+			sizePolicy1 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+			self.__ui.emptywidget.setSizePolicy(sizePolicy1)
+			sizePolicy2 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+			self.__ui.somewidget.setSizePolicy(sizePolicy2)
+			self.__ui.somewidget.setWidget(self.__ui.emptywidget)
+			#self.__ui.somewidget.setWidgetResizable(1)
 			self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
 			self.__ui.vboxlayout.setObjectName("vboxlayout")
+			self.__ui.vboxlayout.setSpacing( self.wdgtspacing )
+			self.__ui.vboxlayout.setMargin( self.wdgtmargin  )
 
 			# Connect signals.
 			connect(ui.cheatSelector, 'activated(QString)', self.fillCheats)
@@ -38,6 +49,11 @@ class TrainerSelect(object):
 		dialog.raise_()
 		dialog.activateWindow()
 		self.getCheats()
+		#the dialog.show() is resizing everything?
+		#and then I fiddle with the new values...
+		w = self.__ui.containeremptywidget.width()
+		h = self.__ui.containeremptywidget.height()
+		self.__ui.somewidget.resize(w,h)
 
 	def getCheats(self):
 		self.__bridge.command(
@@ -72,7 +88,8 @@ class TrainerSelect(object):
 			widget.close()
 		self.__checkbox = []
 
-		i = 0
+		i = w = 0
+		h = 2 * self.wdgtmargin 
 		for trainerLine in trainerArray[ : -1]:
 			trainerIndex = trainerLine.rstrip()\
 			[:trainerLine.find('[')]
@@ -89,6 +106,11 @@ class TrainerSelect(object):
 			checkbox.setText(trainerDesc)
 			checkbox.setChecked( trainerActive == '[x]')
 			checkbox.setObjectName( trainerIndex )
+			size = checkbox.sizeHint()
+			h = h + self.wdgtspacing + size.height()
+			if w < size.width():
+				w = size.width()
+			#checkbox.height()
 			self.__checkbox.append( checkbox )
 			connect(self.__checkbox[i],
 				'stateChanged(int)',
@@ -97,6 +119,8 @@ class TrainerSelect(object):
 				)
 			self.__ui.vboxlayout.addWidget(checkbox)
 			i = i + 1
+		w = w + 2 * self.wdgtmargin 
+		self.__ui.emptywidget.resize(w,h)
 
 	def __toggle(self, index ):
 		print "toggled "+str(self.__selected) +" "+str(index)
