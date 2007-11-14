@@ -79,7 +79,6 @@ class TrainerSelect(object):
 		line = ' '.join(words)
 		trainerArray = line.split('\n')
 		
-		trainerArray = sorted(trainerArray)
 		#remove all items in the vboxlayout
 		for widget in self.__checkbox[:]:
 			self.__ui.vboxlayout.removeWidget(widget)
@@ -90,7 +89,7 @@ class TrainerSelect(object):
 
 		i = w = 0
 		h = 2 * self.wdgtmargin 
-		for trainerLine in trainerArray[ : -1]:
+		for trainerLine in trainerArray[ 1 : ]:
 			trainerIndex = trainerLine.rstrip()\
 			[:trainerLine.find('[')]
 
@@ -110,7 +109,6 @@ class TrainerSelect(object):
 			h = h + self.wdgtspacing + size.height()
 			if w < size.width():
 				w = size.width()
-			#checkbox.height()
 			self.__checkbox.append( checkbox )
 			connect(self.__checkbox[i],
 				'stateChanged(int)',
@@ -128,7 +126,7 @@ class TrainerSelect(object):
 			str(self.__selected),
 			str(index))()
 		#Maybe we need to create an __update so that we
-		#read ALL vlues again and set the checkboxes ?
+		#read ALL values again and set the checkboxes ?
 		#This would catch also all cases of manual (de)selection in 
 		#the openMSX console which we do ignore at the moment...
 		#self.__bridge.command('trainer',str(self.__selected))(self.__update)
