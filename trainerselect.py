@@ -14,6 +14,8 @@ class TrainerSelect(object):
 		self.__spacerItem = None
 		self.wdgtspacing = 0
 		self.wdgtmargin = 9
+		# tmp to debug checkbox
+		#self.__debugvalue = 0
 
 	def show(self):
 		dialog = self.__cfDialog
@@ -80,12 +82,48 @@ class TrainerSelect(object):
 		trainerArray = line.split('\n')
 		
 		#remove all items in the vboxlayout
-		for widget in self.__checkbox[:]:
-			self.__ui.vboxlayout.removeWidget(widget)
-			#TODO: find out if this close() also
-			#deletes/free the objects
-			widget.close()
+		#print "checkboxes to remove... " + str(len(self.__checkbox))
+		#let the 
+		self.__ui.vboxlayout = None
+		self.__ui.emptywidget = None
+		#-------------------- ------------------------------------
+		# Old code temporaly kept for later reference
+		#
+		#		for widget in self.__checkbox[:]:
+		#			self.__ui.vboxlayout.removeWidget(widget)
+		#			#self.__ui.emptywidget.removeChild(widget)
+		#			##p = widget.parent()
+		#			##p.removeChild(widget)
+		#			widget.close()
+		#			#a close() doesn't deletes/free the python objects
+		#			del widget
+		#---------------------------------------------------------
+		#
+		# this new code simply throws away the emptywidget,boxlayout etc etc
+		# and lets python/pyqt garbage collector take care of it all
+		#
+		self.__ui.emptywidget = QtGui.QWidget()
+		sizePolicy1 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+		self.__ui.emptywidget.setSizePolicy(sizePolicy1)
+		self.__ui.somewidget.setWidget(self.__ui.emptywidget)
+		self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
+		self.__ui.vboxlayout.setObjectName("vboxlayout")
+		self.__ui.vboxlayout.setSpacing( self.wdgtspacing )
+		self.__ui.vboxlayout.setMargin( self.wdgtmargin  )
+		w = self.__ui.containeremptywidget.width()
+		h = self.__ui.containeremptywidget.height()
+		self.__ui.somewidget.resize(w,h)
+
 		self.__checkbox = []
+
+		#-----------------------------------------------------------------------
+		# if the old code was used then this debug prints showed that emptywidget
+		# still kept all the previously instantiated checkboxes as children
+		# so the number kept going up with every trainer selected!!
+		#
+		#lijstje = self.__ui.emptywidget.findChildren(QtGui.QCheckBox)
+		#print "found children: " +  str(len(lijstje))
+
 
 		i = w = 0
 		h = 2 * self.wdgtmargin 
@@ -118,7 +156,12 @@ class TrainerSelect(object):
 			self.__ui.vboxlayout.addWidget(checkbox)
 			i = i + 1
 		w = w + 2 * self.wdgtmargin 
+
 		self.__ui.emptywidget.resize(w,h)
+		#print "checkboxes added... " + str(len(self.__checkbox))
+		#if len(self.__checkbox) - self.__debugvalue != 0 :
+		#	print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" 
+		#self.__debugvalue = len(self.__checkbox)
 
 	def __toggle(self, index ):
 		print "toggled "+str(self.__selected) +" "+str(index)
