@@ -5,6 +5,7 @@ from PyQt4 import QtCore, QtXml
 from preferences import preferences
 from openmsx_utils import parseTclValue, escapedStr
 from qt_utils import Signal, connect
+from inspect import getargspec
 
 class PrefixDemux(object):
 
@@ -91,6 +92,30 @@ class ControlBridge(QtCore.QObject):
 			self.registerUpdate(updateType, demux)
 		demux.register(prefixes, handler)
 
+	def __formatReply(self, callbackfunc, value):
+		'''Formats a TCL reply words to either a list of
+		reply words, or a list with a single string in which all words
+		are concatenated together, depending on what the callbackfunc
+		expects.'''
+		words = parseTclValue(value)
+		args, varargs_, varkw_, defaults = getargspec(callbackfunc)
+		numArgs = len(args)
+		if numArgs != 0 and args[0] == 'self':
+			numArgs -= 1
+		if defaults is not None:
+			numArgs -= len(defaults)
+		#print 'Net num callback args: %d' % numArgs
+		if numArgs == 1:
+			if len(words) == 1:
+				#print 'Returning (1 word): %s' % words
+				return words
+			else:
+				#print 'Returning (multiple words): %s' % " ".join(words)
+				return [" ".join(words)]
+		else:
+			#print 'Returning: %s' % words
+			return words
+
 	def command(self, *words):
 		'''Send a Tcl command to openMSX.
 		The words that form the command are passed as separate arguments.
@@ -121,7 +146,7 @@ class ControlBridge(QtCore.QObject):
 			if callback is None:
 				rawCallback = None
 			else:
-				rawCallback = lambda result: callback(*parseTclValue(result))
+				rawCallback = lambda result: callback(*self.__formatReply(callback, result))
 			self.sendCommandRaw(line, rawCallback, errback)
 		return execute
 

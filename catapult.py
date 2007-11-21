@@ -33,6 +33,7 @@ from custom import docDir
 from machine import MachineManager
 from extension import ExtensionManager
 from mediamodel import MediaModel
+#from connectormodel import ConnectorModel
 from media import MediaSwitcher
 from audio import AudioMixer
 from diskmanipulator import Diskmanipulator
@@ -61,6 +62,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__ui = ui = Ui_MainWindow()
 		self.__afterConList = []
 		self.__mediaModel = mediaModel = MediaModel(bridge)
+#		self.__connectorModel = connectorModel = ConnectorModel(bridge)
 		ui.setupUi(self)
 		# Added stuff that at the moment will be exclusive to
 		# the openMSX-CD
@@ -447,7 +449,9 @@ class MainWindow(QtGui.QMainWindow):
 
 	@QtCore.pyqtSignature('')
 	def closeConnection(self):
-		self.__bridge.closeConnection(QtGui.qApp.quit)
+		# wrap in lambda to avoid setting a builtin func as callback
+		# which is not appreciated by the command method of the bridge
+		self.__bridge.closeConnection(lambda: QtGui.qApp.quit())
 
 	def __getAssistentClient(self):
 		if self.__assistentClient is None:
