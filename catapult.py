@@ -2,7 +2,6 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from openmsx_utils import tclEscape
 import os.path, sys
 
 #Is this a version for the openMSX-CD ?
@@ -43,6 +42,7 @@ from trainerselect import TrainerSelect
 from softwaredb import SoftwareDB
 from openmsx_control import ControlBridge
 from paletteeditor import PaletteEditor
+from inputtext import InputText
 from player import PlayState
 from qt_utils import connect
 import settings
@@ -108,10 +108,10 @@ class MainWindow(QtGui.QMainWindow):
 		self.__trainerselect = TrainerSelect(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
 		self.__paletteeditor = PaletteEditor(bridge)
+		self.__inputtext = InputText(bridge)
 		self.__connectMenuActions(ui)
 
 		bridge.logLine.connect(self.logLine)
-		#
 
 		settingsManager.registerSetting('scanline', settings.IntegerSetting)
 		settingsManager.connectSetting('scanline', ui.scanlineSlider)
@@ -149,14 +149,9 @@ class MainWindow(QtGui.QMainWindow):
 
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
-		connect(ui.sendButton, 'clicked()', self.__typeInputText)
-		connect(ui.clearButton, 'clicked()', self.__clearInputText)
-
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
 		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
-		# the following property is missing in Designer somehow
-		ui.inputText.setWordWrapMode(QtGui.QTextOption.WrapAnywhere)
 
 	def __dispatchFloatSpinBox(self, name, value):
 		print "spinbox initiated command: set " + str(name) + "  " + str(value)
@@ -348,6 +343,7 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_CheatFinder, self.__cheatfinder.show ),
 			( ui.action_TrainerSelect, self.__trainerselect.show ),			
 			( ui.action_PaletteEditor, self.__paletteeditor.show ),
+			( ui.action_InputText, self.__inputtext.show ),
 			( ui.action_SoftwareDB, self.__softwaredb.show ),
 			( ui.action_HelpSetup, self.showHelpSetup ),
 			( ui.action_HelpUser, self.showHelpUser ),
@@ -370,14 +366,6 @@ class MainWindow(QtGui.QMainWindow):
 		self.__bridge.sendCommandRaw(
 			'proc exit {} { set ::renderer none ; set ::power off }'
 			)
-
-	def __typeInputText(self):
-		#TODO: Capture Regular expressions chars like { [ at the beginning of a line
-		strText = tclEscape(self.__ui.inputText.toPlainText())
-		self.__bridge.sendCommandRaw('type "%s"' % strText)
-
-	def __clearInputText(self):
-		self.__ui.inputText.clear()
 
 	def consoleReply(self, reply):
 		if reply.endswith('\n'):

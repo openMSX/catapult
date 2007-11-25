@@ -2104,58 +2104,6 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="inputTab" >
-       <attribute name="title" >
-        <string>Input</string>
-       </attribute>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" >
-         <layout class="QVBoxLayout" >
-          <item>
-           <widget class="QTextEdit" name="inputText" >
-            <property name="toolTip" >
-             <string>Text to paste into the MSX</string>
-            </property>
-            <property name="acceptRichText" >
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" >
-            <item>
-             <widget class="QPushButton" name="sendButton" >
-              <property name="text" >
-               <string>Send</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="clearButton" >
-              <property name="text" >
-               <string>Clear</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>431</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="videoTab" >
        <attribute name="title" >
         <string>Video</string>
@@ -2833,10 +2781,15 @@ p, li { white-space: pre-wrap; }
      <string>&amp;Tools</string>
     </property>
     <addaction name="action_Start_Debugger" />
+    <addaction name="separator" />
     <addaction name="action_Diskmanipulator" />
+    <addaction name="separator" />
     <addaction name="action_CheatFinder" />
-    <addaction name="action_PaletteEditor" />
     <addaction name="action_TrainerSelect" />
+    <addaction name="separator" />
+    <addaction name="action_PaletteEditor" />
+    <addaction name="separator" />
+    <addaction name="action_InputText" />
    </widget>
    <addaction name="menu_File" />
    <addaction name="menuConfiguration" />
@@ -2907,7 +2860,12 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_TrainerSelect" >
    <property name="text" >
-    <string>Trainer Selector</string>
+    <string>Trainer Selector...</string>
+   </property>
+  </action>
+  <action name="action_InputText" >
+   <property name="text" >
+    <string>Input Text...</string>
    </property>
   </action>
  </widget>

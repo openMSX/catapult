@@ -5,6 +5,7 @@ $Id$
 	  pluggables in the connectors of the active MSX.
 	  TODO: - fix some (still appearingly harmless) race conditions
 	        - add the settings related to each pluggable somehwere
+	* Made Input Text a separate dialog, accessible from the Tools menu.
 
 2007-11-20 David Heremans <david.heremans@gnu-linux.net>
 	* Pressing cursor down to quickly go through the trainer list
