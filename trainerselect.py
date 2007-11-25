@@ -32,9 +32,9 @@ class TrainerSelect(object):
 			self.__ui = ui
 			self.__ui.emptywidget = QtGui.QWidget()
 			self.__ui.somewidget = QtGui.QScrollArea(self.__ui.containeremptywidget)
-			sizePolicy1 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+			sizePolicy1 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 			self.__ui.emptywidget.setSizePolicy(sizePolicy1)
-			sizePolicy2 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+			sizePolicy2 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 			self.__ui.somewidget.setSizePolicy(sizePolicy2)
 			self.__ui.somewidget.setWidget(self.__ui.emptywidget)
 			#self.__ui.somewidget.setWidgetResizable(1)
@@ -55,7 +55,7 @@ class TrainerSelect(object):
 		#and then I fiddle with the new values...
 		w = self.__ui.containeremptywidget.width()
 		h = self.__ui.containeremptywidget.height()
-		self.__ui.somewidget.resize(w,h)
+		self.__ui.somewidget.resize(w, h)
 
 	def getCheats(self):
 		self.__bridge.command(
@@ -99,11 +99,11 @@ class TrainerSelect(object):
 		#			del widget
 		#---------------------------------------------------------
 		#
-		# this new code simply throws away the emptywidget,boxlayout etc etc
+		# this new code simply throws away the emptywidget, boxlayout etc etc
 		# and lets python/pyqt garbage collector take care of it all
 		#
 		self.__ui.emptywidget = QtGui.QWidget()
-		sizePolicy1 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+		sizePolicy1 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 		self.__ui.emptywidget.setSizePolicy(sizePolicy1)
 		self.__ui.somewidget.setWidget(self.__ui.emptywidget)
 		self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
@@ -112,7 +112,7 @@ class TrainerSelect(object):
 		self.__ui.vboxlayout.setMargin( self.wdgtmargin  )
 		w = self.__ui.containeremptywidget.width()
 		h = self.__ui.containeremptywidget.height()
-		self.__ui.somewidget.resize(w,h)
+		self.__ui.somewidget.resize(w, h)
 
 		self.__checkbox = []
 
@@ -157,7 +157,7 @@ class TrainerSelect(object):
 			i = i + 1
 		w = w + 2 * self.wdgtmargin 
 
-		self.__ui.emptywidget.resize(w,h)
+		self.__ui.emptywidget.resize(w, h)
 		#print "checkboxes added... " + str(len(self.__checkbox))
 		#if len(self.__checkbox) - self.__debugvalue != 0 :
 		#	print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" 
@@ -172,4 +172,4 @@ class TrainerSelect(object):
 		#read ALL values again and set the checkboxes ?
 		#This would catch also all cases of manual (de)selection in 
 		#the openMSX console which we do ignore at the moment...
-		#self.__bridge.command('trainer',str(self.__selected))(self.__update)
+		#self.__bridge.command('trainer', str(self.__selected))(self.__update)

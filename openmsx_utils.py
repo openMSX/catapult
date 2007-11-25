@@ -86,7 +86,7 @@ def tclEscape(string):
 	return newString
 
 # this class is used to mark a string as being already escaped
-class escapedStr(str):
+class EscapedStr(str):
 	pass
 
 	

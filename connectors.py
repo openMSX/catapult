@@ -1,8 +1,6 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-
-from preferences import preferences
 from qt_utils import connect
 
 class ConnectorPlugger(QtCore.QObject):
@@ -12,6 +10,7 @@ class ConnectorPlugger(QtCore.QObject):
 		self.__connectorModel = connectorModel 
 		self.__ui = ui
 		self.__connector = None
+		self.__handlers = []
 		# Connect to connector model and view:
 		ui.connectorList.setModel(connectorModel)
 		connectorModel.dataChanged.connect(self.connectorPluggableChanged)
@@ -32,8 +31,8 @@ class ConnectorPlugger(QtCore.QObject):
 		self.__handlers = [
 			handler(self.__ui, self)
 			for handler in ( AudioInHandler, CassettePortHandler,
-				JoyPortHandler, PrinterPortHandler, RS232Handler,
-				Y8950KbdPortHandler, MIDIinHandler, MIDIoutHandler
+				JoyPortHandler, PrinterPortHandler, SerialHandler,
+				AudioKbdPortHandler, MIDIinHandler, MIDIoutHandler
 				)
 			]
 
@@ -108,7 +107,9 @@ class ConnectorHandler(QtCore.QObject):
 
 		self._pluggableBox.clear()
 		self._pluggableBox.addItem('--empty--')
-		self._pluggableBox.addItems(plugger.getModel().getPluggables(self.connectorClass))
+		self._pluggableBox.addItems(
+			plugger.getModel().getPluggables(self.connectorClass)
+			)
 
 		# Connect signals.
 		connect(self._unplugButton, 'clicked()', self.unplug)
@@ -133,7 +134,9 @@ class ConnectorHandler(QtCore.QObject):
 		self._pluggableDescLabel.setText(description)
 
 		# set description (readable name) of connector
-		self._pluggableLabel.setText(self._plugger.getModel().getConnectorDescription(connector))
+		self._pluggableLabel.setText(
+			self._plugger.getModel().getConnectorDescription(connector)
+			)
 	
 	def getPage(self):
 		return getattr(self._ui, self.connector + 'Page')
@@ -154,11 +157,11 @@ class PrinterPortHandler(ConnectorHandler):
 	connector = 'printerPort'
 	connectorClass = 'Printer Port'
 
-class RS232Handler(ConnectorHandler):
+class SerialHandler(ConnectorHandler):
 	connector = 'RS232'
 	connectorClass = 'RS232'
 
-class Y8950KbdPortHandler(ConnectorHandler):
+class AudioKbdPortHandler(ConnectorHandler):
 	connector = 'Y8950KbdPort'
 	connectorClass = 'Y8950 Keyboard Port'
 

@@ -1,9 +1,9 @@
 from PyQt4 import QtCore
 from bisect import bisect
-from openmsx_utils import tclEscape, escapedStr
+from openmsx_utils import tclEscape, EscapedStr
 import os.path
 
-from qt_utils import QtSignal, connect, Signal
+from qt_utils import QtSignal, Signal
 
 class MediaModel(QtCore.QAbstractListModel):
 	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
@@ -154,7 +154,7 @@ class MediaModel(QtCore.QAbstractListModel):
 					)
 			else:
 				self.__bridge.command(mediaSlot, 'insert',
-					escapedStr(tclEscape(path)), *options)(
+					EscapedStr(tclEscape(path)), *options)(
 					None, errorHandler
 					)
 			self.mediumChanged.emit(mediaSlot, path)

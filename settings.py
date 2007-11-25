@@ -9,7 +9,7 @@ class Setting(QtCore.QObject):
 	'''
 	# Note: Will be overridden with real signature.
 	valueChanged = Signal('?')
-	settingChanged = Signal('?','?')
+	settingChanged = Signal('?', '?')
 
 	# TODO: Make these static methods?
 
@@ -84,7 +84,7 @@ class Setting(QtCore.QObject):
 
 class BooleanSetting(Setting):
 	valueChanged = Signal('bool')
-	settingChanged = Signal('QString','bool')
+	settingChanged = Signal('QString', 'bool')
 
 	def _convertFromStr(self, valueStr):
 		return valueStr in ('on', 'true', 'yes')
@@ -101,7 +101,7 @@ class BooleanSetting(Setting):
 
 class EnumSetting(Setting):
 	valueChanged = Signal('QString')
-	settingChanged = Signal('QString','QString')
+	settingChanged = Signal('QString', 'QString')
 
 	def _convertFromStr(self, valueStr):
 		return valueStr
@@ -115,7 +115,7 @@ class EnumSetting(Setting):
 
 class IntegerSetting(Setting):
 	valueChanged = Signal('int')
-	settingChanged = Signal('QString','int')
+	settingChanged = Signal('QString', 'int')
 
 	def _convertFromStr(self, valueStr):
 		return int(valueStr)
@@ -129,14 +129,14 @@ class IntegerSetting(Setting):
 
 class FloatSetting(Setting):
 	valueChanged = Signal('double')
-	settingChanged = Signal('QString','double')
+	settingChanged = Signal('QString', 'double')
 
 	def _convertFromStr(self, valueStr):
-		print 'from str',valueStr
+		print 'from str', valueStr
 		return float(valueStr)
 
 	def _convertToStr(self, value):
-		print 'to str',value
+		print 'to str', value
 		return str(value)
 
 	def connectUpdates(self, obj):

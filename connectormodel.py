@@ -101,7 +101,8 @@ class ConnectorModel(QtCore.QAbstractListModel):
 			desc = self.__pluggableDescriptions[pluggable]
 		except KeyError:
 			desc = ''
-			print 'No description available yet for pluggable %s, fix race conditions!' % pluggable
+			print 'No description available yet for pluggable %s, '\
+				'fix race conditions!' % pluggable
 		return desc
 
 	def getConnectorDescription(self, connector):
@@ -109,7 +110,8 @@ class ConnectorModel(QtCore.QAbstractListModel):
 			desc = self.__connectorDescriptions[connector]
 		except KeyError:
 			desc = ''
-			print 'No description available yet for connector %s, fix race conditions!' % connector
+			print 'No description available yet for connector %s, '\
+				'fix race conditions!' % connector
 		return desc
 
 	def getClass(self, connector):
@@ -196,7 +198,8 @@ class ConnectorModel(QtCore.QAbstractListModel):
 				'connector "%s".' % ( action, connector )
 
 	def __connectorReply(self, connector, pluggable, flags = ''):
-		print 'connector update %s to "%s" flags "%s"' % ( connector, pluggable, flags )
+		print 'connector update %s to "%s" flags "%s"'\
+			% ( connector, pluggable, flags )
 		if connector[-1] == ':':
 			connector = connector[ : -1]
 		else:
@@ -207,7 +210,8 @@ class ConnectorModel(QtCore.QAbstractListModel):
 		self.__updateConnector(connector, pluggable)
 
 	def getInserted(self, connector):
-		'''Returns the pluggable currently plugged in the given connector.
+		'''Returns the pluggable which is currently plugged in the
+		given connector.
 		If the pluggable is not yet known, None is returned.
 		Raises KeyError if no connector exists by the given name.
 		'''

@@ -1,7 +1,7 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QColor, QPalette
+from PyQt4.QtGui import QColor
 from qt_utils import connect
 
 class Cheatfinder(object):
@@ -44,11 +44,11 @@ class Cheatfinder(object):
 		dialog.activateWindow()
 		self.__ui.CheatTable.verticalHeader().hide()
 		self.__ui.CheatTable.horizontalHeader().setStretchLastSection(True)
-		self.__ui.CheatTable.setColumnWidth(0,70)
-		self.__ui.CheatTable.setColumnWidth(1,60)
-		self.__ui.CheatTable.setColumnWidth(2,60)
-		self.__ui.CheatTable.setColumnWidth(3,60)
-		self.__ui.CheatTable.setColumnWidth(4,60)		
+		self.__ui.CheatTable.setColumnWidth(0, 70)
+		self.__ui.CheatTable.setColumnWidth(1, 60)
+		self.__ui.CheatTable.setColumnWidth(2, 60)
+		self.__ui.CheatTable.setColumnWidth(3, 60)
+		self.__ui.CheatTable.setColumnWidth(4, 60)		
 
 	def disableDirectSearch(self):
 		self.__ui.FindCheatValue.setEnabled(False)
@@ -112,11 +112,11 @@ class Cheatfinder(object):
 		cheatValue = self.__ui.cheatVal.text()
 		self.__ui.FindCheatRestart.setEnabled(False)
 		if len(cheatValue)<1:
-			msgText='Start New Search :'
+			msgText = 'Start New Search :'
 		else:
-			msgText='Start New Search Equal To: '+str(cheatValue)
+			msgText = 'Start New Search Equal To: '+str(cheatValue)
 		self.__ui.cheatResults.append(msgText)
-		self.__bridge.command('findcheat', '-start',cheatValue)(self.__CheatListReply)
+		self.__bridge.command('findcheat', '-start', cheatValue)(self.__CheatListReply)
 
 	def findCheatValue(self):
 		cheatValue = self.__ui.cheatVal.text()
@@ -146,11 +146,11 @@ class Cheatfinder(object):
 		#Check if results are found
 		if line.find('results')<1:
 			#Format output to be put into an array
-			line = line.replace('->',' ')
-			line = line.replace(':',' ')
-			line = line.replace('  ',' ')
-			line = line.replace(' ',';')
-			line = line.replace(';;',';')
+			line = line.replace('->', ' ')
+			line = line.replace(':', ' ')
+			line = line.replace('  ', ' ')
+			line = line.replace(' ', ';')
+			line = line.replace(';;', ';')
 			#Put resultset into array
 			cheatArray = line.split('\n')
 

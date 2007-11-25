@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtXml
 
 from preferences import preferences
-from openmsx_utils import parseTclValue, escapedStr
+from openmsx_utils import parseTclValue, EscapedStr
 from qt_utils import Signal, connect
 from inspect import getargspec
 
@@ -130,7 +130,7 @@ class ControlBridge(QtCore.QObject):
 		#     previous version (see commented out code below)
 		line = ''
 		for word in words:
-			if isinstance(word, escapedStr):
+			if isinstance(word, EscapedStr):
 				line += unicode(word).replace(' ', '\\ ') + ' '
 			else:
 				line += unicode(word).replace('\\', '\\\\').replace(' ', '\\ ') + ' '

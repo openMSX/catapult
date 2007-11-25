@@ -163,7 +163,8 @@ class MainWindow(QtGui.QMainWindow):
 		self.__settingsManager.set(name, float(value))
 
 	def __dispatchFloatSlider(self, name, value):
-		print "slider initiated command: set " + str(name) + "  " + str(float(value)/100)
+		print "slider initiated command: set " + str(name) + "  " + \
+			str(float(value)/100)
 		self.__settingsManager.set(name, float(value)/100)
 
 	def __dispatchCombo(self, name, value):
@@ -211,8 +212,7 @@ class MainWindow(QtGui.QMainWindow):
 		spinner.setValue(val)
 		slider.setValue(int(val*100))
 
-
-	def __goFullscreen(self,value):
+	def __goFullscreen(self, value):
 		if self.__ui.fullscreen.isChecked():
 			reply = QtGui.QMessageBox.warning(self,
 				self.tr("Going fullscreen"),
