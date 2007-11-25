@@ -1,5 +1,11 @@
 $Id$
 
+2007-11-25 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added first version of connector panel. You can use it to plug
+	  pluggables in the connectors of the active MSX.
+	  TODO: - fix some (still appearingly harmless) race conditions
+	        - add the settings related to each pluggable somehwere
+
 2007-11-20 David Heremans <david.heremans@gnu-linux.net>
 	* Pressing cursor down to quickly go through the trainer list
 	  caused some "left over" checkboxes to appear after a

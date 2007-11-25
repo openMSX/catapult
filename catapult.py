@@ -33,8 +33,9 @@ from custom import docDir
 from machine import MachineManager
 from extension import ExtensionManager
 from mediamodel import MediaModel
-#from connectormodel import ConnectorModel
+from connectormodel import ConnectorModel
 from media import MediaSwitcher
+from connectors import ConnectorPlugger
 from audio import AudioMixer
 from diskmanipulator import Diskmanipulator
 from cheatfinder import Cheatfinder
@@ -62,7 +63,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__ui = ui = Ui_MainWindow()
 		self.__afterConList = []
 		self.__mediaModel = mediaModel = MediaModel(bridge)
-#		self.__connectorModel = connectorModel = ConnectorModel(bridge)
+		self.__connectorModel = connectorModel = ConnectorModel(bridge)
 		ui.setupUi(self)
 		# Added stuff that at the moment will be exclusive to
 		# the openMSX-CD
@@ -152,6 +153,7 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.clearButton, 'clicked()', self.__clearInputText)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
+		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
 		# the following property is missing in Designer somehow
 		ui.inputText.setWordWrapMode(QtGui.QTextOption.WrapAnywhere)
