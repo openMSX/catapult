@@ -169,3 +169,14 @@ def connect(obj, signature, slot, connType = QtCore.Qt.AutoCompatConnection):
 		numSignalArgs = 0
 	_SignalWrapper(obj, signature, numSignalArgs).connect(slot, connType)
 
+# This is a possible implementation, but it is untested
+#def disconnect(obj, signature, slot):
+#	'''Disconnects a Qt native signal to a slot.
+#	'''
+#	match = _reSignature.match(signature)
+#	argTypes = match.group(2)
+#	if argTypes:
+#		numSignalArgs = argTypes.count(',') + 1
+#	else:
+#		numSignalArgs = 0
+#	_SignalWrapper(obj, signature, numSignalArgs).disconnect(slot)
