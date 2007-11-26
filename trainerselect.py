@@ -32,10 +32,16 @@ class TrainerSelect(object):
 			self.__ui = ui
 			self.__ui.emptywidget = QtGui.QWidget()
 			self.__ui.somewidget = QtGui.QScrollArea(self.__ui.containeremptywidget)
-			sizePolicy1 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-			self.__ui.emptywidget.setSizePolicy(sizePolicy1)
-			sizePolicy2 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-			self.__ui.somewidget.setSizePolicy(sizePolicy2)
+			sizePolicyA = QtGui.QSizePolicy(
+				QtGui.QSizePolicy.Expanding,
+				QtGui.QSizePolicy.Expanding
+				)
+			self.__ui.emptywidget.setSizePolicy(sizePolicyA)
+			sizePolicyB = QtGui.QSizePolicy(
+				QtGui.QSizePolicy.Expanding,
+				QtGui.QSizePolicy.Expanding
+				)
+			self.__ui.somewidget.setSizePolicy(sizePolicyB)
 			self.__ui.somewidget.setWidget(self.__ui.emptywidget)
 			#self.__ui.somewidget.setWidgetResizable(1)
 			self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
@@ -53,9 +59,9 @@ class TrainerSelect(object):
 		self.getCheats()
 		#the dialog.show() is resizing everything?
 		#and then I fiddle with the new values...
-		w = self.__ui.containeremptywidget.width()
-		h = self.__ui.containeremptywidget.height()
-		self.__ui.somewidget.resize(w, h)
+		newWidth = self.__ui.containeremptywidget.width()
+		newHeight = self.__ui.containeremptywidget.height()
+		self.__ui.somewidget.resize(newWidth, newHeight)
 
 	def getCheats(self):
 		self.__bridge.command(
@@ -103,16 +109,19 @@ class TrainerSelect(object):
 		# and lets python/pyqt garbage collector take care of it all
 		#
 		self.__ui.emptywidget = QtGui.QWidget()
-		sizePolicy1 = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-		self.__ui.emptywidget.setSizePolicy(sizePolicy1)
+		sizePolicyA = QtGui.QSizePolicy(
+			QtGui.QSizePolicy.Expanding,
+			QtGui.QSizePolicy.Expanding
+			)
+		self.__ui.emptywidget.setSizePolicy(sizePolicyA)
 		self.__ui.somewidget.setWidget(self.__ui.emptywidget)
 		self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
 		self.__ui.vboxlayout.setObjectName("vboxlayout")
 		self.__ui.vboxlayout.setSpacing( self.wdgtspacing )
 		self.__ui.vboxlayout.setMargin( self.wdgtmargin  )
-		w = self.__ui.containeremptywidget.width()
-		h = self.__ui.containeremptywidget.height()
-		self.__ui.somewidget.resize(w, h)
+		newWidth = self.__ui.containeremptywidget.width()
+		newHeight = self.__ui.containeremptywidget.height()
+		self.__ui.somewidget.resize(newWidth, newHeight)
 
 		self.__checkbox = []
 
@@ -125,8 +134,8 @@ class TrainerSelect(object):
 		#print "found children: " +  str(len(lijstje))
 
 
-		i = w = 0
-		h = 2 * self.wdgtmargin 
+		i = newwidth = 0
+		newheight = 2 * self.wdgtmargin 
 		for trainerLine in trainerArray[ 1 : ]:
 			trainerIndex = trainerLine.rstrip()\
 			[:trainerLine.find('[')]
@@ -144,9 +153,9 @@ class TrainerSelect(object):
 			checkbox.setChecked( trainerActive == '[x]')
 			checkbox.setObjectName( trainerIndex )
 			size = checkbox.sizeHint()
-			h = h + self.wdgtspacing + size.height()
-			if w < size.width():
-				w = size.width()
+			newheight = newheight + self.wdgtspacing + size.height()
+			if newwidth < size.width():
+				newwidth = size.width()
 			self.__checkbox.append( checkbox )
 			connect(self.__checkbox[i],
 				'stateChanged(int)',
@@ -155,12 +164,12 @@ class TrainerSelect(object):
 				)
 			self.__ui.vboxlayout.addWidget(checkbox)
 			i = i + 1
-		w = w + 2 * self.wdgtmargin 
+		newwidth = newwidth + 2 * self.wdgtmargin 
 
-		self.__ui.emptywidget.resize(w, h)
+		self.__ui.emptywidget.resize(newwidth, newheight)
 		#print "checkboxes added... " + str(len(self.__checkbox))
 		#if len(self.__checkbox) - self.__debugvalue != 0 :
-		#	print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" 
+		#	print "--------------------------------------------" 
 		#self.__debugvalue = len(self.__checkbox)
 
 	def __toggle(self, index ):
