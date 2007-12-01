@@ -38,7 +38,7 @@ class Cheatfinder(object):
 			connect(ui.EmulationReset, 'clicked()', self.emulationReset)
 			connect(ui.rbCompare, 'clicked()', self.disableDirectSearch)
 			connect(ui.rbSearch, 'clicked()', self.disableCompareSearch)
-			
+
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
@@ -48,7 +48,7 @@ class Cheatfinder(object):
 		self.__ui.CheatTable.setColumnWidth(1, 60)
 		self.__ui.CheatTable.setColumnWidth(2, 60)
 		self.__ui.CheatTable.setColumnWidth(3, 60)
-		self.__ui.CheatTable.setColumnWidth(4, 60)		
+		self.__ui.CheatTable.setColumnWidth(4, 60)
 
 	def disableDirectSearch(self):
 		self.__ui.FindCheatValue.setEnabled(False)
@@ -115,7 +115,9 @@ class Cheatfinder(object):
 		else:
 			msgText = 'Start New Search Equal To: '+str(cheatValue)
 		self.__ui.cheatResults.append(msgText)
-		self.__bridge.command('findcheat', '-start', cheatValue)(self.__CheatListReply)
+		self.__bridge.command('findcheat', '-start', cheatValue)(
+			self.__CheatListReply
+		)
 
 	def findCheatValue(self):
 		cheatValue = self.__ui.cheatVal.text()
@@ -176,7 +178,7 @@ class Cheatfinder(object):
 				newValItem = QtGui.QTableWidgetItem(cheatVal[2])
 				newValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 				self.__ui.CheatTable.setItem(row, 2, newValItem)
-				
+
 				#Fill Old Value Item (Hex)
 				oldValItem = QtGui.QTableWidgetItem(hex(int(cheatVal[1])))
 				oldValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
