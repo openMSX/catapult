@@ -6,6 +6,14 @@ $Id$
 	  settings. Most of this moved from catapult.py to settings.py.
 	  TODO: also improve the mechanism that sets limits to sliders
 	  and fills comboboxes, etc.
+	* Now also refactored setting up the UI elements that get connected to
+	  a setting. Connecting a UI element to a setting now automatically
+	  queries the necessary data from openMSX and configures the element
+	  to the proper values (min/max, enum values in ComboBox).
+	  Unfortunately, this does break the videosource setting at the
+	  moment.
+	  TODO: handle settings that have dynamical value options, like the
+	  videosource setting and also the scale_factor (depends on renderer)
 
 2007-11-25 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added first version of connector panel. You can use it to plug

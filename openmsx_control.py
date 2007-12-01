@@ -29,6 +29,7 @@ class PrefixDemux(object):
 
 class ControlBridge(QtCore.QObject):
 	logLine = Signal('QString', 'QString')
+	connectionEstablished = Signal()
 
 	def __init__(self):
 		QtCore.QObject.__init__(self)
@@ -48,6 +49,7 @@ class ControlBridge(QtCore.QObject):
 			self.sendCommandRaw('update enable %s' % updateType)
 		for handler in self.__initialHandlers:
 			handler()
+		self.connectionEstablished.emit()
 
 	def closeConnection(self, callback):
 		if self.__connection is None:

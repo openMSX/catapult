@@ -9,7 +9,6 @@ class Setting(QtCore.QObject):
 	'''
 	# Note: Will be overridden with real signature.
 	valueChanged = Signal('?')
-	settingChanged = Signal('?', '?')
 
 	# TODO: Make these static methods?
 
@@ -34,14 +33,18 @@ class Setting(QtCore.QObject):
 		this setting's valueChanged to the object's setValue and
 		the object's valueChanged to this setting's setValue.
 		'''
+		#print 'Going to connectSync a %s with myself %s' % (obj, self)
 		self.valueChanged.connect(
 			lambda value, obj = obj: self.setUiObjValue(obj, value)
 			)
-		# TODO: make this more beautiful...
+		# initialize value of object:
+		self.setUiObjValue(obj, self.__value)
+
+		# TODO: Make this more beautiful... (if possible)
 		if isinstance(obj, QtGui.QCheckBox):
 			connect(obj, 'stateChanged(int)', self.setValue)
 		elif isinstance(obj, QtGui.QComboBox):
-			connect(obj, 'currentIndexChanged(QString)', self.setValue)
+			connect(obj, 'activated(QString)', self.setValue)
 		elif isinstance(obj, QtGui.QSlider):
 			connect(obj, 'valueChanged(int)', self.setValue)
 		else:
@@ -71,7 +74,6 @@ class Setting(QtCore.QObject):
 		if value != self.__value:
 			self.__value = value
 			self.valueChanged.emit(value)
-			self.settingChanged.emit(self.__name, value)
 
 	def revert(self):
 		'''Revert to the default value.
@@ -87,7 +89,6 @@ class Setting(QtCore.QObject):
 		if value != self.__value:
 			self.__value = value
 			self.valueChanged.emit(value)
-			self.settingChanged.emit(self.__name, value)
 			self.__bridge.command(
 				'set', self.__name, self._convertToStr(value)
 				)()
@@ -98,7 +99,6 @@ class Setting(QtCore.QObject):
 
 class BooleanSetting(Setting):
 	valueChanged = Signal('int')
-	settingChanged = Signal('QString', 'bool')
 
 	def _convertFromStr(self, valueStr):
 		return valueStr in ('on', 'true', 'yes')
@@ -113,6 +113,7 @@ class BooleanSetting(Setting):
 		state = QtCore.Qt.Unchecked
 		if value:
 			state = QtCore.Qt.Checked
+		print 'Setting boolean object (checkbox) to state: %s' % state
 		obj.setCheckState(state)
 	
 	def setValue(self, value):
@@ -131,7 +132,6 @@ class BooleanSetting(Setting):
 
 class EnumSetting(Setting):
 	valueChanged = Signal('QString')
-	settingChanged = Signal('QString', 'QString')
 
 	def _convertFromStr(self, valueStr):
 		return valueStr
@@ -148,7 +148,6 @@ class EnumSetting(Setting):
 	
 class IntegerSetting(Setting):
 	valueChanged = Signal('int')
-	settingChanged = Signal('QString', 'int')
 
 	def _convertFromStr(self, valueStr):
 		return int(valueStr)
@@ -158,7 +157,6 @@ class IntegerSetting(Setting):
 
 class FloatSetting(Setting):
 	valueChanged = Signal('double')
-	settingChanged = Signal('QString', 'double')
 
 	def _convertFromStr(self, valueStr):
 		return float(valueStr)
@@ -222,6 +220,29 @@ class SettingsManager(QtCore.QObject):
 		self.__settings[name].disconnectSync(obj)
 
 	def connectSetting(self, name, obj):
+		self.__bridge.command('openmsx_info', 'setting', name
+				)( lambda *items: self.__configUIElem(name, obj, *items), None)
+		
+	def __configUIElem(self, name, obj, *items):
+		if items[0] == 'float':
+			mini, maxi = items[2].split(' ')
+			if isinstance(obj, QtGui.QSlider):
+				obj.setMinimum(int(float(mini)*100))
+				obj.setMaximum(int(float(maxi)*100))
+			else:
+				obj.setMinimum(float(mini))
+				obj.setMaximum(float(maxi))
+		elif items[0] == 'integer':
+			mini, maxi = items[2].split(' ')
+			obj.setMinimum(int(mini))
+			obj.setMaximum(int(maxi))
+		elif items[0] == 'enumeration' and isinstance(obj, QtGui.QComboBox):
+			obj.clear()
+			for item in items[2].split(' '):
+				obj.addItem(QtCore.QString(item))
+		else:
+			print 'No need to configure UI element of type %s'\
+				'and setting type %s' % (type(obj), items[0])
 		self.__settings[name].connectSync(obj)
 
 	def sync(self):

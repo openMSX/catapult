@@ -61,7 +61,6 @@ class MainWindow(QtGui.QMainWindow):
 		QtGui.QMainWindow.__init__(self)
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
-		self.__afterConList = []
 		self.__mediaModel = mediaModel = MediaModel(bridge)
 		self.__connectorModel = connectorModel = ConnectorModel(bridge)
 		ui.setupUi(self)
@@ -112,23 +111,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__connectMenuActions(ui)
 
 		bridge.logLine.connect(self.logLine)
-
-		settingsManager.registerSetting('scanline', settings.IntegerSetting)
-		settingsManager.connectSetting('scanline', ui.scanlineSlider)
-		settingsManager.connectSetting('scanline', ui.scanlineSpinBox)
-		settingsManager.registerSetting('blur', settings.IntegerSetting)
-		settingsManager.connectSetting('blur', ui.blurSlider)
-		settingsManager.connectSetting('blur', ui.blurSpinBox)
-		settingsManager.registerSetting('glow', settings.IntegerSetting)
-		settingsManager.connectSetting('glow', ui.glowSlider)
-		settingsManager.connectSetting('glow', ui.glowSpinBox)
-
-		settingsManager.registerSetting('scale_factor', settings.IntegerSetting)
-		settingsManager.connectSetting('scale_factor', ui.scaleFactorSpinBox)
-		settingsManager.registerSetting('deinterlace', settings.BooleanSetting)
-		settingsManager.connectSetting('deinterlace', ui.deinterlace)
-		settingsManager.registerSetting('limitsprites', settings.BooleanSetting)
-		settingsManager.connectSetting('limitsprites', ui.limitsprites)
+		bridge.connectionEstablished.connect(self.__afterConnectionMade)
 
 		# full screen is a special setting, because we want to pop up a dialog
 		# before letting the change take effect.
@@ -136,15 +119,6 @@ class MainWindow(QtGui.QMainWindow):
 			'fullscreen', self.__updateSpecialSettings
 			)
 		connect(ui.fullscreen, 'clicked(bool)', self.__goFullscreen)
-
-		settingsManager.registerSetting('scale_algorithm', settings.EnumSetting)
-		settingsManager.connectSetting('scale_algorithm', ui.scalealgorithmComboBox)
-		settingsManager.registerSetting('videosource', settings.EnumSetting)
-		settingsManager.connectSetting('videosource', ui.videosourceComboBox)
-		settingsManager.registerSetting('renderer', settings.EnumSetting)
-		settingsManager.connectSetting('renderer', ui.rendererComboBox)
-		settingsManager.registerSetting('display_deform', settings.EnumSetting)
-		settingsManager.connectSetting('display_deform', ui.displaydeformComboBox)
 
 		self.__playState = PlayState(settingsManager, ui)
 
@@ -183,36 +157,21 @@ class MainWindow(QtGui.QMainWindow):
 		else:
 			self.__bridge.sendCommandRaw('set fullscreen off')
 
-	def afterConnectionMade(self):
-		self.__afterConList = []
-		#eunmsettings for comboboxes
-		for item in ('renderer', 'display_deform',
-			'videosource', 'scale_algorithm'):
-			self.__afterConList.append(item)
-			self.__bridge.command('openmsx_info',
-				'setting', item
-				)(
-				self.__fillComboBox,
-				self.__infoFailed
-				)
-		#floatsettings for sliders+spinboxes
-		for item in ('gamma', 'brightness', 'contrast', 'noise'): 
-			self.__afterConList.append(item)
-			self.__bridge.command('openmsx_info',
-				'setting', item
-				)(
-				self.__configSliders,
-				self.__infoFailed
-				)
-		# Some float settings
-		# we need to register them here since we need to have the
-		# sliders set to the correct minimum/maximum by the
-		# openmsx_info command first. Otherwise it is possible that the
-		# setting will try to set the slider to a value not yet allowed
-		# triggerring an valuechanged signal that sets the openmsx to
+	def __afterConnectionMade(self):
+		'''Things that should be done after the connection is established
+		'''
+		# Some complex settings that need their UI elements to be configured...
+		# we need to register and connect them here since we need to
+		# have e.g. the sliders set to the correct minimum/maximum by
+		# the openmsx_info command first (that's what I mean with
+		# configuring the UI elements). Otherwise it is possible that
+		# the setting will try to set the slider to a value not yet
+		# allowed
+		# Triggering an valuechanged signal that sets the openmsx to
 		# the wrong value. This was the case when the noise was set to
 		# 3.0 and the slider only went up until 0.99 since the
-		# openmsx_info was not yet used...
+		# slider was not yet configured... 
+		# The same goes for practically all settings.
 		settingsManager = self.__settingsManager
 		ui = self.__ui
 		settingsManager.registerSetting('gamma', settings.FloatSetting)
@@ -228,55 +187,30 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.connectSetting('noise', ui.noiseSlider)
 		settingsManager.connectSetting('noise', ui.noiseSpinBox)
 
-	def __infoFailed(self, name, message):
-		print 'Failed to get info about %s : %s' % (
-			name, message
-			)
+		settingsManager.registerSetting('scanline', settings.IntegerSetting)
+		settingsManager.connectSetting('scanline', ui.scanlineSlider)
+		settingsManager.connectSetting('scanline', ui.scanlineSpinBox)
+		settingsManager.registerSetting('blur', settings.IntegerSetting)
+		settingsManager.connectSetting('blur', ui.blurSlider)
+		settingsManager.connectSetting('blur', ui.blurSpinBox)
+		settingsManager.registerSetting('glow', settings.IntegerSetting)
+		settingsManager.connectSetting('glow', ui.glowSlider)
+		settingsManager.connectSetting('glow', ui.glowSpinBox)
 
-	def __fillComboBox(self, *items):
-		element = self.__afterConList.pop(0)
-		uimap = {
-			'renderer': self.__ui.rendererComboBox,
-			'display_deform': self.__ui.displaydeformComboBox,
-			'scale_algorithm': self.__ui.scalealgorithmComboBox,
-			'videosource': self.__ui.videosourceComboBox
-			}
-		uiElement = uimap[ element ]
-		for item in items[2].split(' '):
-			#combo = self.__ui.rendererComboBox
-			qitem = QtCore.QString(item)
-			#maybe element is already in combobox due
-			#to settingchanged signal
-			if uiElement.findText(qitem) == -1:
-				uiElement.addItem(qitem)
-
-	def __configSliders(self, *items):
-		element = self.__afterConList.pop(0)
-		print '------------------------------------'
-		print element
-		print items
-		print '------------------------------------'
-		uimap = {
-			'gamma': (self.__ui.gammaSlider,
-				self.__ui.gammaSpinBox ),
-			'brightness': (self.__ui.brightnessSlider,
-				self.__ui.brightnessSpinBox ),
-			'contrast': (self.__ui.contrastSlider,
-				self.__ui.contrastSpinBox ),
-			'noise': (self.__ui.noiseSlider,
-				self.__ui.noiseSpinBox )
-			}
-		uiSlider, uiSpinner = uimap[ element ]
-		mini, maxi = items[2].split(' ')
-		curval = float(items[1])
-		uiSlider.setMinimum( int(float(mini)*100) )
-		uiSlider.setMaximum( int(float(maxi)*100) )
-		uiSlider.setValue( int(curval*100) )
-		uiSpinner.setMinimum( float(mini) )
-		uiSpinner.setMaximum( float(maxi) )
-		uiSpinner.setMaximum( float(maxi) )
-		uiSpinner.setSingleStep( 0.01 )
-		uiSpinner.setValue( curval )
+		settingsManager.registerSetting('scale_factor', settings.IntegerSetting)
+		settingsManager.connectSetting('scale_factor', ui.scaleFactorSpinBox)
+		settingsManager.registerSetting('deinterlace', settings.BooleanSetting)
+		settingsManager.connectSetting('deinterlace', ui.deinterlace)
+		settingsManager.registerSetting('limitsprites', settings.BooleanSetting)
+		settingsManager.connectSetting('limitsprites', ui.limitsprites)
+		settingsManager.registerSetting('scale_algorithm', settings.EnumSetting)
+		settingsManager.connectSetting('scale_algorithm', ui.scalealgorithmComboBox)
+		settingsManager.registerSetting('videosource', settings.EnumSetting)
+		settingsManager.connectSetting('videosource', ui.videosourceComboBox)
+		settingsManager.registerSetting('renderer', settings.EnumSetting)
+		settingsManager.connectSetting('renderer', ui.rendererComboBox)
+		settingsManager.registerSetting('display_deform', settings.EnumSetting)
+		settingsManager.connectSetting('display_deform', ui.displaydeformComboBox)
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
@@ -450,12 +384,7 @@ if __name__ == '__main__':
 	controlBridge = ControlBridge()
 	mainWindow = MainWindow(controlBridge)
 	controlBridge.openConnection()
-	#quick hack TODO: get this is in beter place!
-	#Question: if we open the connection before we
-	# create the mainwindow, will this work?
-	# I think I need to look into this beacuse of
-	# the exit/Tcl remark at line 86
-	mainWindow.afterConnectionMade()
+
 	mainWindow.show()
 
 	sys.exit(app.exec_())
