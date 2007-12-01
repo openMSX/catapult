@@ -71,8 +71,7 @@ class Cheatfinder(object):
 		self.__ui.FindCheatMore.setEnabled(False)
 
 	def emulationTogglePause(self):
-		self.__ui.FindCheatRestart.setEnabled(False)
-		self.__bridge.command('toggle', 'pause')(self.__DisplayCheats)
+		self.__bridge.command('toggle', 'pause')()
 
 	def emulationReset(self):
 		self.__ui.FindCheatRestart.setEnabled(False)
@@ -126,12 +125,9 @@ class Cheatfinder(object):
 	def __CheatListReply(self, *words):
 		line = ' '.join(words)
 		text = self.__ui.cheatResults
-		try:
-			color = QColor()
-			color.setRgb(0, 0, 255)
-			text.setTextColor(color)
-		except BaseException, ex:
-			print 'error:', ex
+		color = QColor()
+		color.setRgb(0, 0, 255)
+		text.setTextColor(color)
 
 		#Check if no results are found (clear table and display message)
 		if line == 'No results left':
