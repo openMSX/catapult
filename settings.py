@@ -1,6 +1,6 @@
 # $Id$
 
-from PyQt4 import QtCore
+from PyQt4 import QtCore, QtGui
 
 from qt_utils import Signal, connect
 
@@ -34,8 +34,18 @@ class Setting(QtCore.QObject):
 		this setting's valueChanged to the object's setValue and
 		the object's valueChanged to this setting's setValue.
 		'''
-		self.valueChanged.connect(obj.setValue)
-		connect(obj, self.valueChanged.signature, self.setValue)
+		self.valueChanged.connect(
+			lambda value, obj = obj: self.setUiObjValue(obj, value)
+			)
+		# TODO: make this more beautiful...
+		if isinstance(obj, QtGui.QCheckBox):
+			connect(obj, 'stateChanged(int)', self.setValue)
+		elif isinstance(obj, QtGui.QComboBox):
+			connect(obj, 'currentIndexChanged(QString)', self.setValue)
+		elif isinstance(obj, QtGui.QSlider):
+			connect(obj, 'valueChanged(int)', self.setValue)
+		else:
+			connect(obj, self.valueChanged.signature, self.setValue)
 
 	def disconnectSync(self, obj):
 		'''Disconnect from the specified object in two directions:
@@ -82,8 +92,12 @@ class Setting(QtCore.QObject):
 				'set', self.__name, self._convertToStr(value)
 				)()
 
+	# default implementation works for many objects (but not all)
+	def setUiObjValue(self, obj, value):
+		obj.setValue(value)
+
 class BooleanSetting(Setting):
-	valueChanged = Signal('bool')
+	valueChanged = Signal('int')
 	settingChanged = Signal('QString', 'bool')
 
 	def _convertFromStr(self, valueStr):
@@ -95,9 +109,25 @@ class BooleanSetting(Setting):
 		else:
 			return 'off'
 
-	def connectUpdates(self, obj):
-		self.settingChanged.connect(obj.updatedBoolean)
-		print "self.settingChanged.connect(obj.updatedBoolean)"
+	def setUiObjValue(self, obj, value):
+		state = QtCore.Qt.Unchecked
+		if value:
+			state = QtCore.Qt.Checked
+		obj.setCheckState(state)
+	
+	def setValue(self, value):
+		if isinstance(value, bool):
+			realVal = value
+		else:
+			realVal = False
+			if value == QtCore.Qt.Unchecked:
+				realVal = False
+			elif value == QtCore.Qt.Checked:
+				realVal = True
+			else:
+				assert False, 'CheckState unsupported'
+		# call superclass
+		Setting.setValue(self, realVal)
 
 class EnumSetting(Setting):
 	valueChanged = Signal('QString')
@@ -109,10 +139,13 @@ class EnumSetting(Setting):
 	def _convertToStr(self, value):
 		return value
 
-	def connectUpdates(self, obj):
-		self.settingChanged.connect(obj.updatedEnum)
-		print 'self.settingChanged.connect(obj.updatedEnum)'
-
+	def setUiObjValue(self, obj, value):
+		index = obj.findText(value)
+		if index == -1:
+			obj.addItem(value)
+		else:	
+			obj.setCurrentIndex(index)
+	
 class IntegerSetting(Setting):
 	valueChanged = Signal('int')
 	settingChanged = Signal('QString', 'int')
@@ -123,25 +156,30 @@ class IntegerSetting(Setting):
 	def _convertToStr(self, value):
 		return str(value)
 
-	def connectUpdates(self, obj):
-		print 'self.settingChanged.connect(obj.updatedInt)'
-		self.settingChanged.connect(obj.updatedInt)
-
 class FloatSetting(Setting):
 	valueChanged = Signal('double')
 	settingChanged = Signal('QString', 'double')
 
 	def _convertFromStr(self, valueStr):
-		print 'from str', valueStr
 		return float(valueStr)
 
 	def _convertToStr(self, value):
-		print 'to str', value
 		return str(value)
 
-	def connectUpdates(self, obj):
-		print 'self.settingChanged.connect(obj.updatedFloat)'
-		self.settingChanged.connect(obj.updatedFloat)
+	def setUiObjValue(self, obj, value):
+		val = float(value)
+		if isinstance(obj, QtGui.QSlider):
+			obj.setValue(int(val*100))
+		else:
+			obj.setValue(val)
+	
+	def setValue(self, value):
+		if isinstance(value, int):
+			realVal = float(value)/100 
+		else:
+			realVal = value
+		# call superclass
+		Setting.setValue(self, realVal)
 
 class SettingsManager(QtCore.QObject):
 
@@ -151,6 +189,7 @@ class SettingsManager(QtCore.QObject):
 		bridge.registerInitial(self.sync)
 		bridge.registerUpdate('setting', self.update)
 		self.__settings = {}
+		self.__specialSettings = {}
 
 	def __getitem__(self, key):
 		return self.__settings[key]
@@ -171,12 +210,16 @@ class SettingsManager(QtCore.QObject):
 		assert name in self.__settings # setting must've been registered
 		del self.__settings[name]
 
+	def registerSpecialSetting(self, name, callback):
+		'''Register the name of a setting we do not want to treat
+		regularly. Instead register a callback for these, so that
+		they can be handled individually.
+		Example: fullscreen setting.'''
+		assert name not in self.__specialSettings, 'Only register once'
+		self.__specialSettings[name] = callback
+
 	def disconnectSetting(self, name, obj):
 		self.__settings[name].disconnectSync(obj)
-
-	def registerForUpdates(self, name, obj):
-		print "+++++registerForUpdates"
-		self.__settings[name].connectUpdates(obj)
 
 	def connectSetting(self, name, obj):
 		self.__settings[name].connectSync(obj)
@@ -193,7 +236,11 @@ class SettingsManager(QtCore.QObject):
 	def update(self, name, message):
 		setting = self.__settings.get(str(name))
 		if setting is None:
-			print 'setting %s not registered' % name
+			if str(name) in self.__specialSettings:
+				callback = self.__specialSettings[str(name)]
+				callback(name, message)
+			else:
+				print 'setting %s not registered' % name
 		else:
 			setting.updateValue(message)
 

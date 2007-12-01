@@ -123,24 +123,28 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.connectSetting('glow', ui.glowSlider)
 		settingsManager.connectSetting('glow', ui.glowSpinBox)
 
-		settingsManager.registerSetting('fullscreen', settings.BooleanSetting)
-		settingsManager.registerForUpdates('fullscreen', self)
-		ui = self.__ui
-		connect(ui.fullscreen, 'stateChanged(int)', self.__goFullscreen)
+		settingsManager.registerSetting('scale_factor', settings.IntegerSetting)
+		settingsManager.connectSetting('scale_factor', ui.scaleFactorSpinBox)
+		settingsManager.registerSetting('deinterlace', settings.BooleanSetting)
+		settingsManager.connectSetting('deinterlace', ui.deinterlace)
+		settingsManager.registerSetting('limitsprites', settings.BooleanSetting)
+		settingsManager.connectSetting('limitsprites', ui.limitsprites)
 
-		# Some enum settings
-		for setting, widget in (
-				('videosource', ui.videosourceComboBox),
-				('scale_algorithm', ui.scalealgorithmComboBox),
-				('display_deform', ui.displaydeformComboBox),
-				('renderer', ui.rendererComboBox)
-				):
-			settingsManager.registerSetting(setting,
-				settings.EnumSetting)
-			settingsManager.registerForUpdates(setting, self)
-			connect(widget, 'currentIndexChanged(QString)',
-				lambda x, setting = setting: self.__dispatchCombo(setting,x) )
+		# full screen is a special setting, because we want to pop up a dialog
+		# before letting the change take effect.
+		settingsManager.registerSpecialSetting(
+			'fullscreen', self.__updateSpecialSettings
+			)
+		connect(ui.fullscreen, 'clicked(bool)', self.__goFullscreen)
 
+		settingsManager.registerSetting('scale_algorithm', settings.EnumSetting)
+		settingsManager.connectSetting('scale_algorithm', ui.scalealgorithmComboBox)
+		settingsManager.registerSetting('videosource', settings.EnumSetting)
+		settingsManager.connectSetting('videosource', ui.videosourceComboBox)
+		settingsManager.registerSetting('renderer', settings.EnumSetting)
+		settingsManager.connectSetting('renderer', ui.rendererComboBox)
+		settingsManager.registerSetting('display_deform', settings.EnumSetting)
+		settingsManager.connectSetting('display_deform', ui.displaydeformComboBox)
 
 		self.__playState = PlayState(settingsManager, ui)
 
@@ -153,69 +157,19 @@ class MainWindow(QtGui.QMainWindow):
 		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
 
-	def __dispatchFloatSpinBox(self, name, value):
-		print "spinbox initiated command: set " + str(name) + "  " + str(value)
-		self.__settingsManager.set(name, float(value))
-
-	def __dispatchFloatSlider(self, name, value):
-		print "slider initiated command: set " + str(name) + "  " + \
-			str(float(value)/100)
-		self.__settingsManager.set(name, float(value)/100)
-
-	def __dispatchCombo(self, name, value):
-		print "combox initiated command: set " + name + "  " + value
-		self.__bridge.command('set',
-			name, value
-			)()
-
-	def updatedBoolean(self, name, value):
-		print "Boolean setting changed :" + str(name) +" = " + str(value)
+	def __updateSpecialSettings(self, name, message):
 		if str(name) == 'fullscreen':
-			state = QtCore.Qt.Unchecked
-			if value:
-				state = QtCore.Qt.Checked
-			self.__ui.fullscreen.setCheckState(state)
-
-	def updatedEnum(self, name, value):
-		print "Enum setting changed :" + name +" = " + value
-		uimap = {'renderer': self.__ui.rendererComboBox,
-			'scale_algorithm': self.__ui.scalealgorithmComboBox,
-			'display_deform': self.__ui.displaydeformComboBox,
-			'videosource': self.__ui.videosourceComboBox
-			}
-		widget = uimap[str(name)]
-		index = widget.findText(value)
-		if index == -1:
-			widget.addItem(value)
-		else:
-			widget.setCurrentIndex(index)
-
-	def updatedInt(self, name, value):
-		print "Int setting changed :" + str(name) + " = " + str(value)
-
-	def updatedFloat(self, name, value):
-		print "Float setting changed :" + str(name) + " = " + str(value)
-		ui = self.__ui
-		uimap = {
-			'gamma': ( ui.gammaSlider, ui.gammaSpinBox),
-			'brightness': ( ui.brightnessSlider, ui.brightnessSpinBox),
-			'contrast': ( ui.contrastSlider, ui.contrastSpinBox),
-			'noise': ( ui.noiseSlider, ui.noiseSpinBox)
-			}
-		slider, spinner = uimap[str(name)]
-		val = float(value)
-		spinner.setValue(val)
-		slider.setValue(int(val*100))
+			self.__ui.fullscreen.setChecked(str(message) in ('on', 'true', 'yes'))
 
 	def __goFullscreen(self, value):
-		if self.__ui.fullscreen.isChecked():
+		if value:
 			reply = QtGui.QMessageBox.warning(self,
 				self.tr("Going fullscreen"),
 				self.tr(
 				"<p>Do you really want to go fullscreen?</p>"
-				"<p>This will hide catapult, so make sure"
+				"<p>This will hide Catapult, so make sure"
 				" that you know how to disable fullscreen"
-				" later on</p>"
+				" later on!</p>"
 				),
 				self.tr("&Cancel"),
 				self.tr("Continue"))
@@ -226,6 +180,8 @@ class MainWindow(QtGui.QMainWindow):
 				#if we respond with 'Cancel'
 			else:
 				self.__bridge.sendCommandRaw('set fullscreen on')
+		else:
+			self.__bridge.sendCommandRaw('set fullscreen off')
 
 	def afterConnectionMade(self):
 		self.__afterConList = []
@@ -237,7 +193,7 @@ class MainWindow(QtGui.QMainWindow):
 				'setting', item
 				)(
 				self.__fillComboBox,
-				self.__infofailed
+				self.__infoFailed
 				)
 		#floatsettings for sliders+spinboxes
 		for item in ('gamma', 'brightness', 'contrast', 'noise'): 
@@ -246,7 +202,7 @@ class MainWindow(QtGui.QMainWindow):
 				'setting', item
 				)(
 				self.__configSliders,
-				self.__infofailed
+				self.__infoFailed
 				)
 		# Some float settings
 		# we need to register them here since we need to have the
@@ -257,25 +213,22 @@ class MainWindow(QtGui.QMainWindow):
 		# the wrong value. This was the case when the noise was set to
 		# 3.0 and the slider only went up until 0.99 since the
 		# openmsx_info was not yet used...
+		settingsManager = self.__settingsManager
 		ui = self.__ui
-		for setting, slider, spinner in (
-			('gamma', ui.gammaSlider, ui.gammaSpinBox),
-			('brightness', ui.brightnessSlider, ui.brightnessSpinBox),
-			('contrast', ui.contrastSlider, ui.contrastSpinBox),
-			('noise', ui.noiseSlider, ui.noiseSpinBox)
-			):
-			self.__settingsManager.registerSetting(setting,
-                                settings.FloatSetting)
-			self.__settingsManager.registerForUpdates(setting, self)
-			connect(slider, 'valueChanged(int)',
-				lambda x, setting = setting:
-					self.__dispatchFloatSlider(setting,x) )
-			connect(spinner, 'valueChanged(double)',
-				lambda x, setting = setting:
-					self.__dispatchFloatSpinBox(setting,x) )
-		
+		settingsManager.registerSetting('gamma', settings.FloatSetting)
+		settingsManager.connectSetting('gamma', ui.gammaSlider)
+		settingsManager.connectSetting('gamma', ui.gammaSpinBox)
+		settingsManager.registerSetting('brightness', settings.FloatSetting)
+		settingsManager.connectSetting('brightness', ui.brightnessSlider)
+		settingsManager.connectSetting('brightness', ui.brightnessSpinBox)
+		settingsManager.registerSetting('contrast', settings.FloatSetting)
+		settingsManager.connectSetting('contrast', ui.contrastSlider)
+		settingsManager.connectSetting('contrast', ui.contrastSpinBox)
+		settingsManager.registerSetting('noise', settings.FloatSetting)
+		settingsManager.connectSetting('noise', ui.noiseSlider)
+		settingsManager.connectSetting('noise', ui.noiseSpinBox)
 
-	def __infofailed(self, name, message):
+	def __infoFailed(self, name, message):
 		print 'Failed to get info about %s : %s' % (
 			name, message
 			)
@@ -324,7 +277,6 @@ class MainWindow(QtGui.QMainWindow):
 		uiSpinner.setMaximum( float(maxi) )
 		uiSpinner.setSingleStep( 0.01 )
 		uiSpinner.setValue( curval )
-
 
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.

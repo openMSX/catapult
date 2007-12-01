@@ -1,5 +1,12 @@
 $Id$
 
+2007-12-01 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added a few missing video settings
+	* Refactored special stuff that is necessary for float and enum
+	  settings. Most of this moved from catapult.py to settings.py.
+	  TODO: also improve the mechanism that sets limits to sliders
+	  and fills comboboxes, etc.
+
 2007-11-25 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added first version of connector panel. You can use it to plug
 	  pluggables in the connectors of the active MSX.
