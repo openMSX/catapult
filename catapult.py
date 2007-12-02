@@ -133,6 +133,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__frameRateTimer = QtCore.QTimer()
 		self.__frameRateTimer.setInterval(2000)
 		self.__frameRateLabel = QtGui.QLabel('')
+		ui.statusbar.addWidget(self.__frameRateLabel)
 
 	def __updateSpecialSettings(self, name, message):
 		if str(name) == 'fullscreen':
@@ -215,7 +216,6 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.registerSetting('display_deform', settings.EnumSetting)
 		settingsManager.connectSetting('display_deform', ui.displaydeformComboBox)
 
-		ui.statusbar.addWidget(self.__frameRateLabel)
 		connect(self.__frameRateTimer, 'timeout()', 
 			lambda: self.__bridge.command('openmsx_info', 'fps')(
 				self.__updateFrameRateLabel, None
