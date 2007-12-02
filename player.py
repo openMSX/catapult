@@ -76,6 +76,9 @@ class PlayState(QtCore.QObject):
 			powerSetting, pauseSetting, throttleSetting, visibleSetting
 			):
 			setting.valueChanged.connect(self.update)
+	
+	def getVisibleSetting(self):
+		return self.__visibleSetting
 
 	def computeState(self):
 		'''Determines the state of the music-player-like control,

@@ -1,5 +1,8 @@
 $Id$
 
+2007-12-02 Manuel Bilderbeek <manuel@msxnet.org>
+	* Display frame rate in status bar.
+
 2007-12-01 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added a few missing video settings
 	* Refactored special stuff that is necessary for float and enum

@@ -130,6 +130,9 @@ class MainWindow(QtGui.QMainWindow):
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
 		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
+		self.__frameRateTimer = QtCore.QTimer()
+		self.__frameRateTimer.setInterval(2000)
+		self.__frameRateLabel = QtGui.QLabel('')
 
 	def __updateSpecialSettings(self, name, message):
 		if str(name) == 'fullscreen':
@@ -212,6 +215,16 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.registerSetting('display_deform', settings.EnumSetting)
 		settingsManager.connectSetting('display_deform', ui.displaydeformComboBox)
 
+		ui.statusbar.addWidget(self.__frameRateLabel)
+		connect(self.__frameRateTimer, 'timeout()', 
+			lambda: self.__bridge.command('openmsx_info', 'fps')(
+				self.__updateFrameRateLabel, None
+				)
+			)
+		self.__playState.getVisibleSetting().valueChanged.connect(
+			self.__visibilityChanged
+			)
+
 	def __connectMenuActions(self, ui):
 		'''Connect actions to methods.
 		For some reason, on_*_triggered methods are called twice unless
@@ -253,6 +266,16 @@ class MainWindow(QtGui.QMainWindow):
 			'proc exit {} { set ::renderer none ; set ::power off }'
 			)
 
+	def __updateFrameRateLabel(self, value):
+		self.__frameRateLabel.setText(str(round(float(value), 1)) + " fps")
+
+	def __visibilityChanged(self, value):
+		if value:
+			self.__frameRateTimer.start()
+		else:
+			self.__frameRateTimer.stop()
+			self.__frameRateLabel.setText('')
+			
 	def consoleReply(self, reply):
 		if reply.endswith('\n'):
 			reply = reply[ : -1]
