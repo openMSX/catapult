@@ -117,12 +117,15 @@ class ConnectorModel(QtCore.QAbstractListModel):
 	def getClass(self, connector):
 		return self.__connectorClasses[connector]
 
-	def __connectorPlugged(self, connector, pluggable):
-		print 'Connector %s got plugged with a %s' % (connector, pluggable)
+	def __connectorPlugged(self, connector, machineId, pluggable):
+		print 'Connector %s got plugged with a %s on machine %s' % (connector, \
+			pluggable, machineId)
+		# TODO: shouldn't we do something with the machineId?
 		self.__setConnector(connector, pluggable)
 
-	def __connectorUnplugged(self, connector, dummy):
-		print 'Connector %s got unplugged' % connector
+	def __connectorUnplugged(self, connector, machineId, dummy):
+		print 'Connector %s got unplugged on machine %s' % (connector, machineId)
+		# TODO: shouldn't we do something with the machineId?
 		self.__setConnector(connector, '')
 
 	def queryConnector(self, connector):
@@ -188,14 +191,16 @@ class ConnectorModel(QtCore.QAbstractListModel):
 			# TODO: Is that a temporary situation?
 			print 'received update for non-existing connector "%s"' % connector
 
-	def __updateConnectorList(self, connector, action):
+	def __updateConnectorList(self, connector, machineId, action):
+		# TODO: shouldn't we do something with the machineId?
 		if action == 'add':
 			self.__connectorAdded(connector)
 		elif action == 'remove':
 			self.__connectorRemoved(connector)
 		else:
 			print 'received update for unsupported action "%s" for ' \
-				'connector "%s".' % ( action, connector )
+				'connector "%s" and machine "%s".'\
+				% ( action, connector, machineId )
 
 	def __connectorReply(self, connector, pluggable, flags = ''):
 		print 'connector update %s to "%s" flags "%s"'\

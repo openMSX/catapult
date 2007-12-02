@@ -199,12 +199,13 @@ class SettingsManager(QtCore.QObject):
 		the order of instantiating
 		'''
 		if name not in self.__settings: # setting may not be registered twice
+			#print 'registering setting %s' % name
 			self.__settings[name] = settingClass(name, self.__bridge)
 			self.__bridge.command('set', name)(self.__settings[name].updateValue)
 
 	# this method probably needs an unconnectSetting method for robustness
 	def unregisterSetting(self, name):
-#		print 'unregistering setting %s' % name
+		#print 'unregistering setting %s' % name
 		assert name in self.__settings # setting must've been registered
 		del self.__settings[name]
 
@@ -224,6 +225,7 @@ class SettingsManager(QtCore.QObject):
 				)( lambda *items: self.__configUIElem(name, obj, *items), None)
 		
 	def __configUIElem(self, name, obj, *items):
+		#print 'Configuring UI element %s for setting %s' % (obj, name)
 		if items[0] == 'float':
 			mini, maxi = items[2].split(' ')
 			if isinstance(obj, QtGui.QSlider):
@@ -254,7 +256,7 @@ class SettingsManager(QtCore.QObject):
 		for name, setting in self.__settings.iteritems():
 			self.__bridge.command('set', name)(setting.updateValue)
 
-	def update(self, name, message):
+	def update(self, name, machineId, message):
 		setting = self.__settings.get(str(name))
 		if setting is None:
 			if str(name) in self.__specialSettings:

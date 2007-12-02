@@ -12,11 +12,11 @@ class PrefixDemux(object):
 	def __init__(self):
 		self.__mapping = {}
 
-	def __call__(self, name, message):
+	def __call__(self, name, machineId, message):
 		handled = False
 		for prefix, handler in self.__mapping.iteritems():
 			if name.startswith(prefix):
-				handler(name, message)
+				handler(name, machineId, message)
 				handled = True
 		if not handled:
 			print 'ignore update for "%s": %s' % ( name, message )
@@ -163,11 +163,11 @@ class ControlBridge(QtCore.QObject):
 			self.__connection.sendCommand(command)
 			self.__sendSerial += 1
 
-	def _update(self, updateType, name, message):
-		print 'UPDATE: %s, %s, %s' % (updateType, name, message)
+	def _update(self, updateType, name, machine, message):
+		print 'UPDATE: %s, %s, %s, %s' % (updateType, name, machine, message)
 		# TODO: Should updates use Tcl syntax for their message?
 		#       Right now, they don't.
-		self.__updateHandlers[str(updateType)](str(name), str(message))
+		self.__updateHandlers[str(updateType)](str(name), str(machine), str(message))
 
 	def _log(self, level, message):
 		print 'log', str(level).upper() + ':', message
@@ -235,6 +235,7 @@ class ControlHandler(QtXml.QXmlDefaultHandler):
 			self.__bridge._update(
 				self.__attrs.value('type'),
 				self.__attrs.value('name'),
+				self.__attrs.value('machine'),
 				self.__message
 				)
 		else:

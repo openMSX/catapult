@@ -2,6 +2,13 @@ $Id$
 
 2007-12-02 Manuel Bilderbeek <manuel@msxnet.org>
 	* Display frame rate in status bar.
+	* Update audio mixer in a much better way. Makes the code in audio.py
+	  a lot more elegant and also fixes a crash when switching machines.
+	  For this it was needed to add machine id's to all update callbacks
+	  and use those for the setting names in the settings manager. This is
+	  because first all devices for a new machine get added and then all
+	  devices of the old machine get removed, when switching machines.
+	  Makes you wonder where we should actually use machineId as well!
 
 2007-12-01 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added a few missing video settings

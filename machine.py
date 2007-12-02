@@ -159,7 +159,7 @@ class MachineManager(QtCore.QObject):
 		self.__currentMachineId = machineId
 		self.__bridge.command('machine_info', 'config_name')(self.__machineChanged)
 
-	def __updateHardware(self, machineId, event):
+	def __updateHardware(self, machineId, dummy, event):
 		print 'Machine', machineId, ':', event
 		if event == 'select':
 			self.__updateMachineId(machineId)

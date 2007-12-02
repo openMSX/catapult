@@ -170,8 +170,9 @@ class ExtensionManager(QtCore.QObject):
 		for extension in extensions:
 			self.__bridge.command('remove_extension', extension.text())()
 
-	def __updateExtension(self, extension, event):
-		print 'Extension', extension, ':', event
+	def __updateExtension(self, extension, machineId, event):
+		print 'Extension', extension, ':', event, '(on machine ', machineId, ')'
+		# TODO: shouldn't we do something with the machineId?
 		self.extensionChanged.emit()
 		if event == 'add':
 			self.__extensionList.addItem(extension)

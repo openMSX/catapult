@@ -101,7 +101,8 @@ class MediaModel(QtCore.QAbstractListModel):
 		else:
 			raise KeyError(mediaSlot)
 
-	def __updateMedium(self, mediaSlot, path):
+	def __updateMedium(self, mediaSlot, machineId, path):
+		# TODO: shouldn't we do something with machineId?
 		try:
 			if self.__setMedium(mediaSlot, path):
 				self.mediumChanged.emit(mediaSlot, path)
@@ -111,14 +112,16 @@ class MediaModel(QtCore.QAbstractListModel):
 			# TODO: Is that a temporary situation?
 			print 'received update for non-existing media slot "%s"' % mediaSlot
 
-	def __updateHardware(self, hardware, action):
+	def __updateHardware(self, hardware, machineId, action):
+		# TODO: shouldn't we do something with machineId?
 		if action == 'add':
 			self.__mediaSlotAdded(hardware)
 		elif action == 'remove':
 			self.__mediaSlotRemoved(hardware)
 		else:
 			print 'received update for unsupported action "%s" for ' \
-				'hardware "%s".' % ( action, hardware )
+				'hardware "%s" on machine "%s".' \
+				% ( action, hardware, machineId )
 
 	def __mediumReply(self, mediaSlot, path, flags = ''):
 		print 'media update %s to "%s" flags "%s"' % ( mediaSlot, path, flags )
@@ -128,8 +131,8 @@ class MediaModel(QtCore.QAbstractListModel):
 			print 'medium slot query reply does not start with "<medium>:", '\
 				'but with "%s"' % mediaSlot
 			return
-		# TODO: Do something with the flags.
-		self.__updateMedium(mediaSlot, path)
+		# TODO: Do something with the flags and fill in the machineId, if necessary.
+		self.__updateMedium(mediaSlot, '?', path)
 
 	def getInserted(self, mediaSlot):
 		'''Returns the path of the medium currently inserted in the given slot.
