@@ -111,7 +111,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__connectMenuActions(ui)
 
 		bridge.logLine.connect(self.logLine)
-		bridge.connectionEstablished.connect(self.__afterConnectionMade)
+		bridge.registerInitial(self.__setUpSettings)
 
 		# full screen is a special setting, because we want to pop up a dialog
 		# before letting the change take effect.
@@ -161,8 +161,9 @@ class MainWindow(QtGui.QMainWindow):
 		else:
 			self.__bridge.sendCommandRaw('set fullscreen off')
 
-	def __afterConnectionMade(self):
+	def __setUpSettings(self):
 		'''Things that should be done after the connection is established
+		This is mostly registering and connecting settings.
 		'''
 		# Some complex settings that need their UI elements to be configured...
 		# we need to register and connect them here since we need to
