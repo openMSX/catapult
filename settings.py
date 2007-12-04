@@ -167,7 +167,7 @@ class FloatSetting(Setting):
 	def setUiObjValue(self, obj, value):
 		val = float(value)
 		if isinstance(obj, QtGui.QSlider):
-			obj.setValue(int(val*100))
+			obj.setValue(round(val*100))
 		else:
 			obj.setValue(val)
 	
@@ -229,8 +229,8 @@ class SettingsManager(QtCore.QObject):
 		if items[0] == 'float':
 			mini, maxi = items[2].split(' ')
 			if isinstance(obj, QtGui.QSlider):
-				obj.setMinimum(int(float(mini)*100))
-				obj.setMaximum(int(float(maxi)*100))
+				obj.setMinimum(round(float(mini)*100))
+				obj.setMaximum(round(float(maxi)*100))
 			else:
 				obj.setMinimum(float(mini))
 				obj.setMaximum(float(maxi))
