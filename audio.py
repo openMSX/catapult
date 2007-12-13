@@ -30,12 +30,12 @@ class AudioModel(QtCore.QAbstractListModel):
 			self.__addDevice(device, machineId)
 		elif updateType == 'remove':
 			self.__removeDevice(device, machineId)
-		else: 
+		else:
 			assert False, 'Unexpected update type'
 	
 	def __initialUpdateReply(self, *devices):
 #		self.__audioChannels.append('master')
-		self.__settingsManager.registerSetting('master_volume', 
+		self.__settingsManager.registerSetting('master_volume',
 			settings.IntegerSetting
 			)
 		self.deviceAdded.emit('master', '')
@@ -48,11 +48,17 @@ class AudioModel(QtCore.QAbstractListModel):
 		self.__settingsManager.registerSetting(
 			machineId + '::' + device + '_volume', settings.IntegerSetting
 			)
+		self.__settingsManager.registerSetting(
+			machineId + '::' + device + '_balance', settings.IntegerSetting
+			)
 		self.deviceAdded.emit(device, machineId)
 
 	def __removeDevice(self, device, machineId):
 		self.__settingsManager.unregisterSetting(
 			machineId + '::' + device + '_volume'
+			)
+		self.__settingsManager.unregisterSetting(
+			machineId + '::' + device + '_balance'
 			)
 #		self.__audioChannels.remove(device)
 		self.deviceRemoved.emit(device, machineId)
@@ -68,11 +74,11 @@ class AudioMixer(QtCore.QObject):
 		self.__ui = ui
 		self.__settingsManager = settingsManager
 
-		self.__sliderItemMap = {}
+		self.__audioControlItemMap = {}
 
-		self.__sliderBox = QtGui.QVBoxLayout(self.__ui)
-		self.__sliderBox.setMargin(6)
-		self.__sliderBox.setSpacing(0)
+		self.__audioControlItemBox = QtGui.QVBoxLayout(self.__ui)
+		self.__audioControlItemBox.setMargin(6)
+		self.__audioControlItemBox.setSpacing(0)
 		
 		self.__audioModel.deviceRemoved.connect(self.__removeChannel)
 		self.__audioModel.deviceAdded.connect(self.__addChannel)
@@ -85,13 +91,13 @@ class AudioMixer(QtCore.QObject):
 		label = QtGui.QLabel()
 		label.setText(channel[0 : 1].upper() + channel[1 :] + ' Volume:')
 		verLayout.addWidget(label)
-		slider = QtGui.QSlider()
-		slider.setObjectName(channel + '_slider')
-		slider.setOrientation(QtCore.Qt.Horizontal)
-		slider.setTickPosition(QtGui.QSlider.TicksBelow)
-		slider.setTickInterval(10)
-		slider.setToolTip('Volume of ' + channel)
-		verLayout.addWidget(slider)
+		volSlider = QtGui.QSlider()
+		volSlider.setObjectName(channel + '_volSlider')
+		volSlider.setOrientation(QtCore.Qt.Horizontal)
+		volSlider.setTickPosition(QtGui.QSlider.TicksBelow)
+		volSlider.setTickInterval(10)
+		volSlider.setToolTip('Volume of ' + channel)
+		verLayout.addWidget(volSlider)
 		verLayout.setSpacing(0)
 		verLayout.setMargin(0)
 		verLayout.addStretch()
@@ -102,25 +108,44 @@ class AudioMixer(QtCore.QObject):
 		horLayout = QtGui.QHBoxLayout(itemWidget)
 		horLayout.setSpacing(6)
 		horLayout.addLayout(verLayout)
-		spinbox = QtGui.QSpinBox()
-		spinbox.setObjectName(channel + '_spinbox')
-		horLayout.addWidget(spinbox)
-
-		if channel == 'master':
-			settingName = 'master_volume'
-		else:
-			settingName = machineId + '::' + channel + '_volume'
+		volSpinbox = QtGui.QSpinBox()
+		volSpinbox.setObjectName(channel + '_volSpinbox')
+		horLayout.addWidget(volSpinbox)
 		
-		self.__settingsManager.connectSetting(settingName, slider)
-		self.__settingsManager.connectSetting(settingName, spinbox)
+		if channel != 'master':
+			balHorLayout = QtGui.QHBoxLayout()
+			balHorLayout.addWidget(QtGui.QLabel('L'))
+			balSlider = QtGui.QSlider()
+			balSlider.setObjectName(channel + '_balSlider')
+			balSlider.setOrientation(QtCore.Qt.Horizontal)
+			balSlider.setTickPosition(QtGui.QSlider.TicksBelow)
+			balSlider.setTickInterval(25)
+			balSlider.setToolTip('Balance of ' + channel)
+			balSlider.setSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+			balHorLayout.addWidget(balSlider)
+			balHorLayout.addWidget(QtGui.QLabel('R'))
+			balVerLayout = QtGui.QVBoxLayout()
+			balVerLayout.addWidget(QtGui.QLabel('Balance:'))
+			balVerLayout.addLayout(balHorLayout)
+			balVerLayout.setSpacing(0)
+			balVerLayout.setMargin(0)
+			horLayout.addLayout(balVerLayout)
+			volSettingName = machineId + '::' + channel + '_volume'
+			balSettingName = machineId + '::' + channel + '_balance'
+			self.__settingsManager.connectSetting(balSettingName, balSlider)
+		else:
+			volSettingName = 'master_volume'
+		
+		self.__settingsManager.connectSetting(volSettingName, volSlider)
+		self.__settingsManager.connectSetting(volSettingName, volSpinbox)
 
-		self.__sliderItemMap[machineId + '::' + channel] = itemWidget
-		self.__sliderBox.addWidget(itemWidget)
+		self.__audioControlItemMap[machineId + '::' + channel] = itemWidget
+		self.__audioControlItemBox.addWidget(itemWidget)
 
 	def __removeChannel(self, channel, machineId):
 		channel = str(channel)
 		machineId = str(machineId)
-		itemWidget = self.__sliderItemMap[machineId + '::' + channel]
-		self.__sliderBox.removeWidget(itemWidget)
+		itemWidget = self.__audioControlItemMap[machineId + '::' + channel]
+		self.__audioControlItemBox.removeWidget(itemWidget)
 		itemWidget.setParent(None)		
 		itemWidget.deleteLater()

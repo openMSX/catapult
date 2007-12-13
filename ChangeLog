@@ -1,5 +1,8 @@
 $Id$
 
+2007-12-13 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added first version of balance controls to the Audio tab
+
 2007-12-02 Manuel Bilderbeek <manuel@msxnet.org>
 	* Display frame rate in status bar.
 	* Update audio mixer in a much better way. Makes the code in audio.py
