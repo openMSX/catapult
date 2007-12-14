@@ -1,5 +1,11 @@
 $Id$
 
+2007-12-14 Manuel Bilderbeek <manuel@msxnet.org>
+	* Improved AudioMixer:
+	  - use stretch to keep channels at the top if there are few
+	  - use scrollarea to get scrollbar (not bigger window) when there are 
+	    many
+
 2007-12-13 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added first version of balance controls to the Audio tab
 

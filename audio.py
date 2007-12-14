@@ -63,8 +63,6 @@ class AudioModel(QtCore.QAbstractListModel):
 #		self.__audioChannels.remove(device)
 		self.deviceRemoved.emit(device, machineId)
 
-# TODO: introduce a scrollarea to prevent the window from resizing with large
-# amounts of channels
 class AudioMixer(QtCore.QObject):
 
 	def __init__(self, ui, settingsManager, bridge):
@@ -74,10 +72,26 @@ class AudioMixer(QtCore.QObject):
 		self.__settingsManager = settingsManager
 
 		self.__audioControlItemMap = {}
-
-		self.__audioControlItemBox = QtGui.QVBoxLayout(self.__ui)
+		
+		# widget that will be controlled by the scrollarea:
+		self.__topLevelWidget = QtGui.QWidget()
+		# layout where we will put our channels in:
+		self.__audioControlItemBox = QtGui.QVBoxLayout(self.__topLevelWidget)
 		self.__audioControlItemBox.setMargin(6)
 		self.__audioControlItemBox.setSpacing(0)
+		# layout to make the scrollarea use all space in this tab:
+		self.__topLevelLayout = QtGui.QGridLayout(self.__ui)
+		self.__topLevelLayout.setMargin(0)
+		self.__topLevelLayout.setSpacing(0)
+		# here we have the scrollarea, to make sure the window does not
+		# get bigger when we have loads of channels
+		self.__scrollArea = QtGui.QScrollArea(self.__ui)
+		self.__scrollArea.setWidget(self.__topLevelWidget)
+		self.__scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+		self.__scrollArea.setWidgetResizable(True)
+		self.__scrollArea.setFrameStyle(QtGui.QFrame.NoFrame)
+		
+		self.__topLevelLayout.addWidget(self.__scrollArea)
 		
 		self.__audioModel.deviceRemoved.connect(self.__removeChannel)
 		self.__audioModel.deviceAdded.connect(self.__addChannel)
