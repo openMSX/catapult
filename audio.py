@@ -65,7 +65,6 @@ class AudioModel(QtCore.QAbstractListModel):
 
 # TODO: introduce a scrollarea to prevent the window from resizing with large
 # amounts of channels
-# TODO: add stretch, in case of very short lists of channels.
 class AudioMixer(QtCore.QObject):
 
 	def __init__(self, ui, settingsManager, bridge):
@@ -87,6 +86,9 @@ class AudioMixer(QtCore.QObject):
 		channel = str(channel)
 		machineId = str(machineId)
 		verLayout = QtGui.QVBoxLayout()
+
+		# remove last item, which is the QSpacerItem providing stretch
+		self.__audioControlItemBox.takeAt(self.__audioControlItemBox.count() - 1)
 
 		label = QtGui.QLabel()
 		label.setText(channel[0 : 1].upper() + channel[1 :] + ' Volume:')
@@ -141,6 +143,9 @@ class AudioMixer(QtCore.QObject):
 
 		self.__audioControlItemMap[machineId + '::' + channel] = itemWidget
 		self.__audioControlItemBox.addWidget(itemWidget)
+
+		# add stretch (QSpacerItem) to make sure all stuff remains at the top
+		self.__audioControlItemBox.addStretch(10)
 
 	def __removeChannel(self, channel, machineId):
 		channel = str(channel)
