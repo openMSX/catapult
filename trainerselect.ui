@@ -14,18 +14,48 @@
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
-    <widget class="QComboBox" name="gameSelector" >
-     <property name="maxVisibleItems" >
-      <number>15</number>
-     </property>
+    <layout class="QHBoxLayout" >
      <item>
-      <property name="text" >
-       <string>None</string>
-      </property>
+      <widget class="QLabel" name="label_2" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text" >
+        <string>Game:</string>
+       </property>
+      </widget>
      </item>
-    </widget>
+     <item>
+      <widget class="QComboBox" name="gameSelector" >
+       <property name="maxVisibleItems" >
+        <number>15</number>
+       </property>
+       <item>
+        <property name="text" >
+         <string>None</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item row="1" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text" >
+      <string>Cheats:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
     <widget class="QWidget" native="1" name="emptyContainerWidget" />
    </item>
   </layout>

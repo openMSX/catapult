@@ -31,7 +31,7 @@ class TrainerSelect(object):
 			self.__trainerVLayout = QtGui.QVBoxLayout(ui.emptyContainerWidget)
 			self.__trainerVLayout.setObjectName('trainerVLayout')
 			self.__trainerVLayout.setSpacing(0)
-			self.__trainerVLayout.setMargin(6)
+			self.__trainerVLayout.setMargin(0)
 			# scrollarea to make sure everything will fit in the window
 			self.__scrollArea = QtGui.QScrollArea(dialog)
 			self.__scrollArea.setWidget(ui.emptyContainerWidget)
@@ -107,11 +107,6 @@ class TrainerSelect(object):
 				)
 			self.__trainerVLayout.addWidget(checkbox)
 		self.__trainerVLayout.addStretch(10)
-
-		#print "checkboxes added... " + str(len(self.__checkbox))
-		#if len(self.__checkbox) - self.__debugvalue != 0 :
-		#	print "--------------------------------------------" 
-		#self.__debugvalue = len(self.__checkbox)
 
 	def __toggle(self, index ):
 		print "toggled "+str(self.__selected) +" "+str(index)
