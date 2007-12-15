@@ -217,7 +217,33 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.registerSetting('display_deform', settings.EnumSetting)
 		settingsManager.connectSetting('display_deform', ui.displaydeformComboBox)
 
-		connect(self.__frameRateTimer, 'timeout()', 
+		###### non standard settings
+		
+		# monitor type
+		# TODO: settings implemented in TCL don't have a way to sync
+		# back...
+		def monitorTypeListReply(*words):
+			combo = self.__ui.monitorTypeComboBox
+			for word in words:
+				combo.addItem(QtCore.QString(word))
+			# hardcoding to start on normal, because this setting
+			# cannot be saved anyway
+			index = combo.findText('normal')
+			combo.setCurrentIndex(index)
+
+		self.__bridge.command('monitor_type', '-list')(
+				monitorTypeListReply
+			)
+		
+		def monitorTypeChanged(newType):
+			self.__bridge.command('monitor_type', str(newType))()
+
+		connect(self.__ui.monitorTypeComboBox, 'activated(QString)',
+			monitorTypeChanged
+			)
+
+		###### other stuff
+		connect(self.__frameRateTimer, 'timeout()',
 			lambda: self.__bridge.command('openmsx_info', 'fps')(
 				self.__updateFrameRateLabel, None
 				)

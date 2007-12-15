@@ -4,6 +4,9 @@ $Id$
 	* Double-click to center in balance controls to the Audio tab
 	* Big clean ups and addition of Enable All and Enable None buttons in
 	  Trainer Selector.
+	* Added monitor-type control, which is a bit messy, because it's an
+	  openMSX setting implemented in Tcl and not natively... No back sync
+	  possible, e.g.
 
 2007-12-14 Manuel Bilderbeek <manuel@msxnet.org>
 	* Improved AudioMixer:
