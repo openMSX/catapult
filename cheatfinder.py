@@ -26,31 +26,28 @@ class Cheatfinder(object):
 			self.__ui = ui
 
 			# Connect signals.
-			connect(ui.FindCheatLess, 'clicked()', self.findCheatLess)
-			connect(ui.FindCheatLessEqual, 'clicked()', self.findCheatLessEqual)
-			connect(ui.FindCheatEqual, 'clicked()', self.findCheatEqual)
-			connect(ui.FindCheatNotEqual, 'clicked()', self.findCheatNotEqual)
-			connect(ui.FindCheatMoreEqual, 'clicked()', self.findCheatMoreEqual)
-			connect(ui.FindCheatMore, 'clicked()', self.findCheatMore)
-			connect(ui.FindCheatRestart, 'clicked()', self.findCheatRestart)
-			connect(ui.FindCheatValue, 'clicked()', self.findCheatValue)
-			connect(ui.EmulationTogglePause, 'clicked()', self.emulationTogglePause)
-			connect(ui.EmulationReset, 'clicked()', self.emulationReset)
-			connect(ui.rbCompare, 'clicked()', self.disableDirectSearch)
-			connect(ui.rbSearch, 'clicked()', self.disableCompareSearch)
+			connect(ui.FindCheatLess, 'clicked()', self.__findCheatLess)
+			connect(ui.FindCheatLessEqual, 'clicked()', self.__findCheatLessEqual)
+			connect(ui.FindCheatEqual, 'clicked()', self.__findCheatEqual)
+			connect(ui.FindCheatNotEqual, 'clicked()', self.__findCheatNotEqual)
+			connect(ui.FindCheatMoreEqual, 'clicked()', self.__findCheatMoreEqual)
+			connect(ui.FindCheatMore, 'clicked()', self.__findCheatMore)
+			connect(ui.FindCheatRestart, 'clicked()', self.__findCheatRestart)
+			connect(ui.FindCheatValue, 'clicked()', self.__findCheatValue)
+			connect(ui.EmulationTogglePause, 'clicked()', self.__emulationTogglePause)
+			connect(ui.EmulationReset, 'clicked()', self.__emulationReset)
+			connect(ui.rbCompare, 'clicked()', self.__disableDirectSearch)
+			connect(ui.rbSearch, 'clicked()', self.__disableCompareSearch)
 
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
 		self.__ui.CheatTable.verticalHeader().hide()
-		self.__ui.CheatTable.horizontalHeader().setStretchLastSection(True)
-		self.__ui.CheatTable.setColumnWidth(0, 70)
-		self.__ui.CheatTable.setColumnWidth(1, 60)
-		self.__ui.CheatTable.setColumnWidth(2, 60)
-		self.__ui.CheatTable.setColumnWidth(3, 60)
-		self.__ui.CheatTable.setColumnWidth(4, 60)
+		self.__ui.CheatTable.horizontalHeader().setResizeMode(
+			QtGui.QHeaderView.Stretch
+		)
 
-	def disableDirectSearch(self):
+	def __disableDirectSearch(self):
 		self.__ui.FindCheatValue.setEnabled(False)
 		self.__ui.cheatVal.setEnabled(False)
 		self.__ui.FindCheatLess.setEnabled(True)
@@ -60,7 +57,7 @@ class Cheatfinder(object):
 		self.__ui.FindCheatMoreEqual.setEnabled(True)
 		self.__ui.FindCheatMore.setEnabled(True)
 
-	def disableCompareSearch(self):
+	def __disableCompareSearch(self):
 		self.__ui.FindCheatValue.setEnabled(True)
 		self.__ui.cheatVal.setEnabled(True)
 		self.__ui.FindCheatLess.setEnabled(False)
@@ -70,44 +67,44 @@ class Cheatfinder(object):
 		self.__ui.FindCheatMoreEqual.setEnabled(False)
 		self.__ui.FindCheatMore.setEnabled(False)
 
-	def emulationTogglePause(self):
+	def __emulationTogglePause(self):
 		self.__bridge.command('toggle', 'pause')()
 
-	def emulationReset(self):
+	def __emulationReset(self):
 		self.__ui.FindCheatRestart.setEnabled(False)
-		self.__bridge.command('reset')(self.__CheatListReply)
+		self.__bridge.command('reset')(self.__cheatListReply)
 
-	def findCheatLess(self):
+	def __findCheatLess(self):
 		self.__ui.FindCheatRestart.setEnabled(False)
 		self.__ui.cheatResults.append('Less')
-		self.__bridge.command('findcheat', 'less')(self.__CheatListReply)
+		self.__bridge.command('findcheat', 'less')(self.__cheatListReply)
 
-	def findCheatLessEqual(self):
+	def __findCheatLessEqual(self):
 		self.__ui.FindCheatRestart.setEnabled(False)
 		self.__ui.cheatResults.append('Less Or Equal')
-		self.__bridge.command('findcheat', 'loe')(self.__CheatListReply)
+		self.__bridge.command('findcheat', 'loe')(self.__cheatListReply)
 
-	def findCheatEqual(self):
+	def __findCheatEqual(self):
 		self.__ui.FindCheatRestart.setEnabled(False)
 		self.__ui.cheatResults.append('Equal')
-		self.__bridge.command('findcheat', 'equal')(self.__CheatListReply)
+		self.__bridge.command('findcheat', 'equal')(self.__cheatListReply)
 
-	def findCheatNotEqual(self):
+	def __findCheatNotEqual(self):
 		self.__ui.FindCheatRestart.setEnabled(False)
 		self.__ui.cheatResults.append('Search Not Equal')
-		self.__bridge.command('findcheat', 'notequal')(self.__CheatListReply)
+		self.__bridge.command('findcheat', 'notequal')(self.__cheatListReply)
 
-	def findCheatMoreEqual(self):
+	def __findCheatMoreEqual(self):
 		self.__ui.FindCheatRestart.setEnabled(False)
 		self.__ui.cheatResults.append('Search More Or Equal')
-		self.__bridge.command('findcheat', 'moe')(self.__CheatListReply)
+		self.__bridge.command('findcheat', 'moe')(self.__cheatListReply)
 
-	def findCheatMore(self):
+	def __findCheatMore(self):
 		self.__ui.FindCheatRestart.setEnabled(False)
 		self.__ui.cheatResults.append('Search More')
-		self.__bridge.command('findcheat', 'more')(self.__CheatListReply)
+		self.__bridge.command('findcheat', 'more')(self.__cheatListReply)
 
-	def findCheatRestart(self):
+	def __findCheatRestart(self):
 		cheatValue = self.__ui.cheatVal.text()
 		self.__ui.FindCheatRestart.setEnabled(False)
 		if len(cheatValue)<1:
@@ -116,15 +113,15 @@ class Cheatfinder(object):
 			msgText = 'Start New Search Equal To: '+str(cheatValue)
 		self.__ui.cheatResults.append(msgText)
 		self.__bridge.command('findcheat', '-start', cheatValue)(
-			self.__CheatListReply
+			self.__cheatListReply
 		)
 
-	def findCheatValue(self):
+	def __findCheatValue(self):
 		cheatValue = self.__ui.cheatVal.text()
 		self.__ui.cheatResults.append('Searching For :'+str(cheatValue))
-		self.__bridge.command('findcheat', cheatValue)(self.__CheatListReply)
+		self.__bridge.command('findcheat', cheatValue)(self.__cheatListReply)
 
-	def __CheatListReply(self, *words):
+	def __cheatListReply(self, *words):
 		line = ' '.join(words)
 		text = self.__ui.cheatResults
 		color = QColor()
@@ -138,7 +135,7 @@ class Cheatfinder(object):
 			text.setTextColor(color)
 			text.append(line)
 		else:
-			if line.find('results')>1:
+			if line.find('results') > 1:
 				text.append(line)
 
 		#Check if results are found
@@ -156,7 +153,7 @@ class Cheatfinder(object):
 			self.__ui.CheatTable.setRowCount( len(cheatArray) - 1 )
 			self.__ui.CheatTable.setSortingEnabled(0)
 			self.__ui.CheatTable.verticalHeader().setResizeMode(
-				QtGui.QHeaderView.ResizeToContents 
+				QtGui.QHeaderView.ResizeToContents
 				)
 
 			row = 0
@@ -169,28 +166,22 @@ class Cheatfinder(object):
 				addrItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 				self.__ui.CheatTable.setItem(row, 0, addrItem)
 
-				#Fill Old Value Item (dec)
-				oldValItem = QtGui.QTableWidgetItem(cheatVal[1])
+				#Fill Old Value Item 
+				oldValItem = QtGui.QTableWidgetItem(
+					cheatVal[1] + ' / ' + str(hex(int(cheatVal[1])))
+				)
 				oldValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 				self.__ui.CheatTable.setItem(row, 1, oldValItem)
 
-				#Fill New Value Item (dec)
-				newValItem = QtGui.QTableWidgetItem(cheatVal[2])
+				#Fill New Value Item
+				newValItem = QtGui.QTableWidgetItem(
+					cheatVal[2] + ' / ' + str(hex(int(cheatVal[2])))
+				)
 				newValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 				self.__ui.CheatTable.setItem(row, 2, newValItem)
 
-				#Fill Old Value Item (Hex)
-				oldValItem = QtGui.QTableWidgetItem(hex(int(cheatVal[1])))
-				oldValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
-				self.__ui.CheatTable.setItem(row, 3, oldValItem)
-
-				#Fill New Value Item (Hex)
-				newValItem = QtGui.QTableWidgetItem(hex(int(cheatVal[2])))
-				newValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
-				self.__ui.CheatTable.setItem(row, 4, newValItem)
-
 				row += 1
-			text.append(str(row)+" results found -> Displayed in table")
+			text.append(str(row) + " results found -> Displayed in table")
 
 			#Enable Sorting
 			self.__ui.CheatTable.setSortingEnabled(1)
