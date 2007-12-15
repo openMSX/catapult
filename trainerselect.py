@@ -11,11 +11,8 @@ class TrainerSelect(object):
 		self.__bridge = bridge
 		self.__selected = ""
 		self.__checkbox = []
-		self.__spacerItem = None
-		self.wdgtspacing = 0
-		self.wdgtmargin = 9
-		# tmp to debug checkbox
-		#self.__debugvalue = 0
+		self.__trainerVLayout = None
+		self.__scrollArea = None
 
 	def show(self):
 		dialog = self.__cfDialog
@@ -30,38 +27,27 @@ class TrainerSelect(object):
 			ui = Ui_trainerSelect()
 			ui.setupUi(dialog)
 			self.__ui = ui
-			self.__ui.emptywidget = QtGui.QWidget()
-			self.__ui.somewidget = QtGui.QScrollArea(self.__ui.containeremptywidget)
-			sizePolicyA = QtGui.QSizePolicy(
-				QtGui.QSizePolicy.Expanding,
-				QtGui.QSizePolicy.Expanding
-				)
-			self.__ui.emptywidget.setSizePolicy(sizePolicyA)
-			sizePolicyB = QtGui.QSizePolicy(
-				QtGui.QSizePolicy.Expanding,
-				QtGui.QSizePolicy.Expanding
-				)
-			self.__ui.somewidget.setSizePolicy(sizePolicyB)
-			self.__ui.somewidget.setWidget(self.__ui.emptywidget)
-			#self.__ui.somewidget.setWidgetResizable(1)
-			self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
-			self.__ui.vboxlayout.setObjectName("vboxlayout")
-			self.__ui.vboxlayout.setSpacing( self.wdgtspacing )
-			self.__ui.vboxlayout.setMargin( self.wdgtmargin  )
-
+			# layout where we will put the cheats in:
+			self.__trainerVLayout = QtGui.QVBoxLayout(ui.emptyContainerWidget)
+			self.__trainerVLayout.setObjectName('trainerVLayout')
+			self.__trainerVLayout.setSpacing(0)
+			self.__trainerVLayout.setMargin(6)
+			# scrollarea to make sure everything will fit in the window
+			self.__scrollArea = QtGui.QScrollArea(dialog)
+			self.__scrollArea.setWidget(ui.emptyContainerWidget)
+			self.__scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+			self.__scrollArea.setWidgetResizable(True)
+			self.__scrollArea.setFrameStyle(QtGui.QFrame.NoFrame)
+			ui.gridlayout.addWidget(self.__scrollArea)
+			
 			# Connect signals.
-			connect(ui.cheatSelector, 'activated(QString)', self.fillCheats)
+			connect(ui.gameSelector, 'activated(QString)', self.fillCheats)
 
 
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
 		self.getCheats()
-		#the dialog.show() is resizing everything?
-		#and then I fiddle with the new values...
-		newWidth = self.__ui.containeremptywidget.width()
-		newHeight = self.__ui.containeremptywidget.height()
-		self.__ui.somewidget.resize(newWidth, newHeight)
 
 	def getCheats(self):
 		self.__bridge.command(
@@ -72,12 +58,12 @@ class TrainerSelect(object):
 		
 	def __fillCheats(self, *words):
 		words = sorted(words)
-		text = self.__ui.cheatSelector 
+		text = self.__ui.gameSelector
 		for cheats in words[ : -1]:
 			text.addItem(cheats)
 
 	def fillCheats(self):
-		self.__selected = self.__ui.cheatSelector.currentText()
+		self.__selected = self.__ui.gameSelector.currentText()
 		self.__bridge.command(
 			'trainer',
 			str(self.__selected)
@@ -87,55 +73,16 @@ class TrainerSelect(object):
 		line = ' '.join(words)
 		trainerArray = line.split('\n')
 		
-		#remove all items in the vboxlayout
-		#print "checkboxes to remove... " + str(len(self.__checkbox))
-		#let the 
-		self.__ui.vboxlayout = None
-		self.__ui.emptywidget = None
-		#-------------------- ------------------------------------
-		# Old code temporaly kept for later reference
-		#
-		#		for widget in self.__checkbox[:]:
-		#			self.__ui.vboxlayout.removeWidget(widget)
-		#			#self.__ui.emptywidget.removeChild(widget)
-		#			##p = widget.parent()
-		#			##p.removeChild(widget)
-		#			widget.close()
-		#			#a close() doesn't deletes/free the python objects
-		#			del widget
-		#---------------------------------------------------------
-		#
-		# this new code simply throws away the emptywidget, boxlayout etc etc
-		# and lets python/pyqt garbage collector take care of it all
-		#
-		self.__ui.emptywidget = QtGui.QWidget()
-		sizePolicyA = QtGui.QSizePolicy(
-			QtGui.QSizePolicy.Expanding,
-			QtGui.QSizePolicy.Expanding
-			)
-		self.__ui.emptywidget.setSizePolicy(sizePolicyA)
-		self.__ui.somewidget.setWidget(self.__ui.emptywidget)
-		self.__ui.vboxlayout = QtGui.QVBoxLayout(self.__ui.emptywidget)
-		self.__ui.vboxlayout.setObjectName("vboxlayout")
-		self.__ui.vboxlayout.setSpacing( self.wdgtspacing )
-		self.__ui.vboxlayout.setMargin( self.wdgtmargin  )
-		newWidth = self.__ui.containeremptywidget.width()
-		newHeight = self.__ui.containeremptywidget.height()
-		self.__ui.somewidget.resize(newWidth, newHeight)
-
+		#remove all items in the trainerVLayout
+		child = self.__trainerVLayout.takeAt(0)
+		while (child != None):
+			if not isinstance(child, QtGui.QSpacerItem):
+				child.widget().setParent(None)
+				child.widget().deleteLater()
+			del child
+			child =  self.__trainerVLayout.takeAt(0)
+	
 		self.__checkbox = []
-
-		#-----------------------------------------------------------------------
-		# if the old code was used then this debug prints showed that emptywidget
-		# still kept all the previously instantiated checkboxes as children
-		# so the number kept going up with every trainer selected!!
-		#
-		#lijstje = self.__ui.emptywidget.findChildren(QtGui.QCheckBox)
-		#print "found children: " +  str(len(lijstje))
-
-
-		i = newwidth = 0
-		newheight = 2 * self.wdgtmargin 
 		for trainerLine in trainerArray[ 1 : ]:
 			trainerIndex = trainerLine.rstrip()\
 			[:trainerLine.find('[')]
@@ -152,21 +99,15 @@ class TrainerSelect(object):
 			checkbox.setText(trainerDesc)
 			checkbox.setChecked( trainerActive == '[x]')
 			checkbox.setObjectName( trainerIndex )
-			size = checkbox.sizeHint()
-			newheight = newheight + self.wdgtspacing + size.height()
-			if newwidth < size.width():
-				newwidth = size.width()
 			self.__checkbox.append( checkbox )
-			connect(self.__checkbox[i],
+			connect(checkbox,
 				'stateChanged(int)',
-				lambda x , trainerIndex=trainerIndex:
+				lambda x , trainerIndex = trainerIndex:
 					self.__toggle(trainerIndex)
 				)
-			self.__ui.vboxlayout.addWidget(checkbox)
-			i = i + 1
-		newwidth = newwidth + 2 * self.wdgtmargin 
+			self.__trainerVLayout.addWidget(checkbox)
+		self.__trainerVLayout.addStretch(10)
 
-		self.__ui.emptywidget.resize(newwidth, newheight)
 		#print "checkboxes added... " + str(len(self.__checkbox))
 		#if len(self.__checkbox) - self.__debugvalue != 0 :
 		#	print "--------------------------------------------" 
