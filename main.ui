@@ -33,7 +33,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QTabWidget" name="tabWidget" >
+     <widget class="QTabWidget" name="miscTab" >
       <property name="currentIndex" >
        <number>0</number>
       </property>
@@ -2635,6 +2635,335 @@ p, li { white-space: pre-wrap; }
         <string>Audio</string>
        </attribute>
       </widget>
+      <widget class="QWidget" name="tab" >
+       <attribute name="title" >
+        <string>Misc</string>
+       </attribute>
+       <layout class="QGridLayout" >
+        <item row="0" column="0" >
+         <widget class="QGroupBox" name="groupBox" >
+          <property name="title" >
+           <string>Emulation Speed and Performance Controls</string>
+          </property>
+          <layout class="QVBoxLayout" >
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <layout class="QVBoxLayout" >
+               <property name="spacing" >
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_10" >
+                 <property name="text" >
+                  <string>Emulation Speed:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="speedSlider" >
+                 <property name="toolTip" >
+                  <string>Emulation speed compared to real MSX.</string>
+                 </property>
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="tickPosition" >
+                  <enum>QSlider::NoTicks</enum>
+                 </property>
+                 <property name="tickInterval" >
+                  <number>10</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="speedSpinBox" >
+               <property name="toolTip" >
+                <string>Emulation speed compared to real MSX.</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="suffix" >
+                <string>%</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="normalSpeedButton" >
+               <property name="sizePolicy" >
+                <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip" >
+                <string>Reset to normal value.</string>
+               </property>
+               <property name="text" >
+                <string>Normal</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="limitSpeedCheckBox" >
+               <property name="toolTip" >
+                <string>Uncheck for unlimited (maximum) speed</string>
+               </property>
+               <property name="text" >
+                <string>limit</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="fullSpeedWhenLoadingCheckBox" >
+             <property name="toolTip" >
+              <string>Enable to speed up loading from disk or tape, without losing emulation accuracy</string>
+             </property>
+             <property name="text" >
+              <string>Unlimited speed when loading from any media</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLabel" name="label_11" >
+               <property name="text" >
+                <string>Frame skip:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" >
+               <item>
+                <widget class="QLabel" name="label_12" >
+                 <property name="text" >
+                  <string>max.:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="maxFrameSkipSpinBox" >
+                 <property name="toolTip" >
+                  <string>Don't skip more frames than this.</string>
+                 </property>
+                 <property name="alignment" >
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="resetMaxFrameSkipButton" >
+                 <property name="toolTip" >
+                  <string>Reset to default value.</string>
+                 </property>
+                 <property name="text" >
+                  <string>Reset</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" >
+               <item>
+                <widget class="QLabel" name="label_13" >
+                 <property name="text" >
+                  <string>min.:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="minFrameSkipSpinBox" >
+                 <property name="toolTip" >
+                  <string>Skip at least this amount of frames.</string>
+                 </property>
+                 <property name="alignment" >
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="resetMinFrameSkipButton" >
+                 <property name="toolTip" >
+                  <string>Reset to default value.</string>
+                 </property>
+                 <property name="text" >
+                  <string>Reset</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QGroupBox" name="groupBox_2" >
+          <property name="title" >
+           <string>MSX CPU Speed Tweaking Controls</string>
+          </property>
+          <layout class="QVBoxLayout" >
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <layout class="QVBoxLayout" >
+               <property name="spacing" >
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_15" >
+                 <property name="text" >
+                  <string>Z80 Clock Frequency:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="Z80FrequencySlider" >
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="tickPosition" >
+                  <enum>QSlider::TicksBelow</enum>
+                 </property>
+                 <property name="tickInterval" >
+                  <number>10000000</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="Z80FrequencySpinBox" >
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="suffix" >
+                <string> Hz</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="resetZ80FrequencyButton" >
+               <property name="toolTip" >
+                <string>Reset to default value.</string>
+               </property>
+               <property name="text" >
+                <string>Reset</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="Z80FrequencyLockCheckBox" >
+               <property name="toolTip" >
+                <string>Locked: use internal frequency; otherwise use given frequency.</string>
+               </property>
+               <property name="text" >
+                <string>lock</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <layout class="QVBoxLayout" >
+               <property name="spacing" >
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_17" >
+                 <property name="text" >
+                  <string>R800 Clock Frequency:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="R800FrequencySlider" >
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="tickPosition" >
+                  <enum>QSlider::TicksBelow</enum>
+                 </property>
+                 <property name="tickInterval" >
+                  <number>10000000</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="R800FrequencySpinBox" >
+               <property name="alignment" >
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="suffix" >
+                <string> Hz</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="resetR800FrequencyButton" >
+               <property name="toolTip" >
+                <string>Reset to default value.</string>
+               </property>
+               <property name="text" >
+                <string>Reset</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="R800FrequencyLockCheckBox" >
+               <property name="toolTip" >
+                <string>Locked: use internal frequency; otherwise use given frequency.</string>
+               </property>
+               <property name="text" >
+                <string>lock</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>20</width>
+            <height>56</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="consoleTab" >
        <attribute name="title" >
         <string>Console</string>
@@ -2904,7 +3233,7 @@ p, li { white-space: pre-wrap; }
  <resources/>
  <connections>
   <connection>
-   <sender>tabWidget</sender>
+   <sender>miscTab</sender>
    <signal>currentChanged(int)</signal>
    <receiver>consoleLineEdit</receiver>
    <slot>setFocus()</slot>

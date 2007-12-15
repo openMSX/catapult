@@ -274,3 +274,10 @@ class SettingsManager(QtCore.QObject):
 		else:
 			setting.setValue(message)
 
+	def restoreToDefault(self, name):
+		'''Tells openMSX to set the setting to its default value.
+		   Will trigger an update, so that we will know about the
+		   new value as well.
+		'''
+		self.__bridge.command('unset', name)()
+

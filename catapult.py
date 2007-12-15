@@ -179,6 +179,8 @@ class MainWindow(QtGui.QMainWindow):
 		# The same goes for practically all settings.
 		settingsManager = self.__settingsManager
 		ui = self.__ui
+		
+		# video settings
 		settingsManager.registerSetting('gamma', settings.FloatSetting)
 		settingsManager.connectSetting('gamma', ui.gammaSlider)
 		settingsManager.connectSetting('gamma', ui.gammaSpinBox)
@@ -216,6 +218,42 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.connectSetting('renderer', ui.rendererComboBox)
 		settingsManager.registerSetting('display_deform', settings.EnumSetting)
 		settingsManager.connectSetting('display_deform', ui.displaydeformComboBox)
+
+		# misc settings
+		settingsManager.registerSetting('speed', settings.IntegerSetting)
+		settingsManager.connectSetting('speed', ui.speedSlider)
+		settingsManager.connectSetting('speed', ui.speedSpinBox)
+		connect(ui.normalSpeedButton, 'clicked()',
+			lambda: settingsManager.restoreToDefault('speed'))
+		settingsManager.registerSetting('throttle', settings.BooleanSetting)
+		settingsManager.connectSetting('throttle', ui.limitSpeedCheckBox)
+		settingsManager.registerSetting('fullspeedwhenloading',
+			settings.BooleanSetting)
+		settingsManager.connectSetting('fullspeedwhenloading',
+			ui.fullSpeedWhenLoadingCheckBox)
+		settingsManager.registerSetting('minframeskip', settings.IntegerSetting)
+		settingsManager.connectSetting('minframeskip', ui.minFrameSkipSpinBox)
+		connect(ui.resetMinFrameSkipButton, 'clicked()',
+			lambda: settingsManager.restoreToDefault('minframeskip'))
+		settingsManager.registerSetting('maxframeskip', settings.IntegerSetting)
+		settingsManager.connectSetting('maxframeskip', ui.maxFrameSkipSpinBox)
+		connect(ui.resetMaxFrameSkipButton, 'clicked()',
+			lambda: settingsManager.restoreToDefault('maxframeskip'))
+		settingsManager.registerSetting('z80_freq', settings.IntegerSetting)
+		settingsManager.connectSetting('z80_freq', ui.Z80FrequencySpinBox)
+		settingsManager.connectSetting('z80_freq', ui.Z80FrequencySlider)
+		settingsManager.registerSetting('z80_freq_locked', settings.BooleanSetting)
+		settingsManager.connectSetting('z80_freq_locked', ui.Z80FrequencyLockCheckBox)
+		connect(ui.resetZ80FrequencyButton, 'clicked()',
+			lambda: settingsManager.restoreToDefault('z80_freq'))
+		settingsManager.registerSetting('r800_freq', settings.IntegerSetting)
+		settingsManager.connectSetting('r800_freq', ui.R800FrequencySpinBox)
+		settingsManager.connectSetting('r800_freq', ui.R800FrequencySlider)
+		settingsManager.registerSetting('r800_freq_locked', settings.BooleanSetting)
+		settingsManager.connectSetting('r800_freq_locked',
+			ui.R800FrequencyLockCheckBox)
+		connect(ui.resetR800FrequencyButton, 'clicked()',
+			lambda: settingsManager.restoreToDefault('r800_freq'))
 
 		###### non standard settings
 		

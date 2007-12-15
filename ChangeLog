@@ -7,6 +7,10 @@ $Id$
 	* Added monitor-type control, which is a bit messy, because it's an
 	  openMSX setting implemented in Tcl and not natively... No back sync
 	  possible, e.g.
+	* Added a new Misc tab with controls for emulation speed, frame skip
+	  and CPU frequency.
+	* TODO: find a way to handle machine switching for machine specific
+	  settings
 
 2007-12-14 Manuel Bilderbeek <manuel@msxnet.org>
 	* Improved AudioMixer:
