@@ -41,28 +41,26 @@ class TrainerSelect(object):
 			ui.gridlayout.addWidget(self.__scrollArea)
 			
 			# Connect signals.
-			connect(ui.gameSelector, 'activated(QString)', self.fillCheats)
+			connect(ui.gameSelector, 'activated(QString)', self.__fillCheats)
+			connect(ui.enableNoneButton, 'clicked()', self.__enableNone)
+			connect(ui.enableAllButton, 'clicked()', self.__enableAll)
 
 
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
-		self.getCheats()
-
-	def getCheats(self):
+		# get cheats
 		self.__bridge.command(
-			'array',
-			'names',
-			'::__trainers'
-			)(self.__fillCheats)
+			'array', 'names', '::__trainers'
+			)(self.__fillGameSelector)
 		
-	def __fillCheats(self, *words):
+	def __fillGameSelector(self, *words):
 		words = sorted(words)
 		text = self.__ui.gameSelector
-		for cheats in words[ : -1]:
-			text.addItem(cheats)
+		for game in words[ : -1]:
+			text.addItem(game)
 
-	def fillCheats(self):
+	def __fillCheats(self):
 		self.__selected = self.__ui.gameSelector.currentText()
 		self.__bridge.command(
 			'trainer',
@@ -80,7 +78,7 @@ class TrainerSelect(object):
 				child.widget().setParent(None)
 				child.widget().deleteLater()
 			del child
-			child =  self.__trainerVLayout.takeAt(0)
+			child = self.__trainerVLayout.takeAt(0)
 	
 		self.__checkbox = []
 		for trainerLine in trainerArray[ 1 : ]:
@@ -102,13 +100,13 @@ class TrainerSelect(object):
 			self.__checkbox.append( checkbox )
 			connect(checkbox,
 				'stateChanged(int)',
-				lambda x , trainerIndex = trainerIndex:
+				lambda x, trainerIndex = trainerIndex:
 					self.__toggle(trainerIndex)
 				)
 			self.__trainerVLayout.addWidget(checkbox)
 		self.__trainerVLayout.addStretch(10)
 
-	def __toggle(self, index ):
+	def __toggle(self, index):
 		print "toggled "+str(self.__selected) +" "+str(index)
 		self.__bridge.command('trainer',
 			str(self.__selected),
@@ -118,3 +116,15 @@ class TrainerSelect(object):
 		#This would catch also all cases of manual (de)selection in 
 		#the openMSX console which we do ignore at the moment...
 		#self.__bridge.command('trainer', str(self.__selected))(self.__update)
+
+	def __enableNone(self):
+		for checkBox in self.__checkbox:
+			if checkBox.isChecked():
+				checkBox.setChecked(False)
+
+	def __enableAll(self):
+		for checkBox in self.__checkbox:
+			if not checkBox.isChecked():
+				checkBox.setChecked(True)
+
+	

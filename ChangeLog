@@ -2,6 +2,8 @@ $Id$
 
 2007-12-15 Manuel Bilderbeek <manuel@msxnet.org>
 	* Double-click to center in balance controls to the Audio tab
+	* Big clean ups and addition of Enable All and Enable None buttons in
+	  Trainer Selector.
 
 2007-12-14 Manuel Bilderbeek <manuel@msxnet.org>
 	* Improved AudioMixer:
