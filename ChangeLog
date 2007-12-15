@@ -1,5 +1,8 @@
 $Id$
 
+2007-12-15 Manuel Bilderbeek <manuel@msxnet.org>
+	* Double-click to center in balance controls to the Audio tab
+
 2007-12-14 Manuel Bilderbeek <manuel@msxnet.org>
 	* Improved AudioMixer:
 	  - use stretch to keep channels at the top if there are few

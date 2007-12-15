@@ -63,6 +63,16 @@ class AudioModel(QtCore.QAbstractListModel):
 #		self.__audioChannels.remove(device)
 		self.deviceRemoved.emit(device, machineId)
 
+class BalanceSlider(QtGui.QSlider):
+
+	def __init__(self, parent = None):
+		QtGui.QSlider.__init__(self, parent)
+
+	# pylint: disable-msg=W0613
+	# We don't need the arguments, but Qt defines this interface.
+	def mouseDoubleClickEvent(self, event):
+		self.setValue(0)
+
 class AudioMixer(QtCore.QObject):
 
 	def __init__(self, ui, settingsManager, bridge):
@@ -131,12 +141,13 @@ class AudioMixer(QtCore.QObject):
 		if channel != 'master':
 			balHorLayout = QtGui.QHBoxLayout()
 			balHorLayout.addWidget(QtGui.QLabel('L'))
-			balSlider = QtGui.QSlider()
+			#balSlider = QtGui.QSlider()
+			balSlider = BalanceSlider()
 			balSlider.setObjectName(channel + '_balSlider')
 			balSlider.setOrientation(QtCore.Qt.Horizontal)
 			balSlider.setTickPosition(QtGui.QSlider.TicksBelow)
 			balSlider.setTickInterval(25)
-			balSlider.setToolTip('Balance of ' + channel)
+			balSlider.setToolTip('Balance of ' + channel + '\n(double-click to center)')
 			balSlider.setSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
 			balHorLayout.addWidget(balSlider)
 			balHorLayout.addWidget(QtGui.QLabel('R'))
