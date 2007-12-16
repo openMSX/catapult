@@ -4,6 +4,7 @@ from PyQt4 import QtCore, QtGui
 
 from preferences import preferences
 from qt_utils import connect
+import settings
 
 def addToHistory(comboBox, path):
 	# TODO: Do we really need this?
@@ -27,9 +28,10 @@ def parseMediaSlot(mediaSlot):
 
 class MediaSwitcher(QtCore.QObject):
 
-	def __init__(self, ui, mediaModel):
+	def __init__(self, ui, mediaModel, settingsManager):
 		QtCore.QObject.__init__(self)
-		self.__mediaModel = mediaModel 
+		self.__mediaModel = mediaModel
+		self.__settingsManager = settingsManager
 		self.__ui = ui
 		self.__mediaSlot = None
 		self.__pageMap = {
@@ -46,6 +48,7 @@ class MediaSwitcher(QtCore.QObject):
 		ui.mediaList.setModel(mediaModel)
 		mediaModel.dataChanged.connect(self.mediaPathChanged)
 		mediaModel.mediaSlotRemoved.connect(self.setInfoPage)
+		mediaModel.connected.connect(self.__connectSettings)
 		# Connect view:
 		connect(
 			ui.mediaList.selectionModel(),
@@ -65,6 +68,13 @@ class MediaSwitcher(QtCore.QObject):
 			for handler in ( DiskHandler, CartHandler,
 				CassetteHandler, HarddiskHandler, CDROMHandler )
 			]
+	
+	def __connectSettings(self):
+		settingsManager = self.__settingsManager
+		ui = self.__ui
+		settingsManager.registerSetting('autoruncassettes', settings.BooleanSetting)
+		settingsManager.connectSetting('autoruncassettes',
+			ui.autoRunCassettesCheckBox)
 
 	def __updateCartPage(self, mediaSlot, identifier):
 		ui = self.__ui

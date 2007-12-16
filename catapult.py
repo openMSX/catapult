@@ -127,7 +127,7 @@ class MainWindow(QtGui.QMainWindow):
 
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
-		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
+		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel, settingsManager)
 		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel,
 			settingsManager
 			)

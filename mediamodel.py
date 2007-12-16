@@ -10,7 +10,7 @@ class MediaModel(QtCore.QAbstractListModel):
 	mediumChanged = Signal('QString', 'QString')
 	mediaSlotRemoved = Signal('QString')
 	mediaSlotAdded = Signal('QString')
-	initialized = Signal()
+	connected = Signal()
 
 	def __init__(self, bridge):
 		QtCore.QAbstractListModel.__init__(self)
@@ -26,6 +26,8 @@ class MediaModel(QtCore.QAbstractListModel):
 			)
 
 	def __updateAll(self):
+		# this is in the registerInitial callback, so:
+		self.connected.emit()
 		# TODO: The idea of the name "updateAll" was to be able to deal with
 		#       openMSX crashes. So, we should go back to knowing nothing about
 		#       the openMSX state.
@@ -62,7 +64,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		self.__bridge.command(slot)(self.__mediumReply)
 
 	def __mediaSlotAdded(self, slot):
-		newEntry = ( slot, None )
+		newEntry = (slot, None)
 		index = bisect(self.__mediaSlots, newEntry)
 		parent = QtCore.QModelIndex() # invalid model index
 		self.beginInsertRows(parent, index, index)

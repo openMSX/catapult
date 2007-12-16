@@ -634,23 +634,8 @@
              </layout>
             </widget>
             <widget class="QWidget" name="cassettePage" >
-             <layout class="QVBoxLayout" >
-              <property name="spacing" >
-               <number>6</number>
-              </property>
-              <property name="leftMargin" >
-               <number>9</number>
-              </property>
-              <property name="topMargin" >
-               <number>9</number>
-              </property>
-              <property name="rightMargin" >
-               <number>9</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>9</number>
-              </property>
-              <item>
+             <layout class="QGridLayout" >
+              <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
@@ -700,7 +685,7 @@
                 </item>
                </layout>
               </item>
-              <item>
+              <item row="1" column="0" >
                <widget class="QLabel" name="cassetteDescriptionLabel" >
                 <property name="font" >
                  <font>
@@ -718,7 +703,7 @@
                 </property>
                </widget>
               </item>
-              <item>
+              <item row="2" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
@@ -757,7 +742,7 @@
                 </item>
                </layout>
               </item>
-              <item>
+              <item row="3" column="0" >
                <widget class="QComboBox" name="cassetteHistoryBox" >
                 <property name="sizePolicy" >
                  <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
@@ -782,15 +767,25 @@
                 </property>
                </widget>
               </item>
-              <item>
+              <item row="4" column="0" >
+               <widget class="QCheckBox" name="autoRunCassettesCheckBox" >
+                <property name="toolTip" >
+                 <string>Currently only works for CAS images.</string>
+                </property>
+                <property name="text" >
+                 <string>(try to) Auto Run</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0" >
                <spacer>
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
                 <property name="sizeHint" >
                  <size>
-                  <width>20</width>
-                  <height>40</height>
+                  <width>242</width>
+                  <height>16</height>
                  </size>
                 </property>
                </spacer>
