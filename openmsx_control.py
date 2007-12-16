@@ -285,8 +285,6 @@ class ControlConnection(QtCore.QObject):
 
 		# Start the openMSX process.
 		# TODO: Detect and report errors.
-		# TODO: If 'system/executable' is not defined yet, we should handle
-		#       that gracefully and try to connect as soon as it is defined.
 		process.start(
 			preferences['system/executable'] + ' -control stdio',
 		#	'gdb'

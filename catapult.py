@@ -483,7 +483,13 @@ class MainWindow(QtGui.QMainWindow):
 if __name__ == '__main__':
 	controlBridge = ControlBridge()
 	mainWindow = MainWindow(controlBridge)
-	controlBridge.openConnection()
+	done = False
+	while not done:
+		try:
+			controlBridge.openConnection()
+			done = True
+		except KeyError:
+			configDialog.show(True) # block
 
 	mainWindow.show()
 

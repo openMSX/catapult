@@ -13,7 +13,7 @@ class ConfigDialog:
 		self._browseDebugExecutableButton = None
 		self._debugExecEdit = None
 
-	def show(self):
+	def show(self, block = False):
 		dialog = self.__configDialog
 		if dialog is None:
 			self.__configDialog = dialog = QtGui.QDialog(
@@ -30,7 +30,10 @@ class ConfigDialog:
 			# TODO: Rename UI objects so their names start with lower case.
 			self._browseExecutableButton = ui.BrowseExecutableButton
 			self._execEdit = ui.ExecEdit
-			self._execEdit.setText(preferences['system/executable'])
+			try:
+				self._execEdit.setText(preferences['system/executable'])
+			except KeyError:
+				self._execEdit.setText('')
 			self._browseDebugExecutableButton = ui.BrowseDebugExecutableButton
 			self._debugExecEdit = ui.DebugExecEdit
 			self._debugExecEdit.setText(
@@ -41,7 +44,10 @@ class ConfigDialog:
 			connect(self._browseDebugExecutableButton, 'clicked()',
 				self.browseDebugExec)
 			connect(self._debugExecEdit, 'editingFinished()', self.setDebugExec)
-		dialog.show()
+		if block:
+			dialog.exec_()
+		else:
+			dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
 
