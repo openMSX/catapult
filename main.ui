@@ -77,30 +77,15 @@
           <property name="frameShadow" >
            <enum>QFrame::Sunken</enum>
           </property>
-          <layout class="QVBoxLayout" >
-           <property name="spacing" >
-            <number>6</number>
-           </property>
-           <property name="leftMargin" >
-            <number>9</number>
-           </property>
-           <property name="topMargin" >
-            <number>9</number>
-           </property>
-           <property name="rightMargin" >
-            <number>9</number>
-           </property>
-           <property name="bottomMargin" >
-            <number>9</number>
-           </property>
-           <item>
+          <layout class="QGridLayout" >
+           <item row="0" column="0" >
             <widget class="QLabel" name="machineLabel" >
              <property name="text" >
               <string>Machine:</string>
              </property>
             </widget>
            </item>
-           <item>
+           <item row="1" column="0" >
             <layout class="QHBoxLayout" >
              <property name="spacing" >
               <number>6</number>
@@ -139,21 +124,45 @@
              </item>
             </layout>
            </item>
-           <item>
+           <item row="2" column="0" >
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QPushButton" name="setAsDefaultButton" >
+               <property name="text" >
+                <string>Set as Default</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="0" >
             <widget class="QLabel" name="machineLabel" >
              <property name="text" >
               <string>Extensions:</string>
              </property>
             </widget>
            </item>
-           <item>
+           <item row="4" column="0" >
             <widget class="QListWidget" name="extensionList" >
              <property name="sortingEnabled" >
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item>
+           <item row="5" column="0" >
             <layout class="QHBoxLayout" >
              <item>
               <spacer>

@@ -99,7 +99,7 @@ class MainWindow(QtGui.QMainWindow):
 			self, ui, bridge
 			)
 		self.__machineManager = machineManager = MachineManager(
-			self, ui.machineBox, bridge
+			self, ui, bridge
 			)
 
 		self.__diskmanipulator = Diskmanipulator(mediaModel, bridge)

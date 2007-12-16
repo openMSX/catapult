@@ -4,6 +4,8 @@ $Id$
 	* Added graphical printer resolution setting, the first setting in the
 	  connector tab.
 	* Added auto run cassettes option in cassette page of media tab.
+	* Added button to make the current machine default (not very useful
+	  yet)
 
 2007-12-15 Manuel Bilderbeek <manuel@msxnet.org>
 	* Double-click to center in balance controls to the Audio tab
@@ -14,8 +16,7 @@ $Id$
 	  possible, e.g.
 	* Added a new Misc tab with controls for emulation speed, frame skip
 	  and CPU frequency.
-	* TODO: find a way to handle machine switching for machine specific
-	  settings
+	* TODO: Z80/R800 settings are reset by openMSX when machines are changed
 
 2007-12-14 Manuel Bilderbeek <manuel@msxnet.org>
 	* Improved AudioMixer:

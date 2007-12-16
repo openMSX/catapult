@@ -119,10 +119,10 @@ class MachineManager(QtCore.QObject):
 
 	machineChanged = Signal()
 
-	def __init__(self, parent, machineBox, bridge):
+	def __init__(self, parent, ui, bridge):
 		QtCore.QObject.__init__(self)
 		self.__parent = parent
-		self.__machineBox = machineBox
+		self.__machineBox = ui.machineBox
 		self.__machineDialog = None
 		self.__bridge = bridge
 		self.__ui = None
@@ -135,12 +135,13 @@ class MachineManager(QtCore.QObject):
 
 		# Load history.
 		for machine in preferences.getList('machine/history'):
-			machineBox.addItem(
+			ui.machineBox.addItem(
 				str(machine).replace('_', ' '), QtCore.QVariant(machine)
 				)
 
 		# Make connections.
-		connect(machineBox, 'activated(int)', self.__machineSelected)
+		connect(ui.machineBox, 'activated(int)', self.__machineSelected)
+		connect(ui.setAsDefaultButton, 'clicked()', self.__machineSetDefault)
 
 		bridge.registerUpdatePrefix(
 			'hardware', ( 'machine', ), self.__updateHardware
@@ -290,3 +291,9 @@ class MachineManager(QtCore.QObject):
 			index = model.createIndex(row, 0)
 			table.setCurrentIndex(index)
 			table.scrollTo(index)
+	
+	def __machineSetDefault(self):
+		machineBox = self.__machineBox
+		machine = machineBox.itemData(machineBox.currentIndex()).toString()
+		self.__bridge.command('set', 'default_machine', machine)()
+
