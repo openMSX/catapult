@@ -2,13 +2,15 @@
 
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect
+import settings
 
 class ConnectorPlugger(QtCore.QObject):
 
-	def __init__(self, ui, connectorModel):
+	def __init__(self, ui, connectorModel, settingsManager):
 		QtCore.QObject.__init__(self)
-		self.__connectorModel = connectorModel 
+		self.__connectorModel = connectorModel
 		self.__ui = ui
+		self.__settingsManager = settingsManager
 		self.__connector = None
 		self.__handlers = []
 		# Connect to connector model and view:
@@ -35,6 +37,14 @@ class ConnectorPlugger(QtCore.QObject):
 				AudioKbdPortHandler, MIDIinHandler, MIDIoutHandler
 				)
 			]
+		# while we're at it, also connect the setting controls
+		settingsManager = self.__settingsManager
+		ui = self.__ui
+		settingsManager.registerSetting('print-resolution', settings.FloatSetting)
+		settingsManager.connectSetting('print-resolution',
+			ui.printerResolutionSlider)
+		settingsManager.connectSetting('print-resolution',
+			ui.printerResolutionSpinBox)
 
 	def __updateConnectorPage(self, connector):
 		connectorClass = self.__connectorModel.getClass(connector)

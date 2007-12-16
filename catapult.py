@@ -128,7 +128,9 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
 		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel)
-		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel)
+		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel,
+			settingsManager
+			)
 		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
 		self.__frameRateTimer = QtCore.QTimer()
 		self.__frameRateTimer.setInterval(2000)

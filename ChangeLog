@@ -1,5 +1,9 @@
 $Id$
 
+2007-12-16 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added graphical printer resolution setting, the first setting in the
+	  connector tab.
+
 2007-12-15 Manuel Bilderbeek <manuel@msxnet.org>
 	* Double-click to center in balance controls to the Audio tab
 	* Big clean ups and addition of Enable All and Enable None buttons in
