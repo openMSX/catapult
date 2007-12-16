@@ -41,7 +41,7 @@ class ConnectorModel(QtCore.QAbstractListModel):
 		for connector in connectors:
 			self.__connectorAdded(connector)
 			self.__bridge.command('machine_info', 'connectionclass', connector)(
-				lambda connectorClass, connector = connector: 
+				lambda connectorClass, connector = connector:
 					self.__connectorClassReply(connector, connectorClass)
 				)
 
@@ -58,12 +58,12 @@ class ConnectorModel(QtCore.QAbstractListModel):
 				)
 		for pluggable in pluggables[:-1]:
 			self.__bridge.command('machine_info', 'connectionclass', pluggable)(
-				lambda pluggableClass, pluggable = pluggable: 
+				lambda pluggableClass, pluggable = pluggable:
 					self.__pluggableClassReply(pluggable, pluggableClass)
 				)
 		pluggable = pluggables[-1]
 		self.__bridge.command('machine_info', 'connectionclass', pluggable)(
-			lambda pluggableClass, pluggable = pluggable: 
+			lambda pluggableClass, pluggable = pluggable:
 				self.__pluggableClassReply(pluggable, pluggableClass, True)
 			)
 
@@ -136,11 +136,11 @@ class ConnectorModel(QtCore.QAbstractListModel):
 		# First update the list of connector descriptions, if necessary
 		if connector not in self.__connectorClasses.keys():
 			self.__bridge.command('machine_info', 'connectionclass', connector)(
-				lambda connectorClass, connector = connector: 
+				lambda connectorClass, connector = connector:
 					self.__connectorClassReply(connector, connectorClass)
 				)
 		if connector not in self.__connectorDescriptions.keys():
-			self.__bridge.command('machine_info', 'connector', 
+			self.__bridge.command('machine_info', 'connector',
 				connector)(lambda description, connector = connector:
 				self.__connectorDescriptionReply(connector, description))
 		newEntry = ( connector, None )
