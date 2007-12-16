@@ -5,7 +5,9 @@ $Id$
 	  connector tab.
 	* Added auto run cassettes option in cassette page of media tab.
 	* Added button to make the current machine default (not very useful
-	  yet)
+	  yet).
+	* Added menu items to save settings and to control auto save settings
+	  on exit. Now you can persist the default machine.
 
 2007-12-15 Manuel Bilderbeek <manuel@msxnet.org>
 	* Double-click to center in balance controls to the Audio tab

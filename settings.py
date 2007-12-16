@@ -43,6 +43,8 @@ class Setting(QtCore.QObject):
 		# TODO: Make this more beautiful... (if possible)
 		if isinstance(obj, QtGui.QCheckBox):
 			connect(obj, 'stateChanged(int)', self.setValue)
+		elif isinstance(obj, QtGui.QAction):
+			connect(obj, 'triggered(bool)', self.setValue)
 		elif isinstance(obj, QtGui.QComboBox):
 			connect(obj, 'activated(QString)', self.setValue)
 		elif isinstance(obj, QtGui.QSlider):
@@ -110,11 +112,16 @@ class BooleanSetting(Setting):
 			return 'off'
 
 	def setUiObjValue(self, obj, value):
-		state = QtCore.Qt.Unchecked
-		if value:
-			state = QtCore.Qt.Checked
-		print 'Setting boolean object (checkbox) to state: %s' % state
-		obj.setCheckState(state)
+		if isinstance(obj, QtGui.QCheckBox):
+			state = QtCore.Qt.Unchecked
+			if value:
+				state = QtCore.Qt.Checked
+			obj.setCheckState(state)
+		elif isinstance(obj, QtGui.QAction):
+			assert obj.isCheckable()
+			obj.setChecked(value)
+		else:
+			assert False, 'Unsupported boolean control'
 	
 	def setValue(self, value):
 		if isinstance(value, bool):

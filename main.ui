@@ -3213,6 +3213,8 @@ p, li { white-space: pre-wrap; }
     <property name="title" >
      <string>&amp;File</string>
     </property>
+    <addaction name="action_SaveSettings" />
+    <addaction name="action_AutoSaveSettings" />
     <addaction name="action_Quit" />
    </widget>
    <widget class="QMenu" name="menuTools" >
@@ -3305,6 +3307,25 @@ p, li { white-space: pre-wrap; }
   <action name="action_InputText" >
    <property name="text" >
     <string>Input Text...</string>
+   </property>
+  </action>
+  <action name="action_SaveSettings" >
+   <property name="text" >
+    <string>Save Settings</string>
+   </property>
+   <property name="toolTip" >
+    <string>Save all openMSX settings now.</string>
+   </property>
+  </action>
+  <action name="action_AutoSaveSettings" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Auto Save Settings</string>
+   </property>
+   <property name="toolTip" >
+    <string>Save openMSX settings automatically after quitting.</string>
    </property>
   </action>
  </widget>

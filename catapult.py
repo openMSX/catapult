@@ -257,6 +257,12 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.resetR800FrequencyButton, 'clicked()',
 			lambda: settingsManager.restoreToDefault('r800_freq'))
 
+		# menu setting(s)
+		settingsManager.registerSetting('save_settings_on_exit',
+			settings.BooleanSetting)
+		settingsManager.connectSetting('save_settings_on_exit',
+			ui.action_AutoSaveSettings)
+
 		###### non standard settings
 		
 		# monitor type
@@ -304,6 +310,7 @@ class MainWindow(QtGui.QMainWindow):
 			# unify both flows by closing the windows, which will indirectly
 			# lead to a quit.
 			( ui.action_Quit, QtGui.qApp.closeAllWindows ),
+			( ui.action_SaveSettings, self.__saveSettings ),
 			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
 			( ui.action_CheatFinder, self.__cheatfinder.show ),
@@ -418,6 +425,9 @@ class MainWindow(QtGui.QMainWindow):
 		# wrap in lambda to avoid setting a builtin func as callback
 		# which is not appreciated by the command method of the bridge
 		self.__bridge.closeConnection(lambda: QtGui.qApp.quit())
+
+	def __saveSettings(self):
+		self.__bridge.command('save_settings')()
 
 	def __getAssistentClient(self):
 		if self.__assistentClient is None:
