@@ -40,7 +40,7 @@ class ConnectorPlugger(QtCore.QObject):
 		# while we're at it, also connect the setting controls
 		settingsManager = self.__settingsManager
 		ui = self.__ui
-		settingsManager.registerSetting('print-resolution', settings.FloatSetting)
+		settingsManager.registerSetting('print-resolution', settings.IntegerSetting)
 		settingsManager.connectSetting('print-resolution',
 			ui.printerResolutionSlider)
 		settingsManager.connectSetting('print-resolution',
