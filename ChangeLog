@@ -8,6 +8,8 @@ $Id$
 	  yet).
 	* Added menu items to save settings and to control auto save settings
 	  on exit. Now you can persist the default machine.
+	* Pop up configuration dialog if openMSX executable isn't specified
+	  yet. TODO: handle errors when wrong executable is specified.
 
 2007-12-15 Manuel Bilderbeek <manuel@msxnet.org>
 	* Double-click to center in balance controls to the Audio tab

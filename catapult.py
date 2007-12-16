@@ -40,7 +40,7 @@ from diskmanipulator import Diskmanipulator
 from cheatfinder import Cheatfinder
 from trainerselect import TrainerSelect
 from softwaredb import SoftwareDB
-from openmsx_control import ControlBridge
+from openmsx_control import ControlBridge, NotConfiguredException
 from paletteeditor import PaletteEditor
 from inputtext import InputText
 from player import PlayState
@@ -488,7 +488,7 @@ if __name__ == '__main__':
 		try:
 			controlBridge.openConnection()
 			done = True
-		except KeyError:
+		except NotConfiguredException:
 			configDialog.show(True) # block
 
 	mainWindow.show()
