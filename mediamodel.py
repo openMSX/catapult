@@ -10,6 +10,7 @@ class MediaModel(QtCore.QAbstractListModel):
 	mediumChanged = Signal('QString', 'QString')
 	mediaSlotRemoved = Signal('QString')
 	mediaSlotAdded = Signal('QString')
+	initialized = Signal()
 
 	def __init__(self, bridge):
 		QtCore.QAbstractListModel.__init__(self)
@@ -24,16 +25,13 @@ class MediaModel(QtCore.QAbstractListModel):
 			self.__updateHardware
 			)
 
-	def doUpdateAll(self):
-		self.__updateAll()
-
 	def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with
 		#       openMSX crashes. So, we should go back to knowing nothing about
 		#       the openMSX state.
 		#self.__mediaSlots = []
 		for pattern in ( 'cart?', 'disk?', 'virtual_drive', 'cassetteplayer', 'hd?',
-				'cd?' 
+				'cd?'
 			       ):
 			# Query medium slots.
 			self.__bridge.command('info', 'command', pattern)(

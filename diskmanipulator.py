@@ -189,11 +189,6 @@ class Diskmanipulator(QtCore.QObject):
 				'editingFinished()',
 				self.editedLocalDir
 				)
-		#self.__mediaModel.doUpdateAll() <-  not anymore
-		#since we do not longer listen to datachange
-		#
-		# quick hack to have some values visible in case doUpdateAll doesn't need
-		# to emmit a datachanged and only now ui is initialized
 		self.__rebuildUI()
 
 		dialog.show()
