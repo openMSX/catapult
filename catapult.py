@@ -131,7 +131,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel,
 			settingsManager
 			)
-		self.__audioMixer = AudioMixer(ui.audioTab, settingsManager, bridge)
+		self.__audioMixer = AudioMixer(ui, settingsManager, bridge)
 		self.__frameRateTimer = QtCore.QTimer()
 		self.__frameRateTimer.setInterval(2000)
 		self.__frameRateLabel = QtGui.QLabel('')

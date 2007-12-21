@@ -1,5 +1,8 @@
 $Id$
 
+2007-12-22 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added Advanced Audio Controls (click button to show) in the Audio tab.
+
 2007-12-16 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added graphical printer resolution setting, the first setting in the
 	  connector tab.

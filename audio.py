@@ -1,7 +1,7 @@
 # $Id$
 
 from PyQt4 import QtCore, QtGui
-from qt_utils import Signal
+from qt_utils import Signal, connect
 import settings
 
 # this model keeps track of which audio devices exist
@@ -83,28 +83,54 @@ class AudioMixer(QtCore.QObject):
 
 		self.__audioControlItemMap = {}
 		
+		# remove margins of top level gridlayout (cannot be edited in Designer)
+		ui.audioTab.layout().setMargin(0)
 		# widget that will be controlled by the scrollarea:
-		self.__topLevelWidget = QtGui.QWidget()
+		topLevelWidget = ui.topLevelAudioMixerWidget
+		# get the layout of this widget and remove margins
+		topLevelLayout = topLevelWidget.parentWidget().layout()
+		topLevelLayout.setMargin(0)
 		# layout where we will put our channels in:
-		self.__audioControlItemBox = QtGui.QVBoxLayout(self.__topLevelWidget)
+		self.__audioControlItemBox = QtGui.QVBoxLayout(topLevelWidget)
 		self.__audioControlItemBox.setMargin(6)
 		self.__audioControlItemBox.setSpacing(0)
-		# layout to make the scrollarea use all space in this tab:
-		self.__topLevelLayout = QtGui.QGridLayout(self.__ui)
-		self.__topLevelLayout.setMargin(0)
-		self.__topLevelLayout.setSpacing(0)
 		# here we have the scrollarea, to make sure the window does not
 		# get bigger when we have loads of channels
-		self.__scrollArea = QtGui.QScrollArea(self.__ui)
-		self.__scrollArea.setWidget(self.__topLevelWidget)
-		self.__scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-		self.__scrollArea.setWidgetResizable(True)
-		self.__scrollArea.setFrameStyle(QtGui.QFrame.NoFrame)
-		
-		self.__topLevelLayout.addWidget(self.__scrollArea)
+		scrollArea = QtGui.QScrollArea(ui.audioTab)
+		scrollArea.setWidget(topLevelWidget)
+		scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+		scrollArea.setWidgetResizable(True)
+		scrollArea.setFrameStyle(QtGui.QFrame.NoFrame)
+		# add it to the layout of the topLevelWidget.
+		topLevelLayout.addWidget(scrollArea)
 		
 		self.__audioModel.deviceRemoved.connect(self.__removeChannel)
 		self.__audioModel.deviceAdded.connect(self.__addChannel)
+
+		ui.advancedAudioSettingsWidget.setVisible(False)
+		ui.advancedAudioSettingsButton.setText('Open Advanced Settings...')
+		connect(ui.advancedAudioSettingsButton, 'clicked()', self.__toggleAdvSettings)
+
+		bridge.registerInitial(self.__connectSettings)
+
+	def __connectSettings(self):
+		settingsManager = self.__settingsManager
+		ui = self.__ui
+		settingsManager.registerSetting('samples', settings.IntegerSetting)
+		settingsManager.connectSetting('samples', ui.samplesSlider)
+		settingsManager.connectSetting('samples', ui.samplesSpinBox)
+		connect(ui.samplesResetButton, 'clicked()',
+			lambda: settingsManager.restoreToDefault('samples'))
+		settingsManager.registerSetting('frequency', settings.IntegerSetting)
+		settingsManager.connectSetting('frequency', ui.frequencySlider)
+		settingsManager.connectSetting('frequency', ui.frequencySpinBox)
+		connect(ui.frequencyResetButton, 'clicked()',
+			lambda: settingsManager.restoreToDefault('frequency'))
+		settingsManager.registerSetting('sound_driver', settings.EnumSetting)
+		settingsManager.connectSetting('sound_driver', ui.soundDriverComboBox)
+		settingsManager.registerSetting('resampler', settings.EnumSetting)
+		settingsManager.connectSetting('resampler', ui.resamplerComboBox)
+
 
 	def __addChannel(self, channel, machineId):
 		channel = str(channel)
@@ -179,3 +205,15 @@ class AudioMixer(QtCore.QObject):
 		self.__audioControlItemBox.removeWidget(itemWidget)
 		itemWidget.setParent(None)		
 		itemWidget.deleteLater()
+
+	def __toggleAdvSettings(self):
+		if self.__ui.advancedAudioSettingsWidget.isHidden():
+			self.__ui.advancedAudioSettingsWidget.setVisible(True)
+			self.__ui.advancedAudioSettingsButton.setText('Close Advanced Settings...')
+		else:
+			self.__ui.advancedAudioSettingsWidget.setVisible(False)
+			self.__ui.advancedAudioSettingsButton.setText('Open Advanced Settings...')
+
+
+
+
