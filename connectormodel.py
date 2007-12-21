@@ -3,6 +3,25 @@ from bisect import bisect
 
 from qt_utils import QtSignal, Signal
 
+# This is a utility class that can be used to emit a signal
+# when the internal counter reaches zero. Use it to track
+# if the last callback has been received
+# Maybe it should be moved to openmsx_utils.py or so.
+class ReadyCounter(object):
+	
+	def __init__(self, signal):
+		self.__counter = 0
+		self.__signal = signal
+
+	def incr(self):
+		self.__counter = self.__counter + 1
+
+	def decr(self):
+		self.__counter = self.__counter - 1
+		assert self.__counter >= 0
+		if (self.__counter == 0):
+			self.__signal.emit()
+
 class ConnectorModel(QtCore.QAbstractListModel):
 	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
 	initialized = Signal()
@@ -19,6 +38,8 @@ class ConnectorModel(QtCore.QAbstractListModel):
 		bridge.registerUpdate('plug', self.__connectorPlugged)
 		bridge.registerUpdate('unplug', self.__connectorUnplugged)
 		bridge.registerUpdate('connector', self.__updateConnectorList)
+
+		self.__readyCounter = ReadyCounter(self.initialized)
 
 	def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with
@@ -40,6 +61,7 @@ class ConnectorModel(QtCore.QAbstractListModel):
 			return
 		for connector in connectors:
 			self.__connectorAdded(connector)
+			self.__readyCounter.incr()
 			self.__bridge.command('machine_info', 'connectionclass', connector)(
 				lambda connectorClass, connector = connector:
 					self.__connectorClassReply(connector, connectorClass)
@@ -56,21 +78,20 @@ class ConnectorModel(QtCore.QAbstractListModel):
 				lambda description, pluggable = pluggable:
 					self.__pluggableDescriptionReply(pluggable, description)
 				)
-		for pluggable in pluggables[:-1]:
+			self.__readyCounter.incr()
+		for pluggable in pluggables:
 			self.__bridge.command('machine_info', 'connectionclass', pluggable)(
 				lambda pluggableClass, pluggable = pluggable:
 					self.__pluggableClassReply(pluggable, pluggableClass)
 				)
-		pluggable = pluggables[-1]
-		self.__bridge.command('machine_info', 'connectionclass', pluggable)(
-			lambda pluggableClass, pluggable = pluggable:
-				self.__pluggableClassReply(pluggable, pluggableClass, True)
-			)
+			self.__readyCounter.incr()
 
 	def __pluggableDescriptionReply(self, pluggable, description):
+		self.__readyCounter.decr()
 		self.__pluggableDescriptions[pluggable] = description
 
 	def __connectorDescriptionReply(self, connector, description):
+		self.__readyCounter.decr()
 		if connector.startswith('joyport'):
 			realDescription = 'Joystick Port %s' % connector[-1].upper()
 		elif connector.startswith('joytap_port'):
@@ -82,12 +103,12 @@ class ConnectorModel(QtCore.QAbstractListModel):
 		self.__connectorDescriptions[connector] = realDescription.rstrip('.')
 
 	def __connectorClassReply(self, connector, connectorClass):
+		self.__readyCounter.decr()
 		self.__connectorClasses[connector] = connectorClass
 
-	def __pluggableClassReply(self, connector, pluggableClass, last = False):
+	def __pluggableClassReply(self, connector, pluggableClass):
+		self.__readyCounter.decr()
 		self.__pluggableClasses[connector] = pluggableClass
-		if last:
-			self.initialized.emit()	
 	
 	def getPluggables(self, connectorClass):
 		retval = []
@@ -139,10 +160,12 @@ class ConnectorModel(QtCore.QAbstractListModel):
 				lambda connectorClass, connector = connector:
 					self.__connectorClassReply(connector, connectorClass)
 				)
+			self.__readyCounter.incr()
 		if connector not in self.__connectorDescriptions.keys():
 			self.__bridge.command('machine_info', 'connector',
 				connector)(lambda description, connector = connector:
 				self.__connectorDescriptionReply(connector, description))
+			self.__readyCounter.incr()
 		newEntry = ( connector, None )
 		index = bisect(self.__connectors, newEntry)
 		parent = QtCore.QModelIndex() # invalid model index
