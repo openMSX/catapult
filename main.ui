@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>562</width>
-    <height>539</height>
+    <height>559</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -2295,10 +2295,10 @@ p, li { white-space: pre-wrap; }
                <enum>Qt::Horizontal</enum>
               </property>
               <property name="tickPosition" >
-               <enum>QSlider::NoTicks</enum>
+               <enum>QSlider::TicksBelow</enum>
               </property>
               <property name="tickInterval" >
-               <number>1</number>
+               <number>100</number>
               </property>
              </widget>
             </item>
@@ -2342,6 +2342,12 @@ p, li { white-space: pre-wrap; }
              <widget class="QSlider" name="contrastSlider" >
               <property name="orientation" >
                <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition" >
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval" >
+               <number>1000</number>
               </property>
              </widget>
             </item>
@@ -2421,6 +2427,12 @@ p, li { white-space: pre-wrap; }
               <property name="orientation" >
                <enum>Qt::Horizontal</enum>
               </property>
+              <property name="tickPosition" >
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval" >
+               <number>1000</number>
+              </property>
              </widget>
             </item>
            </layout>
@@ -2463,6 +2475,12 @@ p, li { white-space: pre-wrap; }
              <widget class="QSlider" name="noiseSlider" >
               <property name="orientation" >
                <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition" >
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval" >
+               <number>1000</number>
               </property>
              </widget>
             </item>
