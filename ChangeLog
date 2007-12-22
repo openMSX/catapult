@@ -1,6 +1,9 @@
 $Id$
 
 2007-12-22 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added globale mute setting control in the Audio tab.
+
+2007-12-21 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added Advanced Audio Controls (click button to show) in the Audio tab.
 
 2007-12-16 Manuel Bilderbeek <manuel@msxnet.org>
@@ -24,6 +27,7 @@ $Id$
 	* Added a new Misc tab with controls for emulation speed, frame skip
 	  and CPU frequency.
 	* TODO: Z80/R800 settings are reset by openMSX when machines are changed
+	  (Note: this got fixed in openMSX later.)
 
 2007-12-14 Manuel Bilderbeek <manuel@msxnet.org>
 	* Improved AudioMixer:

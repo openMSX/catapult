@@ -38,6 +38,9 @@ class AudioModel(QtCore.QAbstractListModel):
 		self.__settingsManager.registerSetting('master_volume',
 			settings.IntegerSetting
 			)
+		self.__settingsManager.registerSetting('mute',
+			settings.BooleanSetting
+			)
 		self.deviceAdded.emit('master', '')
 		# TODO: is 'machine1' a valid assumption??
 		for device in devices:
@@ -188,6 +191,9 @@ class AudioMixer(QtCore.QObject):
 			self.__settingsManager.connectSetting(balSettingName, balSlider)
 		else:
 			volSettingName = 'master_volume'
+			muteCheckBox = QtGui.QCheckBox('mute')
+			self.__settingsManager.connectSetting('mute', muteCheckBox)
+			horLayout.addWidget(muteCheckBox)
 		
 		self.__settingsManager.connectSetting(volSettingName, volSlider)
 		self.__settingsManager.connectSetting(volSettingName, volSpinbox)
