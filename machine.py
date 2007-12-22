@@ -234,8 +234,17 @@ class MachineManager(QtCore.QObject):
 
 	def __setMachine(self, machine):
 		# Request machine change from openMSX.
-		self.__bridge.command('machine', machine)()
+		self.__bridge.command('machine', machine)(None,
+			self.__machineChangeErrorHandler
+			)
 
+	def __machineChangeErrorHandler(self, message):
+		messageBox =  QtGui.QMessageBox('Problem changing machine:', message,
+				QtGui.QMessageBox.Warning, 0, 0, 0,
+				self.__machineBox
+				)
+		messageBox.show()
+	
 	def __machineChanged(self, value):
 		print 'current machine:', value
 		self.__currentMachineConfig = value
