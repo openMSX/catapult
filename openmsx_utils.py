@@ -39,7 +39,7 @@ def parseTclValue(value):
 			ch = chars.next()
 			if ch not in (' ', None):
 				raise ValueError, \
-					'extra characters after close-%s' % quoteType
+					'extra characters after close-%s: %s' % (quoteType, ch)
 
 if __name__ == '__main__':
 	# TODO: Make this into a unit test.
