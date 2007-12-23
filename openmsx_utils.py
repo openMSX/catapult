@@ -21,25 +21,37 @@ def parseTclValue(value):
 			}.get(ch, ( None,    ' ', False ) )
 		if quoteType is not None:
 			ch = chars.next()
+		braceLevel = 0
 		buf = []
-		while ch != endChar and ch is not None:
-			if ch == '\\':
+		while True:
+			if ch == endChar:
+				if endChar == '}' and braceLevel > 0:
+					braceLevel -= 1
+				else:
+					break
+			elif ch == '{':
+				braceLevel += 1
+			elif ch == '\\':
 				if keepBackslash:
 					buf.append(ch)
 				ch = chars.next()
 				# Note: Tcl supports multi-line with backslash; we don't.
 				if ch is None:
-					raise ValueError, 'backslash at end of string'
+					raise ValueError('backslash at end of string')
 			buf.append(ch)
 			ch = chars.next()
+			if ch is None:
+				break
 		words.append(u''.join(buf))
 		if quoteType is not None:
 			if ch is None:
 				raise ValueError, 'unterminated open-%s' % quoteType
 			ch = chars.next()
 			if ch not in (' ', None):
-				raise ValueError, \
-					'extra characters after close-%s: %s' % (quoteType, ch)
+				raise ValueError(
+					'extra characters after close-%s: %s'
+					% (quoteType, ch)
+					)
 
 if __name__ == '__main__':
 	# TODO: Make this into a unit test.
@@ -67,7 +79,10 @@ if __name__ == '__main__':
 		( r'\\', [ '\\' ] ),
 		( r'abc\ def', [ 'abc def' ] ),
 		( r'{abc\}def}', [ r'abc\}def' ] ),
+		( r'{abc\{def}', [ r'abc\{def' ] ),
 		( r'"abc\"def"', [ 'abc"def' ] ),
+		( 'xyz {{a b c} {d e {f}} g {h}}',
+		  [ 'xyz', '{a b c} {d e {f}} g {h}' ] ),
 		):
 		try:
 			result = parseTclValue(inp)
@@ -88,5 +103,3 @@ def tclEscape(string):
 # this class is used to mark a string as being already escaped
 class EscapedStr(str):
 	pass
-
-	
