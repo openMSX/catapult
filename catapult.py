@@ -3,6 +3,7 @@
 
 from PyQt4 import QtCore, QtGui
 import os.path, sys
+from openmsx_utils import tclEscape, EscapedStr
 
 #Is this a version for the openMSX-CD ?
 openmsxcd = 1
@@ -439,8 +440,10 @@ class MainWindow(QtGui.QMainWindow):
 			None #, 0
 			)
 		if settingsFile != '':
-			self.__bridge.command('save_settings', settingsFile)\
-				(None, self.__saveSettingsAsFailedHandler)
+			self.__bridge.command('save_settings',
+					EscapedStr(tclEscape(settingsFile)))(
+					None, self.__saveSettingsAsFailedHandler
+					)
 	
 	def __saveSettingsAsFailedHandler(self, message):
 		messageBox = QtGui.QMessageBox('Problem Saving Settings', message,
@@ -457,9 +460,13 @@ class MainWindow(QtGui.QMainWindow):
 			None #, 0
 			)
 		if settingsFile != '':
-			self.__bridge.command('load_settings', settingsFile)\
-				(None, self.__loadSettingsFailedHandler)
-			# TODO: prevent openMSX from showing the window again
+			self.__bridge.command('set', '__tmp', '$renderer;',
+				'load_settings',
+				EscapedStr(tclEscape(settingsFile)) + ';',
+				'set', 'renderer', '$__tmp'
+				)(
+				None, self.__loadSettingsFailedHandler
+				)
 
 	def __loadSettingsFailedHandler(self, message):
 		messageBox = QtGui.QMessageBox('Problem Loading Settings', message,
