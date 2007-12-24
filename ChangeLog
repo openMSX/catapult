@@ -1,7 +1,12 @@
 $Id$
 
+2007-12-24 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added Load and Save As for settings. TODO: loading settings makes
+	  the openMSX window visible, because the renderer is not set to
+	  none... Find out a way to prevent this.
+
 2007-12-22 Manuel Bilderbeek <manuel@msxnet.org>
-	* Added globale mute setting control in the Audio tab.
+	* Added global mute setting control in the Audio tab.
 
 2007-12-21 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added Advanced Audio Controls (click button to show) in the Audio tab.

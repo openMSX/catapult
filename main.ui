@@ -3443,7 +3443,9 @@ p, li { white-space: pre-wrap; }
      <string>&amp;File</string>
     </property>
     <addaction name="action_SaveSettings" />
+    <addaction name="action_SaveSettingsAs" />
     <addaction name="action_AutoSaveSettings" />
+    <addaction name="action_LoadSettings" />
     <addaction name="action_Quit" />
    </widget>
    <widget class="QMenu" name="menuTools" >
@@ -3555,6 +3557,16 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip" >
     <string>Save openMSX settings automatically after quitting.</string>
+   </property>
+  </action>
+  <action name="action_SaveSettingsAs" >
+   <property name="text" >
+    <string>Save Settings As...</string>
+   </property>
+  </action>
+  <action name="action_LoadSettings" >
+   <property name="text" >
+    <string>Load Settings...</string>
    </property>
   </action>
  </widget>

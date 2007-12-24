@@ -311,6 +311,8 @@ class MainWindow(QtGui.QMainWindow):
 			# lead to a quit.
 			( ui.action_Quit, QtGui.qApp.closeAllWindows ),
 			( ui.action_SaveSettings, self.__saveSettings ),
+			( ui.action_SaveSettingsAs, self.__saveSettingsAs ),
+			( ui.action_LoadSettings, self.__loadSettings ),
 			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
 			( ui.action_CheatFinder, self.__cheatfinder.show ),
@@ -428,6 +430,43 @@ class MainWindow(QtGui.QMainWindow):
 
 	def __saveSettings(self):
 		self.__bridge.command('save_settings')()
+
+	def __saveSettingsAs(self):
+		settingsFile = QtGui.QFileDialog.getSaveFileName(
+			self.__ui.centralwidget, 'Select openMSX Settings File',
+			QtCore.QDir.homePath(),
+			'openMSX Settings Files (*.xml);;All Files (*)',
+			None #, 0
+			)
+		if settingsFile != '':
+			self.__bridge.command('save_settings', settingsFile)\
+				(None, self.__saveSettingsAsFailedHandler)
+	
+	def __saveSettingsAsFailedHandler(self, message):
+		messageBox = QtGui.QMessageBox('Problem Saving Settings', message,
+				QtGui.QMessageBox.Warning, 0, 0, 0,
+				self.__ui.centralwidget
+				)
+		messageBox.show()
+
+	def __loadSettings(self):
+		settingsFile = QtGui.QFileDialog.getOpenFileName(
+			self.__ui.centralwidget, 'Select openMSX Settings File',
+			QtCore.QDir.homePath(),
+			'openMSX Settings Files (*.xml);;All Files (*)',
+			None #, 0
+			)
+		if settingsFile != '':
+			self.__bridge.command('load_settings', settingsFile)\
+				(None, self.__loadSettingsFailedHandler)
+			# TODO: prevent openMSX from showing the window again
+
+	def __loadSettingsFailedHandler(self, message):
+		messageBox = QtGui.QMessageBox('Problem Loading Settings', message,
+			QtGui.QMessageBox.Warning, 0, 0, 0,
+			self.__ui.centralwidget
+			)
+		messageBox.show()
 
 	def __getAssistentClient(self):
 		if self.__assistentClient is None:
