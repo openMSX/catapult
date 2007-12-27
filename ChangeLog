@@ -1,5 +1,9 @@
 $Id$
 
+2007-12-27 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added context menu for settings widgets which reverts the setting to
+	  its default value (by sending unset <setting> to openMSX).
+
 2007-12-24 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added Load and Save As for settings. 
 	* Used Tcl to save the current value for renderer.

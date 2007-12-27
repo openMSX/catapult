@@ -180,7 +180,7 @@ class FloatSetting(Setting):
 	
 	def setValue(self, value):
 		if isinstance(value, int):
-			realVal = float(value)/100 
+			realVal = float(value)/100
 		else:
 			realVal = value
 		# call superclass
@@ -241,18 +241,29 @@ class SettingsManager(QtCore.QObject):
 			else:
 				obj.setMinimum(float(mini))
 				obj.setMaximum(float(maxi))
+			self.__addRestoreAction(name, obj)
 		elif items[0] == 'integer':
 			mini, maxi = items[2].split(' ')
 			obj.setMinimum(int(mini))
 			obj.setMaximum(int(maxi))
+			self.__addRestoreAction(name, obj)
 		elif items[0] == 'enumeration' and isinstance(obj, QtGui.QComboBox):
 			obj.clear()
 			for item in items[2].split(' '):
 				obj.addItem(QtCore.QString(item))
+			self.__addRestoreAction(name, obj)
 		else:
 			print 'No need to configure UI element of type %s'\
 				'and setting type %s' % (type(obj), items[0])
 		self.__settings[name].connectSync(obj)
+
+	def __addRestoreAction(self, name, obj):
+		obj.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
+		action = QtGui.QAction('Restore to default value', obj)
+		connect(action, 'triggered()',
+			lambda name_ = name: self.restoreToDefault(name_)
+			)
+		obj.addAction(action)
 
 	def sync(self):
 		'''Retrieves the current values of all registered settings.
