@@ -37,8 +37,7 @@ class Diskmanipulator(QtCore.QObject):
 			#clear all items first
 			while combo.count() > 0:
 				combo.removeItem( combo.count() - 1 )
-			devices = self.__mediaModel.getDriveNames()
-			for device in devices:
+			for device in self.__mediaModel.iterDriveNames():
 				combo.addItem(QtCore.QString(device))
 			#rebuilding the combobox will show 'virtual drive'
 			#selected so we set this as current media and

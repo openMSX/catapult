@@ -204,13 +204,11 @@ class MediaModel(QtCore.QAbstractListModel):
 
 		return QtCore.QVariant()
 
-	def getDriveNames(self):
-		driveNames = []
-		driveNames.append('virtual_drive')
-		for name, path in self.__mediaSlots:
-			if name.startswith('disk') or name.startswith('hd'):
-				driveNames.append(name)
-		return driveNames
+	def iterDriveNames(self):
+		for name, path_ in self.__mediaSlots:
+			if name.startswith('disk') or name.startswith('hd') \
+					or name == 'virtual_drive':
+				yield name
 
 	def getRomTypes(self):
 		return self.__romTypes
