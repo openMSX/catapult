@@ -1139,7 +1139,7 @@
                <string>Reset the MSX</string>
               </property>
               <property name="text" >
-               <string>Reset</string>
+               <string>Reset MSX</string>
               </property>
              </widget>
             </item>
