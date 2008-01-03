@@ -8,10 +8,7 @@ from qt_utils import Signal, connect
 from inspect import getargspec
 
 class NotConfiguredException(Exception):
-	def __init__(self, value = 'Not configured'):
-		self.parameter = value
-	def __str__(self):
-		return repr(self.parameter)
+	pass
 
 class PrefixDemux(object):
 
@@ -48,7 +45,7 @@ class ControlBridge(QtCore.QObject):
 
 	def openConnection(self):
 		# first check if we have an executable specified
-		if not 'system/executable' in preferences:
+		if 'system/executable' not in preferences:
 			raise NotConfiguredException
 		self.__connection = connection = ControlConnection(self)
 		connection.connectionClosed.connect(self.connectionClosed)
