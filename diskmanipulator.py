@@ -140,12 +140,12 @@ class Diskmanipulator(QtCore.QObject):
 			connect(
 				ui.hostDirReloadButton,
 				'clicked()',
-				self.refreshLocalDir 
+				self.refreshLocalDir
 				)
 			connect(
 				ui.hostDirUpButton,
 				'clicked()',
-				self.upLocalDir 
+				self.upLocalDir
 				)
 			connect(
 				ui.hostDirNewButton,
@@ -155,12 +155,12 @@ class Diskmanipulator(QtCore.QObject):
 			connect(
 				ui.hostDirView,
 				'doubleClicked(QModelIndex)',
-				self.doubleClickedLocalDir 
+				self.doubleClickedLocalDir
 				)
 			connect(
 				ui.msxDirTable,
 				'doubleClicked(QModelIndex)',
-				self.doubleClickedMSXDir 
+				self.doubleClickedMSXDir
 				)
 
 			connect(
@@ -208,7 +208,7 @@ class Diskmanipulator(QtCore.QObject):
 
 		historyBox = self.__ui.hostDirComboBox
 		# if this is a dir then we alter the combobox
-		# if the path doesn't exist (anymore) then we 
+		# if the path doesn't exist (anymore) then we
 		# remove it from the comboboc
 
 		if QtCore.QDir(path).exists() :
@@ -225,7 +225,7 @@ class Diskmanipulator(QtCore.QObject):
 			self.__localDir = QtCore.QDir(path)
 			hostDirTable = self.__ui.hostDirView
 			hostDirTable.setRootIndex(
-				self.__dirModel.index( path ) 
+				self.__dirModel.index( path )
 				)
 		else:
 			# Remove the path from the history.
@@ -237,11 +237,11 @@ class Diskmanipulator(QtCore.QObject):
 					index += 1
 
 	def doubleClickedMSXDir(self, modelindex):
-		attr = str( self.__ui.msxDirTable.item(modelindex.row(), 1).text() ) 
+		attr = str( self.__ui.msxDirTable.item(modelindex.row(), 1).text() )
 		if attr.find('d') != -1:
 			item = str(
 				self.__ui.msxDirTable.item(modelindex.row(), 0).text()
-				) 
+				)
 			print item
 			if item == '.':
 				self.refreshDir()
@@ -329,7 +329,7 @@ class Diskmanipulator(QtCore.QObject):
 				QtGui.QMessageBox.Cancel)
 		if reply == 0:
 			return
-		
+
 		self.__bridge.command(
 			'diskmanipulator', 'create',
 			str(path), *size.split(' ')
@@ -383,7 +383,7 @@ class Diskmanipulator(QtCore.QObject):
 			print 'disk "%s" now contains image "%s" '% (driveId, path)
 			if path == '':
 				self.__cwd[driveId] = ''
-			else: 
+			else:
 				self.__cwd[driveId] = '/'
 			# only if gui is visible ofcourse
 			if driveId == self.__media and self.__combobox != None:
@@ -510,7 +510,7 @@ class Diskmanipulator(QtCore.QObject):
 		self.__bridge.command(
 			'diskmanipulator', 'mkdir',
 			self.__media, str( newdir )
-			)() 
+			)()
 
 		if self.__cwd[self.__media] != '/':
 			self.__cwd[self.__media] += '/'
