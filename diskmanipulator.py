@@ -33,7 +33,7 @@ class Diskmanipulator(QtCore.QObject):
 	def __rebuildUI(self):
 		comboBox = self.__comboBox
 		# Only if ui is initialized
-		if comboBox != None:
+		if comboBox is not None:
 			comboBox.clear()
 			for device in self.__mediaModel.iterDriveNames():
 				comboBox.addItem(QtCore.QString(device))
@@ -208,7 +208,7 @@ class Diskmanipulator(QtCore.QObject):
 		# if the path doesn't exist (anymore) then we
 		# remove it from the comboboc
 
-		if QtCore.QDir(path).exists() :
+		if QtCore.QDir(path).exists():
 			# Insert path at the top of the list.
 			historyBox.insertItem(0, path)
 			historyBox.setCurrentIndex(0)
@@ -252,7 +252,7 @@ class Diskmanipulator(QtCore.QObject):
 				self.refreshDir()
 
 	def doubleClickedLocalDir(self, modelindex):
-		if self.__dirModel.isDir(modelindex) :
+		if self.__dirModel.isDir(modelindex):
 			self.setLocalDir( self.__dirModel.filePath(modelindex) )
 
 	def upLocalDir(self):
@@ -296,7 +296,7 @@ class Diskmanipulator(QtCore.QObject):
 		wizard.exec_()
 		size = wizard.getSizes()
 		print 'wizard.getSizes()' + size
-		# Ask if user is really ,really sure
+		# Ask if user is really, really sure
 		if size.find(" ") == -1:
 			text = self.tr(
 				"<p>Are you sure you want to create this "
@@ -376,7 +376,7 @@ class Diskmanipulator(QtCore.QObject):
 			else:
 				self.__cwd[driveId] = '/'
 			# only if gui is visible ofcourse
-			if driveId == self.__media and self.__comboBox != None:
+			if driveId == self.__media and self.__comboBox is not None:
 				self.refreshDir()
 
 	def __driveAdded(self, name):
@@ -385,7 +385,7 @@ class Diskmanipulator(QtCore.QObject):
 			print 'drive "%s" added '% name
 			self.__cwd[driveId] = '/'
 			# only if gui is visible ofcourse
-			if self.__comboBox != None:
+			if self.__comboBox is not None:
 				self.__comboBox.addItem(QtCore.QString(driveId))
 
 	def __driveRemoved(self, name):
@@ -394,7 +394,7 @@ class Diskmanipulator(QtCore.QObject):
 			print 'drive "%s" removed'% name
 			comboBox = self.__comboBox
 			# only if gui is visible ofcourse
-			if comboBox != None:
+			if comboBox is not None:
 				index = comboBox.findText(QtCore.QString(driveId))
 				comboBox.removeItem(index)
 				if driveId == self.__media:
@@ -403,7 +403,7 @@ class Diskmanipulator(QtCore.QObject):
 
 	def refreshDir(self):
 		path = self.__cwd[self.__media]
-		if path != '' :
+		if path != '':
 			self.__ui.cwdLine.setReadOnly(0)
 			self.__ui.cwdLine.font().setItalic(0)
 			self.__ui.cwdLine.setText(self.__cwd[self.__media])
@@ -432,16 +432,20 @@ class Diskmanipulator(QtCore.QObject):
 		self.__ui.msxDirTable.setRowCount(0)
 		self.__ui.msxDirTable.setSortingEnabled(0)
 		row = 0
-		self.__ui.msxDirTable.setRowCount( len(entries) - 1 )
+		self.__ui.msxDirTable.setRowCount(len(entries) - 1)
 		for entry in entries[ : -1]:
 			data = entry.split('\t')
 			fileNameItem = QtGui.QTableWidgetItem(data[0])
 			# not editable etc etc
-			fileNameItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+			fileNameItem.setFlags(
+				QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+				)
 			self.__ui.msxDirTable.setItem(row, 0, fileNameItem)
 
 			fileAttrItem = QtGui.QTableWidgetItem(data[1])
-			fileAttrItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+			fileAttrItem.setFlags(
+				QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+				)
 			self.__ui.msxDirTable.setItem(row, 1, fileAttrItem)
 
 			fileSizeItem = QtGui.QTableWidgetItem(data[2])
@@ -458,7 +462,7 @@ class Diskmanipulator(QtCore.QObject):
 		lijst = path.rsplit('/', 1)
 		if lijst[1] == '': # maybe last character was already '/'...
 			lijst = lijst[0].rsplit('/', 1)
-		if path != '' and lijst[0] == '' :
+		if path != '' and lijst[0] == '':
 			path = '/'
 		else:
 			path = lijst[0]
@@ -512,18 +516,19 @@ class Diskmanipulator(QtCore.QObject):
 		# Make sure we are in the correct directory on the image
 		path = self.__cwd[self.__media]
 		self.__bridge.command(
-			'diskmanipulator','chdir',
-			diskimage , path
+			'diskmanipulator', 'chdir',
+			diskimage, path
 			)()
 		#iterate over selected files
-		path = str( self.__localDir.path() )
+		path = str(self.__localDir.path())
 		table = self.__ui.hostDirView
 		for index in table.selectionModel().selectedIndexes():
-			filename = str( self.__dirModel.filePath(index) )
+			filename = str(self.__dirModel.filePath(index))
 			print filename
 			self.__bridge.command(
 				'diskmanipulator', 'import',
-				diskimage , filename)()
+				diskimage, filename
+				)()
 		self.refreshDir()
 
 	def exportFiles(self):
@@ -540,7 +545,7 @@ class Diskmanipulator(QtCore.QObject):
 			if item.isSelected():
 				self.__bridge.command(
 					'diskmanipulator', 'export',
-					diskimage ,
-					str(self.__localDir.path()) ,
+					diskimage,
+					str(self.__localDir.path()),
 					str(item.text())
 					)( self.refreshLocalDir )
