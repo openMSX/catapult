@@ -1,4 +1,4 @@
-# $Id:$
+# $Id$
 
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect
@@ -181,7 +181,7 @@ class SoftwareDB:
 			#item = QtGui.QTableWidgetItem(row[0]) # 'id'
 			#item.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 			#self.__ui.gamelistView.setItem(index, 1, item)
-			
+
 			self.__selectedgameid.append( row[0] )
 
 			index += 1
@@ -201,7 +201,7 @@ class SoftwareDB:
 			self.__ui.label_year.setText( QtCore.QString( row[2] ))
 			self.__ui.label_machine.setText( QtCore.QString( row[6] ))
 			self.__ui.label_genre.setText( QtCore.QString( row[7] ))
-		
+
 	def gamelistView_cellClicked( self , row , column ):
 		self.showGameinfo( self.__selectedgameid[row] )
 
