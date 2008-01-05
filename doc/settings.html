@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN"
+"http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<link title="Catapult doc style" rel="stylesheet" href="doc.css" type="text/css" />
+<title>openMSX Catapult - Settings Framework</title>
+</head>
+
+<body>
+
+<h1>openMSX Catapult - Settings Framework</h1>
+
+<h2>Definition of Setting</h2>
+
+<p>
+openMSX uses settings for both persistent user preferences and non-persistent configuration items. A setting has the following properties:
+</p>
+<ul>
+<li>name</li>
+<li>type</li>
+<li>current value</li>
+<li>default value</li>
+<li>range</li>
+<li>help text</li>
+</ul>
+<p>
+For some types (such as string) the range is always the full type: any string is possible. For ordered types (int, float) range is a minimum and maximum value. For enumerations, range is the list of possible values.
+</p>
+<p>
+Both the current value and the range are dynamic. An example of a dynamic range is the "videosource" setting: if a GFX9000 cartridge is inserted, an additional video source becomes available.
+</p>
+<p>
+Setting existence is also dynamic: for example sound settings such as volume and balance exist for each sound device and sound devices can come and go at runtime. Another example is the firmware setting, which is only available on machines that have indeed switchable firmware.
+</p>
+
+<h2>Requirements for Setting Support in Catapult</h2>
+
+<p>
+List of requirements for the Settings Framework of the New Catapult:
+</p>
+<ul>
+<li>settings are identified by their name</li>
+<li>the following setting properties are available:
+  <ul>
+  <li>value
+  <li>range
+  <li>help text
+  </ul>
+</li>
+<li>changes in value and in range must be supported</li>
+<li>you can make a synchronous connection between a widget and a setting, which means that the widget's value gets updated when the setting's value changes and that the setting's value gets updated if the widget's value changes</li>
+<li>it should be possible to restore a setting to its default value (can be implemented by sending 'unset' to openMSX)</li>
+<li>it should be easy to use the data of a setting to configure a widget (set ranges, possible values, help text, enable/disable, add a 'revert to default value' context menu action, etc.)</li>
+<li>settings may stop or start to exist when a machine is changed. This should be handled properly, without the caller code having to reconnect settings to widgets, just because a machine change occurred</li>
+</ul>
+
+<h2>Design</h2>
+
+<ul>
+<li>it is probably a good idea to have python settings classes for each openMSX settings class. Interesting case: filename setting: can we use it to do something clever with a file dialog?</li>
+<li>setting properties (both static and dynamic) are fetched from openMSX. Some through 'settinginfo' updates from openMSX</li>
+<li>all communication is asynchronous, this means that some data is not available right after registration of a setting. The framework or caller should be able to cope with this in a clean manner</li>
+<li>we should be able to handle the fact that different widget types have different signals (names and signatures) for 'value changed' and different methods to set a value (e.g. in a ComboBox for EnumSettings, you have to find the proper index and set that as current)</li>
+<li>we should take into account that we have to convert types in our setting code. E.g. Slider widgets do not support floats. We have to convert to ints and back to floats for this. Other (small) conversions need to take place for booleans in checkboxes, e.g.</li>
+</ul>
+
+<p class="version">
+$Id$
+</p>
+
+</body>
+</html>

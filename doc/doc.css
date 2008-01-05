@@ -1,0 +1,38 @@
+/* $Id$ */
+body {
+	color: black;
+	background-color: white;
+}
+ul, ol {
+	padding-left: 16pt;
+}
+h1 {
+	border-bottom: 2px solid #3060C0;
+}
+h2 {
+	padding-left: 4pt;
+	background: #3060C0;
+	color: white;
+}
+p, dl, ul, ol, h5 {
+	margin-left: 16pt;
+}
+p.version {
+	padding-top: 1em;
+	margin-left: 0pt;
+	font-size: 50%;
+	text-align: right;
+	border-top: 2px solid #3060C0;
+}
+p.todo {
+	color: red;
+}
+a.internal, a.external:visited {
+	color: #000080;
+}
+a.external:link {
+	color: #0000FF;
+}
+a.external:active {
+	color: #8080FF;
+}
