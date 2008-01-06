@@ -73,6 +73,27 @@ Settings may stop or start to exist when a machine is changed. It must be possib
 
 <h2>Design</h2>
 
+<p>
+Catapult's view of a setting can be in one of the following states:
+</p>
+<dl>
+<dt>unknown</dt>
+<dd>It is not known whether the setting currently exists; this implies that the current properties are not known either.</dd>
+<dt>known</dt>
+<dd>The setting currently exists and all its properties are known.</dd>
+<dt>non-existant</dt>
+<dd>The setting currently does not exist.</dd>
+</dl>
+<p>
+Note that "currently" refers to Catapult's view of the setting. Because of the asynchronous nature of the control connection, openMSX might temporarily have a different view.
+</p>
+<p>
+It would be possible to query setting properties one at a time, in which case the "known" state would be split into several new states. However, this complicates things without offering an advantage.
+</p>
+
+<p>
+Notes:
+</p>
 <ul>
 <li>it is probably a good idea to have python settings classes for each openMSX settings class. Interesting case: filename setting: can we use it to do something clever with a file dialog?</li>
 <li>setting properties (both static and dynamic) are fetched from openMSX. Some through 'settinginfo' updates from openMSX</li>
