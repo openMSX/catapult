@@ -85,7 +85,7 @@ Settings may stop or start to exist when a machine is changed. It must be possib
 
 <ul>
 <li>Settings are sometimes getting registered before the connection is up. This means information cannot be retrieved of the setting and the actual setting cannot be created.</li>
-<li>Settings that are not available immediately lead to problems: code that registers a setting and then connects to it, or retrieves it via a getter method gets an incomplete or non-existing setting. There is currently no event that tells this code that the setting is ready to use, nor is the code prepared to handle this situation at all (it assumes a very synchronous behaviour: registration means it exists).<li>
+<li>Settings that are not available immediately lead to problems: code that registers a setting and then connects to it, or retrieves it via a getter method gets an incomplete or non-existing setting. There is currently no event that tells this code that the setting is ready to use, nor is the code prepared to handle this situation at all (it assumes a very synchronous behaviour: registration means it exists).</li>
 <li>At registration you have to specify the type, while the type is also already retrieved shortly afterwards, when the rest of the settings data is retrieved. It looks and feels superfluous to specify data that is already going to be received from openMSX.</li>
 <li>The code that retrieves the setting properties (there were multiple queries, e.g. for setting info itself and for the help text) is chain-linked, meaning a brittle construction.</li>
 <li>No support for changing ranges of settings or settings that exist in one machine and not in another (changing availability of settings).</li>
