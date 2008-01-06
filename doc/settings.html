@@ -38,23 +38,35 @@ Setting existence is also dynamic: for example sound settings such as volume and
 <h2>Requirements for Setting Support in Catapult</h2>
 
 <p>
-List of requirements for the Settings Framework of the New Catapult:
+Much of the functionality of Catapult consists of controlling openMSX settings. Therefore, we want to have a framework that offers an easy way to observe and modify settings.
 </p>
-<ul>
-<li>settings are identified by their name</li>
-<li>the following setting properties are available:
-  <ul>
-  <li>value
-  <li>range
-  <li>help text
-  </ul>
-</li>
-<li>changes in value and in range must be supported</li>
-<li>you can make a synchronous connection between a widget and a setting, which means that the widget's value gets updated when the setting's value changes and that the setting's value gets updated if the widget's value changes</li>
-<li>it should be possible to restore a setting to its default value (can be implemented by sending 'unset' to openMSX)</li>
-<li>it should be easy to use the data of a setting to configure a widget (set ranges, possible values, help text, enable/disable, add a 'revert to default value' context menu action, etc.)</li>
-<li>settings may stop or start to exist when a machine is changed. This should be handled properly, without the caller code having to reconnect settings to widgets, just because a machine change occurred</li>
-</ul>
+<p>
+Here is an overview of how Catapult should handle the different setting properties:
+</p>
+<dl>
+<dt>name</dt>
+<dd>Settings are identified by their name. If a setting name changes, the Catapult code must be updated to match.</dd>
+<dt>type</dt>
+<dd>The setting type that Catapult expects must match the type of the setting in openMSX: a checkbox can represent a boolean setting, but not a string setting. If a setting type changes, the Catapult code must be updated to match.</dd>
+<dt>current value</dt>
+<dd>Catapult must support the current value changing at runtime.</dd>
+<dt>default value</dt>
+<dd>Catapult must support resetting a setting to its default value. However, this does not necessarily mean that Catapult has to know that default value.</dd>
+<dt>range</dt>
+<dd>Catapult must support the range changing at runtime.</dd>
+<dt>help text</dt>
+<dd>The openMSX help text for a setting can be used in Catapult, to avoid duplication of these texts in source code. The help texts do not change at runtime.</dd>
+</dl>
+
+<p>
+Typically there is a widget or set of widgets to control a particular setting. The framework must offer a way to keep the value of a widget synchronized to the value of the setting in openMSX: the widget's value must get updated when the setting's value changes and vice versa. This mechanism must avoid oscillation that can happen because of the latency of the asynchronous communication channel with openMSX.
+</p>
+<p>
+In addition to synchronizing the current value, there must be a mechanism to synchronize the current range. Also "revert to default value" must be easy to trigger by a widget.
+</p>
+<P>
+Settings may stop or start to exist when a machine is changed. It must be possible for a widget to be connected to a certain setting in the current machine. When a switch from an old machine to a new machine occurs, the widget should automatically be synchronized (and stay synchronized) to the same setting in the new machine.
+</p>
 
 <h2>Design</h2>
 
