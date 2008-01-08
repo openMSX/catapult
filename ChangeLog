@@ -1,5 +1,9 @@
 $Id$
 
+2008-01-08 David Heremans <david.heremans@gnu-linux.net>
+	* First upload of the custom slideshow widget
+	  and first steps to an autorun dialog.
+
 2007-12-27 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added context menu for settings widgets which reverts the setting to
 	  its default value (by sending unset <setting> to openMSX).
