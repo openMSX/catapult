@@ -16,7 +16,7 @@
    <item>
     <layout class="QHBoxLayout" >
      <item>
-      <widget class="Slideshow" native="1" name="widget" >
+      <widget class="Slideshow" native="1" name="slideshowWidget" >
        <property name="sizePolicy" >
         <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
          <horstretch>0</horstretch>
@@ -41,21 +41,6 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <item>
-          <property name="text" >
-           <string>game1</string>
-          </property>
-         </item>
-         <item>
-          <property name="text" >
-           <string>game2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text" >
-           <string>game3</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>

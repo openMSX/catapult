@@ -1,5 +1,9 @@
 $Id$
 
+2008-01-09 David Heremans <david.heremans@gnu-linux.net>
+	* Some code clean up and a little more work on 
+	  the autorun dialog
+
 2008-01-08 David Heremans <david.heremans@gnu-linux.net>
 	* First upload of the custom slideshow widget
 	  and first steps to an autorun dialog.
