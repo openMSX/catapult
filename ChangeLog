@@ -1,8 +1,9 @@
 $Id$
 
 2008-01-09 David Heremans <david.heremans@gnu-linux.net>
-	* Some code clean up and a little more work on 
-	  the autorun dialog
+	* Some code clean up
+	* More work on the autorun dialog, it can now actually launch the
+	  select software title once the timer reaches zero.
 
 2008-01-08 David Heremans <david.heremans@gnu-linux.net>
 	* First upload of the custom slideshow widget

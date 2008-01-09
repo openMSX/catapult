@@ -10,7 +10,7 @@ connection = sqlite.connect('autorun.db')
 cursor = connection.cursor()
 
 #creating the DB
-cursor.execute("CREATE TABLE autorun (id INTEGER PRIMARY KEY, Machine VARCHAR(50), Title VARCHAR(50), Info VARCHAR(250), Extentions VARCHAR(50), Timeout VARCHAR(50), Media VARCHAR(50), File VARCHAR(250))")
+cursor.execute("CREATE TABLE autorun (id INTEGER PRIMARY KEY, Machine VARCHAR(50), Title VARCHAR(50), Info VARCHAR(250), Extensions VARCHAR(50), Timeout VARCHAR(50), Media VARCHAR(50), File VARCHAR(250))")
 
 #Filling the DB
 f = open('autorun.txt', 'r')

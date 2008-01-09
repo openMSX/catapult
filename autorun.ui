@@ -229,7 +229,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton" >
+      <widget class="QPushButton" name="pushButtonApply" >
        <property name="text" >
         <string>Apply now!</string>
        </property>
