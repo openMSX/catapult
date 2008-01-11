@@ -114,7 +114,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__cheatfinder = Cheatfinder(bridge)
 		self.__trainerselect = TrainerSelect(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
-		self.__autorun = Autorun(self,bridge)
+		self.__autorun = Autorun(self, settingsManager, bridge)
 		self.__paletteeditor = PaletteEditor(bridge)
 		self.__inputtext = InputText(bridge)
 		self.__connectMenuActions(ui)
@@ -357,8 +357,7 @@ class MainWindow(QtGui.QMainWindow):
 
 	def __visibilityChanged(self, value):
 		if value:
-			#temporary to help me debug my stuff I avoid those pesky FPS updates
-			#self.__frameRateTimer.start()
+			self.__frameRateTimer.start()
 			self.__frameRateTimer.stop()
 		else:
 			self.__frameRateTimer.stop()

@@ -15,11 +15,14 @@ cursor.execute("CREATE TABLE autorun (id INTEGER PRIMARY KEY, Machine VARCHAR(50
 #Filling the DB
 f = open('autorun.txt', 'r')
 headerline = f.readline
+items = []
 
 for line in f:
 	line = line.rstrip()
-	print line.split(';')
-	cursor.execute('INSERT INTO autorun VALUES (null, ?, ?, ?, ?, ?, ?, ? )', line.split(';'))
+	items = line.split(';')
+	items[2]= items[2].decode('string_escape')
+	print items[2]
+	cursor.execute('INSERT INTO autorun VALUES (null, ?, ?, ?, ?, ?, ?, ? )', items )
 
 #cursor.execute('INSERT INTO software VALUES (null, "John Doe", "jdoe@jdoe.zz")')
 #name = "Luke Skywalker"

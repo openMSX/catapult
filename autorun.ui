@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>554</width>
-    <height>549</height>
+    <height>477</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -25,8 +25,8 @@
        </property>
        <property name="minimumSize" >
         <size>
-         <width>90</width>
-         <height>90</height>
+         <width>320</width>
+         <height>240</height>
         </size>
        </property>
       </widget>
@@ -34,14 +34,61 @@
      <item>
       <layout class="QVBoxLayout" >
        <item>
-        <widget class="QComboBox" name="comboBoxGames" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" >
+         <item>
+          <layout class="QVBoxLayout" >
+           <item>
+            <widget class="QComboBox" name="comboBoxGames" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" >
+           <item>
+            <widget class="QLCDNumber" name="lcdNumber" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize" >
+              <size>
+               <width>81</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="numDigits" >
+              <number>3</number>
+             </property>
+             <property name="mode" >
+              <enum>QLCDNumber::Dec</enum>
+             </property>
+             <property name="segmentStyle" >
+              <enum>QLCDNumber::Flat</enum>
+             </property>
+             <property name="intValue" stdset="0" >
+              <number>120</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonCounter" >
+             <property name="text" >
+              <string>stop counter</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QLabel" name="labelGames" >
@@ -55,58 +102,6 @@
           <string>TextLabel</string>
          </property>
         </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" >
-       <item>
-        <widget class="QLCDNumber" name="lcdNumber" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize" >
-          <size>
-           <width>81</width>
-           <height>51</height>
-          </size>
-         </property>
-         <property name="numDigits" >
-          <number>3</number>
-         </property>
-         <property name="mode" >
-          <enum>QLCDNumber::Dec</enum>
-         </property>
-         <property name="segmentStyle" >
-          <enum>QLCDNumber::Flat</enum>
-         </property>
-         <property name="intValue" stdset="0" >
-          <number>120</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButtonCounter" >
-         <property name="text" >
-          <string>stop counter</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" >
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </item>
@@ -193,6 +188,36 @@
     <layout class="QHBoxLayout" >
      <item>
       <layout class="QVBoxLayout" >
+       <item>
+        <layout class="QHBoxLayout" >
+         <item>
+          <widget class="QCheckBox" name="checkBoxShutdown" >
+           <property name="text" >
+            <string>Automatically shut down</string>
+           </property>
+           <property name="checked" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="spinBoxShutdown" >
+           <property name="suffix" >
+            <string> seconds</string>
+           </property>
+           <property name="maximum" >
+            <number>9999</number>
+           </property>
+           <property name="singleStep" >
+            <number>10</number>
+           </property>
+           <property name="value" >
+            <number>240</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item>
         <widget class="QCheckBox" name="checkBoxReadme" >
          <property name="text" >

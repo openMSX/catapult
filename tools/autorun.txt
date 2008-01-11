@@ -1,5 +1,5 @@
-msx2;Jungle Symphonies;A music disk;moonsound;400;diska;/openMSX/SOFTWARE/copyright/compjoet/junglsym.di2.gz
-msx2;Almost Real (FD 41);An impressive demo;audio;1620;diska;/openMSX/SOFTWARE/donated/almost_real.dsk.gz
-msx2;Impaccable;A nice demo;mbstereo;1170;diska;/openMSX/SOFTWARE/pd/impact/impcable.di2.gz
-msx2;FAC Demo 4;Clasic demo\nFAC is the abrev. of Federation against Commodore;audio;1150;diska;/openMSX/SOFTWARE/downloaded/fac/facdemo4.dsk.gz
+msx2;Jungle Symphonies;A music disk;moonsound;30;diska;/openMSX/SOFTWARE/copyright/compjoet/junglsym.di2.gz
+msx2;Almost Real (FD 41);An impressive demo;audio;30;diska;/openMSX/SOFTWARE/donated/almost_real.dsk.gz
+msx2;Impaccable;A nice demo;mbstereo;30;diska;/openMSX/SOFTWARE/pd/impact/impcable.di2.gz
+msx2;FAC Demo 4;Clasic demo\nFAC is the abrev. of Federation against Commodore;audio;30;diska;/openMSX/SOFTWARE/downloaded/fac/facdemo4.dsk.gz
 msx2;FAC Demo 5;And yet an other demo\n\nNice, isn't it.;audio;1116;diska;/openMSX/SOFTWARE/downloaded/fac/facdemo5.dsk.gz

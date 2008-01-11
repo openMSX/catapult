@@ -1,5 +1,13 @@
 $Id$
 
+2008-01-11 David Heremans <david.heremans@gnu-linux.net>
+	* Basic functionality from autorun now complete:
+	  1. start openMSX with software from dropdown
+	  2. stop openMSX after idle timeout
+	  3. restart timer, select next software from dropdown
+	     and back to step 1.
+	* Don't "autorun" when openMSX is manually started
+
 2008-01-09 David Heremans <david.heremans@gnu-linux.net>
 	* Some code clean up
 	* More work on the autorun dialog, it can now actually launch the
