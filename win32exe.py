@@ -1,5 +1,3 @@
-$Id: ChangeLog 1 2008-01-11 21:10:03Z Vampier $
-
 #call with python win32exe.py py2exe
 
 from distutils.core import setup
