@@ -43,6 +43,9 @@
            <property name="tickPosition" >
             <enum>QSlider::TicksBelow</enum>
            </property>
+           <property name="tickInterval" >
+            <number>1</number>
+           </property>
           </widget>
          </item>
          <item>
@@ -95,6 +98,9 @@
            <property name="tickPosition" >
             <enum>QSlider::TicksBelow</enum>
            </property>
+           <property name="tickInterval" >
+            <number>1</number>
+           </property>
           </widget>
          </item>
          <item>
@@ -146,6 +152,9 @@
            </property>
            <property name="tickPosition" >
             <enum>QSlider::TicksBelow</enum>
+           </property>
+           <property name="tickInterval" >
+            <number>1</number>
            </property>
           </widget>
          </item>
@@ -744,14 +753,14 @@
           <bool>false</bool>
          </property>
          <property name="text" >
-          <string>Save</string>
+          <string>Save...</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="LoadPalette" >
          <property name="text" >
-          <string>Load</string>
+          <string>Load...</string>
          </property>
         </widget>
        </item>
