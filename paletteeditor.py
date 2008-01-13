@@ -1,4 +1,4 @@
-# $Id: cheatfinder.py 7020 2007-09-16 06:17:50Z vampier $
+# $Id$
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtGui import QColor, QPalette

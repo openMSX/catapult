@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# $Id$
 
 """This is a slideshow widget developed for Catapult the openMSX launcher"""
 
@@ -233,5 +233,3 @@ class Slideshow(QtGui.QWidget):
 	def __adjustScrollBar(self, scrollBar, factor):
 		scrollBar.setValue(int(factor * scrollBar.value()
 			+ ((factor - 1) * scrollBar.pageStep()/2)))
-
-

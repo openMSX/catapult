@@ -1,4 +1,4 @@
-# $Id: softwaredb.py 7510 2008-01-03 17:10:17Z mthuurne $
+# $Id$
 
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect

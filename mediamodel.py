@@ -1,3 +1,5 @@
+# $Id$
+
 from PyQt4 import QtCore
 from bisect import bisect
 from openmsx_utils import tclEscape, EscapedStr

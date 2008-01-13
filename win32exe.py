@@ -1,3 +1,4 @@
+# $Id$
 #call with python win32exe.py py2exe
 
 from distutils.core import setup
