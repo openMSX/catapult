@@ -5,10 +5,10 @@ openMSX Catapult
 This is the new openMSX Catapult, an external GUI for openMSX.
 
 Requirements:
-- Python 2.4 or higher
+- Python 2.5 or higher
 - PyQt4 (thus also Qt4)
 - python-pysqlite2 for softwareDB tool
-- openMSX, preferably a recent version from Subversion (post 0.6.1)
+- openMSX, preferably a recent version from Subversion (post 0.6.3)
 
 Download links:
 
@@ -30,6 +30,9 @@ be able to follow development:
 For the moment, you have to set some hardcoded paths to values
 corresponding to your system. You can find these in "custom.py".
 
+If your system's default Python version is not Python 2.5, then change the line
+"python catapult.py" in the Makefile into "python2.5 catapult.py".
+
 Then to start Catapult, just run "make".
 
 If you have problems like: KeyError: 'system/executable', you're hitting a
@@ -49,7 +52,7 @@ file 'GPL'.
 
 Win32/MSYS  Section
 
-I assume you have python 2.5 and PyQT installed in C:\Python25\  if this is not the case adjust your paths accordingly.
+I assume you have Python 2.5 and PyQt installed in C:\Python25\  if this is not the case adjust your paths accordingly.
 
 Make sure the python.exe file is accessible through your path (set path in my computer->Advanced->Environment Variables->(go to lower window and add ;C:\Python25 to the path.
 
@@ -57,7 +60,7 @@ Make sure the python.exe file is accessible through your path (set path in my co
 - Put the following line into the code:
   /c/Python25/Lib/site-packages/PyQt4/uic/pyuic.py ${1+"$@"}
 - chmod this file so it's executable from within msys: chmod +x /c/Python25/pyuic
-- if you are missing MSVCP71.DLL please download this file from 
+- if you are missing MSVCP71.DLL please download this file from
   http://www.dll-files.com/dllindex/dll-files.shtml?msvcp71
   and put it in your c:\windows\system32\ folder
 
