@@ -18,7 +18,7 @@ class Autorun(QtGui.QWidget):
 		self.timer = QtCore.QTimer()
 		self.__cursor = None
 
-		self.__runAfterAply = 0
+		self.__runAfterApply = False
 		self.__sendState = 0
 		self.__MSX = "msx2"
 		self.__diska = "Empty"
@@ -27,29 +27,30 @@ class Autorun(QtGui.QWidget):
 		self.__cartb = "Empty"
 		self.__extensions = "Empty"
 
-		self.connect(self.timer, QtCore.SIGNAL("timeout()"), self.counterTimeOut)
+		self.connect(
+			self.timer, QtCore.SIGNAL("timeout()"), self.counterTimeOut
+			)
 
 		settingsManager.registerSetting('power', BooleanSetting)
 		settingsManager['power'].valueChanged.connect(self.updatePowerInfo)
 
 	def updatePowerInfo(self, value):
-		if value == 1:
+		if value:
 			# User is running openMSX, so shouldn't be looking
 			# anymore at the autorun slides :-)
 			self.__ui.slideshowWidget.setSlideStopped(False)
 			# extra stop timer in case the user manually 
 			# powered on the openmsx
 			self.stopTimer()
-
-		if value == False:
+		else:
 			# MSX powered off after autorun started it,so we
 			# restart counting,swicth to next game and 
 			# restart the slideshow
-			if self.__runAfterAply:
+			if self.__runAfterApply:
 				self.nextGame()
 				self.startTimer()
 				self.__ui.slideshowWidget.setSlideStopped(True)
-			self.__runAfterAply = 0
+				self.__runAfterApply = False
 
 	def counterTimeOut(self):
 		lcd = self.__ui.lcdNumber
@@ -58,7 +59,7 @@ class Autorun(QtGui.QWidget):
 		else:
 			self.stopTimer()
 			self.__ui.slideshowWidget.setSlideStopped(False)
-			self.__runAfterAply = 1
+			self.__runAfterApply = True
 			self.applySettings()
 
 	def startTimer(self):
@@ -126,9 +127,9 @@ class Autorun(QtGui.QWidget):
 	def applySettings(self):
 		self.__sendState = 0
 		if self.__ui.checkBoxExtensions.isChecked() and \
-			not self.__ui.checkBoxMSX.isChecked():
-			#extensions are removed when switching machine, but
-			#here we do not want to switch machine!
+				not self.__ui.checkBoxMSX.isChecked():
+			# Extensions are removed when switching machine,
+			# but here we do not want to switch machine!
 			self.__bridge.command('list_extensions', )(self.clearExtensions)
 		else:
 			self.applySettingsCont("bogus")
@@ -148,7 +149,7 @@ class Autorun(QtGui.QWidget):
 			else:
 				self.applySettingsCont()
 
-		if switch == 1:
+		elif switch == 1:
 			if self.__ui.checkBoxExtensions.isChecked():
 				#TODO Fix this thing since it creates 
 				#to much callbacks if more then one ext is given...
@@ -158,7 +159,7 @@ class Autorun(QtGui.QWidget):
 			else:
 				self.applySettingsCont()
 
-		if switch == 2:
+		elif switch == 2:
 			if self.__ui.checkBoxDiska.isChecked():
 				disk = self.__diska
 				if disk == "Empty":
@@ -169,7 +170,7 @@ class Autorun(QtGui.QWidget):
 			else:
 				self.applySettingsCont()
 
-		if switch == 3:
+		elif switch == 3:
 			if self.__ui.checkBoxDiskb.isChecked():
 				disk = self.__diskb
 				if disk == "Empty":
@@ -180,7 +181,7 @@ class Autorun(QtGui.QWidget):
 			else:
 				self.applySettingsCont()
 
-		if switch == 4:
+		elif switch == 4:
 			if self.__ui.checkBoxCarta.isChecked():
 				cart = self.__carta
 				if cart == "Empty":
@@ -191,7 +192,7 @@ class Autorun(QtGui.QWidget):
 			else:
 				self.applySettingsCont()
 
-		if switch == 5:
+		elif switch == 5:
 			if self.__ui.checkBoxCartb.isChecked():
 				cart = self.__cartb
 				if cart == "Empty":
@@ -202,8 +203,8 @@ class Autorun(QtGui.QWidget):
 			else:
 				self.applySettingsCont()
 
-		if switch == 6:
-			if self.__runAfterAply:
+		elif switch == 6:
+			if self.__runAfterApply:
 				self.__mainwindow.getPlayState().setState(PlayState.play)
 				self.__bridge.command('reset')()
 			if self.__ui.checkBoxShutdown.isChecked():
@@ -226,8 +227,8 @@ class Autorun(QtGui.QWidget):
 
 	#Stop timer when window is closed/hidden
 	@QtCore.pyqtSignature("")
-	def getsHidden(self,int):
-		print " def getsHidden(self,int): "
+	def getsHidden(self, int):
+		print " def getsHidden(self, int): "
 		self.stopTimer()
 
 	@QtCore.pyqtSignature("")
@@ -251,17 +252,28 @@ class Autorun(QtGui.QWidget):
 			else:
 				self.__carta = row[6]
 
-			self.__ui.checkBoxMSX.setText( QtCore.QString("MSX: " + self.__MSX ))
-			self.__ui.checkBoxDiska.setText( QtCore.QString("diska: " + self.__diska ))
-			self.__ui.checkBoxDiskb.setText( QtCore.QString("diskb: " + self.__diskb ))
-			self.__ui.checkBoxCarta.setText( QtCore.QString("carta: " + self.__carta ))
-			self.__ui.checkBoxCartb.setText( QtCore.QString("cartb: " + self.__cartb ))
-			self.__ui.checkBoxExtensions.setText( QtCore.QString("extensions: "
-				+ self.__extensions ))
-			self.__ui.labelGames.setText( QtCore.QString(row[2]) )
-			self.__ui.spinBoxShutdown.setValue( int( row[4] ))
+			self.__ui.checkBoxMSX.setText(
+				QtCore.QString("MSX: " + self.__MSX)
+				)
+			self.__ui.checkBoxDiska.setText(
+				QtCore.QString("diska: " + self.__diska)
+				)
+			self.__ui.checkBoxDiskb.setText(
+				QtCore.QString("diskb: " + self.__diskb)
+				)
+			self.__ui.checkBoxCarta.setText(
+				QtCore.QString("carta: " + self.__carta)
+				)
+			self.__ui.checkBoxCartb.setText(
+				QtCore.QString("cartb: " + self.__cartb)
+				)
+			self.__ui.checkBoxExtensions.setText(
+				QtCore.QString("extensions: " + self.__extensions)
+				)
+			self.__ui.labelGames.setText(QtCore.QString(row[2]))
+			self.__ui.spinBoxShutdown.setValue(int(row[4]))
 			self.__ui.slideshowWidget.reset()
-			self.__ui.slideshowWidget.findImagesForMedia( row[6] )
+			self.__ui.slideshowWidget.findImagesForMedia(row[6])
 
 	@QtCore.pyqtSignature("")
 	def on_pushButtonCounter_clicked(self):
@@ -271,7 +283,5 @@ class Autorun(QtGui.QWidget):
 			# also restart the slideshow in case we stopped it
 			# because of manual launching openmsx
 			self.__ui.slideshowWidget.setSlideStopped(True)
-
 		else:
 			self.stopTimer()
-
