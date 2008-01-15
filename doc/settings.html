@@ -60,7 +60,9 @@ Here is an overview of how Catapult should handle the different setting properti
 <dt>help text</dt>
 <dd>The openMSX help text for a setting can be used in Catapult, to avoid duplication of these texts in source code. The help texts do not change at runtime.</dd>
 </dl>
-
+<p>
+All communication between Catapult and openMSX is asynchronous. This means that reading a setting will not immediately return an answer. The framework should offer a mechanism to deliver the answer when it arrives. Additionally, Catapult can subscribe to updates from openMSX, which arrive in Catapult at arbitrary moments.
+</p>
 <p>
 Typically there is a widget or set of widgets to control a particular setting. The framework must offer a way to keep the value of a widget synchronized to the value of the setting in openMSX: the widget's value must get updated when the setting's value changes and vice versa. This mechanism must avoid oscillation that can happen because of the latency of the asynchronous communication channel with openMSX.
 </p>
@@ -73,8 +75,12 @@ Settings may stop or start to exist when a machine is changed. It must be possib
 
 <h2>Design</h2>
 
+<h3>Setting Proxies</h3>
 <p>
-Catapult's view of a setting can be in one of the following states:
+Catapult will keep a proxy object for every setting that it is interested in. There will be a central registry of setting proxies, to make sure there is at most one proxy for each openMSX setting.
+</p>
+<p>
+Setting properties (both static and dynamic) are fetched from openMSX. Catapult's view of a setting can be in one of the following states:
 </p>
 <dl>
 <dt>unknown</dt>
@@ -90,17 +96,21 @@ Note that "currently" refers to Catapult's view of the setting. Because of the a
 <p>
 It would be possible to query setting properties one at a time, in which case the "known" state would be split into several new states. However, this complicates things without offering an advantage.
 </p>
-
 <p>
-Notes:
+Some settings exist per machine. For those settings, the setting proxy will reflect the setting from the current machine. Therefore, on a machine change settings can go in or out of existance, or change value.
 </p>
-<ul>
-<li>it is probably a good idea to have python settings classes for each openMSX settings class. Interesting case: filename setting: can we use it to do something clever with a file dialog?</li>
-<li>setting properties (both static and dynamic) are fetched from openMSX. Some through 'settinginfo' updates from openMSX</li>
-<li>all communication is asynchronous, this means that some data is not available right after registration of a setting. The framework or caller should be able to cope with this in a clean manner</li>
-<li>we should be able to handle the fact that different widget types have different signals (names and signatures) for 'value changed' and different methods to set a value (e.g. in a ComboBox for EnumSettings, you have to find the proper index and set that as current)</li>
-<li>we should take into account that we have to convert types in our setting code. E.g. Slider widgets do not support floats. We have to convert to ints and back to floats for this. Other (small) conversions need to take place for booleans in checkboxes, e.g.</li>
-</ul>
+
+<h3>Widgets</h3>
+
+<p class="todo">
+We should be able to handle the fact that different widget types have different signals (names and signatures) for 'value changed' and different methods to set a value (e.g. in a ComboBox for EnumSettings, you have to find the proper index and set that as current).
+</p>
+<p class="todo">
+We should take into account that we have to convert types in our setting code. E.g. Slider widgets do not support floats. We have to convert to ints and back to floats for this. Other (small) conversions need to take place for booleans in checkboxes, e.g.
+</p>
+<p class="todo">
+Filename setting: can we use it to do something clever with a file dialog?
+</p>
 
 <h2>Issues with Old Design</h2>
 

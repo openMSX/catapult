@@ -9,8 +9,10 @@ ul, ol {
 h1 {
 	border-bottom: 2px solid #3060C0;
 }
-h2 {
+h2, h3 {
 	padding-left: 4pt;
+}
+h2 {
 	background: #3060C0;
 	color: white;
 }
