@@ -1,5 +1,9 @@
 $Id$
 
+2008-01-18 David Heremans <david.heremans@gnu-linux.net>
+	* Only apply idle command when autorun
+	* Checked for instanciated __ui when handling power events
+
 2008-01-11 David Heremans <david.heremans@gnu-linux.net>
 	* Basic functionality from autorun now complete:
 	  1. start openMSX with software from dropdown

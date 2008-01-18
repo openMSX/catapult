@@ -5,11 +5,12 @@ from qt_utils import connect
 
 class Diskmanipulator(QtCore.QObject):
 
-	def __init__(self, mediaModel, bridge):
+	def __init__(self, mainwindow, mediaModel, bridge):
 		#QtCore.QAbstractListModel.__init__(self)
 		QtCore.QObject.__init__(self)
 
 		self.__dmDialog = None
+		self.__mainwindow = mainwindow
 		self.__ui = None
 		self.__comboBox = None
 		self.__mediaModel = mediaModel
@@ -47,7 +48,7 @@ class Diskmanipulator(QtCore.QObject):
 		dialog = self.__dmDialog
 		if dialog is None:
 			self.__dmDialog = dialog = QtGui.QDialog(
-				None, # TODO: find a way to get the real parent
+				self.__mainwindow, # TODO: find a better way to get the real parent :-)
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
 				)
@@ -104,6 +105,13 @@ class Diskmanipulator(QtCore.QObject):
 
 
 			# Connect signals.
+			#TOO: Find out how to do this correctly, since this doesn't work
+			# maybe I should throw events from the closeEvent handler from the mainwindow??
+			#connect(
+			#	self.__mainwindow,
+			#	'close()',
+			#	dialog.close
+			#	)
 			connect(
 				ui.openImageButton,
 				'clicked()',

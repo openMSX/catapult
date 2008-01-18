@@ -35,6 +35,8 @@ class Autorun(QtGui.QWidget):
 		settingsManager['power'].valueChanged.connect(self.updatePowerInfo)
 
 	def updatePowerInfo(self, value):
+		if self.__ui == None:
+			return
 		if value:
 			# User is running openMSX, so shouldn't be looking
 			# anymore at the autorun slides :-)
@@ -147,17 +149,17 @@ class Autorun(QtGui.QWidget):
 			if self.__ui.checkBoxMSX.isChecked():
 				self.__bridge.command('machine', self.__MSX)(self.applySettingsCont)
 			else:
-				self.applySettingsCont()
+				self.applySettingsCont("bogus")
 
 		elif switch == 1:
-			if self.__ui.checkBoxExtensions.isChecked():
+			if self.__ui.checkBoxExtensions.isChecked() and self.__extensions != "Empty" :
 				#TODO Fix this thing since it creates 
 				#to much callbacks if more then one ext is given...
 				#For now it is a it-just-works solution
 				for ext in self.__extensions.split(','):
-					self.__bridge.command('ext', ext)(self.applySettingsCont)
+					self.__bridge.command('ext', ext)(self.applySettingsCont,self.applySettingsCont)
 			else:
-				self.applySettingsCont()
+				self.applySettingsCont("bogus")
 
 		elif switch == 2:
 			if self.__ui.checkBoxDiska.isChecked():
@@ -168,7 +170,7 @@ class Autorun(QtGui.QWidget):
 					self.applySettingsCont,
 					self.applySettingsCont)
 			else:
-				self.applySettingsCont()
+				self.applySettingsCont("bogus")
 
 		elif switch == 3:
 			if self.__ui.checkBoxDiskb.isChecked():
@@ -179,7 +181,7 @@ class Autorun(QtGui.QWidget):
 					self.applySettingsCont,
 					self.applySettingsCont)
 			else:
-				self.applySettingsCont()
+				self.applySettingsCont("bogus")
 
 		elif switch == 4:
 			if self.__ui.checkBoxCarta.isChecked():
@@ -190,7 +192,7 @@ class Autorun(QtGui.QWidget):
 					self.applySettingsCont,
 					self.applySettingsCont)
 			else:
-				self.applySettingsCont()
+				self.applySettingsCont("bogus")
 
 		elif switch == 5:
 			if self.__ui.checkBoxCartb.isChecked():
@@ -201,16 +203,16 @@ class Autorun(QtGui.QWidget):
 					self.applySettingsCont,
 					self.applySettingsCont)
 			else:
-				self.applySettingsCont()
+				self.applySettingsCont("bogus")
 
 		elif switch == 6:
 			if self.__runAfterApply:
 				self.__mainwindow.getPlayState().setState(PlayState.play)
 				self.__bridge.command('reset')()
-			if self.__ui.checkBoxShutdown.isChecked():
-				self.__bridge.command('after', 'idle',
-					self.__ui.spinBoxShutdown.value(),
-					'quit')()
+				if self.__ui.checkBoxShutdown.isChecked():
+					self.__bridge.command('after', 'idle',
+						self.__ui.spinBoxShutdown.value(),
+						'quit')()
 
 	def nextGame(self):
 		combo = self.__ui.comboBoxGames

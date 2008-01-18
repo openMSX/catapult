@@ -1,5 +1,11 @@
-msx2;Jungle Symphonies;A music disk;moonsound;30;diska;/openMSX/SOFTWARE/copyright/compjoet/junglsym.di2.gz
+turbor;20th anniversary demo;A demo made by Maggoo\nShowing some nice visual effects;audio;1000;diska;/openMSX/SOFTWARE/downloaded/maggoo/msx20th.dsk.gz
 msx2;Almost Real (FD 41);An impressive demo;audio;30;diska;/openMSX/SOFTWARE/donated/almost_real.dsk.gz
-msx2;Impaccable;A nice demo;mbstereo;30;diska;/openMSX/SOFTWARE/pd/impact/impcable.di2.gz
-msx2;FAC Demo 4;Clasic demo\nFAC is the abrev. of Federation against Commodore;audio;30;diska;/openMSX/SOFTWARE/downloaded/fac/facdemo4.dsk.gz
+msx2;Avaakkus;The MSX1 demo for Alternative Party'98;Empty;1000;diska;/openMSX/SOFTWARE/downloaded/lievestuore/avaakkus.dsk.gz
 msx2;FAC Demo 5;And yet an other demo\n\nNice, isn't it.;audio;1116;diska;/openMSX/SOFTWARE/downloaded/fac/facdemo5.dsk.gz
+turbor;Sphere;A demo made by Infinite\n\nA screen 0 (80chars) demo\nAnimation timed to music.;moonsound,ram4mb;1116;diska;/openMSX/SOFTWARE/downloaded/infinite/sphere1.dsk.gz
+turbor;SWISS demo;A demo made by Mi-Chi and A.T.\n\nOne of the first Turbo-R demos\n;Empty;1116;diska;/openMSX/SOFTWARE/turbo-software/swiss.dsk.gz
+msx2;Turnix;Final demo of the FCS group;mbstereo;1116;diska;/openMSX/SOFTWARE/downloaded/group/turnix.dsk.gz
+turbor;Unknow Reality;Legendary mega demo from the group NOP\nThe first to use the overscan effect.\nThe first to do a vertical screensplit.\nThe first to use an 256KB MSX-AUDIO\nIt was released on 3 disks.;audio;1116;diska;/openMSX/SOFTWARE/downloaded/group4/ur20a.dsk.gz
+msx2;Maze;This demo uses the test mode of the RTC\nto be able to calculate the needed\ntiming for the color effects.\nThis makes the timing perfect on any MSX\nmodel. A regular Z80,6 or 7MHz modifications,R800,...\nAll work flawlessly;mbstereo;1116;diska;/openMSX/SOFTWARE/downloaded/maze.dsk.gz
+msx2;Jungle Symphonies;A music disk;moonsound;30;diska;/openMSX/SOFTWARE/copyright/compjoet/junglsym.di2.gz
+msx2;Impaccable;A nice demo;mbstereo;30;diska;/openMSX/SOFTWARE/pd/impact/impcable.di2.gz

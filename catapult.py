@@ -111,7 +111,7 @@ class MainWindow(QtGui.QMainWindow):
 			self, ui, bridge
 			)
 
-		self.__diskmanipulator = Diskmanipulator(mediaModel, bridge)
+		self.__diskmanipulator = Diskmanipulator(self, mediaModel, bridge)
 		self.__cheatfinder = Cheatfinder(bridge)
 		self.__trainerselect = TrainerSelect(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
@@ -373,6 +373,16 @@ class MainWindow(QtGui.QMainWindow):
 		return self.__playState
 
 	# Slots:
+
+	#@QtCore.pyqtSignature('')
+	def closeEvent(self,event):
+		print " QtGui.QMainWindow.closeEvent(self,event)"
+		QtGui.QMainWindow.closeEvent(self,event)
+
+	@QtCore.pyqtSignature('')
+	def close(self):
+		print " QtGui.QMainWindow.closeEvent(self,event)"
+		QtGui.QMainWindow.close(self)
 
 	@QtCore.pyqtSignature('')
 	def on_playButton_clicked(self):
