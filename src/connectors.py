@@ -129,7 +129,7 @@ class ConnectorHandler(QtCore.QObject):
 		'''Removes the currently inserted pluggable.
 		'''
 		self._plugger.setPluggable('')
-	
+
 	def selectionChanged(self, newSelection):
 		self._plugger.setPluggable(newSelection)
 
@@ -147,7 +147,7 @@ class ConnectorHandler(QtCore.QObject):
 		self._pluggableLabel.setText(
 			self._plugger.getModel().getConnectorDescription(connector)
 			)
-	
+
 	def getPage(self):
 		return getattr(self._ui, self.connector + 'Page')
 

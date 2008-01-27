@@ -52,7 +52,7 @@ class Slideshow(QtGui.QWidget):
 		self.__slideStarted = False
 		self.__slidePauzed = False
 		self.currentSlide = 0
-		
+
 		self.curImagWidth = self.minWidth
 		self.curImagHeight = self.minHeight
 		self.maxImagWidth = self.minWidth

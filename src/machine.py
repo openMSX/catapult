@@ -244,7 +244,7 @@ class MachineManager(QtCore.QObject):
 				self.__machineBox
 				)
 		messageBox.show()
-	
+
 	def __machineChanged(self, value):
 		print 'current machine:', value
 		self.__currentMachineConfig = value
@@ -300,7 +300,7 @@ class MachineManager(QtCore.QObject):
 			index = model.createIndex(row, 0)
 			table.setCurrentIndex(index)
 			table.scrollTo(index)
-	
+
 	def __machineSetDefault(self):
 		machineBox = self.__machineBox
 		machine = machineBox.itemData(machineBox.currentIndex()).toString()

@@ -122,7 +122,7 @@ class BooleanSetting(Setting):
 			obj.setChecked(value)
 		else:
 			assert False, 'Unsupported boolean control'
-	
+
 	def setValue(self, value):
 		if isinstance(value, bool):
 			realVal = value
@@ -150,9 +150,9 @@ class EnumSetting(Setting):
 		index = obj.findText(value)
 		if index == -1:
 			obj.addItem(value)
-		else:	
+		else:
 			obj.setCurrentIndex(index)
-	
+
 class IntegerSetting(Setting):
 	valueChanged = Signal('int')
 
@@ -177,7 +177,7 @@ class FloatSetting(Setting):
 			obj.setValue(round(val*100))
 		else:
 			obj.setValue(val)
-	
+
 	def setValue(self, value):
 		if isinstance(value, int):
 			realVal = float(value)/100
@@ -201,7 +201,7 @@ class SettingsManager(QtCore.QObject):
 
 	def registerSetting(self, name, settingClass):
 		'''Register the name of the setting once at the bridge.
-		If multiple objects want to listen to updates the can still 
+		If multiple objects want to listen to updates the can still
 		call this method, otherwise one would start depending on
 		the order of instantiating
 		'''
@@ -230,7 +230,7 @@ class SettingsManager(QtCore.QObject):
 	def connectSetting(self, name, obj):
 		self.__bridge.command('openmsx_info', 'setting', name
 				)( lambda *items: self.__configUIElem(name, obj, *items), None)
-		
+
 	def __configUIElem(self, name, obj, *items):
 		#print 'Configuring UI element %s for setting %s' % (obj, name)
 		if items[0] == 'float':

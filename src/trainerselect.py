@@ -39,7 +39,7 @@ class TrainerSelect(object):
 			self.__scrollArea.setWidgetResizable(True)
 			self.__scrollArea.setFrameStyle(QtGui.QFrame.NoFrame)
 			ui.gridlayout.addWidget(self.__scrollArea)
-			
+
 			# Connect signals.
 			connect(ui.gameSelector, 'activated(QString)', self.__fillCheats)
 			connect(ui.enableNoneButton, 'clicked()', self.__enableNone)
@@ -53,7 +53,7 @@ class TrainerSelect(object):
 		self.__bridge.command(
 			'array', 'names', '::__trainers'
 			)(self.__fillGameSelector)
-		
+
 	def __fillGameSelector(self, *words):
 		words = sorted(words)
 		text = self.__ui.gameSelector
@@ -70,7 +70,7 @@ class TrainerSelect(object):
 	def __output(self, *words):
 		line = ' '.join(words)
 		trainerArray = line.split('\n')
-		
+
 		#remove all items in the trainerVLayout
 		child = self.__trainerVLayout.takeAt(0)
 		while (child != None):
@@ -79,7 +79,7 @@ class TrainerSelect(object):
 				child.widget().deleteLater()
 			del child
 			child = self.__trainerVLayout.takeAt(0)
-	
+
 		self.__checkbox = []
 		for trainerLine in trainerArray[ 1 : ]:
 			trainerIndex = trainerLine.rstrip()\
@@ -113,7 +113,7 @@ class TrainerSelect(object):
 			str(index))()
 		#Maybe we need to create an __update so that we
 		#read ALL values again and set the checkboxes ?
-		#This would catch also all cases of manual (de)selection in 
+		#This would catch also all cases of manual (de)selection in
 		#the openMSX console which we do ignore at the moment...
 		#self.__bridge.command('trainer', str(self.__selected))(self.__update)
 
@@ -127,4 +127,4 @@ class TrainerSelect(object):
 			if not checkBox.isChecked():
 				checkBox.setChecked(True)
 
-	
+

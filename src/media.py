@@ -68,7 +68,7 @@ class MediaSwitcher(QtCore.QObject):
 			for handler in ( DiskHandler, CartHandler,
 				CassetteHandler, HarddiskHandler, CDROMHandler )
 			]
-	
+
 	def __connectSettings(self):
 		settingsManager = self.__settingsManager
 		ui = self.__ui
@@ -113,12 +113,12 @@ class MediaSwitcher(QtCore.QObject):
 		ui.cartDescriptionLabel.setText(description)
 
 		ui.cartHistoryBox.lineEdit().setText(path)
-		
+
 		if not self.__cartPageInited:
 			# the next query might be empty, if it happens too soon
 			mapperTypes = self.__mediaModel.getRomTypes()
 			if len(mapperTypes) != 0:
-				self.__cartPageInited = True 
+				self.__cartPageInited = True
 				ui.mapperTypeCombo.addItem('Auto Detect')
 				for item in mapperTypes:
 					ui.mapperTypeCombo.addItem(QtCore.QString(item))
@@ -330,8 +330,8 @@ class MediaSwitcher(QtCore.QObject):
 			self.__updateMediaPage(mediaSlot)
 
 	def setInfoPage(self):
-		# TODO : this is called for each media hardware that is added or removed, 
-		# since switching machines will sent this event for each and 
+		# TODO : this is called for each media hardware that is added or removed,
+		# since switching machines will sent this event for each and
 		# every drive/hd/cd/... this will be called several times in a row
 		# do we need to handel this in a better way ?
 		self.__ui.mediaStack.setCurrentWidget(self.__ui.infoPage)
@@ -464,9 +464,9 @@ class CartHandler(MediaHandler):
 		self._mapperTypeCombo = ui.mapperTypeCombo
 
 		# Connect signals.
-		connect(self._mapperTypeCombo, 'activated(QString)', 
+		connect(self._mapperTypeCombo, 'activated(QString)',
 			self.__mapperTypeSelected)
-	
+
 	def __mapperTypeSelected(self, mapperType):
 		# reinsert to set the mappertype
 		self.mapperType = mapperType
@@ -498,7 +498,7 @@ class CartHandler(MediaHandler):
 		if (self.mapperType == 'Auto Detect'):
 			self._switcher.setPath(str(path))
 		else:
-			self._switcher.setPath(str(path), '-romtype', 
+			self._switcher.setPath(str(path), '-romtype',
 				self.mapperType)
 
 		# Persist history.

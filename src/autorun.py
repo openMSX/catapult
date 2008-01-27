@@ -41,12 +41,12 @@ class Autorun(QtGui.QWidget):
 			# User is running openMSX, so shouldn't be looking
 			# anymore at the autorun slides :-)
 			self.__ui.slideshowWidget.setSlideStopped(False)
-			# extra stop timer in case the user manually 
+			# extra stop timer in case the user manually
 			# powered on the openmsx
 			self.stopTimer()
 		else:
 			# MSX powered off after autorun started it,so we
-			# restart counting,swicth to next game and 
+			# restart counting,swicth to next game and
 			# restart the slideshow
 			if self.__runAfterApply:
 				self.nextGame()
@@ -135,11 +135,11 @@ class Autorun(QtGui.QWidget):
 			self.__bridge.command('list_extensions', )(self.clearExtensions)
 		else:
 			self.applySettingsCont("bogus")
-	
+
 	def clearExtensions(self, extlist):
 		for ext in extlist.split(' '):
 			self.__bridge.command('remove_extension', ext)()
-		
+
 		self.applySettingsCont("bogus")
 
 	def applySettingsCont(self, ignoredReturnValue):
@@ -153,7 +153,7 @@ class Autorun(QtGui.QWidget):
 
 		elif switch == 1:
 			if self.__ui.checkBoxExtensions.isChecked() and self.__extensions != "Empty" :
-				#TODO Fix this thing since it creates 
+				#TODO Fix this thing since it creates
 				#to much callbacks if more then one ext is given...
 				#For now it is a it-just-works solution
 				for ext in self.__extensions.split(','):
@@ -238,7 +238,7 @@ class Autorun(QtGui.QWidget):
 		cursor = self.__cursor
 		index = index + 1
 		cursor.execute('SELECT Machine, Title, Info, Extensions,' +
-			' Timeout, Media, File FROM autorun WHERE id = ' + 
+			' Timeout, Media, File FROM autorun WHERE id = ' +
 			str(index) )
 		for row in cursor:
 			#TODO this is a quick hack to see something move :-)

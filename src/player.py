@@ -76,7 +76,7 @@ class PlayState(QtCore.QObject):
 			powerSetting, pauseSetting, throttleSetting, visibleSetting
 			):
 			setting.valueChanged.connect(self.update)
-	
+
 	def getVisibleSetting(self):
 		return self.__visibleSetting
 

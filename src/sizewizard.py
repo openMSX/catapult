@@ -45,11 +45,11 @@ class Sizewizardtwo(QtGui.QDialog):
 		connect(self.spinBox, "valueChanged(int)", self.setNrPartitions)
 
 		self.label.setText(QtGui.QApplication.translate(
-			"Dialog", "Number of partitions", None, 
+			"Dialog", "Number of partitions", None,
 			QtGui.QApplication.UnicodeUTF8)
 			)
 		self.listWidget.clear()
-	
+
 		index = 0
 		while index < 32:
 			widgetItem = QtGui.QListWidgetItem(self.listWidget)
@@ -60,7 +60,7 @@ class Sizewizardtwo(QtGui.QDialog):
 				)
 			widgetItem.setText(
 				QtGui.QApplication.translate(
-					"Dialog", "32M", None, 
+					"Dialog", "32M", None,
 					QtGui.QApplication.UnicodeUTF8
 					)
 				)
@@ -126,7 +126,7 @@ class Sizewizard(QtGui.QDialog):
 			'valueChanged(int)',
 			self.changedDiskSize
 			)
-	
+
 	def setWidgetstate(self):
 		print 'def setWidgetstate():'
 		ui = self.__ui
@@ -139,7 +139,7 @@ class Sizewizard(QtGui.QDialog):
 		ui.unpartedLabel.setEnabled(state)
 
 	def changedDiskSize(self, size):
-		bold = 1 
+		bold = 1
 		if  size > 32767:
 			txt = 'Maximum sized FAT12 disk fo IDE extension'
 		elif size == 720:
@@ -151,11 +151,11 @@ class Sizewizard(QtGui.QDialog):
 		elif size > 720:
 			txt = 'big disk for IDE extension' + \
 			'with size ' + str(size/1024) + "MB"
-			bold = 0 
+			bold = 0
 		else:
 			txt = "disk with custom size of " + \
 			str(size) + "KB"
-			bold = 0 
+			bold = 0
 		self.__ui.unpartedLabel.setText(txt)
 		self.__ui.unpartedLabel.font().setBold(bold)
 

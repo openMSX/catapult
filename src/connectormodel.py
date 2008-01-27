@@ -10,7 +10,7 @@ from qt_utils import QtSignal, Signal
 # if the last callback has been received
 # Maybe it should be moved to openmsx_utils.py or so.
 class ReadyCounter(object):
-	
+
 	def __init__(self, signal):
 		self.__counter = 0
 		self.__signal = signal
@@ -111,7 +111,7 @@ class ConnectorModel(QtCore.QAbstractListModel):
 	def __pluggableClassReply(self, connector, pluggableClass):
 		self.__readyCounter.decr()
 		self.__pluggableClasses[connector] = pluggableClass
-	
+
 	def getPluggables(self, connectorClass):
 		retval = []
 		for pluggable in self.__pluggableClasses:

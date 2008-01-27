@@ -166,7 +166,7 @@ class Cheatfinder(object):
 				addrItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 				self.__ui.CheatTable.setItem(row, 0, addrItem)
 
-				#Fill Old Value Item 
+				#Fill Old Value Item
 				oldValItem = QtGui.QTableWidgetItem(
 					cheatVal[1] + ' / ' + str(hex(int(cheatVal[1])))
 				)

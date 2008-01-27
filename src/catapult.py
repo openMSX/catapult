@@ -187,11 +187,11 @@ class MainWindow(QtGui.QMainWindow):
 		# Triggering an valuechanged signal that sets the openmsx to
 		# the wrong value. This was the case when the noise was set to
 		# 3.0 and the slider only went up until 0.99 since the
-		# slider was not yet configured... 
+		# slider was not yet configured...
 		# The same goes for practically all settings.
 		settingsManager = self.__settingsManager
 		ui = self.__ui
-		
+
 		# video settings
 		settingsManager.registerSetting('gamma', settings.FloatSetting)
 		settingsManager.connectSetting('gamma', ui.gammaSlider)
@@ -274,7 +274,7 @@ class MainWindow(QtGui.QMainWindow):
 			ui.action_AutoSaveSettings)
 
 		###### non standard settings
-		
+
 		# monitor type
 		# TODO: settings implemented in TCL don't have a way to sync
 		# back...
@@ -290,7 +290,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__bridge.command('monitor_type', '-list')(
 				monitorTypeListReply
 			)
-		
+
 		def monitorTypeChanged(newType):
 			self.__bridge.command('monitor_type', str(newType))()
 
@@ -326,7 +326,7 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
 			( ui.action_CheatFinder, self.__cheatfinder.show ),
-			( ui.action_TrainerSelect, self.__trainerselect.show ),			
+			( ui.action_TrainerSelect, self.__trainerselect.show ),
 			( ui.action_PaletteEditor, self.__paletteeditor.show ),
 			( ui.action_InputText, self.__inputtext.show ),
 			( ui.action_SoftwareDB, self.__softwaredb.show ),
@@ -363,7 +363,7 @@ class MainWindow(QtGui.QMainWindow):
 		else:
 			self.__frameRateTimer.stop()
 			self.__frameRateLabel.setText('')
-			
+
 	def consoleReply(self, reply):
 		if reply.endswith('\n'):
 			reply = reply[ : -1]
@@ -468,7 +468,7 @@ class MainWindow(QtGui.QMainWindow):
 					EscapedStr(tclEscape(settingsFile)))(
 					None, self.__saveSettingsAsFailedHandler
 					)
-	
+
 	def __saveSettingsAsFailedHandler(self, message):
 		messageBox = QtGui.QMessageBox('Problem Saving Settings', message,
 				QtGui.QMessageBox.Warning, 0, 0, 0,

@@ -32,7 +32,7 @@ class AudioModel(QtCore.QAbstractListModel):
 			self.__removeDevice(device, machineId)
 		else:
 			assert False, 'Unexpected update type'
-	
+
 	def __initialUpdateReply(self, *devices):
 #		self.__audioChannels.append('master')
 		self.__settingsManager.registerSetting('master_volume',
@@ -85,7 +85,7 @@ class AudioMixer(QtCore.QObject):
 		self.__settingsManager = settingsManager
 
 		self.__audioControlItemMap = {}
-		
+
 		# remove margins of top level gridlayout (cannot be edited in Designer)
 		ui.audioTab.layout().setMargin(0)
 		# widget that will be controlled by the scrollarea:
@@ -106,7 +106,7 @@ class AudioMixer(QtCore.QObject):
 		scrollArea.setFrameStyle(QtGui.QFrame.NoFrame)
 		# add it to the layout of the topLevelWidget.
 		topLevelLayout.addWidget(scrollArea)
-		
+
 		self.__audioModel.deviceRemoved.connect(self.__removeChannel)
 		self.__audioModel.deviceAdded.connect(self.__addChannel)
 
@@ -156,17 +156,17 @@ class AudioMixer(QtCore.QObject):
 		verLayout.setSpacing(0)
 		verLayout.setMargin(0)
 		verLayout.addStretch()
-			
+
 		itemWidget = QtGui.QWidget()
 		itemWidget.setContentsMargins(0, 0, 0, 0)
-		
+
 		horLayout = QtGui.QHBoxLayout(itemWidget)
 		horLayout.setSpacing(6)
 		horLayout.addLayout(verLayout)
 		volSpinbox = QtGui.QSpinBox()
 		volSpinbox.setObjectName(channel + '_volSpinbox')
 		horLayout.addWidget(volSpinbox)
-		
+
 		if channel != 'master':
 			balHorLayout = QtGui.QHBoxLayout()
 			balHorLayout.addWidget(QtGui.QLabel('L'))
@@ -194,7 +194,7 @@ class AudioMixer(QtCore.QObject):
 			muteCheckBox = QtGui.QCheckBox('mute')
 			self.__settingsManager.connectSetting('mute', muteCheckBox)
 			horLayout.addWidget(muteCheckBox)
-		
+
 		self.__settingsManager.connectSetting(volSettingName, volSlider)
 		self.__settingsManager.connectSetting(volSettingName, volSpinbox)
 
@@ -209,7 +209,7 @@ class AudioMixer(QtCore.QObject):
 		machineId = str(machineId)
 		itemWidget = self.__audioControlItemMap[machineId + '::' + channel]
 		self.__audioControlItemBox.removeWidget(itemWidget)
-		itemWidget.setParent(None)		
+		itemWidget.setParent(None)
 		itemWidget.deleteLater()
 
 	def __toggleAdvSettings(self):
