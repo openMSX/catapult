@@ -2,42 +2,56 @@
 
 .PHONY: run build clean lint lintrun dist
 
-UI_DESIGNS:=$(wildcard *.ui)
-UI_GEN_SRC:=$(UI_DESIGNS:%.ui=ui_%.py)
+ICONS:=$(wildcard res/*.png)
+COPY_ICONS:=$(ICONS:res/%=derived/%)
 
-SOURCES:=$(filter-out $(UI_GEN_SRC),$(wildcard *.py))
-DIST_FILES:=Makefile $(UI_DESIGNS) $(SOURCES) $(wildcard *.png)
+SOURCES:=$(wildcard src/*.py)
+COPY_SRC:=$(SOURCES:src/%=derived/%)
+
+UI_DESIGNS:=$(wildcard res/*.ui)
+UI_GEN_SRC:=$(UI_DESIGNS:res/%.ui=derived/ui_%.py)
+
+DIST_FILES:=Makefile $(SOURCES) $(ICONS) $(UI_DESIGNS) win32exe.py
 
 run: build
-	python catapult.py
+	cd derived && python catapult.py
 
-build: $(UI_GEN_SRC)
+build: $(COPY_SRC) $(COPY_ICONS) $(UI_GEN_SRC)
 
-$(UI_GEN_SRC): ui_%.py: %.ui
+$(COPY_SRC): derived/%.py: src/%.py
+	@mkdir -p derived
+	cp $< $@
+
+$(COPY_ICONS): derived/%: res/%
+	@mkdir -p derived
+	cp $< $@
+
+$(UI_GEN_SRC): derived/ui_%.py: res/%.ui
+	@mkdir -p derived
 	pyuic4 $< -o $@
 
 clean:
-	rm -f $(UI_GEN_SRC) *.pyc *.pyo
+	rm -rf derived
 
 # Altough the generated sources are not checked, the modules that are checked
 # import them and those import statements are checked.
 lint: build
-	pylint $(SOURCES)
+	cd src && PYTHONPATH=../derived pylint $(SOURCES:src/%.py=%.py)
 
 lintrun: build
 	@echo "Checking modified sources with PyLint..."
-	@MODIFIED=`svn st | sed -ne 's/[AM]..... \(.*\.py\)$$/\1/p'` && \
+	@MODIFIED=`svn st | sed -ne 's/[AM]..... src\/\(.*\.py\)$$/\1/p'` && \
 		if [ -n "$$MODIFIED" ]; then \
-			! pylint --debug-mode $$MODIFIED | grep .; \
+			cd src && ! PYTHONPATH=../derived pylint --errors-only $$MODIFIED | grep .; \
 		fi
-	python catapult.py
+	cd derived && python catapult.py
 
 precommit: build
 	@svn diff
-	@MODIFIED=`svn st | sed -ne 's/[AM]..... \(.*\.py\)$$/\1/p'` && \
+	@MODIFIED=`svn st | sed -ne 's/[AM]..... src\/\(.*\.py\)$$/\1/p'` && \
 		if [ -n "$$MODIFIED" ]; then \
-			pylint -rn $$MODIFIED; \
+			cd src && PYTHONPATH=../derived pylint -rn $$MODIFIED; \
 		fi
 
 dist:
-	 zip $(shell date +%Y-%m-%d-%H-%M).zip $(DIST_FILES)
+	 zip catapult-$(shell date +%Y-%m-%d-%H-%M).zip $(DIST_FILES)

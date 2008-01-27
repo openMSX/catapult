@@ -1,5 +1,9 @@
 $Id$
 
+2008-01-27 Maarten ter Huurne <maarten@treewalker.org>
+	* Restructured archive: put Python code in "src", UI design and icons
+	  in "res" and generated files in "derived".
+
 2008-01-18 David Heremans <david.heremans@gnu-linux.net>
 	* Only apply idle command when autorun
 	* Checked for instanciated __ui when handling power events
@@ -26,7 +30,7 @@ $Id$
 	  its default value (by sending unset <setting> to openMSX).
 
 2007-12-24 Manuel Bilderbeek <manuel@msxnet.org>
-	* Added Load and Save As for settings. 
+	* Added Load and Save As for settings.
 	* Used Tcl to save the current value for renderer.
 	  TODO: just discovered that the Player crashes after loading
 	  settings. Fix!
@@ -63,7 +67,7 @@ $Id$
 2007-12-14 Manuel Bilderbeek <manuel@msxnet.org>
 	* Improved AudioMixer:
 	  - use stretch to keep channels at the top if there are few
-	  - use scrollarea to get scrollbar (not bigger window) when there are 
+	  - use scrollarea to get scrollbar (not bigger window) when there are
 	    many
 
 2007-12-13 Manuel Bilderbeek <manuel@msxnet.org>
@@ -124,11 +128,11 @@ $Id$
 
 2007-10-13 David Heremans <david.heremans@gnu-linux.net>
 	* The videotab sliders/spinboxes now use the value from openMSX
-	  itself, instead of resetting them to the default as returned 
+	  itself, instead of resetting them to the default as returned
 	  by the openmsx_info command
 
 2007-10-12 David Heremans <david.heremans@gnu-linux.net>
-	* Diskmanipulator only uses virtual drive  for new images if 
+	* Diskmanipulator only uses virtual drive  for new images if
 	  there are no partitions on it.
 
 2007-10-11 David Heremans <david.heremans@gnu-linux.net>
@@ -149,7 +153,7 @@ $Id$
 	  extract selected files/dirs from the MSX media.
 
 2007-09-29 Patrick van Arkel <vampiermsx@gmail.com>
-	* Implemented the base for the Trainer Selector. 
+	* Implemented the base for the Trainer Selector.
 	  And made some improvements on the Cheatfinder.
 
 2007-09-27 David Heremans <david.heremans@gnu-linux.net>
@@ -160,7 +164,7 @@ $Id$
 	* The diskmanipulator now only shows the available drives,
 	  knows when there is no disk in the drive and reacts to
 	  machine/disk changes. Order of signals and commands is
-	  currently caussing an issue though... 
+	  currently caussing an issue though...
 
 2007-09-24 David Heremans <david.heremans@gnu-linux.net>
 	* More WIP code for the comboboxes in the video tab
