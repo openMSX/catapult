@@ -1,5 +1,8 @@
 $Id$
 
+2008-02-10 Maarten ter Huurne <maarten@treewalker.org>
+	* Create application folder on Mac OS X.
+
 2008-01-27 Maarten ter Huurne <maarten@treewalker.org>
 	* Restructured archive: put Python code in "src", UI design and icons
 	  in "res" and generated files in "derived".
