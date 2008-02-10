@@ -17,7 +17,7 @@ PY_DIR:=derived
 RES_DIR:=derived
 endif
 
-ICONS:=$(wildcard res/*.png)
+ICONS:=$(wildcard res/*.png) $(wildcard res/*.icns)
 COPY_ICONS:=$(ICONS:res/%=$(RES_DIR)/%)
 
 SOURCES:=$(wildcard src/*.py)
