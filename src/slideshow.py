@@ -63,18 +63,18 @@ class Slideshow(QtGui.QWidget):
 		self.scrollArea.resize(QtCore.QSize(40, 40))
 		self.updateGeometry()
 
-	def setMinimumSize(self,size):
+	def setMinimumSize(self, size):
 		self.setMinimumWidth(size.width())
 		self.setMinimumHeight(size.height())
 
-	def setMinimumWidth(self,width):
+	def setMinimumWidth(self, width):
 		self.minWidth = width
 		if width > self.scrollArea.size().width():
 			self.scrollArea.setMinimumWidth(width)
 			QtGui.QWidget.setMinimumWidth(self, width)
 			self.updateGeometry()
 
-	def setMinimumHeight(self,height):
+	def setMinimumHeight(self, height):
 		self.minHeight = height
 		if height > self.scrollArea.size().height():
 			self.scrollArea.setMinimumHeight(height)

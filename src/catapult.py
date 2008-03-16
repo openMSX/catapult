@@ -375,13 +375,14 @@ class MainWindow(QtGui.QMainWindow):
 	# Slots:
 
 	#@QtCore.pyqtSignature('')
-	def closeEvent(self,event):
-		print " QtGui.QMainWindow.closeEvent(self,event)"
-		QtGui.QMainWindow.closeEvent(self,event)
+	def closeEvent(self, event):
+		print " QtGui.QMainWindow.closeEvent(self, event)"
+		QtGui.QMainWindow.closeEvent(self, event)
 
 	@QtCore.pyqtSignature('')
 	def close(self):
-		print " QtGui.QMainWindow.closeEvent(self,event)"
+		# [Manuel] is the following log line correct??
+		print " QtGui.QMainWindow.closeEvent(self, event)"
 		QtGui.QMainWindow.close(self)
 
 	@QtCore.pyqtSignature('')
