@@ -628,8 +628,8 @@
              </layout>
             </widget>
             <widget class="QWidget" name="cassettePage" >
-             <layout class="QGridLayout" >
-              <item row="0" column="0" >
+             <layout class="QVBoxLayout" >
+              <item>
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
@@ -660,7 +660,10 @@
                    </font>
                   </property>
                   <property name="text" >
-                   <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:16pt; font-weight:600; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:400;">Cassette Player&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                   <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:16pt; font-weight:600; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:400;">Cassette Deck&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
                   </property>
                  </widget>
                 </item>
@@ -679,7 +682,7 @@
                 </item>
                </layout>
               </item>
-              <item row="1" column="0" >
+              <item>
                <widget class="QLabel" name="cassetteDescriptionLabel" >
                 <property name="font" >
                  <font>
@@ -697,7 +700,7 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="0" >
+              <item>
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
@@ -736,7 +739,7 @@
                 </item>
                </layout>
               </item>
-              <item row="3" column="0" >
+              <item>
                <widget class="QComboBox" name="cassetteHistoryBox" >
                 <property name="sizePolicy" >
                  <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
@@ -761,7 +764,104 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="0" >
+              <item>
+               <layout class="QHBoxLayout" >
+                <item>
+                 <layout class="QHBoxLayout" >
+                  <property name="spacing" >
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin" >
+                   <number>6</number>
+                  </property>
+                  <property name="topMargin" >
+                   <number>6</number>
+                  </property>
+                  <property name="rightMargin" >
+                   <number>6</number>
+                  </property>
+                  <property name="bottomMargin" >
+                   <number>6</number>
+                  </property>
+                  <item>
+                   <widget class="QPushButton" name="tapePlayButton" >
+                    <property name="sizePolicy" >
+                     <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="toolTip" >
+                     <string>Set to Play mode</string>
+                    </property>
+                    <property name="icon" >
+                     <iconset>play.png</iconset>
+                    </property>
+                    <property name="checkable" >
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="tapeRewindButton" >
+                    <property name="toolTip" >
+                     <string>Rewind tape</string>
+                    </property>
+                    <property name="icon" >
+                     <iconset>rewind.png</iconset>
+                    </property>
+                    <property name="checkable" >
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="tapeStopButton" >
+                    <property name="toolTip" >
+                     <string>Stop mode</string>
+                    </property>
+                    <property name="icon" >
+                     <iconset>stop.png</iconset>
+                    </property>
+                    <property name="checkable" >
+                     <bool>true</bool>
+                    </property>
+                    <property name="checked" >
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="tapeRecordButton" >
+                    <property name="toolTip" >
+                     <string>Select new tape to record to</string>
+                    </property>
+                    <property name="icon" >
+                     <iconset>record.png</iconset>
+                    </property>
+                    <property name="checkable" >
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer>
+                  <property name="orientation" >
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" >
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
                <widget class="QCheckBox" name="autoRunCassettesCheckBox" >
                 <property name="toolTip" >
                  <string>Currently only works for CAS images.</string>
@@ -771,15 +871,15 @@
                 </property>
                </widget>
               </item>
-              <item row="5" column="0" >
+              <item>
                <spacer>
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
                 <property name="sizeHint" >
                  <size>
-                  <width>242</width>
-                  <height>16</height>
+                  <width>384</width>
+                  <height>10</height>
                  </size>
                 </property>
                </spacer>
@@ -1120,29 +1220,6 @@
             <property name="bottomMargin" >
              <number>0</number>
             </property>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>156</width>
-                <height>30</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="resetButton" >
-              <property name="toolTip" >
-               <string>Reset the MSX</string>
-              </property>
-              <property name="text" >
-               <string>Reset MSX</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
          </layout>
@@ -3306,23 +3383,8 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="1" column="0" >
-     <layout class="QHBoxLayout" >
-      <property name="spacing" >
-       <number>6</number>
-      </property>
-      <property name="leftMargin" >
-       <number>0</number>
-      </property>
-      <property name="topMargin" >
-       <number>0</number>
-      </property>
-      <property name="rightMargin" >
-       <number>0</number>
-      </property>
-      <property name="bottomMargin" >
-       <number>0</number>
-      </property>
-      <item>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
        <layout class="QHBoxLayout" >
         <property name="spacing" >
          <number>0</number>
@@ -3396,18 +3458,28 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </item>
-      <item>
+      <item row="0" column="1" >
        <spacer>
         <property name="orientation" >
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeHint" >
          <size>
-          <width>351</width>
-          <height>20</height>
+          <width>286</width>
+          <height>44</height>
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="0" column="2" >
+       <widget class="QPushButton" name="resetButton" >
+        <property name="toolTip" >
+         <string>Reset the MSX</string>
+        </property>
+        <property name="text" >
+         <string>Reset MSX </string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

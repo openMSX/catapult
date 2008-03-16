@@ -19,6 +19,8 @@ class MediaModel(QtCore.QAbstractListModel):
 		self.__bridge = bridge
 		self.__mediaSlots = []
 		self.__romTypes = []
+		self.__cassetteDeckStateModel = CassetteDeckStateModel(bridge)
+
 		bridge.registerInitial(self.__updateAll)
 		bridge.registerUpdate('media', self.__updateMedium)
 		bridge.registerUpdatePrefix(
@@ -182,7 +184,7 @@ class MediaModel(QtCore.QAbstractListModel):
 			elif name.startswith('disk'):
 				description = 'Disk drive %s' % name[-1].upper()
 			elif name.startswith('cassette'):
-				description = 'Cassette player'
+				description = 'Cassette deck'
 			elif name.startswith('hd'):
 				description = 'Hard disk drive %s' % name[-1].upper()
 			elif name.startswith('cd'):
@@ -214,3 +216,52 @@ class MediaModel(QtCore.QAbstractListModel):
 
 	def getRomTypes(self):
 		return self.__romTypes
+
+	def getCassetteDeckStateModel(self):
+		return self.__cassetteDeckStateModel
+
+# TODO: properly handle machine id's and thus changes of machines
+class CassetteDeckStateModel(QtCore.QObject):
+
+	stateChanged = Signal('QString')
+	
+	def __init__(self, bridge):
+		QtCore.QObject.__init__(self)
+		self.__bridge = bridge
+		self.__state = ''
+		bridge.registerInitial(self.__queryState)
+		bridge.registerUpdate('status', self.__updateState)
+
+	def __queryState(self):
+		self.__bridge.command('cassetteplayer')(self.__stateReply)
+
+	def __updateState(self, name, machineId, state):
+		# TODO: shouldn't we do something with machineId?
+		if name == 'cassetteplayer':
+			print 'State of cassetteplayer updated to ', state
+			self.__state = state
+			self.stateChanged.emit(state)
+	
+	def __stateReply(self, *words):
+		self.__updateState('cassetteplayer', 'TODO: machine', words[2])
+	
+	def getState(self):
+		assert self.__state != '', 'Illegal state!'
+		return self.__state
+
+	def rewind(self, errorHandler):
+		self.__updateState('cassetteplayer', 'TODO: machine', 'rewind')
+		self.__bridge.command('cassetteplayer', 'rewind')(
+			lambda *dummy: self.__queryState(), errorHandler
+			)
+	
+	def record(self, filename, errorHandler):
+		self.__bridge.command('cassetteplayer', 'new', filename)(
+			None, errorHandler
+			)
+
+	def play(self, errorHandler):
+		self.__bridge.command('cassetteplayer', 'play')(
+			None, errorHandler
+			)
+

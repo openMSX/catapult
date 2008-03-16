@@ -247,10 +247,10 @@ class MediaSwitcher(QtCore.QObject):
 		path = self.__mediaModel.getInserted(mediaSlot)
 		fileInfo = QtCore.QFileInfo(path)
 
-		ui.cassetteLabel.setText('Cassette Player') # this could also be removed
+		ui.cassetteLabel.setText('Cassette Deck') # this could also be removed
 
 		if path == '':
-			description = 'No cassette in player'
+			description = 'No cassette in deck'
 		elif fileInfo.isFile():
 			lastDot = path.rfind('.')
 			if lastDot == -1:
@@ -355,6 +355,9 @@ class MediaSwitcher(QtCore.QObject):
 			)
 		messageBox.show()
 		self.__mediaModel.queryMedium(mediaSlot)
+
+	def getCassetteDeckStateModel(self):
+		return self.__mediaModel.getCassetteDeckStateModel()
 
 class MediaHandler(QtCore.QObject):
 	medium = None
@@ -513,6 +516,75 @@ class CassetteHandler(MediaHandler):
 	medium = 'cassette'
 	browseTitle = 'Select Cassette Image'
 	imageSpec = 'Cassette Images (*.cas *.wav *.zip *.gz);;All Files (*)'
+
+	play = 'play'
+	rewind = 'rewind'
+	stop = 'stop'
+	record = 'record'
+
+	def __init__(self, ui, switcher):
+		MediaHandler.__init__(self, ui, switcher)
+
+		self.__deckStateModel = switcher.getCassetteDeckStateModel()
+		# Look up UI elements.
+
+		self.__ui = ui
+
+		# Connect signals.
+		connect(ui.tapePlayButton, 'clicked()', self.__playButtonClicked)
+		connect(ui.tapeRewindButton, 'clicked()', self.__rewindButtonClicked)
+		connect(ui.tapeStopButton, 'clicked()', self.__stopButtonClicked)
+		connect(ui.tapeRecordButton, 'clicked()', self.__recordButtonClicked)
+	
+		self.__deckStateModel.stateChanged.connect(self.__updateButtonState)
+
+		self.__buttonMap = {
+			self.play: ui.tapePlayButton,
+			self.rewind: ui.tapeRewindButton,
+			self.stop: ui.tapeStopButton,
+			self.record: ui.tapeRecordButton,
+		}
+
+	def __updateButtonState(self, newState):
+		for state, button in self.__buttonMap.iteritems():
+			button.setChecked(newState == state)
+
+	def __playButtonClicked(self):
+		path = self._historyBox.currentText()
+		if path == '':
+			self.browseImage()
+		else:
+			self.__deckStateModel.play(self.__errorHandler)
+			# prevent toggling behaviour of play button:
+			self.__updateButtonState(self.__deckStateModel.getState())
+
+	def __rewindButtonClicked(self):
+		self.__deckStateModel.rewind(self.__errorHandler)
+
+	def __stopButtonClicked(self):
+		# restore button state (this is actually a 'readonly' button)
+		self.__updateButtonState(self.__deckStateModel.getState())
+
+	def __recordButtonClicked(self):
+		filename = QtGui.QFileDialog.getSaveFileName(
+			None, 'Enter New File for Cassette Image',
+			QtCore.QDir.homePath(),
+			'Cassette Images (*.wav);;All Files (*)',
+			None #, 0
+			)
+		if filename == '':
+			self.__updateButtonState(self.__deckStateModel.getState())
+		else:
+			self.__deckStateModel.record(filename, self.__errorHandler)
+	
+	def __errorHandler(self, message):
+		messageBox = QtGui.QMessageBox('Cassette deck problem', message,
+				QtGui.QMessageBox.Warning, 0, 0, 0,
+				self.__ui.tapeStopButton
+				)
+		messageBox.show()
+		self.__updateButtonState(self.__deckStateModel.getState())
+
 
 class HarddiskHandler(MediaHandler):
 	medium = 'hd'

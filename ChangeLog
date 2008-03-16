@@ -1,5 +1,9 @@
 $Id$
 
+2008-03-16 Manuel Bilderbeek <manuel@msxnet.org>
+	* First version of cassette deck controls.
+	  TODO: handle machine switches and related things.
+
 2008-02-10 Maarten ter Huurne <maarten@treewalker.org>
 	* Create application folder on Mac OS X.
 
