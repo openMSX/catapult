@@ -359,7 +359,7 @@ class MainWindow(QtGui.QMainWindow):
 	def __visibilityChanged(self, value):
 		if value:
 			self.__frameRateTimer.start()
-			self.__frameRateTimer.stop()
+		#	self.__frameRateTimer.stop() # uncomment to disable fps polling
 		else:
 			self.__frameRateTimer.stop()
 			self.__frameRateLabel.setText('')
