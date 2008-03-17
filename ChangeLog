@@ -1,5 +1,9 @@
 $Id$
 
+2008-03-17 Manuel Bilderbeek <manuel@msxnet.org>
+	* Display tape position and size, using the new cassetteplayer
+	  subcommands.
+
 2008-03-16 Manuel Bilderbeek <manuel@msxnet.org>
 	* First version of cassette deck controls.
 	  TODO: handle machine switches and related things.

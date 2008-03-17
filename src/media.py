@@ -530,11 +530,15 @@ class CassetteHandler(MediaHandler):
 
 		self.__ui = ui
 
+		self.__pollTimer = QtCore.QTimer()
+		self.__pollTimer.setInterval(500)
+
 		# Connect signals.
 		connect(ui.tapePlayButton, 'clicked()', self.__playButtonClicked)
 		connect(ui.tapeRewindButton, 'clicked()', self.__rewindButtonClicked)
 		connect(ui.tapeStopButton, 'clicked()', self.__stopButtonClicked)
 		connect(ui.tapeRecordButton, 'clicked()', self.__recordButtonClicked)
+		connect(self.__pollTimer, 'timeout()', self.__queryTimes)
 	
 		self.__deckStateModel.stateChanged.connect(self.__updateButtonState)
 
@@ -548,6 +552,12 @@ class CassetteHandler(MediaHandler):
 	def __updateButtonState(self, newState):
 		for state, button in self.__buttonMap.iteritems():
 			button.setChecked(newState == state)
+		if newState in ['play', 'record']:
+			self.__pollTimer.start()
+		else:
+			self.__pollTimer.stop()
+			self.__queryTimes() # make sure end time is correct
+
 
 	def __playButtonClicked(self):
 		path = self._historyBox.currentText()
@@ -575,6 +585,7 @@ class CassetteHandler(MediaHandler):
 		if filename == '':
 			self.__updateButtonState(self.__deckStateModel.getState())
 		else:
+			self.__updateTapeLength(0)
 			self.__deckStateModel.record(filename, self.__errorHandler)
 	
 	def __errorHandler(self, message):
@@ -584,6 +595,40 @@ class CassetteHandler(MediaHandler):
 				)
 		messageBox.show()
 		self.__updateButtonState(self.__deckStateModel.getState())
+
+	def insert(self, path):
+		MediaHandler.insert(self, path)
+		self.__deckStateModel.getTapeLength(self.__updateTapeLength,
+			self.__errorHandler
+			)
+
+	def eject(self):
+		MediaHandler.eject(self)
+		self.__updateTapeLength(0)
+
+	def __updateTapeLength(self, length):
+		zeroTime = QtCore.QTime(0, 0, 0)
+		time = zeroTime.addSecs(round(float(length)))
+		self.__ui.tapeLength.setTime(time)
+		
+	def __updateTapePosition(self, position):
+		zeroTime = QtCore.QTime(0, 0, 0)
+		time = zeroTime.addSecs(round(float(position)))
+		self.__ui.tapeTime.setTime(time)
+		# for now, we can have this optimization:
+		if (self.__deckStateModel.getState() == 'record'):
+			self.__updateTapeLength(position)
+
+	def __queryTimes(self):
+		# don't do this for now, but use the optimization that
+		# lenght == position when recording, see above
+#		if (self.__deckStateModel.getState() == 'record'):
+#			self.__deckStateModel.getTapeLength(self.__updateTapeLength,
+#				self.__errorHandler
+#			)
+		self.__deckStateModel.getTapePosition(self.__updateTapePosition,
+			self.__errorHandler
+		)
 
 
 class HarddiskHandler(MediaHandler):

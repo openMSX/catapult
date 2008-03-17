@@ -264,4 +264,12 @@ class CassetteDeckStateModel(QtCore.QObject):
 		self.__bridge.command('cassetteplayer', 'play')(
 			None, errorHandler
 			)
+	
+	def getTapeLength(self, replyHandler, errorHandler):
+		self.__bridge.command('cassetteplayer', 'getlength')(
+			replyHandler, errorHandler)
+
+	def getTapePosition(self, replyHandler, errorHandler):
+		self.__bridge.command('cassetteplayer', 'getpos')(
+			replyHandler, errorHandler)
 
