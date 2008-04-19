@@ -5,6 +5,8 @@ $Id$
 	* Improved mapper type selection (was global, now per slot)
 	* Made mediamodel machine aware, to prevent problems when
 	  switching machines
+	* Refactored MediaSwitcher to put all media specific code in
+	  the MediaHandler classes to reduce code duplication
 
 2008-03-17 Manuel Bilderbeek <manuel@msxnet.org>
 	* Display tape position and size, using the new cassetteplayer

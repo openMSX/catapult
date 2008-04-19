@@ -35,15 +35,6 @@ class MediaSwitcher(QtCore.QObject):
 		self.__settingsManager = settingsManager
 		self.__ui = ui
 		self.__mediaSlot = None
-		self.__pageMap = {
-			'cart': ( ui.cartPage, self.__updateCartPage ),
-			'disk': ( ui.diskPage, self.__updateDrivePage ),
-			'cassette': (
-				ui.cassettePage, self.__updateCassettePage
-				),
-			'hd': ( ui.hdPage, self.__updateHarddiskPage ),
-			'cd': ( ui.cdPage, self.__updateCDROMPage ),
-			}
 		self.__cartPageInited = False
 		# Connect to media model:
 		ui.mediaList.setModel(mediaModel)
@@ -79,221 +70,16 @@ class MediaSwitcher(QtCore.QObject):
 		settingsManager.connectSetting('autoruncassettes',
 			ui.autoRunCassettesCheckBox)
 
-	def __updateCartPage(self, mediaSlot, identifier):
-		ui = self.__ui
-		path = self.__mediaModel.getInserted(mediaSlot)
-
-		ui.cartLabel.setText('Cartridge Slot %s' % identifier.upper())
-
-		fileInfo = QtCore.QFileInfo(path)
-
-		if path == '':
-			description = 'No cartridge in slot'
-		elif fileInfo.isFile():
-			lastDot = path.rfind('.')
-			if lastDot == -1:
-				ext = None
-			else:
-				ext = path[lastDot + 1 : ].lower()
-			if ext in ('rom', 'ri'):
-				description = 'ROM image'
-				size = fileInfo.size()
-				if size != 0:
-					description += ' of %dkB' % (size / 1024)
-					megabits = size / 1024 / 128
-					if megabits == 1:
-						description += ' (MegaROM)'
-					elif megabits > 1:
-						description += ' (%d MegaROM)' % megabits
-			elif ext in ('zip', 'gz'):
-				description = 'Compressed ROM image'
-			else:
-				description = 'ROM image of unknown type'
-		elif fileInfo.exists():
-			description = 'Special file node'
-		else:
-			description = 'Not found'
-		ui.cartDescriptionLabel.setText(description)
-
-		ui.cartHistoryBox.lineEdit().setText(path)
-
-		if not self.__cartPageInited:
-			# the next query might be empty, if it happens too soon
-			mapperTypes = self.__mediaModel.getRomTypes()
-			if len(mapperTypes) != 0:
-				self.__cartPageInited = True
-				for item in mapperTypes:
-					ui.mapperTypeCombo.addItem(QtCore.QString(item))
-			else:
-				print 'Interesting! We are preventing a race\
-					condition here!'
-		
-		# set the mappertype combo to the proper value
-		mapperType = self.__mediaModel.getMapperType(self.__mediaSlot)
-		index = ui.mapperTypeCombo.findText(mapperType)
-		ui.mapperTypeCombo.setCurrentIndex(index)
-
-		ui.cartIPSLabel.setText('(' + str(len(self.__mediaModel.getIpsPatchList(
-				self.__mediaSlot))) + ' selected)'
-			)
-
-	def __updateDrivePage(self, mediaSlot, identifier):
-		ui = self.__ui
-		path = self.__mediaModel.getInserted(mediaSlot)
-		fileInfo = QtCore.QFileInfo(path)
-
-		ui.diskLabel.setText('Disk Drive %s' % identifier.upper())
-
-		if path == '':
-			description = 'No disk in drive'
-		elif fileInfo.isDir():
-			description = 'Directory as disk (%d entries)' % (
-				fileInfo.dir().count()
-				)
-		elif fileInfo.isFile():
-			lastDot = path.rfind('.')
-			if lastDot == -1:
-				ext = None
-			else:
-				ext = path[lastDot + 1 : ].lower()
-			if ext in ('dsk', 'di1', 'di2'):
-				description = 'Raw disk image'
-				size = fileInfo.size()
-				if size != 0:
-					description += ' of %dkB' % (size / 1024)
-			elif ext in ('xsa', 'zip', 'gz'):
-				description = 'Compressed disk image'
-			else:
-				description = 'Disk image of unknown type'
-		elif fileInfo.exists():
-			description = 'Special file node'
-		else:
-			description = 'Not found'
-		ui.diskDescriptionLabel.setText(description)
-		# TODO: Display "(read only)" in description label if the disk is
-		#       read only for some reason:
-		#       - image type that openMSX cannot write (XSA)
-		#       - image file that is read-only on host file system
-		#       I guess it's best if openMSX detects and reports this.
-		#       The "diskX" commands return a flag "readonly", but updates
-		#       do not include flags.
-
-		ui.diskHistoryBox.lineEdit().setText(path)
-
-		ui.diskIPSLabel.setText('(' + str(len(self.__mediaModel.getIpsPatchList(
-				self.__mediaSlot))) + ' selected)'
-			)
-
-	def __updateHarddiskPage(self, mediaSlot, identifier):
-		ui = self.__ui
-		path = self.__mediaModel.getInserted(mediaSlot)
-		fileInfo = QtCore.QFileInfo(path)
-
-		ui.hdLabel.setText('Hard Disk Drive %s' % identifier.upper())
-
-		if path == '':
-			description = 'No hard disk in drive'
-		elif fileInfo.isFile():
-			lastDot = path.rfind('.')
-			if lastDot == -1:
-				ext = None
-			else:
-				ext = path[lastDot + 1 : ].lower()
-			if ext == 'dsk':
-				description = 'Raw hard disk image'
-				size = fileInfo.size()
-				if size != 0:
-					description += ' of %dMB' % (size / 1024 / 1024)
-			elif ext in ('zip', 'gz'):
-				description = 'Compressed hard disk image'
-			else:
-				description = 'Hard disk image of unknown type'
-		elif fileInfo.exists():
-			description = 'Special file node'
-		else:
-			description = 'Not found'
-		ui.hdDescriptionLabel.setText(description)
-		# TODO: Display "(read only)" in description label if the hd is
-		#       read only for some reason:
-		#       - image file that is read-only on host file system
-		#       I guess it's best if openMSX detects and reports this.
-		#       The "hdX" commands return a flag "readonly", but updates
-		#       do not include flags.
-
-		ui.hdHistoryBox.lineEdit().setText(path)
-
-	def __updateCDROMPage(self, mediaSlot, identifier):
-		ui = self.__ui
-		path = self.__mediaModel.getInserted(mediaSlot)
-		fileInfo = QtCore.QFileInfo(path)
-
-		ui.cdLabel.setText('CD-ROM Drive %s' % identifier.upper())
-
-		if path == '':
-			description = 'No CD-ROM in drive'
-		elif fileInfo.isFile():
-			lastDot = path.rfind('.')
-			if lastDot == -1:
-				ext = None
-			else:
-				ext = path[lastDot + 1 : ].lower()
-			if ext == 'iso':
-				description = 'ISO CD-ROM image'
-				size = fileInfo.size()
-				if size != 0:
-					description += ' of %dMB' % (size / 1024 / 1024)
-			elif ext in ('zip', 'gz'):
-				description = 'Compressed CD-ROM image'
-			else:
-				description = 'CD-ROM image of unknown type'
-		elif fileInfo.exists():
-			description = 'Special file node'
-		else:
-			description = 'Not found'
-		ui.cdDescriptionLabel.setText(description)
-
-		ui.cdHistoryBox.lineEdit().setText(path)
-
-	def __updateCassettePage(self, mediaSlot, identifier
-		# identifier is ignored for cassetteplayer:
-		# pylint: disable-msg=W0613
-		):
-		ui = self.__ui
-		path = self.__mediaModel.getInserted(mediaSlot)
-		fileInfo = QtCore.QFileInfo(path)
-
-		ui.cassetteLabel.setText('Cassette Deck') # this could also be removed
-
-		if path == '':
-			description = 'No cassette in deck'
-		elif fileInfo.isFile():
-			lastDot = path.rfind('.')
-			if lastDot == -1:
-				ext = None
-			else:
-				ext = path[lastDot + 1 : ].lower()
-			if ext == 'cas':
-				description = 'Cassette image in CAS format'
-			elif ext == 'wav':
-				description = 'Raw cassette image'
-			elif ext in ('zip', 'gz'):
-				description = 'Compressed cassette image'
-			else:
-				description = 'Cassette image of unknown type'
-		elif fileInfo.exists():
-			description = 'Special file node'
-		else:
-			description = 'Not found'
-		ui.cassetteDescriptionLabel.setText(description)
-
-		ui.cassetteHistoryBox.lineEdit().setText(path)
 
 	def __updateMediaPage(self, mediaSlot):
 		medium, identifier = parseMediaSlot(mediaSlot)
 		# Look up page widget and update method for this medium.
-		page, updater = self.__pageMap[medium]
+		page = getattr(self.__ui, medium + 'Page')
 		# Initialise the UI page for this medium.
-		updater(mediaSlot, identifier)
+		for handler in self.__handlers:
+			if handler.medium == medium:
+				handler.updatePage(identifier)
+				break
 		return page
 
 	@QtCore.pyqtSignature('QModelIndex')
@@ -389,10 +175,23 @@ class MediaSwitcher(QtCore.QObject):
 	def setMapperType(self, mapperType):
 		self.__mediaModel.setMapperType(self.__mediaSlot, mapperType)
 
+	def getPath(self):
+		return self.__mediaModel.getInserted(self.__mediaSlot)
+
+	def getRomTypes(self):
+		return self.__mediaModel.getRomTypes()
+
+
 class MediaHandler(QtCore.QObject):
+	'''Base class for handling media stuff.
+	The purpose is to make it easy to add a new media type, by
+	only implementing/overriding what is specific for that new type
+	in a specialized class.
+	'''
 	medium = None
 	browseTitle = None
 	imageSpec = None
+	emptyPathDesc = None
 
 	def __init__(self, ui, switcher):
 		QtCore.QObject.__init__(self)
@@ -403,6 +202,8 @@ class MediaHandler(QtCore.QObject):
 		self._ejectButton = getattr(ui, self.medium + 'EjectButton', None)
 		self._browseButton = getattr(ui, self.medium + 'BrowseImageButton')
 		self._historyBox = getattr(ui, self.medium + 'HistoryBox')
+		self._mediaLabel = getattr(ui, self.medium + 'Label')
+		self._descriptionLabel = getattr(ui, self.medium + 'DescriptionLabel')
 		try:
 			self._IPSButton = getattr(ui, self.medium + 'IPSButton')
 		except AttributeError:
@@ -475,11 +276,67 @@ class MediaHandler(QtCore.QObject):
 		ipsDialog.fill(self._switcher.getIpsPatchList())
 		if ipsDialog.exec_(self._IPSButton) == QtGui.QDialog.Accepted:
 			self._switcher.setIpsPatchList(ipsDialog.getIPSList())
+	
+	def updatePage(self, identifier):
+		path = self._switcher.getPath()
+
+		self._mediaLabel.setText(self._getLabelText(identifier))
+
+		fileInfo = QtCore.QFileInfo(path)
+
+		if path == '':
+			description = self.emptyPathDesc
+		elif fileInfo.isDir():
+			description = self._getDirDesc(fileInfo)
+		elif fileInfo.isFile():
+			lastDot = path.rfind('.')
+			if lastDot == -1:
+				ext = None
+			else:
+				ext = path[lastDot + 1 : ].lower()
+			description = self._getFileDesc(fileInfo, ext)
+		elif fileInfo.exists():
+			description = 'Special file node'
+		else:
+			description = 'Not found'
+
+		# TODO: Display "(read only)" somewhere if the media is
+		#       read only for some reason:
+		#       - image type that openMSX cannot write (XSA)
+		#       - image file that is read-only on host file system
+		#       I guess it's best if openMSX detects and reports this.
+		#       The "mediaX" commands return a flag "readonly", but updates
+		#       do not include flags.
+
+		self._descriptionLabel.setText(description)
+
+		self._historyBox.lineEdit().setText(path)
+		
+		self._finishUpdatePage()
+
+	def _getLabelText(self, identifier):
+		raise NotImplementedError
+
+	def _getFileDesc(self, fileInfo, ext):
+		raise NotImplementedError
+
+	def _getDirDesc(self, fileInfo
+		# fileInfo is not necessary in the base class:
+		# pylint: disable-msg=W0613
+		):
+		# there's a default implementation in case
+		# dirs are not supported
+		return 'Not found'
+
+	def _finishUpdatePage(self):
+		# usually, nothing should be done
+		return
 
 class DiskHandler(MediaHandler):
 	medium = 'disk'
 	browseTitle = 'Select Disk Image'
 	imageSpec = 'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)'
+	emptyPathDesc = 'No disk in drive'
 
 	def __init__(self, ui, switcher):
 		MediaHandler.__init__(self, ui, switcher)
@@ -496,13 +353,36 @@ class DiskHandler(MediaHandler):
 			self._historyBox.itemText(0) or QtCore.QDir.homePath()
 			))
 
+	def _getLabelText(self, identifier):
+		return 'Disk Drive %s' % identifier.upper()
+
+	def _getFileDesc(self, fileInfo, ext):
+		if ext in ('dsk', 'di1', 'di2'):
+			description = 'Raw disk image'
+			size = fileInfo.size()
+			if size != 0:
+				description += ' of %dkB' % (size / 1024)
+		elif ext in ('xsa', 'zip', 'gz'):
+			description = 'Compressed disk image'
+		else:
+			description = 'Disk image of unknown type'
+		return description
+
+	def _finishUpdatePage(self):
+		self._ui.diskIPSLabel.setText('(' + str(len(
+				self._switcher.getIpsPatchList()
+				)) + ' selected)')
+
 class CartHandler(MediaHandler):
 	medium = 'cart'
 	browseTitle = 'Select ROM Image'
 	imageSpec = 'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)'
+	emptyPathDesc = 'No cartridge in slot'
 
 	def __init__(self, ui, switcher):
 		MediaHandler.__init__(self, ui, switcher)
+
+		self.__cartPageInited = False
 
 		# Look up UI elements.
 		self._mapperTypeCombo = ui.mapperTypeCombo
@@ -514,10 +394,52 @@ class CartHandler(MediaHandler):
 	def __mapperTypeSelected(self, mapperType):
 		self._switcher.setMapperType(str(mapperType))
 
+	def _getLabelText(self, identifier):
+		return 'Cartridge Slot %s' % identifier.upper()
+
+	def _getFileDesc(self, fileInfo, ext):
+		if ext in ('rom', 'ri'):
+			description = 'ROM image'
+			size = fileInfo.size()
+			if size != 0:
+				description += ' of %dkB' % (size / 1024)
+				megabits = size / 1024 / 128
+				if megabits == 1:
+					description += ' (MegaROM)'
+				elif megabits > 1:
+					description += ' (%d MegaROM)' % megabits
+		elif ext in ('zip', 'gz'):
+			description = 'Compressed ROM image'
+		else:
+			description = 'ROM image of unknown type'
+		return description
+
+	def _finishUpdatePage(self):
+		if not self.__cartPageInited:
+			# the next query might be empty, if it happens too soon
+			mapperTypes = self._switcher.getRomTypes()
+			if len(mapperTypes) != 0:
+				self.__cartPageInited = True
+				for item in mapperTypes:
+					self._ui.mapperTypeCombo.addItem(QtCore.QString(item))
+			else:
+				print 'Interesting! We are preventing a race\
+					condition here!'
+		
+		# set the mappertype combo to the proper value
+		mapperType = self._switcher.getMapperType()
+		index = self._ui.mapperTypeCombo.findText(mapperType)
+		self._ui.mapperTypeCombo.setCurrentIndex(index)
+
+		self._ui.cartIPSLabel.setText('(' + str(len(
+				self._switcher.getIpsPatchList()
+				)) + ' selected)')
+
 class CassetteHandler(MediaHandler):
 	medium = 'cassette'
 	browseTitle = 'Select Cassette Image'
 	imageSpec = 'Cassette Images (*.cas *.wav *.zip *.gz);;All Files (*)'
+	emptyPathDesc = 'No cassette in deck'
 
 	play = 'play'
 	rewind = 'rewind'
@@ -529,8 +451,6 @@ class CassetteHandler(MediaHandler):
 
 		self.__deckStateModel = switcher.getCassetteDeckStateModel()
 		# Look up UI elements.
-
-		self.__ui = ui
 
 		self.__pollTimer = QtCore.QTimer()
 		self.__pollTimer.setInterval(500)
@@ -593,7 +513,7 @@ class CassetteHandler(MediaHandler):
 	def __errorHandler(self, message):
 		messageBox = QtGui.QMessageBox('Cassette deck problem', message,
 				QtGui.QMessageBox.Warning, 0, 0, 0,
-				self.__ui.tapeStopButton
+				self._ui.tapeStopButton
 				)
 		messageBox.show()
 		self.__updateButtonState(self.__deckStateModel.getState())
@@ -611,12 +531,12 @@ class CassetteHandler(MediaHandler):
 	def __updateTapeLength(self, length):
 		zeroTime = QtCore.QTime(0, 0, 0)
 		time = zeroTime.addSecs(round(float(length)))
-		self.__ui.tapeLength.setTime(time)
+		self._ui.tapeLength.setTime(time)
 		
 	def __updateTapePosition(self, position):
 		zeroTime = QtCore.QTime(0, 0, 0)
 		time = zeroTime.addSecs(round(float(position)))
-		self.__ui.tapeTime.setTime(time)
+		self._ui.tapeTime.setTime(time)
 		# for now, we can have this optimization:
 		if (self.__deckStateModel.getState() == 'record'):
 			self.__updateTapeLength(position)
@@ -632,13 +552,64 @@ class CassetteHandler(MediaHandler):
 			self.__errorHandler
 		)
 
+	def _getLabelText(self, identifier
+		# identifier is ignored for cassetteplayer:
+		# pylint: disable-msg=W0613
+		):
+		return 'Cassette Deck'
+
+	def _getFileDesc(self, fileInfo
+		# fileInfo is not needed here:
+		# pylint: disable-msg=W0613
+		, ext):
+		if ext == 'cas':
+			description = 'Cassette image in CAS format'
+		elif ext == 'wav':
+			description = 'Raw cassette image'
+		elif ext in ('zip', 'gz'):
+			description = 'Compressed cassette image'
+		else:
+			description = 'Cassette image of unknown type'
+		return description
 
 class HarddiskHandler(MediaHandler):
 	medium = 'hd'
 	browseTitle = 'Select Hard Disk Image'
 	imageSpec = 'Hard Disk Images (*.dsk *.zip *.gz);;All Files (*)'
+	emptyPathDesc = 'No hard disk in drive'
+
+	def _getLabelText(self, identifier):
+		return 'Hard Disk Drive %s' % identifier.upper()
+
+	def _getFileDesc(self, fileInfo, ext):
+		if ext == 'dsk':
+			description = 'Raw hard disk image'
+			size = fileInfo.size()
+			if size != 0:
+				description += ' of %dMB' % (size / 1024 / 1024)
+		elif ext in ('zip', 'gz'):
+			description = 'Compressed hard disk image'
+		else:
+			description = 'Hard disk image of unknown type'
+		return description
 
 class CDROMHandler(MediaHandler):
 	medium = 'cd'
 	browseTitle = 'Select CD-ROM Image'
 	imageSpec = 'CD-ROM Images (*.iso *.zip *.gz);;All Files (*)'
+	emptyPathDesc = 'No CD-ROM in drive'
+
+	def _getLabelText(self, identifier):
+		return 'CD-ROM Drive %s' % identifier.upper()
+
+	def _getFileDesc(self, fileInfo, ext):
+		if ext == 'iso':
+			description = 'ISO CD-ROM image'
+			size = fileInfo.size()
+			if size != 0:
+				description += ' of %dMB' % (size / 1024 / 1024)
+		elif ext in ('zip', 'gz'):
+			description = 'Compressed CD-ROM image'
+		else:
+			description = 'CD-ROM image of unknown type'
+		return description
