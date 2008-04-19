@@ -42,7 +42,7 @@ class AudioModel(QtCore.QAbstractListModel):
 			settings.BooleanSetting
 			)
 		self.deviceAdded.emit('master', '')
-		# TODO: is 'machine1' a valid assumption??
+		# TODO: get actual machine from MachineManager!
 		for device in devices:
 			self.__addDevice(device, 'machine1')
 
