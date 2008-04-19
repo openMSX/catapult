@@ -106,7 +106,8 @@ class Diskmanipulator(QtCore.QObject):
 
 			# Connect signals.
 			#TOO: Find out how to do this correctly, since this doesn't work
-			# maybe I should throw events from the closeEvent handler from the mainwindow??
+			# maybe I should throw events from the closeEvent
+			# handler from the mainwindow??
 			#connect(
 			#	self.__mainwindow,
 			#	'close()',

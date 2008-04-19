@@ -152,12 +152,14 @@ class Autorun(QtGui.QWidget):
 				self.applySettingsCont("bogus")
 
 		elif switch == 1:
-			if self.__ui.checkBoxExtensions.isChecked() and self.__extensions != "Empty" :
+			if self.__ui.checkBoxExtensions.isChecked() and self.__extensions != "Empty":
 				#TODO Fix this thing since it creates
 				#to much callbacks if more then one ext is given...
 				#For now it is a it-just-works solution
 				for ext in self.__extensions.split(','):
-					self.__bridge.command('ext', ext)(self.applySettingsCont,self.applySettingsCont)
+					self.__bridge.command('ext', ext)(
+						self.applySettingsCont,self.applySettingsCont
+						)
 			else:
 				self.applySettingsCont("bogus")
 
@@ -229,8 +231,8 @@ class Autorun(QtGui.QWidget):
 
 	#Stop timer when window is closed/hidden
 	@QtCore.pyqtSignature("")
-	def getsHidden(self, int):
-		print " def getsHidden(self, int): "
+	def getsHidden(self, result):
+		print " def getsHidden(self, result): ", result
 		self.stopTimer()
 
 	@QtCore.pyqtSignature("")
