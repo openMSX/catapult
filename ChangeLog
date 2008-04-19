@@ -1,5 +1,11 @@
 $Id$
 
+2008-04-19 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added IPS patch selection per media
+	* Improved mapper type selection (was global, now per slot)
+	* Made mediamodel machine aware, to prevent problems when
+	  switching machines
+
 2008-03-17 Manuel Bilderbeek <manuel@msxnet.org>
 	* Display tape position and size, using the new cassetteplayer
 	  subcommands.

@@ -64,7 +64,6 @@ class MainWindow(QtGui.QMainWindow):
 		QtGui.QMainWindow.__init__(self)
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
-		self.__mediaModel = mediaModel = MediaModel(bridge)
 		self.__connectorModel = connectorModel = ConnectorModel(bridge)
 		ui.setupUi(self)
 		# Added stuff that at the moment will be exclusive to
@@ -110,6 +109,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__machineManager = machineManager = MachineManager(
 			self, ui, bridge
 			)
+		self.__mediaModel = mediaModel = MediaModel(bridge, machineManager)
 
 		self.__diskmanipulator = Diskmanipulator(self, mediaModel, bridge)
 		self.__cheatfinder = Cheatfinder(bridge)

@@ -117,7 +117,9 @@ class MachineModel(HardwareModel):
 
 class MachineManager(QtCore.QObject):
 
-	machineChanged = Signal()
+	machineChanged = Signal('QString')
+	machineAdded = Signal('QString')
+	machineRemoved = Signal('QString')
 
 	def __init__(self, parent, ui, bridge):
 		QtCore.QObject.__init__(self)
@@ -153,18 +155,30 @@ class MachineManager(QtCore.QObject):
 		'''Query initial state.
 		'''
 		bridge = self.__bridge
-		bridge.command('machine')(self.__updateMachineId)
+		bridge.command('machine')(self.__initialReply)
+	
+	def __initialReply(self, machineId):
+		self.machineAdded.emit(machineId)
+		self.__updateMachineId(machineId)
 
 	def __updateMachineId(self, machineId):
 		print 'ID of current machine:', machineId
 		self.__currentMachineId = machineId
+		self.machineChanged.emit(machineId)
 		self.__bridge.command('machine_info', 'config_name')(self.__machineChanged)
 
 	def __updateHardware(self, machineId, dummy, event):
 		print 'Machine', machineId, ':', event
 		if event == 'select':
 			self.__updateMachineId(machineId)
-			self.machineChanged.emit()
+		elif event == 'add':
+			self.machineAdded.emit(machineId)
+		elif event == 'remove':
+			self.machineRemoved.emit(machineId)
+
+	def getCurrentMachineId(self):
+#		assert self.__currentMachineId is not None, 'No current machine known yet!'
+		return self.__currentMachineId
 
 	def __disableRefreshButton(self):
 		self.__ui.refreshButton.setEnabled(False)
@@ -268,7 +282,6 @@ class MachineManager(QtCore.QObject):
 		preferences['machine/history'] = history
 
 	def __machineSelected(self, index):
-		#print 'selected index %d of combo box' % index
 		machine = self.__machineBox.itemData(index).toString()
 		print 'selected machine:', machine
 		# TODO: Ask user for confirmation if current machine is different and

@@ -5,6 +5,7 @@ from PyQt4 import QtCore, QtGui
 from preferences import preferences
 from qt_utils import connect
 import settings
+from ipsselector import ipsDialog
 
 def addToHistory(comboBox, path):
 	# TODO: Do we really need this?
@@ -48,6 +49,8 @@ class MediaSwitcher(QtCore.QObject):
 		ui.mediaList.setModel(mediaModel)
 		mediaModel.dataChanged.connect(self.mediaPathChanged)
 		mediaModel.mediaSlotRemoved.connect(self.setInfoPage)
+		mediaModel.ipsPatchListChanged.connect(self.__optionsChanged)
+		mediaModel.mapperTypeChanged.connect(self.__optionsChanged)
 		mediaModel.connected.connect(self.__connectSettings)
 		# Connect view:
 		connect(
@@ -119,12 +122,20 @@ class MediaSwitcher(QtCore.QObject):
 			mapperTypes = self.__mediaModel.getRomTypes()
 			if len(mapperTypes) != 0:
 				self.__cartPageInited = True
-				ui.mapperTypeCombo.addItem('Auto Detect')
 				for item in mapperTypes:
 					ui.mapperTypeCombo.addItem(QtCore.QString(item))
 			else:
 				print 'Interesting! We are preventing a race\
 					condition here!'
+		
+		# set the mappertype combo to the proper value
+		mapperType = self.__mediaModel.getMapperType(self.__mediaSlot)
+		index = ui.mapperTypeCombo.findText(mapperType)
+		ui.mapperTypeCombo.setCurrentIndex(index)
+
+		ui.cartIPSLabel.setText('(' + str(len(self.__mediaModel.getIpsPatchList(
+				self.__mediaSlot))) + ' selected)'
+			)
 
 	def __updateDrivePage(self, mediaSlot, identifier):
 		ui = self.__ui
@@ -168,6 +179,10 @@ class MediaSwitcher(QtCore.QObject):
 		#       do not include flags.
 
 		ui.diskHistoryBox.lineEdit().setText(path)
+
+		ui.diskIPSLabel.setText('(' + str(len(self.__mediaModel.getIpsPatchList(
+				self.__mediaSlot))) + ' selected)'
+			)
 
 	def __updateHarddiskPage(self, mediaSlot, identifier):
 		ui = self.__ui
@@ -285,17 +300,14 @@ class MediaSwitcher(QtCore.QObject):
 	def updateMedia(self, index):
 		# Find out which media entry has become active.
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
-		#print "***********"
-		#print "mediaslot has currently become active:"
-		#print mediaSlot
+		#print '***********'
+		#print 'mediaslot has currently become active: ', mediaSlot
 		if self.__mediaSlot == mediaSlot:
 			return
-		#quick hack to ignore VIRTUAL_DRIVE selection
-		# TODO: find out how to register virtual drive as slot but not
-		# display it in the selection list
-		if  mediaSlot == 'virtual_drive':
-			return
 		self.__mediaSlot = mediaSlot
+		# prevent error due to race condition (?)
+		if self.__mediaSlot == '':
+			return
 		page = self.__updateMediaPage(mediaSlot)
 		# Switch page.
 		self.__ui.mediaStack.setCurrentWidget(page)
@@ -326,26 +338,32 @@ class MediaSwitcher(QtCore.QObject):
 		):
 		index = topLeft
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
-		if self.__mediaSlot == mediaSlot:
+		if self.__mediaSlot == mediaSlot and mediaSlot != '':
 			self.__updateMediaPage(mediaSlot)
 
 	def setInfoPage(self):
 		# TODO : this is called for each media hardware that is added or removed,
 		# since switching machines will sent this event for each and
 		# every drive/hd/cd/... this will be called several times in a row
-		# do we need to handel this in a better way ?
+		# do we need to handle this in a better way?
 		self.__ui.mediaStack.setCurrentWidget(self.__ui.infoPage)
 		self.__ui.mediaList.selectionModel().clear()
+		self.__mediaSlot = ''
 
+	def __optionsChanged(self, slot):
+		slot = str(slot)
+		if self.__mediaSlot == slot:
+			self.__updateMediaPage(self.__mediaSlot)
+		# reuse our normal error handler for now:
+		self.__mediaModel.applyOptions(slot, self.__mediaChangeErrorHandler)
 
-	def setPath(self, path, *options):
+	def setPath(self, path):
 		'''Sets a new path for the currently selected medium.
 		'''
 		self.__mediaModel.setInserted(self.__mediaSlot, path,
 			lambda message: self.__mediaChangeErrorHandler(
 				self.__mediaSlot, message
 				)
-				, *options
 			)
 
 	def __mediaChangeErrorHandler(self, mediaSlot, message):
@@ -358,6 +376,18 @@ class MediaSwitcher(QtCore.QObject):
 
 	def getCassetteDeckStateModel(self):
 		return self.__mediaModel.getCassetteDeckStateModel()
+
+	def getIpsPatchList(self):
+		return self.__mediaModel.getIpsPatchList(self.__mediaSlot)
+
+	def setIpsPatchList(self, patchList):
+		self.__mediaModel.setIpsPatchList(self.__mediaSlot, patchList)
+
+	def getMapperType(self):
+		return self.__mediaModel.getMapperType(self.__mediaSlot)
+
+	def setMapperType(self, mapperType):
+		self.__mediaModel.setMapperType(self.__mediaSlot, mapperType)
 
 class MediaHandler(QtCore.QObject):
 	medium = None
@@ -373,6 +403,11 @@ class MediaHandler(QtCore.QObject):
 		self._ejectButton = getattr(ui, self.medium + 'EjectButton', None)
 		self._browseButton = getattr(ui, self.medium + 'BrowseImageButton')
 		self._historyBox = getattr(ui, self.medium + 'HistoryBox')
+		try:
+			self._IPSButton = getattr(ui, self.medium + 'IPSButton')
+		except AttributeError:
+			# this medium doesn't support IPS, apparently
+			self._IPSButton = None
 
 		# Load history.
 		history = preferences.getList(self.medium + '/history')
@@ -387,6 +422,8 @@ class MediaHandler(QtCore.QObject):
 		connect(self._browseButton, 'clicked()', self.browseImage)
 		connect(self._historyBox, 'activated(QString)', self.insert)
 		connect(self._historyBox.lineEdit(), 'editingFinished()', self.edited)
+		if self._IPSButton is not None:
+			connect(self._IPSButton, 'clicked()', self._IPSButtonClicked)
 
 	def insert(self, path):
 		'''Tells the model to insert a new medium with the given path.
@@ -434,6 +471,11 @@ class MediaHandler(QtCore.QObject):
 			self.imageSpec, None #, 0
 			))
 
+	def _IPSButtonClicked(self):
+		ipsDialog.fill(self._switcher.getIpsPatchList())
+		if ipsDialog.exec_(self._IPSButton) == QtGui.QDialog.Accepted:
+			self._switcher.setIpsPatchList(ipsDialog.getIPSList())
+
 class DiskHandler(MediaHandler):
 	medium = 'disk'
 	browseTitle = 'Select Disk Image'
@@ -458,7 +500,6 @@ class CartHandler(MediaHandler):
 	medium = 'cart'
 	browseTitle = 'Select ROM Image'
 	imageSpec = 'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)'
-	mapperType = 'Auto Detect'
 
 	def __init__(self, ui, switcher):
 		MediaHandler.__init__(self, ui, switcher)
@@ -471,46 +512,7 @@ class CartHandler(MediaHandler):
 			self.__mapperTypeSelected)
 
 	def __mapperTypeSelected(self, mapperType):
-		# reinsert to set the mappertype
-		self.mapperType = mapperType
-		path = self._historyBox.currentText()
-		self._switcher.setPath('')
-		self.insert(path)
-
-	def insert(self, path):
-		'''Tells the model to insert a new cart with the given path.
-		'''
-		# TODO: remove code duplication with base class
-		print 'selected:', path or '<nothing>'
-		if not path:
-			return
-
-		historyBox = self._historyBox
-		# Insert path at the top of the list.
-		historyBox.insertItem(0, path)
-		historyBox.setCurrentIndex(0)
-		# Remove duplicates of the path from the history.
-		index = 1
-		while index < historyBox.count():
-			if historyBox.itemText(index) == path:
-				historyBox.removeItem(index)
-			else:
-				index += 1
-
-		# Update the model.
-		if (self.mapperType == 'Auto Detect'):
-			self._switcher.setPath(str(path))
-		else:
-			self._switcher.setPath(str(path), '-romtype',
-				self.mapperType)
-
-		# Persist history.
-		history = QtCore.QStringList()
-		for index in range(historyBox.count()):
-			history.append(historyBox.itemText(index))
-		preferences[self.medium + '/history'] = history
-
-		# TODO: persist history of mapperTypes with carts
+		self._switcher.setMapperType(str(mapperType))
 
 class CassetteHandler(MediaHandler):
 	medium = 'cassette'
