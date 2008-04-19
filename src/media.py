@@ -22,6 +22,8 @@ def parseMediaSlot(mediaSlot):
 	'''Returns a tuple ( medium, identifier) that corresponds to the given
 	media slot.
 	'''
+	assert mediaSlot is not None, 'Invalid media slot! (None)'
+	assert mediaSlot != '', 'Invalid media slot! (emtpy)'
 	if mediaSlot == 'cassetteplayer':
 		return 'cassette', None
 	else:
@@ -53,6 +55,7 @@ class MediaSwitcher(QtCore.QObject):
 			ui.mediaList, 'doubleClicked(QModelIndex)',
 			self.browseMedia
 			)
+
 		# Connect signals of media panels:
 		# It is essential to keep the references, otherwise the classes are
 		# garbage collected even though they have signal-slot connections
@@ -70,33 +73,46 @@ class MediaSwitcher(QtCore.QObject):
 		settingsManager.connectSetting('autoruncassettes',
 			ui.autoRunCassettesCheckBox)
 
+	def __getHandlerByMedium(self, medium):
+		for handler in self.__handlers:
+			if handler.medium == medium:
+				return handler
+		assert False, 'No handler found for medium "%s"' % medium
+
+	def __getPageBySlot(self, mediaSlot):
+		medium, identifier_ = parseMediaSlot(mediaSlot)
+		# Look up page widget for this medium.
+		return getattr(self.__ui, medium + 'Page')
+
+	def __getHandlerBySlot(self, mediaSlot):
+		medium, identifier_ = parseMediaSlot(mediaSlot)
+		return self.__getHandlerByMedium(medium)
 
 	def __updateMediaPage(self, mediaSlot):
 		medium, identifier = parseMediaSlot(mediaSlot)
-		# Look up page widget and update method for this medium.
-		page = getattr(self.__ui, medium + 'Page')
+		handler = self.__getHandlerByMedium(medium)
 		# Initialise the UI page for this medium.
-		for handler in self.__handlers:
-			if handler.medium == medium:
-				handler.updatePage(identifier)
-				break
-		return page
+		handler.updatePage(identifier)
 
 	@QtCore.pyqtSignature('QModelIndex')
 	def updateMedia(self, index):
+		oldMediaSlot = self.__mediaSlot
 		# Find out which media entry has become active.
 		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
 		#print '***********'
 		#print 'mediaslot has currently become active: ', mediaSlot
-		if self.__mediaSlot == mediaSlot:
+		if oldMediaSlot == mediaSlot:
 			return
 		self.__mediaSlot = mediaSlot
 		# prevent error due to race condition (?)
 		if self.__mediaSlot == '':
 			return
-		page = self.__updateMediaPage(mediaSlot)
+		if oldMediaSlot is not None and oldMediaSlot != '':
+			self.__getHandlerBySlot(oldMediaSlot).signalSetInvisible()
+		self.__updateMediaPage(mediaSlot)
 		# Switch page.
-		self.__ui.mediaStack.setCurrentWidget(page)
+		self.__ui.mediaStack.setCurrentWidget(self.__getPageBySlot(mediaSlot))
+		self.__getHandlerBySlot(mediaSlot).signalSetVisible()
 
 	@QtCore.pyqtSignature('QModelIndex')
 	def browseMedia(self, index):
@@ -107,13 +123,8 @@ class MediaSwitcher(QtCore.QObject):
 		# display it in the selection list
 		if  mediaSlot == 'virtual_drive':
 			return
-		medium, identifier_ = parseMediaSlot(mediaSlot)
-		for handler in self.__handlers:
-			if handler.medium == medium:
-				handler.browseImage()
-				break
-		else:
-			print 'no handler found for medium "%s"' % medium
+		handler = self.__getHandlerBySlot(mediaSlot)
+		handler.browseImage()
 
 	@QtCore.pyqtSignature('QModelIndex, QModelIndex')
 	def mediaPathChanged(
@@ -132,6 +143,8 @@ class MediaSwitcher(QtCore.QObject):
 		# since switching machines will sent this event for each and
 		# every drive/hd/cd/... this will be called several times in a row
 		# do we need to handle this in a better way?
+		if self.__mediaSlot is not None and self.__mediaSlot != '':
+			self.__getHandlerBySlot(self.__mediaSlot).signalSetInvisible()
 		self.__ui.mediaStack.setCurrentWidget(self.__ui.infoPage)
 		self.__ui.mediaList.selectionModel().clear()
 		self.__mediaSlot = ''
@@ -332,6 +345,18 @@ class MediaHandler(QtCore.QObject):
 		# usually, nothing should be done
 		return
 
+	def signalSetVisible(self):
+		'''Called when this page has become visible.
+		'''
+		# default implementation does nothing
+		return
+
+	def signalSetInvisible(self):
+		'''Called when this page has become invisible
+		'''
+		# default implementation does nothing
+		return
+
 class DiskHandler(MediaHandler):
 	medium = 'disk'
 	browseTitle = 'Select Disk Image'
@@ -455,6 +480,8 @@ class CassetteHandler(MediaHandler):
 		self.__pollTimer = QtCore.QTimer()
 		self.__pollTimer.setInterval(500)
 
+		self.__isVisible = False
+
 		# Connect signals.
 		connect(ui.tapePlayButton, 'clicked()', self.__playButtonClicked)
 		connect(ui.tapeRewindButton, 'clicked()', self.__rewindButtonClicked)
@@ -474,12 +501,12 @@ class CassetteHandler(MediaHandler):
 	def __updateButtonState(self, newState):
 		for state, button in self.__buttonMap.iteritems():
 			button.setChecked(newState == state)
-		if newState in ['play', 'record']:
+		if newState in ['play', 'record'] and self.__isVisible:
 			self.__pollTimer.start()
-		else:
+		if newState == 'stop':
 			self.__pollTimer.stop()
-			self.__queryTimes() # make sure end time is correct
-
+			if self.__isVisible:
+				self.__queryTimes() # make sure end time is correct
 
 	def __playButtonClicked(self):
 		path = self._historyBox.currentText()
@@ -549,8 +576,22 @@ class CassetteHandler(MediaHandler):
 #				self.__errorHandler
 #			)
 		self.__deckStateModel.getTapePosition(self.__updateTapePosition,
-			self.__errorHandler
+			None # errors can occur if cassetteplayer got removed
 		)
+
+	def signalSetVisible(self):
+		assert self.__isVisible == False, 'Um, we already were visible!?'
+		self.__isVisible = True
+		# start timer in case we are in play or record mode
+		state = self.__deckStateModel.getState()
+		if state in ['play', 'record']:
+			self.__pollTimer.start()
+
+	def signalSetInvisible(self):
+		assert self.__isVisible == True, 'Um, we were not even visible!?'
+		self.__isVisible = False
+		# always stop timer
+		self.__pollTimer.stop()
 
 	def _getLabelText(self, identifier
 		# identifier is ignored for cassetteplayer:

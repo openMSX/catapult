@@ -7,6 +7,12 @@ $Id$
 	  switching machines
 	* Refactored MediaSwitcher to put all media specific code in
 	  the MediaHandler classes to reduce code duplication
+	* Added setVisible and setInvisible triggers to handlers, so that
+	  they can do something if the visibility changes of the media page
+	* Use the previous to prevent useless polling of tape position when
+	  the counter is invisible.
+	* This helps to prevent huge problems when the cassetteplayer is
+	  removed (switch to turboR)
 
 2008-03-17 Manuel Bilderbeek <manuel@msxnet.org>
 	* Display tape position and size, using the new cassetteplayer
