@@ -393,6 +393,11 @@ class DiskHandler(MediaHandler):
 			description = 'Disk image of unknown type'
 		return description
 
+	def _getDirDesc(self, fileInfo):
+		return 'Directory as disk (%d entries)' % (
+				fileInfo.dir().count()
+			)
+
 	def _finishUpdatePage(self):
 		self._ui.diskIPSLabel.setText('(' + str(len(
 				self._switcher.getIpsPatchList()
