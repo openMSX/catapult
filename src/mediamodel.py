@@ -10,29 +10,30 @@ from qt_utils import QtSignal, Signal
 # All data that belongs to a medium is centralized in this class
 class Medium(QtCore.QObject):
 	ipsPatchListChanged = Signal('PyQt_PyObject')
-	mapperTypeChanged = Signal('PyQt_PyObject')
+
+	def create(mediumType, path):
+		'''Factory-like static method to create the proper Medium instance.
+		type can be also a mediaSlot name, as long as it starts with one
+		of the media type names
+		'''
+		if mediumType.startswith('cart'):
+			return CartridgeMedium(path)
+		else:
+			return Medium(path)
+	create = staticmethod(create)
 
 	def __init__(self, path):
 		QtCore.QObject.__init__(self)
 		self.__ipsPatchList = None
-		self.__mapperType = None
 		self.__path = path
 		self.__patchesSetToZero = False
-		self.__reset()
+		self._reset()
 	
-	def __reset(self):
+	def _reset(self):
 		self.__ipsPatchList = []
-		self.__mapperType = 'Auto Detect'
 
 	def getPath(self):
 		return self.__path
-
-	def setMapperType(self, mapperType):
-		self.__mapperType = mapperType
-		self.mapperTypeChanged.emit(self)
-
-	def getMapperType(self):
-		return self.__mapperType
 
 	def getIpsPatchList(self):
 		return self.__ipsPatchList
@@ -52,6 +53,27 @@ class Medium(QtCore.QObject):
 	
 	def __str__(self):
 		return 'medium with path %s' % self.__path
+
+class CartridgeMedium(Medium):
+	mapperTypeChanged = Signal('PyQt_PyObject')
+	
+	def __init__(self, path):
+		self.__mapperType = None
+		Medium.__init__(self, path)
+
+	def _reset(self):
+		Medium._reset(self)
+		self.__mapperType = 'Auto Detect'
+
+	def setMapperType(self, mapperType):
+		self.__mapperType = mapperType
+		self.mapperTypeChanged.emit(self)
+
+	def getMapperType(self):
+		return self.__mapperType
+	
+	def __str__(self):
+		return 'cartridge' + Medium.__str__(self)
 
 class MediaModel(QtCore.QAbstractListModel):
 	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
@@ -80,7 +102,8 @@ class MediaModel(QtCore.QAbstractListModel):
 			)
 		machineManager.machineAdded.connect(self.__machineAdded)
 		machineManager.machineRemoved.connect(self.__machineRemoved)
-	
+
+
 	def __updateAll(self):
 		# this is in the registerInitial callback, so:
 		self.connected.emit()
@@ -177,7 +200,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		if str(path) == '':
 			medium = None
 		else:
-			medium = Medium(path)
+			medium = Medium.create(mediaSlot, path)
 		self.__setMedium(mediaSlot, machineId, medium)
 
 	def __setMedium(self, mediaSlot, machineId, medium):
@@ -196,11 +219,13 @@ class MediaModel(QtCore.QAbstractListModel):
 					# disconnect from old medium
 					if oldMedium is not None:
 						oldMedium.ipsPatchListChanged.disconnect(self.__ipsPatchListChanged)
-						oldMedium.mapperTypeChanged.disconnect(self.__mapperTypeChanged)
+						if isinstance(oldMedium, CartridgeMedium):
+							oldMedium.mapperTypeChanged.disconnect(self.__mapperTypeChanged)
 					# connect to new medium
 					if medium is not None:
 						medium.ipsPatchListChanged.connect(self.__ipsPatchListChanged)
-						medium.mapperTypeChanged.connect(self.__mapperTypeChanged)
+						if isinstance(medium, CartridgeMedium):
+							medium.mapperTypeChanged.connect(self.__mapperTypeChanged)
 					modelIndex = self.createIndex(index, 0)
 					self.dataChanged.emit(modelIndex, modelIndex)
 					self.mediumChanged.emit(slotName, medium) # TODO: add machine Id?
@@ -261,18 +286,19 @@ class MediaModel(QtCore.QAbstractListModel):
 		print 'Applying options...'
 		machineId = self.__machineManager.getCurrentMachineId()
 		medium = self.__mediumInSlotForMachine[machineId][mediaSlot]
-		patchList = medium.getIpsPatchList()
 		path = medium.getPath()
-		mapper = medium.getMapperType()
 		if path != '':
 			optionList = []
+			patchList = medium.getIpsPatchList()
 			if len(patchList) > 0 or medium.getPatchesSetToZero():
 				for option in patchList:
 					optionList.append('-ips')
 					optionList.append(option)
-			if mapper != 'Auto Detect':
-				optionList.append('-romtype')
-				optionList.append(mapper)
+			if isinstance(medium, CartridgeMedium):
+				mapper = medium.getMapperType()
+				if mapper != 'Auto Detect':
+					optionList.append('-romtype')
+					optionList.append(mapper)
 			self.__bridge.command(mediaSlot, 'insert',
 				EscapedStr(tclEscape(path)), *optionList
 				)(

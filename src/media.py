@@ -20,7 +20,7 @@ def addToHistory(comboBox, path):
 		comboBox.setCurrentIndex(0)
 
 def parseMediaSlot(mediaSlot):
-	'''Returns a tuple ( medium, identifier) that corresponds to the given
+	'''Returns a tuple ( mediumType, identifier) that corresponds to the given
 	media slot.
 	'''
 	assert mediaSlot is not None, 'Invalid media slot! (None)'
@@ -74,25 +74,25 @@ class MediaSwitcher(QtCore.QObject):
 		settingsManager.connectSetting('autoruncassettes',
 			ui.autoRunCassettesCheckBox)
 
-	def __getHandlerByMedium(self, medium):
+	def __getHandlerByMediumType(self, mediumType):
 		for handler in self.__handlers:
-			if handler.medium == medium:
+			if handler.mediumType == mediumType:
 				return handler
-		assert False, 'No handler found for medium "%s"' % medium
+		assert False, 'No handler found for mediumType "%s"' % mediumType
 
 	def __getPageBySlot(self, mediaSlot):
-		medium, identifier_ = parseMediaSlot(mediaSlot)
-		# Look up page widget for this medium.
-		return getattr(self.__ui, medium + 'Page')
+		mediumType, identifier_ = parseMediaSlot(mediaSlot)
+		# Look up page widget for this mediumType.
+		return getattr(self.__ui, mediumType + 'Page')
 
 	def __getHandlerBySlot(self, mediaSlot):
-		medium, identifier_ = parseMediaSlot(mediaSlot)
-		return self.__getHandlerByMedium(medium)
+		mediumType, identifier_ = parseMediaSlot(mediaSlot)
+		return self.__getHandlerByMediumType(mediumType)
 
 	def __updateMediaPage(self, mediaSlot):
-		medium, identifier = parseMediaSlot(mediaSlot)
-		handler = self.__getHandlerByMedium(medium)
-		# Initialise the UI page for this medium.
+		mediumType, identifier = parseMediaSlot(mediaSlot)
+		handler = self.__getHandlerByMediumType(mediumType)
+		# Initialise the UI page for this mediumType.
 		handler.updatePage(identifier)
 
 	@QtCore.pyqtSignature('QModelIndex')
@@ -191,7 +191,7 @@ class MediaHandler(QtCore.QObject):
 	only implementing/overriding what is specific for that new type
 	in a specialized class.
 	'''
-	medium = None
+	mediumType = None
 	browseTitle = None
 	imageSpec = None
 	emptyPathDesc = None
@@ -202,19 +202,15 @@ class MediaHandler(QtCore.QObject):
 		self._switcher = switcher
 
 		# Look up UI elements.
-		self._ejectButton = getattr(ui, self.medium + 'EjectButton', None)
-		self._browseButton = getattr(ui, self.medium + 'BrowseImageButton')
-		self._historyBox = getattr(ui, self.medium + 'HistoryBox')
-		self._mediaLabel = getattr(ui, self.medium + 'Label')
-		self._descriptionLabel = getattr(ui, self.medium + 'DescriptionLabel')
-		try:
-			self._IPSButton = getattr(ui, self.medium + 'IPSButton')
-		except AttributeError:
-			# this medium doesn't support IPS, apparently
-			self._IPSButton = None
+		self._ejectButton = getattr(ui, self.mediumType + 'EjectButton', None)
+		self._browseButton = getattr(ui, self.mediumType + 'BrowseImageButton')
+		self._historyBox = getattr(ui, self.mediumType + 'HistoryBox')
+		self._mediaLabel = getattr(ui, self.mediumType + 'Label')
+		self._descriptionLabel = getattr(ui, self.mediumType + 'DescriptionLabel')
+		self._IPSButton = getattr(ui, self.mediumType + 'IPSButton', None)
 
 		# Load history.
-		history = preferences.getList(self.medium + '/history')
+		history = preferences.getList(self.mediumType + '/history')
 		self._historyBox.addItems(history)
 		# On OS X, the top item of the history is automatically put into
 		# the edit box; this is not what we want, so we clear it.
@@ -249,13 +245,13 @@ class MediaHandler(QtCore.QObject):
 				index += 1
 
 		# Update the model.
-		self._switcher.insertMedium(Medium(str(path)))
+		self._switcher.insertMedium(Medium.create(self.mediumType, str(path)))
 
 		# Persist history.
 		history = QtCore.QStringList()
 		for index in range(historyBox.count()):
 			history.append(historyBox.itemText(index))
-		preferences[self.medium + '/history'] = history
+		preferences[self.mediumType + '/history'] = history
 
 	def eject(self):
 		'''Removes the currently inserted medium.
@@ -285,7 +281,8 @@ class MediaHandler(QtCore.QObject):
 	def updatePage(self, identifier):
 		medium = self._switcher.getMedium()
 
-		self._ejectButton.setDisabled(medium is None)
+		if (self._ejectButton):
+			self._ejectButton.setDisabled(medium is None)
 		self._mediaLabel.setText(self._getLabelText(identifier))
 
 		if medium:
@@ -356,7 +353,7 @@ class MediaHandler(QtCore.QObject):
 		return
 
 class DiskHandler(MediaHandler):
-	medium = 'disk'
+	mediumType = 'disk'
 	browseTitle = 'Select Disk Image'
 	imageSpec = 'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)'
 	emptyPathDesc = 'No disk in drive'
@@ -410,7 +407,7 @@ class DiskHandler(MediaHandler):
 				 + ' selected)')
 
 class CartHandler(MediaHandler):
-	medium = 'cart'
+	mediumType = 'cart'
 	browseTitle = 'Select ROM Image'
 	imageSpec = 'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)'
 	emptyPathDesc = 'No cartridge in slot'
@@ -428,7 +425,8 @@ class CartHandler(MediaHandler):
 			self.__mapperTypeSelected)
 
 	def __mapperTypeSelected(self, mapperType):
-		self._switcher.setMapperType(str(mapperType))
+		medium = self._switcher.getMedium()
+		medium.setMapperType(str(mapperType))
 
 	def _getLabelText(self, identifier):
 		return 'Cartridge Slot %s' % identifier.upper()
@@ -485,7 +483,7 @@ class CartHandler(MediaHandler):
 				 + ' selected)')
 
 class CassetteHandler(MediaHandler):
-	medium = 'cassette'
+	mediumType = 'cassette'
 	browseTitle = 'Select Cassette Image'
 	imageSpec = 'Cassette Images (*.cas *.wav *.zip *.gz);;All Files (*)'
 	emptyPathDesc = 'No cassette in deck'
@@ -642,7 +640,7 @@ class CassetteHandler(MediaHandler):
 		return
 
 class HarddiskHandler(MediaHandler):
-	medium = 'hd'
+	mediumType = 'hd'
 	browseTitle = 'Select Hard Disk Image'
 	imageSpec = 'Hard Disk Images (*.dsk *.zip *.gz);;All Files (*)'
 	emptyPathDesc = 'No hard disk in drive'
@@ -663,7 +661,7 @@ class HarddiskHandler(MediaHandler):
 		return description
 
 class CDROMHandler(MediaHandler):
-	medium = 'cd'
+	mediumType = 'cd'
 	browseTitle = 'Select CD-ROM Image'
 	imageSpec = 'CD-ROM Images (*.iso *.zip *.gz);;All Files (*)'
 	emptyPathDesc = 'No CD-ROM in drive'

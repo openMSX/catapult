@@ -5,6 +5,8 @@ $Id$
 	  of Medium to put medium specific functionality in (e.g. get
 	  tape length)
 	* Disable some buttons in media page when they are not applicable.
+	* Start using subclassing for Medium, put cart specific stuff
+	  (mapperType) inside specialized CartridgeMedium
 
 2008-04-19 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added IPS patch selection per media
