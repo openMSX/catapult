@@ -375,9 +375,12 @@ class Diskmanipulator(QtCore.QObject):
 		return name.startswith('disk') or name.startswith('hd') \
 			or name == 'virtual_drive'
 
-	def __diskChanged(self, name, imagepath):
+	def __diskChanged(self, name, medium):
 		driveId = str(name)
-		path = str(imagepath)
+		if medium is None:
+			path = ''
+		else:
+			path = str(medium.getPath())
 		if self.isUsableDisk(driveId):
 			print 'disk "%s" now contains image "%s" '% (driveId, path)
 			if path == '':

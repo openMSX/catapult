@@ -6,6 +6,7 @@ from preferences import preferences
 from qt_utils import connect
 import settings
 from ipsselector import ipsDialog
+from mediamodel import Medium
 
 def addToHistory(comboBox, path):
 	# TODO: Do we really need this?
@@ -149,17 +150,18 @@ class MediaSwitcher(QtCore.QObject):
 		self.__ui.mediaList.selectionModel().clear()
 		self.__mediaSlot = ''
 
-	def __optionsChanged(self, slot):
-		slot = str(slot)
-		if self.__mediaSlot == slot:
+	def __optionsChanged(self, medium):
+		if self.__mediaModel.getMediumInSlot(self.__mediaSlot) == medium:
 			self.__updateMediaPage(self.__mediaSlot)
 		# reuse our normal error handler for now:
-		self.__mediaModel.applyOptions(slot, self.__mediaChangeErrorHandler)
+		self.__mediaModel.applyOptions(self.__mediaSlot,
+			self.__mediaChangeErrorHandler
+			)
 
-	def setPath(self, path):
-		'''Sets a new path for the currently selected medium.
+	def insertMedium(self, medium):
+		'''Sets a new medium for the currently selected slot.
 		'''
-		self.__mediaModel.setInserted(self.__mediaSlot, path,
+		self.__mediaModel.insertMediumInSlot(self.__mediaSlot, medium,
 			lambda message: self.__mediaChangeErrorHandler(
 				self.__mediaSlot, message
 				)
@@ -177,19 +179,33 @@ class MediaSwitcher(QtCore.QObject):
 		return self.__mediaModel.getCassetteDeckStateModel()
 
 	def getIpsPatchList(self):
-		return self.__mediaModel.getIpsPatchList(self.__mediaSlot)
+		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
+		if medium is None:
+			return None
+		return medium.getIpsPatchList()
 
 	def setIpsPatchList(self, patchList):
-		self.__mediaModel.setIpsPatchList(self.__mediaSlot, patchList)
+		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
+		assert medium is not None, 'Should not set patches when slot is empty'
+		medium.setIpsPatchList(patchList)
 
 	def getMapperType(self):
-		return self.__mediaModel.getMapperType(self.__mediaSlot)
+		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
+		if medium is None:
+			return None
+		return medium.getMapperType()
 
 	def setMapperType(self, mapperType):
-		self.__mediaModel.setMapperType(self.__mediaSlot, mapperType)
+		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
+		assert medium is not None, 'Should not set mapper type when slot is empty'
+		medium.setMapperType(mapperType)
 
 	def getPath(self):
-		return self.__mediaModel.getInserted(self.__mediaSlot)
+		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
+		if medium is None:
+			return ''
+		else:
+			return medium.getPath()
 
 	def getRomTypes(self):
 		return self.__mediaModel.getRomTypes()
@@ -259,7 +275,7 @@ class MediaHandler(QtCore.QObject):
 				index += 1
 
 		# Update the model.
-		self._switcher.setPath(str(path))
+		self._switcher.insertMedium(Medium(str(path)))
 
 		# Persist history.
 		history = QtCore.QStringList()
@@ -271,7 +287,7 @@ class MediaHandler(QtCore.QObject):
 		'''Removes the currently inserted medium.
 		'''
 		self._historyBox.clearEditText()
-		self._switcher.setPath('')
+		self._switcher.insertMedium(None)
 
 	def edited(self):
 		'''Inserts the medium specified in the combobox line edit.
@@ -293,6 +309,7 @@ class MediaHandler(QtCore.QObject):
 	def updatePage(self, identifier):
 		path = self._switcher.getPath()
 
+		self._ejectButton.setDisabled(path == '')
 		self._mediaLabel.setText(self._getLabelText(identifier))
 
 		fileInfo = QtCore.QFileInfo(path)
@@ -399,9 +416,17 @@ class DiskHandler(MediaHandler):
 			)
 
 	def _finishUpdatePage(self):
-		self._ui.diskIPSLabel.setText('(' + str(len(
-				self._switcher.getIpsPatchList()
-				)) + ' selected)')
+		patchList = self._switcher.getIpsPatchList()
+		if patchList is None:
+			self._ui.diskIPSLabel.setDisabled(True)
+			self._IPSButton.setDisabled(True)
+			amount = 0
+		else:
+			self._ui.diskIPSLabel.setEnabled(True)
+			self._IPSButton.setEnabled(True)
+			amount = len(patchList)
+		self._ui.diskIPSLabel.setText('(' + str(amount)
+				 + ' selected)')
 
 class CartHandler(MediaHandler):
 	medium = 'cart'
@@ -458,12 +483,24 @@ class CartHandler(MediaHandler):
 		
 		# set the mappertype combo to the proper value
 		mapperType = self._switcher.getMapperType()
-		index = self._ui.mapperTypeCombo.findText(mapperType)
-		self._ui.mapperTypeCombo.setCurrentIndex(index)
+		if mapperType is None:
+			self._ui.mapperTypeCombo.setDisabled(True)
+		else:
+			self._ui.mapperTypeCombo.setEnabled(True)
+			index = self._ui.mapperTypeCombo.findText(mapperType)
+			self._ui.mapperTypeCombo.setCurrentIndex(index)
 
-		self._ui.cartIPSLabel.setText('(' + str(len(
-				self._switcher.getIpsPatchList()
-				)) + ' selected)')
+		patchList = self._switcher.getIpsPatchList()
+		if patchList is None:
+			self._ui.cartIPSLabel.setDisabled(True)
+			self._IPSButton.setDisabled(True)
+			amount = 0
+		else:
+			self._ui.cartIPSLabel.setEnabled(True)
+			self._IPSButton.setEnabled(True)
+			amount = len(patchList)
+		self._ui.cartIPSLabel.setText('(' + str(amount)
+				 + ' selected)')
 
 class CassetteHandler(MediaHandler):
 	medium = 'cassette'
@@ -617,6 +654,10 @@ class CassetteHandler(MediaHandler):
 		else:
 			description = 'Cassette image of unknown type'
 		return description
+
+	def _finishUpdatePage(self):
+		# TODO: update the tapelength
+		return
 
 class HarddiskHandler(MediaHandler):
 	medium = 'hd'
