@@ -177,35 +177,9 @@ class MediaSwitcher(QtCore.QObject):
 
 	def getCassetteDeckStateModel(self):
 		return self.__mediaModel.getCassetteDeckStateModel()
-
-	def getIpsPatchList(self):
-		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
-		if medium is None:
-			return None
-		return medium.getIpsPatchList()
-
-	def setIpsPatchList(self, patchList):
-		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
-		assert medium is not None, 'Should not set patches when slot is empty'
-		medium.setIpsPatchList(patchList)
-
-	def getMapperType(self):
-		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
-		if medium is None:
-			return None
-		return medium.getMapperType()
-
-	def setMapperType(self, mapperType):
-		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
-		assert medium is not None, 'Should not set mapper type when slot is empty'
-		medium.setMapperType(mapperType)
-
-	def getPath(self):
-		medium = self.__mediaModel.getMediumInSlot(self.__mediaSlot)
-		if medium is None:
-			return ''
-		else:
-			return medium.getPath()
+	
+	def getMedium(self):
+		return self.__mediaModel.getMediumInSlot(self.__mediaSlot)
 
 	def getRomTypes(self):
 		return self.__mediaModel.getRomTypes()
@@ -302,15 +276,22 @@ class MediaHandler(QtCore.QObject):
 			))
 
 	def _IPSButtonClicked(self):
-		ipsDialog.fill(self._switcher.getIpsPatchList())
+		medium = self._switcher.getMedium()
+		assert medium is not None, 'Click on IPS button without medium'
+		ipsDialog.fill(medium.getIpsPatchList())
 		if ipsDialog.exec_(self._IPSButton) == QtGui.QDialog.Accepted:
-			self._switcher.setIpsPatchList(ipsDialog.getIPSList())
+			medium.setIpsPatchList(ipsDialog.getIPSList())
 	
 	def updatePage(self, identifier):
-		path = self._switcher.getPath()
+		medium = self._switcher.getMedium()
 
-		self._ejectButton.setDisabled(path == '')
+		self._ejectButton.setDisabled(medium is None)
 		self._mediaLabel.setText(self._getLabelText(identifier))
+
+		if medium:
+			path = medium.getPath()
+		else:
+			path = ''
 
 		fileInfo = QtCore.QFileInfo(path)
 
@@ -416,15 +397,15 @@ class DiskHandler(MediaHandler):
 			)
 
 	def _finishUpdatePage(self):
-		patchList = self._switcher.getIpsPatchList()
-		if patchList is None:
+		medium = self._switcher.getMedium()
+		if medium is None:
 			self._ui.diskIPSLabel.setDisabled(True)
 			self._IPSButton.setDisabled(True)
 			amount = 0
 		else:
 			self._ui.diskIPSLabel.setEnabled(True)
 			self._IPSButton.setEnabled(True)
-			amount = len(patchList)
+			amount = len(medium.getIpsPatchList())
 		self._ui.diskIPSLabel.setText('(' + str(amount)
 				 + ' selected)')
 
@@ -482,23 +463,24 @@ class CartHandler(MediaHandler):
 					condition here!'
 		
 		# set the mappertype combo to the proper value
-		mapperType = self._switcher.getMapperType()
-		if mapperType is None:
+		medium = self._switcher.getMedium()
+		if medium is None:
+			# mapper
 			self._ui.mapperTypeCombo.setDisabled(True)
-		else:
-			self._ui.mapperTypeCombo.setEnabled(True)
-			index = self._ui.mapperTypeCombo.findText(mapperType)
-			self._ui.mapperTypeCombo.setCurrentIndex(index)
-
-		patchList = self._switcher.getIpsPatchList()
-		if patchList is None:
+			# patchlist
 			self._ui.cartIPSLabel.setDisabled(True)
 			self._IPSButton.setDisabled(True)
 			amount = 0
 		else:
+			# mapper
+			self._ui.mapperTypeCombo.setEnabled(True)
+			mapperType = medium.getMapperType()
+			index = self._ui.mapperTypeCombo.findText(mapperType)
+			self._ui.mapperTypeCombo.setCurrentIndex(index)
+			# patchlist
 			self._ui.cartIPSLabel.setEnabled(True)
 			self._IPSButton.setEnabled(True)
-			amount = len(patchList)
+			amount = len(medium.getIpsPatchList())
 		self._ui.cartIPSLabel.setText('(' + str(amount)
 				 + ' selected)')
 
