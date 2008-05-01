@@ -79,7 +79,7 @@ class CassetteMedium(Medium):
 		return self.__length
 
 	def setLength(self, length):
-		'''Only call this from CassetteMediaSlot!'''
+		'''Only call this from CassetteDeck!'''
 		self.__length = length
 	
 	def __str__(self):
@@ -93,7 +93,7 @@ class MediaSlot(QtCore.QObject):
 		slotName a mediaSlot name, which will also be stored in the object.
 		'''
 		if slotName.startswith('cassette'):
-			return CassetteMediaSlot(slotName, bridge)
+			return CassetteDeck(slotName, bridge)
 		elif slotName.startswith('cart'):
 			return CartridgeSlot(slotName, bridge)
 		else:
@@ -179,9 +179,20 @@ class MediaSlot(QtCore.QObject):
 		return 'MediaSlot with name %s and inserted medium %s' % (self.__name,
 			self._medium or '<none>')
 
-class CassetteMediaSlot(MediaSlot):
+class CassetteDeck(MediaSlot):
+
+	stateChanged = Signal('QString')
+	
 	def __init__(self, name, bridge):
 		MediaSlot.__init__(self, name, bridge)
+		self.__state = ''
+		self.__queryState()
+	
+	def __queryState(self):
+		self._bridge.command('cassetteplayer')(self.__stateReply)
+
+	def __stateReply(self, *words):
+		self.setState(str(words[2]))
 
 	def setMedium(self, medium, errorHandler):
 		MediaSlot.setMedium(self, medium, errorHandler)
@@ -200,6 +211,32 @@ class CassetteMediaSlot(MediaSlot):
 		'''
 		self._bridge.command('cassetteplayer', 'getpos')(
 			replyHandler, errorHandler)
+
+	def setState(self, state):
+		'''Only call this from MediaModel and from __stateReply and rewind!
+		'''
+		self.__state = state
+		self.stateChanged.emit(state)
+
+	def getState(self):
+		assert self.__state != '', 'Illegal state!'
+		return self.__state
+
+	def rewind(self, errorHandler):
+		self.setState('rewind') # rewind state is not sent by openMSX
+		self._bridge.command('cassetteplayer', 'rewind')(
+			lambda *dummy: self.__queryState(), errorHandler
+			)
+	
+	def record(self, filename, errorHandler):
+		self._bridge.command('cassetteplayer', 'new', filename)(
+			None, errorHandler
+			)
+
+	def play(self, errorHandler):
+		self._bridge.command('cassetteplayer', 'play')(
+			None, errorHandler
+			)
 
 class CartridgeSlot(MediaSlot):
 	def __init__(self, name, bridge):
@@ -229,10 +266,10 @@ class MediaModel(QtCore.QAbstractListModel):
 		self.__virtualDriveSlot = MediaSlot.create('virtual_drive', bridge)
 		self.__romTypes = []
 		self.__machineManager = machineManager
-		self.__cassetteDeckStateModel = CassetteDeckStateModel(bridge)
 
 		bridge.registerInitial(self.__updateAll)
 		bridge.registerUpdate('media', self.__updateMedium)
+		bridge.registerUpdate('status', self.__updateCassetteDeckState)
 		bridge.registerUpdatePrefix(
 			'hardware',
 			( 'cart', 'disk', 'cassette', 'hd', 'cd' ),
@@ -359,13 +396,10 @@ class MediaModel(QtCore.QAbstractListModel):
 
 		assert machineId != '', 'You need to pass a machineId!'
 		slotList = self.__mediaSlotListForMachine[machineId]
-		for index in range(len(slotList)):
-			slot = slotList[index]
+		for slot in slotList:
 			if slot.getName() == name:
-				break
-		if slot.getName() != name:
-			raise KeyError(name)
-		return slot
+				return slot
+		raise KeyError(name)
 
 	def rowCount(self, parent):
 		# TODO: What does this mean?
@@ -442,50 +476,10 @@ class MediaModel(QtCore.QAbstractListModel):
 	def getRomTypes(self):
 		return self.__romTypes
 
-	def getCassetteDeckStateModel(self):
-		return self.__cassetteDeckStateModel
-	
-# TODO: properly handle machine id's and thus changes of machines
-class CassetteDeckStateModel(QtCore.QObject):
-
-	stateChanged = Signal('QString')
-	
-	def __init__(self, bridge):
-		QtCore.QObject.__init__(self)
-		self.__bridge = bridge
-		self.__state = ''
-		bridge.registerInitial(self.__queryState)
-		bridge.registerUpdate('status', self.__updateState)
-
-	def __queryState(self):
-		self.__bridge.command('cassetteplayer')(self.__stateReply)
-
-	def __updateState(self, name, machineId, state):
-		# TODO: shouldn't we do something with machineId?
+	# forward cassette deck state update to the proper slot
+	def __updateCassetteDeckState(self, name, machineId, state):
+		name = str(name)
 		if name == 'cassetteplayer':
 			print 'State of cassetteplayer updated to ', state
-			self.__state = state
-			self.stateChanged.emit(state)
-	
-	def __stateReply(self, *words):
-		self.__updateState('cassetteplayer', 'TODO: machine', words[2])
-	
-	def getState(self):
-		assert self.__state != '', 'Illegal state!'
-		return self.__state
-
-	def rewind(self, errorHandler):
-		self.__updateState('cassetteplayer', 'TODO: machine', 'rewind')
-		self.__bridge.command('cassetteplayer', 'rewind')(
-			lambda *dummy: self.__queryState(), errorHandler
-			)
-	
-	def record(self, filename, errorHandler):
-		self.__bridge.command('cassetteplayer', 'new', filename)(
-			None, errorHandler
-			)
-
-	def play(self, errorHandler):
-		self.__bridge.command('cassetteplayer', 'play')(
-			None, errorHandler
-			)
+			deck = self.getMediaSlotByName(name, machineId)
+			deck.setState(state)

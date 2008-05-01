@@ -109,9 +109,9 @@ class MediaSwitcher(QtCore.QObject):
 		#print 'mediaslot has currently become active: ', slot
 		if oldMediaSlot is not None and oldMediaSlot.getName() == slot.getName():
 			return
-		self.__mediaSlot = slot
 		if oldMediaSlot is not None:
 			self.__getHandlerBySlot(oldMediaSlot).signalSetInvisible()
+		self.__mediaSlot = slot
 		self.__updateMediaPage(slot)
 		# Switch page.
 		self.__ui.mediaStack.setCurrentWidget(self.__getPageBySlot(slot))
@@ -168,9 +168,6 @@ class MediaSwitcher(QtCore.QObject):
 			)
 		messageBox.show()
 
-	def getCassetteDeckStateModel(self):
-		return self.__mediaModel.getCassetteDeckStateModel()
-	
 	def getMedium(self):
 		return self.__mediaSlot.getMedium()
 
@@ -504,7 +501,6 @@ class CassetteHandler(MediaHandler):
 	def __init__(self, ui, switcher):
 		MediaHandler.__init__(self, ui, switcher)
 
-		self.__deckStateModel = switcher.getCassetteDeckStateModel()
 		# Look up UI elements.
 
 		self.__pollTimer = QtCore.QTimer()
@@ -519,8 +515,6 @@ class CassetteHandler(MediaHandler):
 		connect(ui.tapeRecordButton, 'clicked()', self.__recordButtonClicked)
 		connect(self.__pollTimer, 'timeout()', self.__queryTimes)
 	
-		self.__deckStateModel.stateChanged.connect(self.__updateButtonState)
-
 		self.__buttonMap = {
 			self.play: ui.tapePlayButton,
 			self.rewind: ui.tapeRewindButton,
@@ -543,16 +537,19 @@ class CassetteHandler(MediaHandler):
 		if path == '':
 			self.browseImage()
 		else:
-			self.__deckStateModel.play(self.__errorHandler)
+			deck = self._switcher.getSlot()
+			deck.play(self.__errorHandler)
 			# prevent toggling behaviour of play button:
-			self.__updateButtonState(self.__deckStateModel.getState())
+			self.__updateButtonState(deck.getState())
 
 	def __rewindButtonClicked(self):
-		self.__deckStateModel.rewind(self.__errorHandler)
+		deck = self._switcher.getSlot()
+		deck.rewind(self.__errorHandler)
 
 	def __stopButtonClicked(self):
 		# restore button state (this is actually a 'readonly' button)
-		self.__updateButtonState(self.__deckStateModel.getState())
+		deck = self._switcher.getSlot()
+		self.__updateButtonState(deck.getState())
 
 	def __recordButtonClicked(self):
 		filename = QtGui.QFileDialog.getSaveFileName(
@@ -561,11 +558,12 @@ class CassetteHandler(MediaHandler):
 			'Cassette Images (*.wav);;All Files (*)',
 			None #, 0
 			)
+		deck = self._switcher.getSlot()
 		if filename == '':
-			self.__updateButtonState(self.__deckStateModel.getState())
+			self.__updateButtonState(deck.getState())
 		else:
 			self.__updateTapeLength(0)
-			self.__deckStateModel.record(filename, self.__errorHandler)
+			deck.record(filename, self.__errorHandler)
 	
 	def __errorHandler(self, message):
 		messageBox = QtGui.QMessageBox('Cassette deck problem', message,
@@ -573,7 +571,8 @@ class CassetteHandler(MediaHandler):
 				self._ui.tapeStopButton
 				)
 		messageBox.show()
-		self.__updateButtonState(self.__deckStateModel.getState())
+		deck = self._switcher.getSlot()
+		self.__updateButtonState(deck.getState())
 
 	def __updateTapeLength(self, length):
 		zeroTime = QtCore.QTime(0, 0, 0)
@@ -581,18 +580,22 @@ class CassetteHandler(MediaHandler):
 		self._ui.tapeLength.setTime(time)
 		
 	def __updateTapePosition(self, position):
+		deck = self._switcher.getSlot()
+		if not deck: # can happen due to race conditions
+			return
 		zeroTime = QtCore.QTime(0, 0, 0)
 		time = zeroTime.addSecs(round(float(position)))
 		self._ui.tapeTime.setTime(time)
 		# for now, we can have this optimization:
-		if (self.__deckStateModel.getState() == 'record'):
+		if (deck.getState() == 'record'):
 			self.__updateTapeLength(position)
 
 	def __queryTimes(self):
 		#medium = self._switcher.getMedium()
 		# don't do something like this for now, but use the optimization
 		# that length == position when recording, see above
-#		if (self.__deckStateModel.getState() == 'record'):
+		# deck = self._switcher.getSlot()
+#		if (deck.getState() == 'record'):
 #			medium.getTapeLength(self.__updateTapeLength,
 #				self.__errorHandler
 #			)
@@ -605,15 +608,19 @@ class CassetteHandler(MediaHandler):
 		assert self.__isVisible == False, 'Um, we already were visible!?'
 		self.__isVisible = True
 		# start timer in case we are in play or record mode
-		state = self.__deckStateModel.getState()
+		deck = self._switcher.getSlot()
+		state = deck.getState()
 		if state in ['play', 'record']:
 			self.__pollTimer.start()
+		self._switcher.getSlot().stateChanged.connect(self.__updateButtonState)
+
 
 	def signalSetInvisible(self):
 		assert self.__isVisible == True, 'Um, we were not even visible!?'
 		self.__isVisible = False
 		# always stop timer
 		self.__pollTimer.stop()
+		self._switcher.getSlot().stateChanged.disconnect(self.__updateButtonState)
 
 	def _getLabelText(self, identifier
 		# identifier is ignored for cassetteplayer:
@@ -645,7 +652,8 @@ class CassetteHandler(MediaHandler):
 		self.__updateTapeLength(length)
 		self._ui.tapeTime.setDisabled(medium is None)
 		self._ui.tapeLength.setDisabled(medium is None)
-		return
+		deck = self._switcher.getSlot()
+		self.__updateButtonState(deck.getState())
 
 class HarddiskHandler(MediaHandler):
 	mediumType = 'hd'
