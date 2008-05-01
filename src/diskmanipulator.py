@@ -5,7 +5,7 @@ from qt_utils import connect
 
 class Diskmanipulator(QtCore.QObject):
 
-	def __init__(self, mainwindow, mediaModel, bridge):
+	def __init__(self, mainwindow, mediaModel, machineManager, bridge):
 		#QtCore.QAbstractListModel.__init__(self)
 		QtCore.QObject.__init__(self)
 
@@ -14,14 +14,15 @@ class Diskmanipulator(QtCore.QObject):
 		self.__ui = None
 		self.__comboBox = None
 		self.__mediaModel = mediaModel
+		self.__machineManager = machineManager
 		self.__bridge = bridge
-		self.__mediaSlots = []
 		self.__cwd = {}
-		self.__media = 'virtual_drive'
+		self.__virtualDriveSlot = mediaModel.getMediaSlotByName('virtual_drive')
+		self.__mediaSlot = self.__virtualDriveSlot
 		self.__localDir = QtCore.QDir.home()
 		self.__dirModel = QtGui.QDirModel()
 
-		mediaModel.mediumChanged.connect(self.__diskChanged)
+		self.__virtualDriveSlot.slotDataChanged.connect(self.__diskChanged)
 		mediaModel.mediaSlotAdded.connect(self.__driveAdded)
 		mediaModel.mediaSlotRemoved.connect(self.__driveRemoved)
 
@@ -41,7 +42,7 @@ class Diskmanipulator(QtCore.QObject):
 			#rebuilding the combobox will show 'virtual drive'
 			#selected so we set this as current media and
 			#update the directory listing
-			self.__media = 'virtual_drive'
+			self.__mediaSlot = self.__virtualDriveSlot
 			self.refreshDir()
 
 	def show(self):
@@ -254,10 +255,11 @@ class Diskmanipulator(QtCore.QObject):
 			elif item == '..':
 				self.updir()
 			else:
-				if self.__cwd[self.__media] != '/':
-					self.__cwd[self.__media] += '/'
-				self.__cwd[self.__media] += item
-				print self.__cwd[self.__media]
+				slotName = self.__mediaSlot.getName()
+				if self.__cwd[slotName] != '/':
+					self.__cwd[slotName] += '/'
+				self.__cwd[slotName] += item
+				print self.__cwd[slotName]
 				self.refreshDir()
 
 	def doubleClickedLocalDir(self, modelindex):
@@ -286,7 +288,7 @@ class Diskmanipulator(QtCore.QObject):
 		# save current media to path
 		self.__bridge.command(
 			'diskmanipulator', 'savedsk',
-			self.__media, str(path)
+			self.__mediaSlot.getName(), str(path)
 			)()
 
 	def newImage(self):
@@ -339,8 +341,8 @@ class Diskmanipulator(QtCore.QObject):
 			)()
 		if size.find(" ") == -1:
 			# insert the selected image in the 'virtual drive'
-			self.__media = 'virtual_drive'
-			self.__cwd[self.__media] = '/'
+			self.__mediaSlot = self.__virtualDriveSlot
+			self.__cwd['virtual_drive'] = '/'
 			self.__bridge.command('virtual_drive', path)(self.refreshDir)
 			# set the combobox to the virtual_drive entrie
 			# go to the root of this disk and get the files,l output
@@ -359,8 +361,8 @@ class Diskmanipulator(QtCore.QObject):
 		if not path:
 			return
 		# insert the selected image in the 'virtual drive'
-		self.__media = 'virtual_drive'
-		self.__cwd[self.__media] = '/'
+		self.__mediaSlot = self.__virtualDriveSlot
+		self.__cwd['virtual_drive'] = '/'
 		self.__bridge.command('virtual_drive', path)(self.refreshDir)
 		# set the combobox to the virtual_drive entrie
 		# go to the root of this disk and get the files,l output
@@ -368,15 +370,18 @@ class Diskmanipulator(QtCore.QObject):
 		# is inserted in the virtual_drive
 
 	def showMediaDir(self, media):
-		self.__media = str(media)
+		self.__mediaSlot = self.__mediaModel.getMediaSlotByName(
+			str(media), self.__machineManager.getCurrentMachineId()
+			)
 		self.refreshDir()
 
 	def isUsableDisk(self, name):
 		return name.startswith('disk') or name.startswith('hd') \
 			or name == 'virtual_drive'
 
-	def __diskChanged(self, name, medium):
-		driveId = str(name)
+	def __diskChanged(self, slot):
+		driveId = str(slot.getName())
+		medium = slot.getMedium()
 		if medium is None:
 			path = ''
 		else:
@@ -388,44 +393,49 @@ class Diskmanipulator(QtCore.QObject):
 			else:
 				self.__cwd[driveId] = '/'
 			# only if gui is visible ofcourse
-			if driveId == self.__media and self.__comboBox is not None:
+			if driveId == self.__mediaSlot.getName() and self.__comboBox is not None:
 				self.refreshDir()
 
-	def __driveAdded(self, name):
+	def __driveAdded(self, name, machineId):
 		driveId = str(name)
 		if self.isUsableDisk(driveId):
 			print 'drive "%s" added '% name
+			self.__mediaModel.getMediaSlotByName(driveId,
+				str(machineId)).slotDataChanged.connect(
+					self.__diskChanged
+					)
 			self.__cwd[driveId] = '/'
 			# only if gui is visible ofcourse
 			if self.__comboBox is not None:
 				self.__comboBox.addItem(QtCore.QString(driveId))
 
-	def __driveRemoved(self, name):
+	def __driveRemoved(self, name, machineId):
 		driveId = str(name)
 		if self.isUsableDisk(driveId):
-			print 'drive "%s" removed'% name
+			print 'drive "%s" removed' % name
 			comboBox = self.__comboBox
 			# only if gui is visible ofcourse
 			if comboBox is not None:
 				index = comboBox.findText(QtCore.QString(driveId))
 				comboBox.removeItem(index)
-				if driveId == self.__media:
-					self.__media = 'virtual_drive'
+				if driveId == self.__mediaSlot.getName():
+					self.__mediaSlot = self.__virtualDriveSlot
 					self.refreshDir()
 
 	def refreshDir(self):
-		path = self.__cwd[self.__media]
+		slotName = self.__mediaSlot.getName()
+		path = self.__cwd[slotName]
 		if path != '':
 			self.__ui.cwdLine.setReadOnly(0)
 			self.__ui.cwdLine.font().setItalic(0)
-			self.__ui.cwdLine.setText(self.__cwd[self.__media])
+			self.__ui.cwdLine.setText(self.__cwd[slotName])
 			self.__bridge.command(
 				'diskmanipulator', 'chdir',
-				self.__media, self.__cwd[self.__media]
+				slotName, self.__cwd[slotName]
 				)()
 			self.__bridge.command(
 				'diskmanipulator', 'dir',
-				self.__media
+				slotName
 				)( self.displayDir)
 		else:
 			#no disk inserted
@@ -470,7 +480,8 @@ class Diskmanipulator(QtCore.QObject):
 		self.__ui.msxDirTable.setSortingEnabled(1)
 
 	def updir(self):
-		path = self.__cwd[self.__media]
+		slotName = self.__mediaSlot.getName()
+		path = self.__cwd[slotName]
 		lijst = path.rsplit('/', 1)
 		if lijst[1] == '': # maybe last character was already '/'...
 			lijst = lijst[0].rsplit('/', 1)
@@ -478,7 +489,7 @@ class Diskmanipulator(QtCore.QObject):
 			path = '/'
 		else:
 			path = lijst[0]
-		self.__cwd[self.__media] = path
+		self.__cwd[slotName] = path
 		self.refreshDir()
 
 	def mklocaldir(self):
@@ -507,18 +518,19 @@ class Diskmanipulator(QtCore.QObject):
 		if not ok:
 			return
 
+		slotName = self.__mediaSlot.getName()
 		self.__bridge.command(
 			'diskmanipulator', 'chdir',
-			self.__media, self.__cwd[self.__media]
+			slotName, self.__cwd[slotName]
 			)()
 		self.__bridge.command(
 			'diskmanipulator', 'mkdir',
-			self.__media, str( newdir )
+			slotName, str( newdir )
 			)()
 
-		if self.__cwd[self.__media] != '/':
-			self.__cwd[self.__media] += '/'
-		self.__cwd[self.__media] += str( newdir )
+		if self.__cwd[slotName] != '/':
+			self.__cwd[slotName] += '/'
+		self.__cwd[slotName] += str( newdir )
 		self.refreshDir()
 
 	def importFiles(self):
@@ -526,7 +538,7 @@ class Diskmanipulator(QtCore.QObject):
 		diskimage = str( self.__comboBox.currentText() )
 		print 'diskimage:' + diskimage
 		# Make sure we are in the correct directory on the image
-		path = self.__cwd[self.__media]
+		path = self.__cwd[self.__mediaSlot.getName()]
 		self.__bridge.command(
 			'diskmanipulator', 'chdir',
 			diskimage, path
@@ -546,9 +558,10 @@ class Diskmanipulator(QtCore.QObject):
 	def exportFiles(self):
 		diskimage = self.__comboBox.currentText()
 		print 'diskimage:' + diskimage
+		slotName = self.__mediaSlot.getName()
 		self.__bridge.command(
 			'diskmanipulator', 'chdir',
-			self.__media, self.__cwd[self.__media]
+			slotName, self.__cwd[slotName]
 			)()
 		# currently the diskmanipultor extracts entire subdirs... :-)
 		msxdir = self.__ui.msxDirTable

@@ -1,5 +1,11 @@
 $Id$
 
+2008-05-01 Manuel Bilderbeek <manuel@msxnet.org>
+	* More refactoring: (re)introduce MediaSlot class and put slot
+	  specific code in it (and its subclasses). TODO: put move
+	  cassettedeckstatemodel to this as well.
+	* Use this to properly update the tape length view when switching
+
 2008-04-20 Manuel Bilderbeek <manuel@msxnet.org>
 	* Refactor MediaSlot to Medium. Goal is to be able to make subclasses
 	  of Medium to put medium specific functionality in (e.g. get

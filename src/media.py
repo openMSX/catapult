@@ -32,10 +32,11 @@ def parseMediaSlot(mediaSlot):
 
 class MediaSwitcher(QtCore.QObject):
 
-	def __init__(self, ui, mediaModel, settingsManager):
+	def __init__(self, ui, mediaModel, settingsManager, machineManager):
 		QtCore.QObject.__init__(self)
 		self.__mediaModel = mediaModel
 		self.__settingsManager = settingsManager
+		self.__machineManager = machineManager
 		self.__ui = ui
 		self.__mediaSlot = None
 		self.__cartPageInited = False
@@ -43,8 +44,6 @@ class MediaSwitcher(QtCore.QObject):
 		ui.mediaList.setModel(mediaModel)
 		mediaModel.dataChanged.connect(self.mediaPathChanged)
 		mediaModel.mediaSlotRemoved.connect(self.setInfoPage)
-		mediaModel.ipsPatchListChanged.connect(self.__optionsChanged)
-		mediaModel.mapperTypeChanged.connect(self.__optionsChanged)
 		mediaModel.connected.connect(self.__connectSettings)
 		# Connect view:
 		connect(
@@ -81,16 +80,16 @@ class MediaSwitcher(QtCore.QObject):
 		assert False, 'No handler found for mediumType "%s"' % mediumType
 
 	def __getPageBySlot(self, mediaSlot):
-		mediumType, identifier_ = parseMediaSlot(mediaSlot)
+		mediumType, identifier_ = parseMediaSlot(mediaSlot.getName())
 		# Look up page widget for this mediumType.
 		return getattr(self.__ui, mediumType + 'Page')
 
 	def __getHandlerBySlot(self, mediaSlot):
-		mediumType, identifier_ = parseMediaSlot(mediaSlot)
+		mediumType, identifier_ = parseMediaSlot(mediaSlot.getName())
 		return self.__getHandlerByMediumType(mediumType)
 
 	def __updateMediaPage(self, mediaSlot):
-		mediumType, identifier = parseMediaSlot(mediaSlot)
+		mediumType, identifier = parseMediaSlot(mediaSlot.getName())
 		handler = self.__getHandlerByMediumType(mediumType)
 		# Initialise the UI page for this mediumType.
 		handler.updatePage(identifier)
@@ -99,21 +98,24 @@ class MediaSwitcher(QtCore.QObject):
 	def updateMedia(self, index):
 		oldMediaSlot = self.__mediaSlot
 		# Find out which media entry has become active.
-		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
+		mediaSlotName = str(index.data(QtCore.Qt.UserRole).toString())
+		# prevent problems due to race conditions when removing slots:
+		if mediaSlotName == '':
+			return
+		slot = self.__mediaModel.getMediaSlotByName(
+				mediaSlotName, self.__machineManager.getCurrentMachineId()
+				)
 		#print '***********'
-		#print 'mediaslot has currently become active: ', mediaSlot
-		if oldMediaSlot == mediaSlot:
+		#print 'mediaslot has currently become active: ', slot
+		if oldMediaSlot is not None and oldMediaSlot.getName() == slot.getName():
 			return
-		self.__mediaSlot = mediaSlot
-		# prevent error due to race condition (?)
-		if self.__mediaSlot == '':
-			return
-		if oldMediaSlot is not None and oldMediaSlot != '':
+		self.__mediaSlot = slot
+		if oldMediaSlot is not None:
 			self.__getHandlerBySlot(oldMediaSlot).signalSetInvisible()
-		self.__updateMediaPage(mediaSlot)
+		self.__updateMediaPage(slot)
 		# Switch page.
-		self.__ui.mediaStack.setCurrentWidget(self.__getPageBySlot(mediaSlot))
-		self.__getHandlerBySlot(mediaSlot).signalSetVisible()
+		self.__ui.mediaStack.setCurrentWidget(self.__getPageBySlot(slot))
+		self.__getHandlerBySlot(slot).signalSetVisible()
 
 	@QtCore.pyqtSignature('QModelIndex')
 	def browseMedia(self, index):
@@ -135,51 +137,45 @@ class MediaSwitcher(QtCore.QObject):
 		# one item changed at a time. This is not correct in general.
 		):
 		index = topLeft
-		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
-		if self.__mediaSlot == mediaSlot and mediaSlot != '':
-			self.__updateMediaPage(mediaSlot)
+		mediaSlotName = str(index.data(QtCore.Qt.UserRole).toString())
+		if self.__mediaSlot is not None and \
+			self.__mediaSlot.getName() == mediaSlotName and \
+				mediaSlotName != '':
+			self.__updateMediaPage(self.__mediaSlot)
 
 	def setInfoPage(self):
 		# TODO : this is called for each media hardware that is added or removed,
 		# since switching machines will sent this event for each and
 		# every drive/hd/cd/... this will be called several times in a row
 		# do we need to handle this in a better way?
-		if self.__mediaSlot is not None and self.__mediaSlot != '':
+		if self.__mediaSlot is not None:
 			self.__getHandlerBySlot(self.__mediaSlot).signalSetInvisible()
 		self.__ui.mediaStack.setCurrentWidget(self.__ui.infoPage)
 		self.__ui.mediaList.selectionModel().clear()
-		self.__mediaSlot = ''
-
-	def __optionsChanged(self, medium):
-		if self.__mediaModel.getMediumInSlot(self.__mediaSlot) == medium:
-			self.__updateMediaPage(self.__mediaSlot)
-		# reuse our normal error handler for now:
-		self.__mediaModel.applyOptions(self.__mediaSlot,
-			self.__mediaChangeErrorHandler
-			)
+		self.__mediaSlot = None
 
 	def insertMedium(self, medium):
 		'''Sets a new medium for the currently selected slot.
 		'''
-		self.__mediaModel.insertMediumInSlot(self.__mediaSlot, medium,
-			lambda message: self.__mediaChangeErrorHandler(
-				self.__mediaSlot, message
-				)
+		self.__mediaSlot.setMedium(medium,
+			self.__mediaChangeErrorHandler
 			)
 
-	def __mediaChangeErrorHandler(self, mediaSlot, message):
-		messageBox = QtGui.QMessageBox('Media change problem', message,
+	def __mediaChangeErrorHandler(self, message):
+		messageBox = QtGui.QMessageBox('Problem changing media', message,
 			QtGui.QMessageBox.Warning, 0, 0, 0,
 			self.__ui.centralwidget
 			)
 		messageBox.show()
-		self.__mediaModel.queryMedium(mediaSlot)
 
 	def getCassetteDeckStateModel(self):
 		return self.__mediaModel.getCassetteDeckStateModel()
 	
 	def getMedium(self):
-		return self.__mediaModel.getMediumInSlot(self.__mediaSlot)
+		return self.__mediaSlot.getMedium()
+
+	def getSlot(self):
+		return self.__mediaSlot
 
 	def getRomTypes(self):
 		return self.__mediaModel.getRomTypes()
@@ -276,7 +272,10 @@ class MediaHandler(QtCore.QObject):
 		assert medium is not None, 'Click on IPS button without medium'
 		ipsDialog.fill(medium.getIpsPatchList())
 		if ipsDialog.exec_(self._IPSButton) == QtGui.QDialog.Accepted:
-			medium.setIpsPatchList(ipsDialog.getIPSList())
+			# replace this medium with a new one (different patchList)
+			self._switcher.insertMedium(medium.copyWithNewPatchList(
+				ipsDialog.getIPSList())
+			)
 	
 	def updatePage(self, identifier):
 		medium = self._switcher.getMedium()
@@ -426,7 +425,14 @@ class CartHandler(MediaHandler):
 
 	def __mapperTypeSelected(self, mapperType):
 		medium = self._switcher.getMedium()
-		medium.setMapperType(str(mapperType))
+		# replace this medium with a new one (different mapper)
+		self._switcher.insertMedium(
+			Medium.create(
+				self.mediumType, medium.getPath(),
+				medium.getIpsPatchList(),
+				mapperType
+				)
+			)
 
 	def _getLabelText(self, identifier):
 		return 'Cartridge Slot %s' % identifier.upper()
@@ -465,6 +471,8 @@ class CartHandler(MediaHandler):
 		if medium is None:
 			# mapper
 			self._ui.mapperTypeCombo.setDisabled(True)
+			index = self._ui.mapperTypeCombo.findText('Auto Detect')
+			self._ui.mapperTypeCombo.setCurrentIndex(index)
 			# patchlist
 			self._ui.cartIPSLabel.setDisabled(True)
 			self._IPSButton.setDisabled(True)
@@ -567,16 +575,6 @@ class CassetteHandler(MediaHandler):
 		messageBox.show()
 		self.__updateButtonState(self.__deckStateModel.getState())
 
-	def insert(self, path):
-		MediaHandler.insert(self, path)
-		self.__deckStateModel.getTapeLength(self.__updateTapeLength,
-			self.__errorHandler
-			)
-
-	def eject(self):
-		MediaHandler.eject(self)
-		self.__updateTapeLength(0)
-
 	def __updateTapeLength(self, length):
 		zeroTime = QtCore.QTime(0, 0, 0)
 		time = zeroTime.addSecs(round(float(length)))
@@ -591,14 +589,16 @@ class CassetteHandler(MediaHandler):
 			self.__updateTapeLength(position)
 
 	def __queryTimes(self):
-		# don't do this for now, but use the optimization that
-		# lenght == position when recording, see above
+		#medium = self._switcher.getMedium()
+		# don't do something like this for now, but use the optimization
+		# that length == position when recording, see above
 #		if (self.__deckStateModel.getState() == 'record'):
-#			self.__deckStateModel.getTapeLength(self.__updateTapeLength,
+#			medium.getTapeLength(self.__updateTapeLength,
 #				self.__errorHandler
 #			)
-		self.__deckStateModel.getTapePosition(self.__updateTapePosition,
-			None # errors can occur if cassetteplayer got removed
+		self._switcher.getSlot().getPosition(self.__updateTapePosition,
+			# errors can occur if cassetteplayer got removed
+			lambda message: self.__updateTapePosition(0)
 		)
 
 	def signalSetVisible(self):
@@ -636,7 +636,15 @@ class CassetteHandler(MediaHandler):
 		return description
 
 	def _finishUpdatePage(self):
-		# TODO: update the tapelength
+		medium = self._switcher.getMedium()
+		if medium:
+			length = medium.getLength()
+		else:
+			self.__updateTapePosition(0)
+			length = 0
+		self.__updateTapeLength(length)
+		self._ui.tapeTime.setDisabled(medium is None)
+		self._ui.tapeLength.setDisabled(medium is None)
 		return
 
 class HarddiskHandler(MediaHandler):

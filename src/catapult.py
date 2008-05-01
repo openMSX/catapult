@@ -111,7 +111,9 @@ class MainWindow(QtGui.QMainWindow):
 			)
 		self.__mediaModel = mediaModel = MediaModel(bridge, machineManager)
 
-		self.__diskmanipulator = Diskmanipulator(self, mediaModel, bridge)
+		self.__diskmanipulator = Diskmanipulator(
+			self, mediaModel, machineManager, bridge
+			)
 		self.__cheatfinder = Cheatfinder(bridge)
 		self.__trainerselect = TrainerSelect(bridge)
 		self.__softwaredb = SoftwareDB(bridge)
@@ -137,7 +139,9 @@ class MainWindow(QtGui.QMainWindow):
 
 		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
 
-		self.__mediaSwitcher = MediaSwitcher(ui, mediaModel, settingsManager)
+		self.__mediaSwitcher = MediaSwitcher(
+			ui, mediaModel, settingsManager, machineManager
+			)
 		self.__connectorPlugger = ConnectorPlugger(ui, connectorModel,
 			settingsManager
 			)
