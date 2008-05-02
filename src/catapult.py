@@ -152,8 +152,8 @@ class MainWindow(QtGui.QMainWindow):
 		ui.statusbar.addWidget(self.__frameRateLabel)
 
 	def __updateSpecialSettings(self, name, message):
-		if str(name) == 'fullscreen':
-			self.__ui.fullscreen.setChecked(str(message) in ('on', 'true', 'yes'))
+		if name == 'fullscreen':
+			self.__ui.fullscreen.setChecked(message in ('on', 'true', 'yes'))
 
 	def __goFullscreen(self, value):
 		if value:

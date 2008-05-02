@@ -1,8 +1,12 @@
 $Id$
 
+2008-05-02 Manuel Bilderbeek <manuel@msxnet.org>
+	* Temporarily fix bug in volume settings... TODO: make SettingsManager
+	  framework machine aware... (and AudioMixer as well)
+
 2008-05-01 Manuel Bilderbeek <manuel@msxnet.org>
 	* More refactoring: (re)introduce MediaSlot class and put slot
-	  specific code in it (and its subclasses). TODO: put move
+	  specific code in it (and its subclasses). TODO: move
 	  cassettedeckstatemodel to this as well.
 	* Use this to properly update the tape length view when switching
 	* And use this to integrate CassetteDeckStateModel into the actual

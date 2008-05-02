@@ -275,11 +275,16 @@ class SettingsManager(QtCore.QObject):
 			self.__bridge.command('set', name)(setting.updateValue)
 
 	def update(self, name, machineId, message):
-		setting = self.__settings.get(str(name))
+		name = str(name)
+		setting = self.__settings.get(name)
+		# temporary hack: TODO: make settings machine aware
 		if setting is None:
-			if str(name) in self.__specialSettings:
-				callback = self.__specialSettings[str(name)]
-				callback(name, message)
+			setting = self.__settings.get(
+				str(machineId) + '::' + name)
+		if setting is None:
+			if name in self.__specialSettings:
+				callback = self.__specialSettings[name]
+				callback(name, str(message))
 			else:
 				print 'setting %s not registered' % name
 		else:
