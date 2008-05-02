@@ -261,7 +261,7 @@
               <item row="0" column="0" >
                <widget class="QLabel" name="label" >
                 <property name="text" >
-                 <string>The cartridge slots, disk drives, cassette player, hard disk and CD-ROM drives of the currently active MSX are shown in the list above. After you select one of them, you can insert a cartridge, disk, cassette or CD-ROM in this panel, or change the hard disk image (at power off).</string>
+                 <string>The cartridge slots, disk drives, cassette deck, hard disk and CD-ROM drives of the currently active MSX are shown in the list above. After you select one of them, you can insert a cartridge, disk, cassette or CD-ROM in this panel, or change the hard disk image (at power off).</string>
                 </property>
                 <property name="alignment" >
                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
