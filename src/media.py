@@ -8,17 +8,6 @@ import settings
 from ipsselector import ipsDialog
 from mediamodel import Medium
 
-def addToHistory(comboBox, path):
-	# TODO: Do we really need this?
-	if path == '':
-		return
-	topPath = comboBox.itemText(0)
-	if topPath == '':
-		comboBox.setItemText(0, path)
-	elif path != topPath:
-		comboBox.insertItem(0, path or '')
-		comboBox.setCurrentIndex(0)
-
 def parseMediaSlot(mediaSlot):
 	'''Returns a tuple ( mediumType, identifier) that corresponds to the given
 	media slot.
@@ -144,7 +133,7 @@ class MediaSwitcher(QtCore.QObject):
 			self.__updateMediaPage(self.__mediaSlot)
 
 	def setInfoPage(self):
-		# TODO : this is called for each media hardware that is added or removed,
+		# TODO: this is called for each media hardware that is added or removed,
 		# since switching machines will sent this event for each and
 		# every drive/hd/cd/... this will be called several times in a row
 		# do we need to handle this in a better way?
@@ -315,8 +304,6 @@ class MediaHandler(QtCore.QObject):
 		self._descriptionLabel.setText(description)
 
 		self._historyBox.lineEdit().setText(path)
-		
-		self._finishUpdatePage()
 
 	def _getLabelText(self, identifier):
 		raise NotImplementedError
@@ -331,10 +318,6 @@ class MediaHandler(QtCore.QObject):
 		# there's a default implementation in case
 		# dirs are not supported
 		return 'Not found'
-
-	def _finishUpdatePage(self):
-		# usually, nothing should be done
-		return
 
 	def signalSetVisible(self):
 		'''Called when this page has become visible.
@@ -363,6 +346,20 @@ class DiskHandler(MediaHandler):
 		# Connect signals.
 		connect(self._browseDirButton, 'clicked()', self.browseDirectory)
 
+	def updatePage(self, identifier):
+		MediaHandler.updatePage(self, identifier)
+		medium = self._switcher.getMedium()
+		if medium is None:
+			self._ui.diskIPSLabel.setDisabled(True)
+			self._IPSButton.setDisabled(True)
+			amount = 0
+		else:
+			self._ui.diskIPSLabel.setEnabled(True)
+			self._IPSButton.setEnabled(True)
+			amount = len(medium.getIpsPatchList())
+		self._ui.diskIPSLabel.setText('(' + str(amount)
+				 + ' selected)')
+
 	def browseDirectory(self):
 		self.insert(QtGui.QFileDialog.getExistingDirectory(
 			self._ui.mediaStack, 'Select Directory',
@@ -389,19 +386,6 @@ class DiskHandler(MediaHandler):
 				fileInfo.dir().count()
 			)
 
-	def _finishUpdatePage(self):
-		medium = self._switcher.getMedium()
-		if medium is None:
-			self._ui.diskIPSLabel.setDisabled(True)
-			self._IPSButton.setDisabled(True)
-			amount = 0
-		else:
-			self._ui.diskIPSLabel.setEnabled(True)
-			self._IPSButton.setEnabled(True)
-			amount = len(medium.getIpsPatchList())
-		self._ui.diskIPSLabel.setText('(' + str(amount)
-				 + ' selected)')
-
 class CartHandler(MediaHandler):
 	mediumType = 'cart'
 	browseTitle = 'Select ROM Image'
@@ -420,38 +404,8 @@ class CartHandler(MediaHandler):
 		connect(self._mapperTypeCombo, 'activated(QString)',
 			self.__mapperTypeSelected)
 
-	def __mapperTypeSelected(self, mapperType):
-		medium = self._switcher.getMedium()
-		# replace this medium with a new one (different mapper)
-		self._switcher.insertMedium(
-			Medium.create(
-				self.mediumType, medium.getPath(),
-				medium.getIpsPatchList(),
-				mapperType
-				)
-			)
-
-	def _getLabelText(self, identifier):
-		return 'Cartridge Slot %s' % identifier.upper()
-
-	def _getFileDesc(self, fileInfo, ext):
-		if ext in ('rom', 'ri'):
-			description = 'ROM image'
-			size = fileInfo.size()
-			if size != 0:
-				description += ' of %dkB' % (size / 1024)
-				megabits = size / 1024 / 128
-				if megabits == 1:
-					description += ' (MegaROM)'
-				elif megabits > 1:
-					description += ' (%d MegaROM)' % megabits
-		elif ext in ('zip', 'gz'):
-			description = 'Compressed ROM image'
-		else:
-			description = 'ROM image of unknown type'
-		return description
-
-	def _finishUpdatePage(self):
+	def updatePage(self, identifier):
+		MediaHandler.updatePage(self, identifier)
 		if not self.__cartPageInited:
 			# the next query might be empty, if it happens too soon
 			mapperTypes = self._switcher.getRomTypes()
@@ -487,6 +441,37 @@ class CartHandler(MediaHandler):
 		self._ui.cartIPSLabel.setText('(' + str(amount)
 				 + ' selected)')
 
+	def __mapperTypeSelected(self, mapperType):
+		medium = self._switcher.getMedium()
+		# replace this medium with a new one (different mapper)
+		self._switcher.insertMedium(
+			Medium.create(
+				self.mediumType, medium.getPath(),
+				medium.getIpsPatchList(),
+				mapperType
+				)
+			)
+
+	def _getLabelText(self, identifier):
+		return 'Cartridge Slot %s' % identifier.upper()
+
+	def _getFileDesc(self, fileInfo, ext):
+		if ext in ('rom', 'ri'):
+			description = 'ROM image'
+			size = fileInfo.size()
+			if size != 0:
+				description += ' of %dkB' % (size / 1024)
+				megabits = size / 1024 / 128
+				if megabits == 1:
+					description += ' (MegaROM)'
+				elif megabits > 1:
+					description += ' (%d MegaROM)' % megabits
+		elif ext in ('zip', 'gz'):
+			description = 'Compressed ROM image'
+		else:
+			description = 'ROM image of unknown type'
+		return description
+
 class CassetteHandler(MediaHandler):
 	mediumType = 'cassette'
 	browseTitle = 'Select Cassette Image'
@@ -521,6 +506,20 @@ class CassetteHandler(MediaHandler):
 			self.stop: ui.tapeStopButton,
 			self.record: ui.tapeRecordButton,
 		}
+
+	def updatePage(self, identifier):
+		MediaHandler.updatePage(self, identifier)
+		medium = self._switcher.getMedium()
+		if medium:
+			length = medium.getLength()
+		else:
+			self.__updateTapePosition(0)
+			length = 0
+		self.__updateTapeLength(length)
+		self._ui.tapeTime.setDisabled(medium is None)
+		self._ui.tapeLength.setDisabled(medium is None)
+		deck = self._switcher.getSlot()
+		self.__updateButtonState(deck.getState())
 
 	def __updateButtonState(self, newState):
 		for state, button in self.__buttonMap.iteritems():
@@ -641,19 +640,6 @@ class CassetteHandler(MediaHandler):
 		else:
 			description = 'Cassette image of unknown type'
 		return description
-
-	def _finishUpdatePage(self):
-		medium = self._switcher.getMedium()
-		if medium:
-			length = medium.getLength()
-		else:
-			self.__updateTapePosition(0)
-			length = 0
-		self.__updateTapeLength(length)
-		self._ui.tapeTime.setDisabled(medium is None)
-		self._ui.tapeLength.setDisabled(medium is None)
-		deck = self._switcher.getSlot()
-		self.__updateButtonState(deck.getState())
 
 class HarddiskHandler(MediaHandler):
 	mediumType = 'hd'
