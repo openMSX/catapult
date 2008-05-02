@@ -21,38 +21,52 @@ class Medium(QtCore.QObject):
 			return CartridgeMedium(path, patchList, str(mapperType))
 		elif mediumType.startswith('cassette'):
 			return CassetteMedium(path)
+		elif mediumType.startswith('disk'):
+			return DiskMedium(path, patchList)
 		else:
-			return Medium(path, patchList)
+			return Medium(path)
 	create = staticmethod(create)
 
-	def __init__(self, path, patchList):
+	def __init__(self, path):
 		QtCore.QObject.__init__(self)
 		self.__path = path
-		self.__ipsPatchList = patchList
-
-	def copyWithNewPatchList(self, patchList):
-		return Medium(self.__path, patchList)
 
 	def getPath(self):
 		return self.__path
 
-	def getIpsPatchList(self):
-		return self.__ipsPatchList
-
 	def __eq__(self, other):
 		if other == None:
 			return False
-		return self.__path == other.getPath() and \
-			self.__ipsPatchList == other.getIpsPatchList()
+		return self.__path == other.getPath()
 	
 	def __str__(self):
-		return 'medium with path %s and %d patches' % \
-			(self.__path, len(self.__ipsPatchList))
+		return 'medium with path %s' % self.__path
 
-class CartridgeMedium(Medium):
+class PatchableMedium(Medium):
+
+	'''Baseclass for patchable media: you should never instantiate it.
+	'''
+	def __init__(self, path, patchList):
+		Medium.__init__(self, path)
+		self._ipsPatchList = patchList
+
+	def copyWithNewPatchList(self, patchList):
+		return PatchableMedium(self.getPath(), patchList)
+
+	def getIpsPatchList(self):
+		return self._ipsPatchList
+
+	def __eq__(self, other):
+		return Medium.__eq__(self, other) and \
+			self._ipsPatchList == other.getIpsPatchList()
+
+	def __str__(self):
+		return Medium.__str__(self) + ' and %d patches' % len(self._ipsPatchList)
+
+class CartridgeMedium(PatchableMedium):
 	
 	def __init__(self, path, patchList, mapperType):
-		Medium.__init__(self, path, patchList)
+		PatchableMedium.__init__(self, path, patchList)
 		self.__mapperType = mapperType
 
 	def copyWithNewPatchList(self, patchList):
@@ -62,17 +76,22 @@ class CartridgeMedium(Medium):
 		return self.__mapperType
 	
 	def __eq__(self, other):
-		return Medium.__eq__(self, other) and \
+		return PatchableMedium.__eq__(self, other) and \
 			self.__mapperType == other.getMapperType()
 
 	def __str__(self):
-		return 'cartridge' + Medium.__str__(self) + \
+		return 'cartridge' + PatchableMedium.__str__(self) + \
 			' and mapper type ' + self.__mapperType
+
+class DiskMedium(PatchableMedium):
+
+	def __str__(self):
+		return 'disk' + PatchableMedium.__str__(self)
 
 class CassetteMedium(Medium):
 
 	def __init__(self, path):
-		Medium.__init__(self, path, [])
+		Medium.__init__(self, path)
 		self.__length = 0
 
 	def getLength(self):
@@ -96,6 +115,8 @@ class MediaSlot(QtCore.QObject):
 			return CassetteDeck(slotName, bridge)
 		elif slotName.startswith('cart'):
 			return CartridgeSlot(slotName, bridge)
+		elif slotName.startswith('disk'):
+			return DiskDrive(slotName, bridge)
 		else:
 			return MediaSlot(slotName, bridge)
 	create = staticmethod(create)
@@ -162,11 +183,8 @@ class MediaSlot(QtCore.QObject):
 		self.__queryMedium()
 
 	def _createOptionList(self, medium):
+		assert medium is not None, 'We should never insert None'
 		optionList = []
-		patchList = medium.getIpsPatchList()
-		for option in patchList:
-			optionList.append('-ips')
-			optionList.append(option)
 		return optionList
 
 	def getMedium(self):
@@ -178,6 +196,16 @@ class MediaSlot(QtCore.QObject):
 	def __str__(self):
 		return 'MediaSlot with name %s and inserted medium %s' % (self.__name,
 			self._medium or '<none>')
+
+class MediaSlotWithPatchableMedia(MediaSlot):
+
+	def _createOptionList(self, medium):
+		optionList = MediaSlot._createOptionList(self, medium)
+		patchList = medium.getIpsPatchList()
+		for option in patchList:
+			optionList.append('-ips')
+			optionList.append(option)
+		return optionList
 
 class CassetteDeck(MediaSlot):
 
@@ -238,19 +266,19 @@ class CassetteDeck(MediaSlot):
 			None, errorHandler
 			)
 
-class CartridgeSlot(MediaSlot):
-	def __init__(self, name, bridge):
-		MediaSlot.__init__(self, name, bridge)
+class DiskDrive(MediaSlotWithPatchableMedia):
+	pass
+
+class CartridgeSlot(MediaSlotWithPatchableMedia):
 
 	def _createOptionList(self, medium):
-		optionList = MediaSlot._createOptionList(self, medium)
+		optionList = MediaSlotWithPatchableMedia._createOptionList(self, medium)
 		assert isinstance(medium, CartridgeMedium), 'Wrong medium in cartridgeslot!'
 		mapper = medium.getMapperType()
 		if mapper != 'Auto Detect':
 			optionList.append('-romtype')
 			optionList.append(mapper)
 		return optionList
-
 
 class MediaModel(QtCore.QAbstractListModel):
 	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
