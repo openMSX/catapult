@@ -126,6 +126,7 @@ class MediaSlot(QtCore.QObject):
 		self.__name = name
 		self._bridge = bridge
 		self._medium = None # empty slot
+		self.__queryMedium()
 	
 	def __queryMedium(self):
 		self._bridge.command(self.__name)(self.__mediumQueryReply)
