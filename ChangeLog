@@ -1,5 +1,8 @@
 $Id$
 
+2008-05-08 Manuel Bilderbeek <manuel@msxnet.org>
+	* Enable multiple select for IPS patches for easier manipulation
+
 2008-05-02 Manuel Bilderbeek <manuel@msxnet.org>
 	* Temporarily fix bug in volume settings... TODO: make SettingsManager
 	  framework machine aware... (and AudioMixer as well)
