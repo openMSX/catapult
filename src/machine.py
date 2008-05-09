@@ -128,6 +128,7 @@ class MachineManager(QtCore.QObject):
 		self.__machineDialog = None
 		self.__bridge = bridge
 		self.__ui = None
+#		self.__cursor = None
 		self.__model = model = MachineModel(bridge)
 		self.__machines = None
 		self.__currentMachineId = None
@@ -206,6 +207,17 @@ class MachineManager(QtCore.QObject):
 			ui.machineTable.verticalHeader().hide()
 			model = self.__model
 			ui.machineTable.setModel(model)
+			# for now hide the slideshow if not the openMSX-CD version.
+			if not self.__parent.openmsxcd :
+				ui.slideshowWidget.hide()
+			#else:
+			#	#else load the DB stuff
+			#	from pysqlite2 import dbapi2 as sqlite
+			#	cursor = self.__cursor
+			#	if cursor is None:
+			#		connection = sqlite.connect('hwimages.db')
+			#		self.__cursor = cursor = connection.cursor()
+
 			# Make connections.
 			connect(dialog, 'accepted()', self.__machineDialogAccepted)
 			connect(
@@ -240,6 +252,21 @@ class MachineManager(QtCore.QObject):
 		self.__selectedMachineConfig = \
 			self.__model.data(current, QtCore.Qt.UserRole).toString()
 		self.__ui.machineTable.scrollTo(current)
+		# Display images of this machine if we are in the openmsxcd version
+		if self.__parent.openmsxcd :
+			self.__ui.slideshowWidget.reset()
+			#cursor = self.__cursor
+			#cursor.execute('SELECT File FROM hwimages WHERE Hardware = \'' +
+			#	str(self.__selectedMachineConfig) + "'" )
+			#for row in cursor:
+			#	self.__ui.slideshowWidget.findImagesForMedia(row[0])
+
+			#TODO use global and user dir for this instead of this quick hack
+			filenames = "/opt/openMSX/share/images/" + str(self.__selectedMachineConfig).lower()
+			print "filenames => " + filenames
+			self.__ui.slideshowWidget.findImagesForMedia(filenames)
+			
+
 
 	def __machineDialogAccepted(self):
 		index = self.__ui.machineTable.currentIndex()

@@ -209,6 +209,10 @@ class ExtensionManager(QtCore.QObject):
 			ui.extensionTable.verticalHeader().hide()
 			model = self.__model
 			ui.extensionTable.setModel(model)
+			# for now hide the slideshow if not the openMSX-CD version.
+			if not self.__parent.openmsxcd :
+				ui.slideshowWidget.hide()
+
 			# Make connections.
 			connect(dialog, 'accepted()', self.__extensionDialogAccepted)
 			connect(

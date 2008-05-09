@@ -1,5 +1,12 @@
 $Id$
 
+2008-05-09 David Heremans <david.heremans@gnu-linux.net>
+	* Made openmsxcd a CLI switch '--cd'
+	  Use 'make runcd' to correctly start this
+	* Added slideshow widget to machine selector and ext selection.
+	  For now only partial functional for machine selector. Currently
+	  reads images from /opt/openMSX/share/images/<machine-id>.jpg
+
 2008-05-08 Manuel Bilderbeek <manuel@msxnet.org>
 	* Enable multiple select for IPS patches for easier manipulation
 	* Fixed bug when browsing media

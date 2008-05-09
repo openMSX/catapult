@@ -6,7 +6,10 @@ import os.path, sys
 from openmsx_utils import tclEscape, EscapedStr
 
 #Is this a version for the openMSX-CD ?
-openmsxcd = 1
+openmsxcd = False
+for i in sys.argv:
+	if i == '--cd':
+		openmsxcd = True
 
 # Application info must be set before the "preferences" module is imported.
 # Since many different modules might import "preferences", we perform the
@@ -65,6 +68,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
 		self.__connectorModel = connectorModel = ConnectorModel(bridge)
+		self.openmsxcd = openmsxcd 
 		ui.setupUi(self)
 		# Added stuff that at the moment will be exclusive to
 		# the openMSX-CD
@@ -116,8 +120,9 @@ class MainWindow(QtGui.QMainWindow):
 			)
 		self.__cheatfinder = Cheatfinder(bridge)
 		self.__trainerselect = TrainerSelect(bridge)
-		self.__softwaredb = SoftwareDB(bridge)
-		self.__autorun = Autorun(self, settingsManager, bridge)
+		if openmsxcd:
+			self.__softwaredb = SoftwareDB(bridge)
+			self.__autorun = Autorun(self, settingsManager, bridge)
 		self.__paletteeditor = PaletteEditor(bridge)
 		self.__inputtext = InputText(bridge)
 		self.__connectMenuActions(ui)
@@ -333,14 +338,18 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_TrainerSelect, self.__trainerselect.show ),
 			( ui.action_PaletteEditor, self.__paletteeditor.show ),
 			( ui.action_InputText, self.__inputtext.show ),
-			( ui.action_SoftwareDB, self.__softwaredb.show ),
-			( ui.action_Autorun, self.__autorun.show ),
 			( ui.action_HelpSetup, self.showHelpSetup ),
 			( ui.action_HelpUser, self.showHelpUser ),
 			( ui.action_AboutCatapult, self.showAboutDialog ),
 			( ui.action_AboutQt, QtGui.qApp.aboutQt ),
 			):
 			connect(action, 'triggered(bool)', func)
+		if openmsxcd:
+			for action, func in (
+				( ui.action_Autorun, self.__autorun.show ),
+				( ui.action_SoftwareDB, self.__softwaredb.show ),
+				):
+				connect(action, 'triggered(bool)', func)
 
 	def __interceptExit(self):
 		'''Redefines the "exit" command so openMSX will stop instead of exit

@@ -33,7 +33,7 @@ class SoftwareDB:
 			from pysqlite2 import dbapi2 as sqlite
 			cursor = self.__cursor
 			if cursor is None:
-				connection = sqlite.connect('test.db')
+				connection = sqlite.connect('softdb.db')
 				self.__cursor = cursor = connection.cursor()
 
 			#First the Compagny

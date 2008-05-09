@@ -1,3 +1,4 @@
+#Headerline is ignored
 turbor;20th anniversary demo;A demo made by Maggoo\nShowing some nice visual effects;audio;1000;diska;/openMSX/SOFTWARE/downloaded/maggoo/msx20th.dsk.gz
 msx2;Almost Real (FD 41);An impressive demo;audio;30;diska;/openMSX/SOFTWARE/donated/almost_real.dsk.gz
 msx2;Avaakkus;The MSX1 demo for Alternative Party'98;Empty;1000;diska;/openMSX/SOFTWARE/downloaded/lievestuore/avaakkus.dsk.gz

@@ -39,6 +39,20 @@ else
 	cd $(PY_DIR) && $(PYTHONBINPREFIX)python catapult.py
 endif
 
+#TODO make the *.db files dependend on *txt files and generate them
+# for now launch autorunfilldb.py manually
+dbfiles:
+	cp tools/autorun.db $(PY_DIR)
+	cp tools/softdb.db $(PY_DIR)
+	cp tools/hwimages.db $(PY_DIR)
+
+runcd: build dbfiles
+ifeq ($(OS),Darwin)
+	open derived/openMSX_Catapult.app --cd
+else
+	cd $(PY_DIR) && $(PYTHONBINPREFIX)python catapult.py --cd
+endif
+
 build: $(COPY_SRC) $(COPY_ICONS) $(UI_GEN_SRC)
 
 $(COPY_SRC): $(PY_DIR)/%.py: src/%.py
