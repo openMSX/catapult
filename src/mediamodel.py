@@ -208,7 +208,8 @@ class MediaSlot(QtCore.QObject):
 
 	def __cmp__(self, other):
 		# pylint: disable-msg=W0212
-		return isinstance(other, MediaSlot) or cmp(self.__name, other.__name)
+		return not isinstance(other, MediaSlot) \
+			or cmp(self.__name, other.__name)
 
 	def __str__(self):
 		return 'MediaSlot with name %s and inserted medium %s' % (self.__name,
