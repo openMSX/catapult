@@ -7,13 +7,15 @@ import os.path
 
 from qt_utils import QtSignal, Signal
 
-# All data that belongs to a medium is centralized in this class
 class Medium(QtCore.QObject):
+	'''All data that belongs to a medium is centralized in this class.
+	'''
 
+	@staticmethod
 	def create(mediumType, path, patchList = None, mapperType = 'Auto Detect'):
-		'''Factory-like static method to create the proper Medium instance.
-		type can be also a mediaSlot name, as long as it starts with one
-		of the media type names
+		'''Factory method to create the proper Medium instance.
+		The "mediumType" argument can be a media slot name, as long as it starts
+		with one of the media type names.
 		'''
 		if patchList is None:
 			patchList = []
@@ -25,7 +27,6 @@ class Medium(QtCore.QObject):
 			return DiskMedium(path, patchList)
 		else:
 			return Medium(path)
-	create = staticmethod(create)
 
 	def __init__(self, path):
 		QtCore.QObject.__init__(self)
@@ -35,17 +36,19 @@ class Medium(QtCore.QObject):
 		return self.__path
 
 	def __eq__(self, other):
-		if other == None:
-			return False
-		return self.__path == other.getPath()
-	
+		# pylint: disable-msg=W0212
+		return isinstance(other, Medium) and self.__path == other.__path
+
+	def __ne__(self, other):
+		return not self.__eq__(other)
+
 	def __str__(self):
 		return 'medium with path %s' % self.__path
 
 class PatchableMedium(Medium):
-
-	'''Baseclass for patchable media: you should never instantiate it.
+	'''Abstract base class for patchable media.
 	'''
+
 	def __init__(self, path, patchList):
 		Medium.__init__(self, path)
 		self._ipsPatchList = patchList
@@ -57,11 +60,16 @@ class PatchableMedium(Medium):
 		return self._ipsPatchList
 
 	def __eq__(self, other):
-		return Medium.__eq__(self, other) and \
-			self._ipsPatchList == other.getIpsPatchList()
+		# pylint: disable-msg=W0212
+		return (
+			isinstance(other, PatchableMedium) and
+			Medium.__eq__(self, other) and
+			self._ipsPatchList == other._ipsPatchList
+			)
 
 	def __str__(self):
-		return Medium.__str__(self) + ' and %d patches' % len(self._ipsPatchList)
+		return Medium.__str__(self) + ' and %d patches' \
+			% len(self._ipsPatchList)
 
 class CartridgeMedium(PatchableMedium):
 	
@@ -76,8 +84,12 @@ class CartridgeMedium(PatchableMedium):
 		return self.__mapperType
 	
 	def __eq__(self, other):
-		return PatchableMedium.__eq__(self, other) and \
-			self.__mapperType == other.getMapperType()
+		# pylint: disable-msg=W0212
+		return (
+			isinstance(other, CartridgeMedium) and
+			PatchableMedium.__eq__(self, other) and
+			self.__mapperType == other.__mapperType
+			)
 
 	def __str__(self):
 		return 'cartridge' + PatchableMedium.__str__(self) + \
@@ -107,8 +119,9 @@ class CassetteMedium(Medium):
 class MediaSlot(QtCore.QObject):
 	slotDataChanged = Signal('PyQt_PyObject') # slot
 	
+	@staticmethod
 	def create(slotName, bridge):
-		'''Factory-like static method to create the proper MediaSlot instance.
+		'''Factory method to create the proper MediaSlot instance.
 		slotName a mediaSlot name, which will also be stored in the object.
 		'''
 		if slotName.startswith('cassette'):
@@ -119,7 +132,6 @@ class MediaSlot(QtCore.QObject):
 			return DiskDrive(slotName, bridge)
 		else:
 			return MediaSlot(slotName, bridge)
-	create = staticmethod(create)
 
 	def __init__(self, name, bridge):
 		QtCore.QObject.__init__(self)
@@ -132,7 +144,9 @@ class MediaSlot(QtCore.QObject):
 		self._bridge.command(self.__name)(self.__mediumQueryReply)
 
 	def __mediumQueryReply(self, slotName, path, flags = ''):
-		print 'media query result of %s "%s" flags "%s"' % ( slotName, path, flags )
+		print 'media query result of %s "%s" flags "%s"' % (
+			slotName, path, flags
+			)
 		if slotName[-1] == ':':
 			slotName = slotName[ : -1]
 		else:
@@ -142,7 +156,8 @@ class MediaSlot(QtCore.QObject):
 		assert slotName == self.__name, 'medium slot reply not for ' \
 			'this slot? Got %s, expected %s.' % (slotName, self.__name)
 		# TODO: Do something with the flags
-		# TODO: can we be sure that this reply was indeed for this (machine's) slot?
+		# TODO: Can we be sure that this reply was indeed for this (machine's)
+		#       slot?
 		self.updateMedium(path)
 
 	def updateMedium(self, path):
@@ -192,8 +207,9 @@ class MediaSlot(QtCore.QObject):
 		return self._medium
 
 	def __cmp__(self, other):
-		return cmp(self.__name, other.getName())
-	
+		# pylint: disable-msg=W0212
+		return isinstance(other, MediaSlot) or cmp(self.__name, other.__name)
+
 	def __str__(self):
 		return 'MediaSlot with name %s and inserted medium %s' % (self.__name,
 			self._medium or '<none>')
@@ -415,8 +431,8 @@ class MediaModel(QtCore.QAbstractListModel):
 
 
 	def getMediaSlotByName(self, name, machineId = ''):
-		'''Returns the media slot of the given machine, identified by the given name.
-		Raises KeyError if no media slot exists by the given name.
+		'''Returns the media slot of the given machine, identified by the given
+		name. Raises KeyError if no media slot exists by the given name.
 		'''
 		if name == 'virtual_drive':
 			print 'Ignoring machineId "%s" for virtual_drive, ' \
