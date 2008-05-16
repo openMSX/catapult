@@ -39,13 +39,9 @@ class IPSDialog:
 			))
 
 	def __remove(self):
-		# get the indices
-		rows = [x.row() for x in self.__ipsListWidget.selectedIndexes()]
-		# sort them, as they are in selection order
-		rows.sort()
-		# remove them in reverse order, to make sure they remain valid
-		for row in reversed(rows):
-			self.__ipsListWidget.takeItem(row)
+		self.__ipsListWidget.takeItem(
+			self.__ipsListWidget.currentRow()
+			)
 
 	def fill(self, patchList):
 		self.__ipsListWidget.clear()

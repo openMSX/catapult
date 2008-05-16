@@ -129,6 +129,8 @@ class MachineManager(QtCore.QObject):
 		self.__bridge = bridge
 		self.__ui = None
 #		self.__cursor = None
+		self.__userdir = None
+		self.__systemdir = None
 		self.__model = model = MachineModel(bridge)
 		self.__machines = None
 		self.__currentMachineId = None
@@ -150,6 +152,7 @@ class MachineManager(QtCore.QObject):
 			'hardware', ( 'machine', ), self.__updateHardware
 			)
 		# Query initial state.
+		# and get data directories needed for images
 		bridge.registerInitial(self.__queryInitial)
 
 	def __queryInitial(self):
@@ -157,7 +160,19 @@ class MachineManager(QtCore.QObject):
 		'''
 		bridge = self.__bridge
 		bridge.command('machine')(self.__initialReply)
+		bridge.command('return','"$env(OPENMSX_USER_DATA)"')(self.__dirReply)
+		bridge.command('return','"$env(OPENMSX_SYSTEM_DATA)"')(self.__dirReply)
 	
+	def __dirReply(self, dataDir):
+		# we use the fact that the response will
+		# come in the order they are requested
+		print "XXX"
+		print dataDir
+		if self.__userdir == None:
+			self.__userdir = dataDir
+		else:
+			self.__systemdir = dataDir
+
 	def __initialReply(self, machineId):
 		self.machineAdded.emit(machineId)
 		self.__updateMachineId(machineId)
@@ -261,11 +276,37 @@ class MachineManager(QtCore.QObject):
 			#for row in cursor:
 			#	self.__ui.slideshowWidget.findImagesForMedia(row[0])
 
-			#TODO use global and user dir for this instead of this quick hack
-			filenames = "/opt/openMSX/share/images/" + str(self.__selectedMachineConfig).lower()
-			print "filenames => " + filenames
-			self.__ui.slideshowWidget.findImagesForMedia(filenames)
-			
+			#Use system and user dir to find images inside
+			#the <dir>/machines/<selected-machine>/images/
+			#or in the images pool
+			#the <dir>/images/<selected-machine>*.(jpeg|jpg|gif|png)
+			if not (self.__userdir == None):
+				print "XXX userdir"
+				dir = self.__userdir + "/machines/" + \
+					str(self.__selectedMachineConfig) + \
+					"/images"
+				print dir
+				self.__ui.slideshowWidget.addImagesInDirectory(dir)
+				dir = self.__userdir + "/images/" + \
+					str(self.__selectedMachineConfig)
+				print dir
+				self.__ui.slideshowWidget.findImagesForMedia(dir)
+			if not (self.__systemdir == None):
+				print "XXX systemdir"
+				dir = self.__systemdir + "/machines/" + \
+					str(self.__selectedMachineConfig) + \
+					"/images"
+				print dir
+				self.__ui.slideshowWidget.addImagesInDirectory(dir)
+				dir = self.__systemdir + "/images/" + \
+					str(self.__selectedMachineConfig)
+				print dir
+				self.__ui.slideshowWidget.findImagesForMedia(dir)
+			print "XXX end images"
+
+			#filenames = "/opt/openMSX/share/images/" + str(self.__selectedMachineConfig).lower()
+			#print "filenames => " + filenames
+			#self.__ui.slideshowWidget.findImagesForMedia(filenames)
 
 
 	def __machineDialogAccepted(self):

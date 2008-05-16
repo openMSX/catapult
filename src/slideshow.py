@@ -223,6 +223,16 @@ class Slideshow(QtGui.QWidget):
 			if ext == "jpg" or ext == "png" or ext == "jpeg" or ext == "gif":
 				self.addFile(imgfile)
 
+	def addImagesInDirectory(self, dir):
+		directory = QtCore.QDir(dir)
+		files = QtCore.QStringList()
+		files = directory.entryList(QtCore.QDir.Files)
+		for i in range(files.count()):
+			imgfile = directory.absoluteFilePath(files[i])
+			ext = QtCore.QFileInfo(imgfile).suffix().toLower()
+			if ext == "jpg" or ext == "png" or ext == "jpeg" or ext == "gif":
+				self.addFile(imgfile)
+
 	def scaleImage(self, factor):
 		self.scaleFactor *= factor
 		self.__imageLabel.resize(self.scaleFactor * self.__imageLabel.pixmap().size())

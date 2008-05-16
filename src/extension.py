@@ -135,6 +135,8 @@ class ExtensionManager(QtCore.QObject):
 		self.__extensionDialog = None
 		self.__bridge = bridge
 		self.__ui = ui
+		self.__userdir = None
+		self.__systemdir = None
 		self.__model = model = ExtensionModel(bridge)
 		self.__extensions = None
 		self.__currentExtensionId = None
@@ -156,13 +158,25 @@ class ExtensionManager(QtCore.QObject):
 			'extension', self.__updateExtension
 		)
 		# Query initial state.
-		#bridge.registerInitial(self.__queryInitial)
+		bridge.registerInitial(self.__queryInitial)
+
 
 	def __queryInitial(self):
 		'''Query initial state.
 		'''
-		#bridge = self.__bridge
+		bridge = self.__bridge
 		#bridge.command('machine')(self.__updateMachineId)
+		bridge.command('return','"$env(OPENMSX_USER_DATA)"')(self.__dirReply)
+		bridge.command('return','"$env(OPENMSX_SYSTEM_DATA)"')(self.__dirReply)
+
+	def __dirReply(self, dataDir):
+		# we use the fact that the response will
+		# come in the order they are requested
+		print dataDir
+		if self.__userdir == None:
+			self.__userdir = dataDir
+		else:
+			self.__systemdir = dataDir
 
 	def __removeExtensions(self):
 		# Request extension remove from openMSX.
@@ -247,6 +261,35 @@ class ExtensionManager(QtCore.QObject):
 		self.__selectedExtensionConfig = \
 			self.__model.data(current, QtCore.Qt.UserRole).toString()
 		self.__ui.extensionTable.scrollTo(current)
+		# Display images of this machine if we are in the openmsxcd version
+		if self.__parent.openmsxcd :
+			self.__ui.slideshowWidget.reset()
+
+			#Use system and user dir to find images inside
+			#the <dir>/machines/<selected-machine>/images/
+			#or in the images pool
+			#the <dir>/images/<selected-machine>*.(jpeg|jpg|gif|png)
+			if not (self.__userdir == None):
+				dir = self.__userdir + "/extensions/" + \
+					str(self.__selectedExtensionConfig) + \
+					"/images"
+				print dir
+				self.__ui.slideshowWidget.addImagesInDirectory(dir)
+				dir = self.__userdir + "/images/" + \
+					str(self.__selectedExtensionConfig)
+				print dir
+				self.__ui.slideshowWidget.findImagesForMedia(dir)
+			if not (self.__systemdir == None):
+				dir = self.__systemdir + "/extensions/" + \
+					str(self.__selectedExtensionConfig) + \
+					"/images"
+				print dir
+				self.__ui.slideshowWidget.addImagesInDirectory(dir)
+				dir = self.__systemdir + "/images/" + \
+					str(self.__selectedExtensionConfig)
+				print dir
+				self.__ui.slideshowWidget.findImagesForMedia(dir)
+
 
 	def __extensionDialogAccepted(self):
 		index = self.__ui.extensionTable.currentIndex()

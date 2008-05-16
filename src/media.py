@@ -109,9 +109,13 @@ class MediaSwitcher(QtCore.QObject):
 	@QtCore.pyqtSignature('QModelIndex')
 	def browseMedia(self, index):
 		# Find out which media entry has become active.
-		mediaSlotName = str(index.data(QtCore.Qt.UserRole).toString())
-		mediumType, identifier_ = parseMediaSlot(mediaSlotName)
-		handler = self.__getHandlerByMediumType(mediumType)
+		mediaSlot = str(index.data(QtCore.Qt.UserRole).toString())
+		#quick hack to ignore VIRTUAL_DRIVE selection
+		# TODO: find out how to register virtual drive as slot but not
+		# display it in the selection list
+		if  mediaSlot == 'virtual_drive':
+			return
+		handler = self.__getHandlerBySlot(mediaSlot)
 		handler.browseImage()
 
 	@QtCore.pyqtSignature('QModelIndex, QModelIndex')
