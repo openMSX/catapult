@@ -22,7 +22,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex" >
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page" >
       <property name="geometry" >
@@ -728,6 +728,16 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="tclscriptCheckBox" >
+            <property name="text" >
+             <string>Use custom TCL script if available</string>
+            </property>
+            <property name="checked" >
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

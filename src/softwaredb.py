@@ -93,14 +93,24 @@ class SoftwareDB:
 				self.on_nextPushButton_clicked
 				)
 			connect(
-				ui.nextPushButton,
+				ui.nextPushButton_2,
 				'clicked()',
-				self.on_nextPushButton_clicked
+				self.on_nextPushButton_2_clicked
 				)
 			connect(
 				ui.previousPushButton,
 				'clicked()',
 				self.on_previousPushButton_clicked
+				)
+			connect(
+				ui.previousPushButton_2,
+				'clicked()',
+				self.on_previousPushButton_2_clicked
+				)
+			connect(
+				ui.applyPushButton,
+				'clicked()',
+				self.on_applyPushButton_clicked
 				)
 			connect(
 				ui.gamelistView,
@@ -155,7 +165,7 @@ class SoftwareDB:
 		if len(where) > 0:
 			query += " WHERE "
 		query += " AND ".join(where)
-		print query
+		#print query
 		return query
 
 	# Slots:
@@ -163,6 +173,10 @@ class SoftwareDB:
 	@QtCore.pyqtSignature("")
 	def on_previousPushButton_clicked(self):
 		self.__ui.stackedPages.setCurrentIndex(0)
+
+	@QtCore.pyqtSignature("")
+	def on_previousPushButton_2_clicked(self):
+		self.__ui.stackedPages.setCurrentIndex(1)
 
 	@QtCore.pyqtSignature("")
 	def on_nextPushButton_clicked(self):
@@ -189,18 +203,108 @@ class SoftwareDB:
 		self.__ui.gamelistView.setRowCount(index + 1)
 		self.showGameinfo( self.__selectedgameid[0] )
 
+	@QtCore.pyqtSignature("")
+	def on_nextPushButton_2_clicked(self):
+		ui = self.__ui
+		ui.stackedPages.setCurrentIndex(2)
+		ui.gamenameLabel.setText(ui.label_name.text())
+		for gui in (
+			ui.diskaLabel ,
+			ui.diskbLabel ,
+			ui.cartaLabel ,
+			ui.cartbLabel ,
+			ui.machineLabel ,
+			ui.extensionsLabel
+			):
+			gui.setText('empty')
+
+		for gui in (
+			ui.diskaCheckBox ,
+			ui.diskbCheckBox ,
+			ui.cartaCheckBox ,
+			ui.cartbCheckBox ,
+			ui.machineCheckBox ,
+			ui.extensionsCheckBox
+			):
+			gui.setEnabled(True)
+
+
+		query = 'SELECT * FROM software WHERE id=' + \
+			str(self.__selectedgameid[ui.gamelistView.currentRow()]) + \
+			' ORDER BY Info'
+		cursor = self.__cursor
+		cursor.execute(query)
+		for row in cursor:
+			print row
+			ui.extensionsLabel.setText(row[5])
+			ui.machineLabel.setText(row[6])
+			ui.diskaLabel.setText(row[9])
+
+
+	
+	@QtCore.pyqtSignature("")
+	def on_applyPushButton_clicked(self):
+		ui = self.__ui
+		#First of all change machine if needed
+		if ui.machineCheckBox.isChecked():
+			# Request machine change from openMSX.
+			# TODO skip changing if openMSX is running with the correct machine
+			self.__bridge.command('machine', ui.machineLabel.text())(
+				self.__applyMedia,
+				self.__machineChangeErrorHandler
+				)
+
+		# Then the needed extension
+			#TODO implement this :-)
+
+	def __applyMedia(self):
+		# Insert(/eject) the media if requested
+		ui = self.__ui
+		for check, label, media in (
+			( ui.diskaCheckBox, ui.diskaLabel, 'diska'),
+			( ui.diskbCheckBox, ui.diskbLabel, 'diskb'),
+			( ui.cartaCheckBox, ui.cartaLabel, 'carta'),
+			( ui.cartbCheckBox, ui.cartbLabel, 'cartb')
+			):
+			print "xxxxxxxxxxxxxxxx" + str(media)
+			if check.isChecked():
+				print "yyyyyyyyyyyyyyyyy CHECKED"
+				if label.text() == 'empty':
+					self.__bridge.command( media, '-eject' )
+					print "zzzzzzzzzzzzzzzzz -eject"
+				else:
+					self.__bridge.command( media, label.text() )
+					print "zzzzzzzzzzzzzzzzz " + str(label.text())
+			else:
+				print "yyyyyyyyyyyyyyyyy not checked"
+		# Do we actually want to close this dialog once a software is chosen ?
+		self.__dmDialog.hide()
+
+
+	def __machineChangeErrorHandler(self, message):
+		messageBox =  QtGui.QMessageBox('Problem changing machine:', message,
+				QtGui.QMessageBox.Warning, 0, 0, 0,
+				self.__dmDialog
+				)
+		messageBox.show()
+
+
+
+
 	def showGameinfo( self , softid ):
 		query = "SELECT * FROM software WHERE id = '" + str(softid) + "'"
 		print query
 		cursor = self.__cursor
 		cursor.execute(query)
 		for row in cursor:
-			print row
+			#print row
+			#info on page 2
 			self.__ui.label_name.setText( QtCore.QString( row[8] ))
 			self.__ui.label_compagny.setText( QtCore.QString( row[4] ))
 			self.__ui.label_year.setText( QtCore.QString( row[2] ))
 			self.__ui.label_machine.setText( QtCore.QString( row[6] ))
 			self.__ui.label_genre.setText( QtCore.QString( row[7] ))
+
 
 	def gamelistView_cellClicked( self , row , column ):
 		self.showGameinfo( self.__selectedgameid[row] )
