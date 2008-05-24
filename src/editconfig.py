@@ -8,10 +8,8 @@ class ConfigDialog:
 
 	def __init__(self):
 		self.__configDialog = None
-		self._browseExecutableButton = None
-		self._execEdit = None
-		self._browseDebugExecutableButton = None
-		self._debugExecEdit = None
+		self.__browseExecutableButton = None
+		self.__execEdit = None
 
 	def show(self, block = False):
 		dialog = self.__configDialog
@@ -27,23 +25,14 @@ class ConfigDialog:
 			from ui_config import Ui_Dialog
 			ui = Ui_Dialog()
 			ui.setupUi(dialog)
-			# TODO: Rename UI objects so their names start with lower case.
-			self._browseExecutableButton = ui.BrowseExecutableButton
-			self._execEdit = ui.ExecEdit
+			self.__browseExecutableButton = ui.browseExecutableButton
+			self.__execEdit = ui.execEdit
 			try:
-				self._execEdit.setText(preferences['system/executable'])
+				self.__execEdit.setText(preferences['system/executable'])
 			except KeyError:
-				self._execEdit.setText('')
-			self._browseDebugExecutableButton = ui.BrowseDebugExecutableButton
-			self._debugExecEdit = ui.DebugExecEdit
-			self._debugExecEdit.setText(
-				preferences.get('system/debugExecutable', '')
-				)
-			connect(self._browseExecutableButton, 'clicked()', self.browseExec)
-			connect(self._execEdit, 'editingFinished()', self.setExec)
-			connect(self._browseDebugExecutableButton, 'clicked()',
-				self.browseDebugExec)
-			connect(self._debugExecEdit, 'editingFinished()', self.setDebugExec)
+				self.__execEdit.setText('')
+			connect(self.__browseExecutableButton, 'clicked()', self.__browseExec)
+			connect(self.__execEdit, 'editingFinished()', self.__setExec)
 		if block:
 			dialog.exec_()
 		else:
@@ -51,32 +40,18 @@ class ConfigDialog:
 		dialog.raise_()
 		dialog.activateWindow()
 
-	def setExec(self):
-		preferences['system/executable'] = self._execEdit.text()
+	def __setExec(self):
+		preferences['system/executable'] = self.__execEdit.text()
 
-	def browseExec(self):
+	def __browseExec(self):
 		path =  QtGui.QFileDialog.getOpenFileName(
-			self._browseExecutableButton,
+			self.__browseExecutableButton,
 			'Select openMSX executable',
 			QtCore.QDir.currentPath(),
 			'All Files (*)'
 			)
 		if not path.isNull():
-			self._execEdit.setText(path)
-		self.setExec()
-
-	def setDebugExec(self):
-		preferences['system/debugExecutable'] = self._debugExecEdit.text()
-
-	def browseDebugExec(self):
-		path =  QtGui.QFileDialog.getOpenFileName(
-			self._browseDebugExecutableButton,
-			'Select openMSX debugger executable',
-			QtCore.QDir.currentPath(),
-			'All Files (*)'
-			)
-		if not path.isNull():
-			self._debugExecEdit.setText(path)
-		self.setDebugExec()
+			self.__execEdit.setText(path)
+		self.__setExec()
 
 configDialog = ConfigDialog()

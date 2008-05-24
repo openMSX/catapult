@@ -4,11 +4,5 @@
 # in the future, but for now putting them in this central place at least makes
 # it easier to customize them for your environment.
 
-# openMSX executable.
-executable = 'openmsx'
-
-# openMSX debug executable.
-debugexecutable = 'openmsxsdebugger'
-
 # openMSX documentation directory.
 docDir = '/home/mth/openmsx/doc'
