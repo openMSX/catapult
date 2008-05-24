@@ -142,7 +142,7 @@ class Autorun(QtGui.QWidget):
 
 		self.applySettingsCont("bogus")
 
-	def applySettingsCont(self, ignoredReturnValue):
+	def applySettingsCont(self, dummy):
 		switch = self.__sendState
 		self.__sendState = 1 + self.__sendState
 		if switch == 0:

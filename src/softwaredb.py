@@ -306,9 +306,8 @@ class SoftwareDB:
 			self.__ui.label_genre.setText( QtCore.QString( row[7] ))
 
 
-	def gamelistView_cellClicked( self , row , column ):
+	def gamelistView_cellClicked( self, row, dummy ):
 		self.showGameinfo( self.__selectedgameid[row] )
-
 
 	#def __updateAll(self):
 		# TODO: The idea of the name "updateAll" was to be able to deal with

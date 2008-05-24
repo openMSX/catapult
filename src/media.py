@@ -315,10 +315,7 @@ class MediaHandler(QtCore.QObject):
 	def _getFileDesc(self, fileInfo, ext):
 		raise NotImplementedError
 
-	def _getDirDesc(self, fileInfo
-		# fileInfo is not necessary in the base class:
-		# pylint: disable-msg=W0613
-		):
+	def _getDirDesc(self, dummy):
 		# there's a default implementation in case
 		# dirs are not supported
 		return 'Not found'
@@ -546,10 +543,9 @@ class CartHandler(PatchableMediaHandler):
 			amount = len(medium.getIpsPatchList())
 		self._ui.cartIPSLabel.setText('(' + str(amount) + ' selected)')
 
-	def __mapperTypeSelected(self, mapperType
-		# We read it back from the combobox, so we don't need mapperType here
-		# pylint: disable-msg=W0613
-		):
+	def __mapperTypeSelected(self, dummy):
+		# We read it back from the combobox, so we don't need the
+		# mapperType param here
 		self._insertMediumFromCurrentValues()
 
 	def _getLabelText(self, identifier):
@@ -721,16 +717,10 @@ class CassetteHandler(MediaHandler):
 		self.__pollTimer.stop()
 		self._switcher.getSlot().stateChanged.disconnect(self.__updateButtonState)
 
-	def _getLabelText(self, identifier
-		# identifier is ignored for cassetteplayer:
-		# pylint: disable-msg=W0613
-		):
+	def _getLabelText(self, dummy):
 		return 'Cassette Deck'
 
-	def _getFileDesc(self, fileInfo
-		# fileInfo is not needed here:
-		# pylint: disable-msg=W0613
-		, ext):
+	def _getFileDesc(self, dummy, ext):
 		if ext == 'cas':
 			description = 'Cassette image in CAS format'
 		elif ext == 'wav':
