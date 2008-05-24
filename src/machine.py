@@ -261,8 +261,7 @@ class MachineManager(QtCore.QObject):
 		dialog.raise_()
 		dialog.activateWindow()
 
-	def __machineHighlighted(self, current, previous):
-		# pylint: disable-msg=W0613
+	def __machineHighlighted(self, current, dummy):
 		self.__ui.okButton.setEnabled(True)
 		self.__selectedMachineConfig = \
 			self.__model.data(current, QtCore.Qt.UserRole).toString()
@@ -356,7 +355,7 @@ class MachineManager(QtCore.QObject):
 		#       currently powered on.
 		self.__setMachine(machine)
 
-	def __machinesAdded(self, parent, start, end): # pylint: disable-msg=W0613
+	def __machinesAdded(self, dummy, start, end):
 		model = self.__model
 		table = self.__ui.machineTable
 		header = table.horizontalHeader()
