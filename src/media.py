@@ -185,7 +185,6 @@ class MediaHandler(QtCore.QObject):
 		self._historyBox = getattr(ui, self.mediumType + 'HistoryBox')
 		self._mediaLabel = getattr(ui, self.mediumType + 'Label')
 		self._descriptionLabel = getattr(ui, self.mediumType + 'DescriptionLabel')
-		self._IPSButton = getattr(ui, self.mediumType + 'IPSButton', None)
 
 		# Load history.
 		history = preferences.getList(self.mediumType + '/history')
@@ -198,18 +197,40 @@ class MediaHandler(QtCore.QObject):
 		if (self._ejectButton):
 			connect(self._ejectButton, 'clicked()', self.eject)
 		connect(self._browseButton, 'clicked()', self.browseImage)
-		connect(self._historyBox, 'activated(QString)', self.insert)
+		connect(self._historyBox, 'activated(QString)', self._pathSelected)
 		connect(self._historyBox.lineEdit(), 'editingFinished()', self.edited)
-		if self._IPSButton is not None:
-			connect(self._IPSButton, 'clicked()', self._IPSButtonClicked)
 
-	def insert(self, path):
-		'''Tells the model to insert a new medium with the given path.
-		'''
+	def _pathSelected(self, path):
 		print 'selected:', path or '<nothing>'
 		if not path:
 			return
 
+		# Make sure the passed path is the current path in the UI (e.g.
+		# after browse)
+		self._historyBox.lineEdit().setText(path)
+
+		self._insertMediumFromCurrentValues()
+
+	def _createMediumFromCurrentDialog(self):
+		'''Reads out the values from the current controls and composes the \
+		   proper media object from it.
+		'''
+		path = unicode(self._historyBox.currentText())
+		medium = Medium.create(self.mediumType, path)
+		return medium
+
+	def _insertMediumFromCurrentValues(self):
+		'''Tells the model to insert the medium defined by the current controls.
+		'''
+		medium = self._createMediumFromCurrentDialog()
+
+		self._addToHistory(medium)
+
+		# Update the model.
+		self._switcher.insertMedium(medium)
+
+	def _addToHistory(self, medium):
+		path = medium.getPath()
 		historyBox = self._historyBox
 		# Insert path at the top of the list.
 		historyBox.insertItem(0, path)
@@ -221,10 +242,6 @@ class MediaHandler(QtCore.QObject):
 				historyBox.removeItem(index)
 			else:
 				index += 1
-
-		# Update the model.
-		self._switcher.insertMedium(Medium.create(self.mediumType, str(path)))
-
 		# Persist history.
 		history = QtCore.QStringList()
 		for index in range(historyBox.count()):
@@ -240,28 +257,19 @@ class MediaHandler(QtCore.QObject):
 	def edited(self):
 		'''Inserts the medium specified in the combobox line edit.
 		'''
-		self.insert(self._historyBox.lineEdit().text())
+		self._pathSelected(self._historyBox.lineEdit().text())
 
 	def browseImage(self):
-		self.insert(QtGui.QFileDialog.getOpenFileName(
+		self._pathSelected(QtGui.QFileDialog.getOpenFileName(
 			self._ui.mediaStack, self.browseTitle,
 			self._historyBox.itemText(0) or QtCore.QDir.homePath(),
 			self.imageSpec, None #, 0
 			))
 
-	def _IPSButtonClicked(self):
-		medium = self._switcher.getMedium()
-		assert medium is not None, 'Click on IPS button without medium'
-		ipsDialog.fill(medium.getIpsPatchList())
-		if ipsDialog.exec_(self._IPSButton) == QtGui.QDialog.Accepted:
-			# replace this medium with a new one (different patchList)
-			self._switcher.insertMedium(medium.copyWithNewPatchList(
-				ipsDialog.getIPSList())
-			)
 	
 	def updatePage(self, identifier):
 		medium = self._switcher.getMedium()
-
+		
 		if (self._ejectButton):
 			self._ejectButton.setDisabled(medium is None)
 		self._mediaLabel.setText(self._getLabelText(identifier))
@@ -327,14 +335,48 @@ class MediaHandler(QtCore.QObject):
 		# default implementation does nothing
 		return
 
-class DiskHandler(MediaHandler):
+class PatchableMediaHandler(MediaHandler):
+		# pylint: disable-msg=W0223
+	'''Baseclass of a Mediahandler that supports IPS patches which should not
+	be instantiated. (Hence we do not implement abstract methods of the baseclass.)
+	'''
+	def __init__(self, ui, switcher):
+		MediaHandler.__init__(self, ui, switcher)
+
+		# Look up UI elements.
+		self._IPSButton = getattr(ui, self.mediumType + 'IPSButton', None)
+		
+		# Connect signals.
+		connect(self._IPSButton, 'clicked()', self._IPSButtonClicked)
+
+	def _createMediumFromCurrentDialog(self):
+		baseMedium = MediaHandler._createMediumFromCurrentDialog(self)
+		return baseMedium.copyWithNewPatchList(ipsDialog.getIPSList())
+
+	def updatePage(self, identifier):
+		MediaHandler.updatePage(self, identifier)
+
+		medium = self._switcher.getMedium()
+		if medium:
+			patchList = medium.getIpsPatchList()
+		else:
+			patchList = []
+		ipsDialog.fill(patchList)
+
+	def _IPSButtonClicked(self):
+		medium = self._switcher.getMedium()
+		assert medium is not None, 'Click on IPS button without medium'
+		if ipsDialog.exec_(self._IPSButton) == QtGui.QDialog.Accepted:
+			self._insertMediumFromCurrentValues()
+			
+class DiskHandler(PatchableMediaHandler):
 	mediumType = 'disk'
 	browseTitle = 'Select Disk Image'
 	imageSpec = 'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)'
 	emptyPathDesc = 'No disk in drive'
 
 	def __init__(self, ui, switcher):
-		MediaHandler.__init__(self, ui, switcher)
+		PatchableMediaHandler.__init__(self, ui, switcher)
 
 		# Look up UI elements.
 		self._browseDirButton = ui.diskBrowseDirectoryButton
@@ -343,7 +385,7 @@ class DiskHandler(MediaHandler):
 		connect(self._browseDirButton, 'clicked()', self.browseDirectory)
 
 	def updatePage(self, identifier):
-		MediaHandler.updatePage(self, identifier)
+		PatchableMediaHandler.updatePage(self, identifier)
 		medium = self._switcher.getMedium()
 		if medium is None:
 			self._ui.diskIPSLabel.setDisabled(True)
@@ -353,8 +395,7 @@ class DiskHandler(MediaHandler):
 			self._ui.diskIPSLabel.setEnabled(True)
 			self._IPSButton.setEnabled(True)
 			amount = len(medium.getIpsPatchList())
-		self._ui.diskIPSLabel.setText('(' + str(amount)
-				 + ' selected)')
+		self._ui.diskIPSLabel.setText('(' + str(amount) + ' selected)')
 
 	def browseDirectory(self):
 		self.insert(QtGui.QFileDialog.getExistingDirectory(
@@ -382,16 +423,35 @@ class DiskHandler(MediaHandler):
 				fileInfo.dir().count()
 			)
 
-class CartHandler(MediaHandler):
+class CartHandler(PatchableMediaHandler):
 	mediumType = 'cart'
 	browseTitle = 'Select ROM Image'
 	imageSpec = 'ROM Images (*.rom *.ri *.zip *.gz);;All Files (*)'
 	emptyPathDesc = 'No cartridge in slot'
 
 	def __init__(self, ui, switcher):
-		MediaHandler.__init__(self, ui, switcher)
+		PatchableMediaHandler.__init__(self, ui, switcher)
 
 		self.__cartPageInited = False
+		historyBox = self._historyBox
+
+		mapperTypeHistory = preferences.getList(
+					self.mediumType + 'mappertype/history'
+					)
+		# some backwards compatibility code:
+		tooLittleItems = historyBox.count() - mapperTypeHistory.count()
+		for dummy in xrange(tooLittleItems):
+			mapperTypeHistory.append('Auto Detect')
+		
+		# fill our mapper type data dict
+		self.__mapperTypeData = {}
+	
+		index = 0
+		while index < historyBox.count():
+			self.__mapperTypeData[
+				unicode(historyBox.itemText(index))
+				] = mapperTypeHistory[index]
+			index += 1
 
 		# Look up UI elements.
 		self._mapperTypeCombo = ui.mapperTypeCombo
@@ -400,8 +460,58 @@ class CartHandler(MediaHandler):
 		connect(self._mapperTypeCombo, 'activated(QString)',
 			self.__mapperTypeSelected)
 
+	def _createMediumFromCurrentDialog(self):
+		baseMedium = PatchableMediaHandler._createMediumFromCurrentDialog(self)
+		medium = Medium.create(
+				self.mediumType, baseMedium.getPath(),
+				baseMedium.getIpsPatchList(),
+				str(self._mapperTypeCombo.currentText())
+				)
+		return medium
+
+	def _pathSelected(self, path):
+		print 'selected:', path or '<nothing>'
+		if not path:
+			return
+
+		path = unicode(path)
+		if path in self.__mapperTypeData:
+			historyMapperType = self.__mapperTypeData[path]
+			# restore mapper type from previous entry
+			index = self._ui.mapperTypeCombo.findText(historyMapperType)
+			self._ui.mapperTypeCombo.setCurrentIndex(index)
+
+		PatchableMediaHandler._pathSelected(self, path)
+
+	def _addToHistory(self, medium):
+		path = medium.getPath()
+		historyBox = self._historyBox
+		# Insert path at the top of the list.
+		historyBox.insertItem(0, path)
+		historyBox.setCurrentIndex(0)
+		# Remove duplicates of the path from the history.
+		index = 1
+		while index < historyBox.count():
+			if historyBox.itemText(index) == path:
+				historyBox.removeItem(index)
+			else:
+				index += 1
+		
+		self.__mapperTypeData[path] = medium.getMapperType()
+
+		# Persist history.
+		history = QtCore.QStringList()
+		mapperTypeHistory = QtCore.QStringList()
+		for index in range(historyBox.count()):
+			history.append(historyBox.itemText(index))
+			mapperTypeHistory.append(self.__mapperTypeData[
+				unicode(historyBox.itemText(index))
+				])
+		preferences[self.mediumType + '/history'] = history
+		preferences[self.mediumType + 'mappertype/history'] = mapperTypeHistory
+
 	def updatePage(self, identifier):
-		MediaHandler.updatePage(self, identifier)
+		PatchableMediaHandler.updatePage(self, identifier)
 		if not self.__cartPageInited:
 			# the next query might be empty, if it happens too soon
 			mapperTypes = self._switcher.getRomTypes()
@@ -434,19 +544,13 @@ class CartHandler(MediaHandler):
 			self._ui.cartIPSLabel.setEnabled(True)
 			self._IPSButton.setEnabled(True)
 			amount = len(medium.getIpsPatchList())
-		self._ui.cartIPSLabel.setText('(' + str(amount)
-				 + ' selected)')
+		self._ui.cartIPSLabel.setText('(' + str(amount) + ' selected)')
 
-	def __mapperTypeSelected(self, mapperType):
-		medium = self._switcher.getMedium()
-		# replace this medium with a new one (different mapper)
-		self._switcher.insertMedium(
-			Medium.create(
-				self.mediumType, medium.getPath(),
-				medium.getIpsPatchList(),
-				mapperType
-				)
-			)
+	def __mapperTypeSelected(self, mapperType
+		# We read it back from the combobox, so we don't need mapperType here
+		# pylint: disable-msg=W0613
+		):
+		self._insertMediumFromCurrentValues()
 
 	def _getLabelText(self, identifier):
 		return 'Cartridge Slot %s' % identifier.upper()
