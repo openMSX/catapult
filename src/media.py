@@ -481,30 +481,18 @@ class CartHandler(PatchableMediaHandler):
 		PatchableMediaHandler._pathSelected(self, path)
 
 	def _addToHistory(self, medium):
+		PatchableMediaHandler._addToHistory(self, medium)
+
 		path = medium.getPath()
 		historyBox = self._historyBox
-		# Insert path at the top of the list.
-		historyBox.insertItem(0, path)
-		historyBox.setCurrentIndex(0)
-		# Remove duplicates of the path from the history.
-		index = 1
-		while index < historyBox.count():
-			if historyBox.itemText(index) == path:
-				historyBox.removeItem(index)
-			else:
-				index += 1
-		
 		self.__mapperTypeData[path] = medium.getMapperType()
 
-		# Persist history.
-		history = QtCore.QStringList()
+		# Persist history (of mapper type).
 		mapperTypeHistory = QtCore.QStringList()
 		for index in range(historyBox.count()):
-			history.append(historyBox.itemText(index))
 			mapperTypeHistory.append(self.__mapperTypeData[
 				unicode(historyBox.itemText(index))
 				])
-		preferences[self.mediumType + '/history'] = history
 		preferences[self.mediumType + 'mappertype/history'] = mapperTypeHistory
 
 	def updatePage(self, identifier):
