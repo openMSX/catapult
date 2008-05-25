@@ -52,9 +52,9 @@ class IPSDialog(object):
 		self.__ipsListWidget.addItems(patchList)
 
 	def getIPSList(self):
-		returnList = []
-		for i in range(self.__ipsListWidget.count()):
-			returnList.append(str(self.__ipsListWidget.item(i).text()))
-		return returnList
+		return [
+			str(self.__ipsListWidget.item(i).text())
+			for i in range(self.__ipsListWidget.count())
+			]
 
 ipsDialog = IPSDialog()
