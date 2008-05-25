@@ -4,7 +4,7 @@ from PyQt4 import QtCore, QtGui
 from preferences import preferences
 from qt_utils import connect
 
-class ConfigDialog:
+class ConfigDialog(object):
 
 	def __init__(self):
 		self.__configDialog = None

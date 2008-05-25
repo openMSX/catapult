@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect
 
-class SoftwareDB:
+class SoftwareDB(object):
 
 	def __init__(self, bridge):
 		self.__dmDialog = None

@@ -3,7 +3,7 @@
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect
 
-class IPSDialog:
+class IPSDialog(object):
 
 	def __init__(self):
 		self.__ipsListWidget = None
