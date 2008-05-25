@@ -27,9 +27,9 @@ class IPSDialog(object):
 
 	def exec_(self, parent = None):
 		dialog = self.__ipsDialog
-#		dialog.setParent(parent) # why does this hang up the app?
+		#dialog.setParent(parent) # why does this hang up the app?
 		return dialog.exec_()
-	
+
 	def __add(self):
 		self.__ipsListWidget.addItems(QtGui.QFileDialog.getOpenFileNames(
 			self.__ipsListWidget, 'Select one ore more IPS patch files',
@@ -40,7 +40,7 @@ class IPSDialog(object):
 
 	def __remove(self):
 		# get the indices
-		rows = [x.row() for x in self.__ipsListWidget.selectedIndexes()]
+		rows = [ x.row() for x in self.__ipsListWidget.selectedIndexes() ]
 		# sort them, as they are in selection order
 		rows.sort()
 		# remove them in reverse order, to make sure they remain valid
