@@ -291,8 +291,8 @@ class ControlConnection(QtCore.QObject):
 
 		# Start the openMSX process.
 		# TODO: Detect and report errors.
-		process.start(
-			preferences['system/executable'] + ' -control stdio',
+		process.start('"' +
+			preferences['system/executable'] + '" -control stdio',
 		#	'gdb'
 		#	' --quiet'
 		#	' --command=script.gdb'
