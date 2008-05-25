@@ -49,7 +49,8 @@ class Diskmanipulator(QtCore.QObject):
 		dialog = self.__dmDialog
 		if dialog is None:
 			self.__dmDialog = dialog = QtGui.QDialog(
-				self.__mainwindow, # TODO: find a better way to get the real parent :-)
+				# TODO: Find a better way to get the real parent :-)
+				self.__mainwindow,
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
 				)
@@ -72,7 +73,7 @@ class Diskmanipulator(QtCore.QObject):
 			# Set the msxDirTable as needed
 			msxDir = self.__ui.msxDirTable
 			msxDir.setRowCount(0)
-			labels = QtCore.QStringList() << 'File Name' << 'Atributes' <<  'Size'
+			labels = QtCore.QStringList([ 'File Name', 'Atributes', 'Size' ])
 			msxDir.setHorizontalHeaderLabels(labels)
 			msxDir.verticalHeader().hide()
 			msxDir.horizontalHeader().setResizeMode(
@@ -104,11 +105,10 @@ class Diskmanipulator(QtCore.QObject):
 				QtGui.QAbstractItemView.SelectionMode(3)
 				)
 
-
 			# Connect signals.
-			#TOO: Find out how to do this correctly, since this doesn't work
-			# maybe I should throw events from the closeEvent
-			# handler from the mainwindow??
+			# TODO: Find out how to do this correctly, since this doesn't work.
+			#       Maybe I should throw events from the closeEvent handler
+			#       from the mainwindow?
 			#connect(
 			#	self.__mainwindow,
 			#	'close()',
@@ -245,7 +245,7 @@ class Diskmanipulator(QtCore.QObject):
 
 	def doubleClickedMSXDir(self, modelindex):
 		attr = str( self.__ui.msxDirTable.item(modelindex.row(), 1).text() )
-		if attr.find('d') != -1:
+		if 'd' in attr:
 			item = str(
 				self.__ui.msxDirTable.item(modelindex.row(), 0).text()
 				)
@@ -308,14 +308,7 @@ class Diskmanipulator(QtCore.QObject):
 		size = wizard.getSizes()
 		print 'wizard.getSizes()' + size
 		# Ask if user is really, really sure
-		if size.find(" ") == -1:
-			text = self.tr(
-				"<p>Are you sure you want to create this "
-				"new disk?</p>"
-				"<p>This new disk image will automatically "
-				"be inserted into the virtual drive</p>"
-				)
-		else:
+		if ' ' in size:
 			text = self.tr(
 				"<p>Are you sure you want to create this "
 				"new partitioned disk?</p>"
@@ -324,6 +317,13 @@ class Diskmanipulator(QtCore.QObject):
 				"Don't forget that changing the HD will "
 				"only work if you power off the emulated "
 				"MSX first!</p>"
+				)
+		else:
+			text = self.tr(
+				"<p>Are you sure you want to create this "
+				"new disk?</p>"
+				"<p>This new disk image will automatically "
+				"be inserted into the virtual drive</p>"
 				)
 
 		reply = QtGui.QMessageBox.question(
@@ -336,18 +336,17 @@ class Diskmanipulator(QtCore.QObject):
 			return
 
 		self.__bridge.command(
-			'diskmanipulator', 'create',
-			str(path), *size.split(' ')
+			'diskmanipulator', 'create', str(path), *size.split(' ')
 			)()
-		if size.find(" ") == -1:
+		if ' ' not in size:
 			# insert the selected image in the 'virtual drive'
 			self.__mediaSlot = self.__virtualDriveSlot
 			self.__cwd['virtual_drive'] = '/'
 			self.__bridge.command('virtual_drive', path)(self.refreshDir)
-			# set the combobox to the virtual_drive entrie
-			# go to the root of this disk and get the files,l output
+			# Set the combobox to the virtual_drive entry.
+			# Go to the root of this disk and get the files, output
 			# after the we get the reply stating that the diskimage is
-			# inserted in the virtual_drive
+			# inserted in the virtual_drive.
 
 	def browseImage(self):
 		browseTitle = 'Select Disk Image'
@@ -360,14 +359,14 @@ class Diskmanipulator(QtCore.QObject):
 			)
 		if not path:
 			return
-		# insert the selected image in the 'virtual drive'
+		# Insert the selected image in the 'virtual drive'.
 		self.__mediaSlot = self.__virtualDriveSlot
 		self.__cwd['virtual_drive'] = '/'
 		self.__bridge.command('virtual_drive', path)(self.refreshDir)
-		# set the combobox to the virtual_drive entrie
-		# go to the root of this disk and get the files,l output
+		# Set the combobox to the virtual_drive entry.
+		# Go to the root of this disk and get the files, output
 		# after the we get the reply stating that the diskimage
-		# is inserted in the virtual_drive
+		# is inserted in the virtual_drive.
 
 	def showMediaDir(self, media):
 		self.__mediaSlot = self.__mediaModel.getMediaSlotByName(
@@ -393,7 +392,8 @@ class Diskmanipulator(QtCore.QObject):
 			else:
 				self.__cwd[driveId] = '/'
 			# only if gui is visible ofcourse
-			if driveId == self.__mediaSlot.getName() and self.__comboBox is not None:
+			if driveId == self.__mediaSlot.getName() \
+					and self.__comboBox is not None:
 				self.refreshDir()
 
 	def __driveAdded(self, name, machineId):
@@ -438,10 +438,10 @@ class Diskmanipulator(QtCore.QObject):
 				slotName
 				)( self.displayDir)
 		else:
-			#no disk inserted
+			# no disk inserted
 			self.__ui.cwdLine.setReadOnly(1)
 			self.__ui.cwdLine.font().setItalic(1)
-			self.__ui.cwdLine.setText("<No disk inserted>")
+			self.__ui.cwdLine.setText('<No disk inserted>')
 			# clear will also erase the labels!
 			self.__ui.msxDirTable.setRowCount(0)
 
