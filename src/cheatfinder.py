@@ -27,14 +27,17 @@ class Cheatfinder(object):
 
 			# Connect signals.
 			connect(ui.FindCheatLess, 'clicked()', self.__findCheatLess)
-			connect(ui.FindCheatLessEqual, 'clicked()', self.__findCheatLessEqual)
+			connect(ui.FindCheatLessEqual, 'clicked()',
+				self.__findCheatLessEqual)
 			connect(ui.FindCheatEqual, 'clicked()', self.__findCheatEqual)
 			connect(ui.FindCheatNotEqual, 'clicked()', self.__findCheatNotEqual)
-			connect(ui.FindCheatMoreEqual, 'clicked()', self.__findCheatMoreEqual)
+			connect(ui.FindCheatMoreEqual, 'clicked()',
+				self.__findCheatMoreEqual)
 			connect(ui.FindCheatMore, 'clicked()', self.__findCheatMore)
 			connect(ui.FindCheatRestart, 'clicked()', self.__findCheatRestart)
 			connect(ui.FindCheatValue, 'clicked()', self.__findCheatValue)
-			connect(ui.EmulationTogglePause, 'clicked()', self.__emulationTogglePause)
+			connect(ui.EmulationTogglePause, 'clicked()',
+				self.__emulationTogglePause)
 			connect(ui.EmulationReset, 'clicked()', self.__emulationReset)
 			connect(ui.rbCompare, 'clicked()', self.__disableDirectSearch)
 			connect(ui.rbSearch, 'clicked()', self.__disableCompareSearch)
@@ -108,9 +111,9 @@ class Cheatfinder(object):
 		cheatValue = self.__ui.cheatVal.text()
 		self.__ui.FindCheatRestart.setEnabled(False)
 		if len(cheatValue)<1:
-			msgText = 'Start New Search :'
+			msgText = 'Start New Search:'
 		else:
-			msgText = 'Start New Search Equal To: '+str(cheatValue)
+			msgText = 'Start New Search Equal To: ' + str(cheatValue)
 		self.__ui.cheatResults.append(msgText)
 		self.__bridge.command('findcheat', '-start', cheatValue)(
 			self.__cheatListReply
@@ -118,7 +121,7 @@ class Cheatfinder(object):
 
 	def __findCheatValue(self):
 		cheatValue = self.__ui.cheatVal.text()
-		self.__ui.cheatResults.append('Searching For :'+str(cheatValue))
+		self.__ui.cheatResults.append('Searching For: ' + str(cheatValue))
 		self.__bridge.command('findcheat', cheatValue)(self.__cheatListReply)
 
 	def __cheatListReply(self, *words):
@@ -128,7 +131,7 @@ class Cheatfinder(object):
 		color.setRgb(0, 0, 255)
 		text.setTextColor(color)
 
-		#Check if no results are found (clear table and display message)
+		# Check if no results are found (clear table and display message).
 		if line == 'No results left':
 			color = QColor()
 			color.setRgb(255, 0, 0)
@@ -138,18 +141,18 @@ class Cheatfinder(object):
 			if line.find('results') > 1:
 				text.append(line)
 
-		#Check if results are found
-		if line.find('results')<1:
-			#Format output to be put into an array
+		# Check if results are found.
+		if line.find('results') < 1:
+			# Format output to be put into an array.
 			line = line.replace('->', ' ')
 			line = line.replace(':', ' ')
 			line = line.replace('  ', ' ')
 			line = line.replace(' ', ';')
 			line = line.replace(';;', ';')
-			#Put resultset into array
+			# Put resultset into array.
 			cheatArray = line.split('\n')
 
-			#Create The Table to be filled / Disable sorting and set Gridsize
+			# Create the table to be filled, disable sorting and set grid size.
 			self.__ui.CheatTable.setRowCount( len(cheatArray) - 1 )
 			self.__ui.CheatTable.setSortingEnabled(0)
 			self.__ui.CheatTable.verticalHeader().setResizeMode(
@@ -158,35 +161,41 @@ class Cheatfinder(object):
 
 			row = 0
 			for cheatLine in cheatArray[ : -1]:
-				#Create Sub Array
+				# Create sub array.
 				cheatVal = cheatLine.split(';')
 
-				#Fill Address Value Item
+				# Fill address value item.
 				addrItem = QtGui.QTableWidgetItem(cheatVal[0])
-				addrItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+				addrItem.setFlags(
+					QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+					)
 				self.__ui.CheatTable.setItem(row, 0, addrItem)
 
-				#Fill Old Value Item
+				# Fill old value item.
 				oldValItem = QtGui.QTableWidgetItem(
-					cheatVal[1] + ' / ' + str(hex(int(cheatVal[1])))
-				)
-				oldValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+					cheatVal[1] + ' / ' + hex(int(cheatVal[1]))
+					)
+				oldValItem.setFlags(
+					QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+					)
 				self.__ui.CheatTable.setItem(row, 1, oldValItem)
 
-				#Fill New Value Item
+				# Fill new value item.
 				newValItem = QtGui.QTableWidgetItem(
-					cheatVal[2] + ' / ' + str(hex(int(cheatVal[2])))
-				)
-				newValItem.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
+					cheatVal[2] + ' / ' + hex(int(cheatVal[2]))
+					)
+				newValItem.setFlags(
+					QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+					)
 				self.__ui.CheatTable.setItem(row, 2, newValItem)
 
 				row += 1
-			text.append(str(row) + " results found -> Displayed in table")
+			text.append(str(row) + ' results found -> Displayed in table')
 
-			#Enable Sorting
+			# Enable sorting.
 			self.__ui.CheatTable.setSortingEnabled(1)
 
-		#Enable Search Button again
+		# Enable search button again.
 		color = QColor()
 		color.setRgb(0, 0, 0)
 		text.setTextColor(color)
