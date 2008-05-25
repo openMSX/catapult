@@ -9,8 +9,8 @@ class TrainerSelect(object):
 		self.__cfDialog = None
 		self.__ui = None
 		self.__bridge = bridge
-		self.__selected = ""
-		self.__checkbox = []
+		self.__selected = ''
+		self.__checkboxes = []
 		self.__trainerVLayout = None
 		self.__scrollArea = None
 
@@ -35,21 +35,27 @@ class TrainerSelect(object):
 			# scrollarea to make sure everything will fit in the window
 			self.__scrollArea = QtGui.QScrollArea(dialog)
 			self.__scrollArea.setWidget(ui.emptyContainerWidget)
-			self.__scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+			self.__scrollArea.setHorizontalScrollBarPolicy(
+				QtCore.Qt.ScrollBarAlwaysOff)
 			self.__scrollArea.setWidgetResizable(True)
 			self.__scrollArea.setFrameStyle(QtGui.QFrame.NoFrame)
 			ui.gridlayout.addWidget(self.__scrollArea)
 
 			# Connect signals.
 			connect(ui.gameSelector, 'activated(QString)', self.__fillCheats)
-			connect(ui.enableNoneButton, 'clicked()', self.__enableNone)
-			connect(ui.enableAllButton, 'clicked()', self.__enableAll)
-
+			connect(
+				ui.enableNoneButton, 'clicked()',
+				lambda: self.__setAll(False)
+				)
+			connect(
+				ui.enableAllButton, 'clicked()',
+				lambda: self.__setAll(True)
+				)
 
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
-		# get cheats
+		# Get cheats from openMSX.
 		self.__bridge.command(
 			'array', 'names', '::__trainers'
 			)(self.__fillGameSelector)
@@ -57,6 +63,7 @@ class TrainerSelect(object):
 	def __fillGameSelector(self, *words):
 		words = sorted(words)
 		text = self.__ui.gameSelector
+		# TODO: Why not the last one?
 		for game in words[ : -1]:
 			text.addItem(game)
 
@@ -71,35 +78,33 @@ class TrainerSelect(object):
 		line = ' '.join(words)
 		trainerArray = line.split('\n')
 
-		#remove all items in the trainerVLayout
-		child = self.__trainerVLayout.takeAt(0)
-		while (child != None):
-			if not isinstance(child, QtGui.QSpacerItem):
-				child.widget().setParent(None)
-				child.widget().deleteLater()
-			del child
+		# Remove all items in the trainerVLayout.
+		while True:
 			child = self.__trainerVLayout.takeAt(0)
+			if child is None:
+				break
+			# TODO: Why are spacers treated differently?
+			if not isinstance(child, QtGui.QSpacerItem):
+				widget = child.widget()
+				widget.setParent(None)
+				widget.deleteLater()
 
-		self.__checkbox = []
-		for trainerLine in trainerArray[ 1 : ]:
-			trainerIndex = trainerLine.rstrip()\
-			[:trainerLine.find('[')]
-
-			trainerIndex = trainerIndex.rstrip()
-
-			trainerActive = trainerLine.rstrip()\
-			[trainerLine.find('['):trainerLine.find(']')+1]
-
-			trainerDesc = trainerLine.rstrip()\
-			[trainerLine.find(']')+1:]
+		self.__checkboxes = []
+		# TODO: What is special about the first line?
+		for trainerLine in trainerArray[1 : ]:
+			openIndex = trainerLine.index('[')
+			closeIndex = trainerLine.index(']')
+			trainerIndex = trainerLine[ : openIndex].rstrip()
+			trainerActive = trainerLine[openIndex : closeIndex + 1]
+			trainerDesc = trainerLine[closeIndex + 1 : ].rstrip()
 
 			checkbox = QtGui.QCheckBox()
 			checkbox.setText(trainerDesc)
-			checkbox.setChecked( trainerActive == '[x]')
-			checkbox.setObjectName( trainerIndex )
-			self.__checkbox.append( checkbox )
-			connect(checkbox,
-				'stateChanged(int)',
+			checkbox.setChecked(trainerActive == '[x]')
+			checkbox.setObjectName(trainerIndex)
+			self.__checkboxes.append(checkbox)
+			connect(
+				checkbox, 'stateChanged(int)',
 				lambda x, trainerIndex = trainerIndex:
 					self.__toggle(trainerIndex)
 				)
@@ -107,24 +112,18 @@ class TrainerSelect(object):
 		self.__trainerVLayout.addStretch(10)
 
 	def __toggle(self, index):
-		print "toggled "+str(self.__selected) +" "+str(index)
-		self.__bridge.command('trainer',
+		print "toggled " + str(self.__selected) + " " + str(index)
+		self.__bridge.command(
+			'trainer',
 			str(self.__selected),
-			str(index))()
-		#Maybe we need to create an __update so that we
-		#read ALL values again and set the checkboxes ?
-		#This would catch also all cases of manual (de)selection in
-		#the openMSX console which we do ignore at the moment...
-		#self.__bridge.command('trainer', str(self.__selected))(self.__update)
+			str(index)
+			)()
+		# Maybe we need to create an __update so that we
+		# read ALL values again and set the checkboxes ?
+		# This would catch also all cases of manual (de)selection in
+		# the openMSX console which we do ignore at the moment...
+		# self.__bridge.command('trainer', str(self.__selected))(self.__update)
 
-	def __enableNone(self):
-		for checkBox in self.__checkbox:
-			if checkBox.isChecked():
-				checkBox.setChecked(False)
-
-	def __enableAll(self):
-		for checkBox in self.__checkbox:
-			if not checkBox.isChecked():
-				checkBox.setChecked(True)
-
-
+	def __setAll(self, enabled):
+		for checkBox in self.__checkboxes:
+			checkBox.setChecked(enabled)
