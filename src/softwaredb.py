@@ -38,13 +38,13 @@ class SoftwareDB(object):
 				connection = sqlite.connect('softdb.db')
 				self.__cursor = cursor = connection.cursor()
 
-			# First the Compagny
-			ui.compagnyComboBox.addItem(QtCore.QString('Select...'))
+			# First the Company
+			ui.companyComboBox.addItem(QtCore.QString('Select...'))
 			cursor.execute(
-				'SELECT DISTINCT Compagny FROM software ORDER BY Compagny'
+				'SELECT DISTINCT Company FROM software ORDER BY Company'
 				)
 			for row in cursor:
-				ui.compagnyComboBox.addItem(QtCore.QString(row[0]))
+				ui.companyComboBox.addItem(QtCore.QString(row[0]))
 
 			# The Genre
 			ui.genreComboBox.addItem(QtCore.QString('Select...'))
@@ -82,7 +82,7 @@ class SoftwareDB(object):
 
 			# Connect all dropdown boxes to the update counter method.
 			for combox in (
-				ui.compagnyComboBox,
+				ui.companyComboBox,
 				ui.genreComboBox,
 				ui.machineComboBox,
 				ui.patchedComboBox,
@@ -152,9 +152,7 @@ class SoftwareDB(object):
 		query = 'FROM software'
 		where = []
 		for gui, sqlstatement in (
-			# TODO: The proper English word is "company" (no "g").
-			#       turbor: Please fix that both in the source and in your DB.
-			(ui.compagnyComboBox, 'Compagny'),
+			(ui.companyComboBox, 'Company'),
 			(ui.genreComboBox, 'Genre'),
 			(ui.machineComboBox, 'Machine'),
 			(ui.patchedComboBox, 'Patched'),
@@ -306,7 +304,7 @@ class SoftwareDB(object):
 			#print row
 			#info on page 2
 			self.__ui.label_name.setText(QtCore.QString(row[8]))
-			self.__ui.label_compagny.setText(QtCore.QString(row[4]))
+			self.__ui.label_company.setText(QtCore.QString(row[4]))
 			self.__ui.label_year.setText(QtCore.QString(row[2]))
 			self.__ui.label_machine.setText(QtCore.QString(row[6]))
 			self.__ui.label_genre.setText(QtCore.QString(row[7]))

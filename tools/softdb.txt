@@ -1,4 +1,4 @@
-#Type;Year;Patched;Compagny;HardwareExtension;Machine;Genre;Info;File
+#Type;Year;Patched;Company;HardwareExtension;Machine;Genre;Info;File
 Disk;unknown;Original;Bit2;fmpac;msx2;Game;Nyancle Racing;SOFTWARE/copyright/Bit2/nyancler.dsk.gz
 Disk;unknown;Original;Bit2;fmpac;msx2;Game;Quinpl;SOFTWARE/copyright/Bit2/quinpl.dsk.gz
 Cart;unknown;Original;Bit2;unknown;msx2;Game;famicle;SOFTWARE/copyright/Bit2/famicle.rom.gz

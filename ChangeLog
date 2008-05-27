@@ -1,5 +1,9 @@
 $Id$
 
+2008-05-27 David Heremans <david.heremans@gnu-linux.net>
+	* Fixed a spelling mistake. Also in the db files, so don't
+	  forget to run the autorunfilldb.py in the tools dir.
+
 2008-05-24 Manuel Bildebeek <manuel@msxnet.org>
 	* More restructuring of media.py: use baseclasses to factor out common
 	  code between different media handlers.
