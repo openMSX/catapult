@@ -42,6 +42,7 @@ class ControlBridge(QtCore.QObject):
 		self.__sendSerial = 0
 		self.__receiveSerial = 0
 		self.__callbacks = {}
+		self.__machinesToIgnore = []
 
 	def openConnection(self):
 		# first check if we have an executable specified
@@ -169,6 +170,12 @@ class ControlBridge(QtCore.QObject):
 
 	def _update(self, updateType, name, machine, message):
 		print 'UPDATE: %s, %s, %s, %s' % (updateType, name, machine, message)
+		if machine in self.__machinesToIgnore:
+			print '(ignoring update for this machine)'
+			return
+		if updateType == 'hardware' and name in self.__machinesToIgnore:
+			print '(ignoring this machine\'s add/remove event)'
+			return
 		# TODO: Should updates use Tcl syntax for their message?
 		#       Right now, they don't.
 		self.__updateHandlers[str(updateType)](str(name), str(machine), str(message))
@@ -195,6 +202,25 @@ class ControlBridge(QtCore.QObject):
 				self._log('warning', result)
 			else:
 				errback(result)
+
+	def addMachineToIgnore(self, machine):
+		'''Add a machine to the list of machines for which update
+		events should be ignored. So far only useful when you are
+		testing machine configurations. 
+		'''
+		assert machine not in self.__machinesToIgnore
+		print 'Adding machine to ignore: "%s"' % machine
+		self.__machinesToIgnore.append(machine)
+
+	def removeMachineToIgnore(self, machine):
+		'''Remove a machine from the list of machines for which update
+		events should be ignored. So far only useful when you are
+		testing machine configurations. 
+		'''
+		assert machine in self.__machinesToIgnore
+		print 'Removing machine to ignore: "%s"' % machine
+		self.__machinesToIgnore.remove(machine)
+
 
 class ControlHandler(QtXml.QXmlDefaultHandler):
 	def __init__(self, bridge):

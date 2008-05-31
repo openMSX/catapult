@@ -13,16 +13,16 @@ class HardwareModel(QtCore.QAbstractTableModel):
 
 	def __init__(self, bridge):
 		QtCore.QAbstractTableModel.__init__(self)
-		self.__bridge = bridge
+		self._bridge = bridge
 		self.__repliesLeft = None
+		self._tempInfoDict = {} # for testing hardware
+		self.__itemIter = None
 
 	def __listReply(self, *items):
 		self.__repliesLeft = len(items)
-		for item in items:
-			# Note: The request is done in a separate method, so the current
-			#       value of "item" is passed rather than this method's context
-			#       in which "item" is changing each iteration.
-			self.__requestInfo(item)
+		self.__itemIter = iter(items)
+		# start requesting info for all these hardware items
+		self.__requestInfo()
 
 	def __listFailed(self, message):
 		print 'Failed to get list of %ss: %s' % (
@@ -34,18 +34,37 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		self.__repliesLeft = None
 		self.populated.emit()
 
-	def __requestInfo(self, item):
-		self.__bridge.command(
+	def __requestInfo(self):
+		'''Requests information about the current machine.
+		   Current depends on the value of __itemIter
+		'''
+		item = self.__itemIter.next()
+		self._bridge.command(
 			'openmsx_info', self._hardwareType + 's', item
 			)(
 			lambda *info: self.__infoReply(item, info),
 			lambda message: self.__infoFailed(item, message)
 			)
+		if self._testable:
+			self._bridge.command('create_machine')(
+				lambda machineId, name = item: self.__machineIdReply(machineId, name),
+				None
+				)
+
+	def __machineIdReply(self, machineId, name):
+		self._bridge.addMachineToIgnore(machineId)
+		self._startHardwareTest(machineId, name)
+
+	def _startHardwareTest(self, machineId, name):
+		'''Implements the hardware specific test to check if it is working.
+		'''
+		raise NotImplementedError
 
 	def __infoReply(self, name, info):
 		infoDict = dict(info[i : i + 2] for i in xrange(0, len(info), 2))
-		self._storeItem(name, infoDict)
-		self.__infoDone()
+		self._tempInfoDict = infoDict
+		if not self._testable:
+			self.__testEnd(name)
 
 	def __infoFailed(self, name, message):
 		print 'Failed to get info about %s %s: %s' % (
@@ -53,10 +72,29 @@ class HardwareModel(QtCore.QAbstractTableModel):
 			)
 		self.__infoDone()
 
+	def _testDone(self, name, machineId, message, successful):
+		self._bridge.removeMachineToIgnore(machineId)
+		print 'Test for: %s successful: %s' % (name, successful)
+		if successful:
+			self._tempInfoDict['working'] = 'Yes'
+		else:
+			self._tempInfoDict['working'] = 'No'
+			print 'Broken hardware found: %s %s: %s' % (
+				self._hardwareType, name, message
+				)
+		self.__testEnd(name)
+
+	def __testEnd(self, name):
+		self._storeItem(name, self._tempInfoDict)
+		self.__infoDone()
+
 	def __infoDone(self):
 		self.__repliesLeft -= 1
 		if self.__repliesLeft == 0:
 			self.__allDone()
+		else:
+			# process the next one!
+			self.__requestInfo()
 
 	def _clearItems(self):
 		'''Clears the items stored in the model.
@@ -76,7 +114,7 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		self.populating.emit()
 		self._clearItems()
 		# Ask openMSX for list of hardware items.
-		self.__bridge.command(
+		self._bridge.command(
 			'openmsx_info', self._hardwareType + 's'
 			)(self.__listReply, self.__listFailed)
 

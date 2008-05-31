@@ -8,8 +8,9 @@ from qt_utils import QtSignal, Signal, connect
 from preferences import preferences
 
 class MachineModel(HardwareModel):
-	__columnKeys = 'manufacturer', 'code', 'type', 'description'
+	__columnKeys = 'manufacturer', 'code', 'type', 'working', 'description'
 	_hardwareType = 'machine'
+	_testable = True
 	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
 	layoutChanged = QtSignal()
 
@@ -23,6 +24,14 @@ class MachineModel(HardwareModel):
 	def __str__(self):
 		return 'MachineModel(%s)' % ', '.join(
 			machine[-2] for machine in self.__machines
+			)
+
+	def _startHardwareTest(self, machineId, name):
+		self._bridge.sendCommandRaw('set err [catch { ' + machineId + \
+			'::load_machine ' + name + ' } errmsg ] ; delete_machine ' + \
+			machineId + ' ; if $err { error $errmsg }',
+			lambda testdata: self._testDone(name, machineId, None, True),
+			lambda message: self._testDone(name, machineId, message, False)
 			)
 
 	def find(self, machine):
@@ -303,7 +312,8 @@ class MachineManager(QtCore.QObject):
 				self.__ui.slideshowWidget.findImagesForMedia(dir)
 			print "XXX end images"
 
-			#filenames = "/opt/openMSX/share/images/" + str(self.__selectedMachineConfig).lower()
+			#filenames = "/opt/openMSX/share/images/" + \
+			#	str(self.__selectedMachineConfig).lower()
 			#print "filenames => " + filenames
 			#self.__ui.slideshowWidget.findImagesForMedia(filenames)
 

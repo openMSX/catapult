@@ -18,6 +18,7 @@ from qt_utils import QtSignal, connect, Signal
 class ExtensionModel(HardwareModel):
 	__columnKeys = 'name', 'manufacturer', 'code', 'type', 'description'
 	_hardwareType = 'extension'
+	_testable = False # for now
 	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
 	layoutChanged = QtSignal()
 
@@ -32,6 +33,9 @@ class ExtensionModel(HardwareModel):
 		return 'ExtensionModel(%s)' % ', '.join(
 			extension[-2] for extension in self.__extensions
 			)
+
+	def _startHardwareTest(self, machineId, name):
+		raise NotImplementedException
 
 	def find(self, extension):
 		'''Searches for an extension with the given name.

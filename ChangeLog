@@ -1,5 +1,11 @@
 $Id$
 
+2008-06-01 Manuel Bilderbeek <manuel@msxnet.org>
+	* Finally committed testing of machines. Makes machine query a lot
+	  longer (from 2 to about 13 seconds on my machine). TODO: find a way
+	  to speed this up. Note: refresh will cause a crash, probably due to
+	  an older bug. Another TODO: add testing of extensions.
+
 2008-05-27 David Heremans <david.heremans@gnu-linux.net>
 	* Fixed a spelling mistake. Also in the db files, so don't
 	  forget to run the autorunfilldb.py in the tools dir.
