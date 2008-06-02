@@ -1,5 +1,9 @@
 $Id$
 
+2008-06-02 Manuel Bilderbeek <manuel@msxnet.org>
+	* Show all data in columns also as tooltip in hardware selector.
+	* Show reason for not working config in tooltip.
+
 2008-06-01 Manuel Bilderbeek <manuel@msxnet.org>
 	* Finally committed testing of machines. Makes machine query a lot
 	  longer (from 2 to about 13 seconds on my machine). TODO: find a way

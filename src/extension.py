@@ -35,7 +35,7 @@ class ExtensionModel(HardwareModel):
 			)
 
 	def _startHardwareTest(self, machineId, name):
-		raise NotImplementedException
+		raise NotImplementedError
 
 	def find(self, extension):
 		'''Searches for an extension with the given name.
@@ -112,6 +112,15 @@ class ExtensionModel(HardwareModel):
 			return QtCore.QVariant(sortRow[-1].get(key, ''))
 		elif role == QtCore.Qt.UserRole:
 			return QtCore.QVariant(sortRow[-2])
+		elif role == QtCore.Qt.ToolTipRole:
+			key = self.__columnKeys[column]
+			value = sortRow[-1].get(key)
+			# TODO: uncomment when extension testing is implemented
+			#if key == 'working' and value == 'No':
+			#	return QtCore.QVariant(sortRow[-1].get('brokenreason'))
+			#else:
+			return QtCore.QVariant(value)
+
 
 		return QtCore.QVariant()
 

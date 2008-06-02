@@ -79,6 +79,7 @@ class HardwareModel(QtCore.QAbstractTableModel):
 			self._tempInfoDict['working'] = 'Yes'
 		else:
 			self._tempInfoDict['working'] = 'No'
+			self._tempInfoDict['brokenreason'] = message
 			print 'Broken hardware found: %s %s: %s' % (
 				self._hardwareType, name, message
 				)

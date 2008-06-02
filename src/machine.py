@@ -109,6 +109,13 @@ class MachineModel(HardwareModel):
 			return QtCore.QVariant(sortRow[-1].get(key, ''))
 		elif role == QtCore.Qt.UserRole:
 			return QtCore.QVariant(sortRow[-2])
+		elif role == QtCore.Qt.ToolTipRole:
+			key = self.__columnKeys[column]
+			value = sortRow[-1].get(key)
+			if key == 'working' and value == 'No':
+				return QtCore.QVariant(sortRow[-1].get('brokenreason'))
+			else:
+				return QtCore.QVariant(value)
 
 		return QtCore.QVariant()
 
