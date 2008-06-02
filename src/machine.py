@@ -66,7 +66,8 @@ class MachineModel(HardwareModel):
 		while low < high:
 			mid = (low + high) / 2
 			machine = self.__machines[mid]
-			if (cmp(key, machine[column]) or cmp(sortRow, machine)) == sortSign:
+			if (sortSign * cmp(key, machine[column])
+					or cmp(sortRow, machine)) > 0:
 				low = mid + 1
 			else:
 				high = mid
@@ -118,9 +119,10 @@ class MachineModel(HardwareModel):
 		self.__sortReversed = order == QtCore.Qt.AscendingOrder
 
 		self.__machines = list(self.__allAscending)
-		self.__machines.sort(key = lambda machine: machine[column])
-		if self.__sortReversed:
-			self.__machines.reverse()
+		self.__machines.sort(
+			key = lambda machine: machine[column],
+			reverse = self.__sortReversed
+			)
 
 		self.layoutChanged.emit()
 
