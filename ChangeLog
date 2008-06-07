@@ -1,5 +1,11 @@
 $Id$
 
+2008-06-06 David Heremans <david.heremans@gnu-linux.net>
+	* Use pythons own sqlite3 (internal package for python 2.5) if
+	  available before trying the external pysqlite2
+	* Correctly hide the 'split' preview in extension and machineselector
+	  if not the openMSX-CD version
+
 2008-06-02 Manuel Bilderbeek <manuel@msxnet.org>
 	* Show all data in columns also as tooltip in hardware selector.
 	* Show reason for not working config in tooltip.

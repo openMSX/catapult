@@ -30,9 +30,12 @@ class SoftwareDB(object):
 			#connect(ui.dirUpButton, 'clicked()', self.updir)
 
 			# Fill the components with values.
-			# TODO: Since Python 2.5 SQLite is part of the standard library;
-			#       please use the "sqlite3" module.
-			from pysqlite2 import dbapi2 as sqlite
+			# Since Python 2.5 SQLite is part of the standard library;
+			# in case of python 2.4 we try to fall back to the external pysqlite2 module
+			try:
+				import sqlite3 as sqlite
+			except:
+				from pysqlite2 import dbapi2 as sqlite
 			cursor = self.__cursor
 			if cursor is None:
 				connection = sqlite.connect('softdb.db')
@@ -263,7 +266,7 @@ class SoftwareDB(object):
 		# Then the needed extension.
 		# TODO: Implement this :-)
 
-	def __applyMedia(self):
+	def __applyMedia(self, message):
 		# Insert(/eject) the media if requested
 		ui = self.__ui
 		for check, label, media in (

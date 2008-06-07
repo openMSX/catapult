@@ -4,7 +4,10 @@
 from PyQt4 import QtCore, QtGui
 import os, sys
 
-from pysqlite2 import dbapi2 as sqlite
+try:
+	import sqlite3 as sqlite
+except:
+	from pysqlite2 import dbapi2 as sqlite
 
 def createdbfiles(tablename):
 	sqlfile = tablename + '.sql'

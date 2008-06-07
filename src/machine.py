@@ -242,7 +242,8 @@ class MachineManager(QtCore.QObject):
 			ui.machineTable.setModel(model)
 			# for now hide the slideshow if not the openMSX-CD version.
 			if not self.__parent.openmsxcd :
-				ui.slideshowWidget.hide()
+				ui.previewWidget.hide()
+				#ui.slideshowWidget.hide()
 			#else:
 			#	#else load the DB stuff
 			#	from pysqlite2 import dbapi2 as sqlite
