@@ -113,6 +113,7 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		'''(Re)populate the model by querying openMSX.
 		'''
 		self.populating.emit()
+		self.reset()
 		self._clearItems()
 		# Ask openMSX for list of hardware items.
 		self._bridge.command(
