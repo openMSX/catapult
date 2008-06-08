@@ -289,19 +289,21 @@ class MainWindow(QtGui.QMainWindow):
 		# back...
 		def monitorTypeListReply(*words):
 			combo = self.__ui.monitorTypeComboBox
-			for word in words:
-				combo.addItem(QtCore.QString(word))
+			for word in sorted(words):
+				combo.addItem(QtCore.QString(word.replace('_', ' ')))
 			# hardcoding to start on normal, because this setting
 			# cannot be saved anyway
 			index = combo.findText('normal')
 			combo.setCurrentIndex(index)
 
 		self.__bridge.command('monitor_type', '-list')(
-				monitorTypeListReply
+			monitorTypeListReply
 			)
 
 		def monitorTypeChanged(newType):
-			self.__bridge.command('monitor_type', str(newType))()
+			self.__bridge.command(
+				'monitor_type', str(newType.replace(' ', '_'))
+				)()
 
 		connect(self.__ui.monitorTypeComboBox, 'activated(QString)',
 			monitorTypeChanged
