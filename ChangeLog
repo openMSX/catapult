@@ -1,5 +1,10 @@
 $Id$
 
+2008-06-10 David Heremans <david.heremans@gnu-linux.net>
+	* Implement new way for the softwaredb to switch machines.
+	  The softwaredb can now launch the needed machine, thus avoiding
+	  the racecondition from the previous code (see comment in the code)
+
 2008-06-06 David Heremans <david.heremans@gnu-linux.net>
 	* Use pythons own sqlite3 (internal package for python 2.5) if
 	  available before trying the external pysqlite2

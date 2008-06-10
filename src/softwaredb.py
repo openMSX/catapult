@@ -11,6 +11,9 @@ class SoftwareDB(object):
 		self.__cursor = None
 		self.__bridge = bridge
 		self.__selectedgameid = []
+		self.__currentshell = ''
+		self.__commandshell = ''
+		self.__destroyshell = False
 
 	def show(self):
 		dialog = self.__dmDialog
@@ -255,37 +258,89 @@ class SoftwareDB(object):
 	def on_applyPushButton_clicked(self):
 		ui = self.__ui
 		# First of all change machine if needed.
+		#
+		# The code originally used the 'machine' command and in the
+		# callback fucntions the 'diska' commands were launched
+		#
+		# Unfortunately these disks were then still inserted in the old
+		# msx shell which was about to be destroyed after the switch
+		# was made.
+		#
+		# The 'Ok'-reply from the machine command seems to mean:
+		# "machine command accept and will start in the near future"
+		# and not "machine is switched"
+		# 
+		# Now we will create the msx shell ourself and delete the
+		# current shell afterwards
+		#
+		self.__bridge.command('machine')(
+			self.__setCurrentshell,
+			self.__machineChangeErrorHandler
+			)
 		if ui.machineCheckBox.isChecked():
 			# Request machine change from openMSX.
 			# TODO: Skip change if openMSX is running with the correct machine.
+			self.__destroyshell = True
+			self.__bridge.command('create_machine')(
+				self.__setCommandshell,
+				self.__machineChangeErrorHandler
+				)
+		else:
+			self.__destroyshell = False
 			self.__bridge.command('machine', ui.machineLabel.text())(
-				self.__applyMedia,
+				self.__setCommandshell,
 				self.__machineChangeErrorHandler
 				)
 
+	def __setCurrentshell(self, message):
+		self.__currentshell = message
+
+	def __setCommandshell(self, message):
+		self.__commandshell = message
+		if self.__destroyshell:
+			#load the new config for the new machine
+			self.__bridge.command(str(self.__commandshell) + '::load_machine', self.__ui.machineLabel.text())(
+				self.__applyExtensions,
+				self.__machineChangeErrorHandler
+			)
+		else:
+			#in correct machine config so resume with extensions
+			self.__applyExtensions(message)
+
+	def __applyExtensions(self, message):
 		# Then the needed extension.
 		# TODO: Implement this :-)
+		# For now directly apply the needed media
+		self.__applyMedia(message)
 
 	def __applyMedia(self, message):
 		# Insert(/eject) the media if requested
 		ui = self.__ui
 		for check, label, media in (
-			( ui.diskaCheckBox, ui.diskaLabel, 'diska' ),
-			( ui.diskbCheckBox, ui.diskbLabel, 'diskb' ),
-			( ui.cartaCheckBox, ui.cartaLabel, 'carta' ),
-			( ui.cartbCheckBox, ui.cartbLabel, 'cartb' )
+			( ui.diskaCheckBox, ui.diskaLabel, '::diska' ),
+			( ui.diskbCheckBox, ui.diskbLabel, '::diskb' ),
+			( ui.cartaCheckBox, ui.cartaLabel, '::carta' ),
+			( ui.cartbCheckBox, ui.cartbLabel, '::cartb' )
 			):
-			print "xxxxxxxxxxxxxxxx" + str(media)
+			setmedia = str(self.__commandshell) + str(media)
 			if check.isChecked():
-				print "yyyyyyyyyyyyyyyyy CHECKED"
 				if label.text() == 'empty':
-					self.__bridge.command( media, '-eject' )
-					print "zzzzzzzzzzzzzzzzz -eject"
+					self.__bridge.command( setmedia, 'eject' )()
+					print setmedia + " eject"
 				else:
-					self.__bridge.command( media, label.text() )
-					print "zzzzzzzzzzzzzzzzz " + str(label.text())
+					self.__bridge.command( setmedia, label.text() )()
+					print setmedia + " " + str(label.text())
 			else:
 				print "yyyyyyyyyyyyyyyyy not checked"
+		#
+		# Switch machine if needed
+		#
+		if self.__destroyshell:
+			#TODO: find out in openMSX itself why this doesn't work
+			#if you first activate the new one and then delte the
+			#current one, aka switch the two lines
+			self.__bridge.command( 'delete_machine' , self.__currentshell )()
+			self.__bridge.command( 'activate_machine' , self.__commandshell )()
 		# TODO: Do we actually want to close this dialog once a software is
 		#       chosen?
 		self.__dmDialog.hide()
