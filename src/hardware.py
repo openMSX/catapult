@@ -73,7 +73,9 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		self.__infoDone()
 
 	def _testDone(self, name, machineId, message, successful):
-		self._bridge.removeMachineToIgnore(machineId)
+		# this is automatically done after the machine is deleted
+		# in openMSX, see openmsx_control.py:
+		#self._bridge.removeMachineToIgnore(machineId)
 		print 'Test for: %s successful: %s' % (name, successful)
 		if successful:
 			self._tempInfoDict['working'] = 'Yes'

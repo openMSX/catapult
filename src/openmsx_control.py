@@ -171,10 +171,14 @@ class ControlBridge(QtCore.QObject):
 	def _update(self, updateType, name, machine, message):
 		print 'UPDATE: %s, %s, %s, %s' % (updateType, name, machine, message)
 		if machine in self.__machinesToIgnore:
-			print '(ignoring update for this machine)'
+			print '(ignoring update for machine "%s")' % machine
 			return
 		if updateType == 'hardware' and name in self.__machinesToIgnore:
-			print '(ignoring this machine\'s add/remove event)'
+			if message == 'add':
+				print '(ignoring "%s"\'s add event)' % name
+			elif message == 'remove':
+				print 'machine "%s" deleted, so, removing from ignore list' % name
+				self.removeMachineToIgnore(name)
 			return
 		# TODO: Should updates use Tcl syntax for their message?
 		#       Right now, they don't.

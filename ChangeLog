@@ -1,5 +1,11 @@
 $Id$
 
+2008-06-18 Manuel Bilderbeek <manuel@msxnet.org>
+	* Remove machine from ignore list as soon as it gets deleted, don't
+	  remove it explicitly anymore
+	* NOTE: Refreshing machine list does not cause a crash anymore, thanks
+	  to an earlier fix by Maarten
+
 2008-06-10 David Heremans <david.heremans@gnu-linux.net>
 	* Implement new way for the softwaredb to switch machines.
 	  The softwaredb can now launch the needed machine, thus avoiding
