@@ -1,5 +1,11 @@
 $Id$
 
+2008-06-24 David Heremans <david.heremans@gnu-linux.net>
+	* softwaredb can now correclty launch the software:
+	  - Set correct media
+	  - Included support for extensions
+	  - CTRL-pressed-during-boot if needed
+
 2008-06-18 Manuel Bilderbeek <manuel@msxnet.org>
 	* Remove machine from ignore list as soon as it gets deleted, don't
 	  remove it explicitly anymore

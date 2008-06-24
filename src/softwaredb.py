@@ -2,6 +2,7 @@
 
 from PyQt4 import QtCore, QtGui
 from qt_utils import connect
+import os
 
 class SoftwareDB(object):
 
@@ -250,9 +251,33 @@ class SoftwareDB(object):
 		cursor.execute(query)
 		for row in cursor:
 			print row
-			ui.extensionsLabel.setText(row[5])
+			# machine
 			ui.machineLabel.setText(row[6])
-			ui.diskaLabel.setText(row[9])
+			#extensions
+			#split of the 'CTRL' fake extension
+			ui.ctrlCheckBox.setChecked(False)
+			extlist = []
+			for item in str(row[5]).split(','):
+				if item == 'CTRL':
+					ui.ctrlCheckBox.setChecked(True)
+				else:
+					extlist.append(item)
+			if len(extlist) == 0:
+				ui.extensionsLabel.setText('None')
+			else :
+				ui.extensionsLabel.setText(','.join(extlist))
+			#media
+			for media, gui in (
+					('disk', ui.diskaLabel),
+					('diska', ui.diskaLabel),
+					('diskb', ui.diskbLabel),
+					('cart', ui.cartaLabel),
+					('carta', ui.cartaLabel),
+					('cartb', ui.cartbLabel),
+				):
+				if  str(row[1]).lower()==media:
+					gui.setText(row[9])
+
 
 	@QtCore.pyqtSignature('')
 	def on_applyPushButton_clicked(self):
@@ -299,23 +324,19 @@ class SoftwareDB(object):
 		self.__commandshell = message
 		if self.__destroyshell:
 			#load the new config for the new machine
-			self.__bridge.command(str(self.__commandshell) + '::load_machine', self.__ui.machineLabel.text())(
-				self.__applyExtensions,
+			self.__bridge.command(str(self.__commandshell) +
+				'::load_machine', self.__ui.machineLabel.text())(
+				self.__applyMedia,
 				self.__machineChangeErrorHandler
 			)
 		else:
 			#in correct machine config so resume with extensions
-			self.__applyExtensions(message)
-
-	def __applyExtensions(self, message):
-		# Then the needed extension.
-		# TODO: Implement this :-)
-		# For now directly apply the needed media
-		self.__applyMedia(message)
+			self.__applyMedia(message)
 
 	def __applyMedia(self, message):
 		# Insert(/eject) the media if requested
 		ui = self.__ui
+		filename = ''
 		for check, label, media in (
 			( ui.diskaCheckBox, ui.diskaLabel, '::diska' ),
 			( ui.diskbCheckBox, ui.diskbLabel, '::diskb' ),
@@ -330,8 +351,23 @@ class SoftwareDB(object):
 				else:
 					self.__bridge.command( setmedia, label.text() )()
 					print setmedia + " " + str(label.text())
+					filename = str(label.text())
 			else:
 				print "yyyyyyyyyyyyyyyyy not checked"
+
+		#
+		# Then the needed extension.
+		# We do this after the media because the eject of the cartx might 
+		# eject an extension otherwise (fi. an fmpac)
+		#
+		# TODO: if the machine isn't switched then we need to prevent inserting
+		# extension if they are already available, but then we need to make the
+		# 'cartx eject' more inteligent also...
+		if ui.extensionsCheckBox.isChecked():
+			setext = str(self.__commandshell) + str('::ext')
+			for item in (ui.extensionsLabel.text()).split(','):
+				self.__bridge.command(setext, item)()
+
 		#
 		# Switch machine if needed
 		#
@@ -341,6 +377,30 @@ class SoftwareDB(object):
 			#current one, aka switch the two lines
 			self.__bridge.command( 'delete_machine' , self.__currentshell )()
 			self.__bridge.command( 'activate_machine' , self.__commandshell )()
+
+		#in the new active machine press CTRL for ten emutime-seconds if requested
+		if ui.ctrlCheckBox.isChecked():
+			self.__bridge.command( 'keymatrixdown', '6', '0x02' )()
+			self.__bridge.command( 'after', 'time', '10', 'keymatrixup', '6', '0x02' )()
+
+		#show the readme first for this piece of software
+		if filename != '':
+			if filename.lower().endswith(".gz") :
+				filename = filename[:len(filename)-3]
+
+			if os.access(filename+str('.readme.1st'), os.F_OK):
+				readmefile = open(filename+str('.readme.1st'),'r')
+				msg = ''
+				for line in readmefile:
+					msg += line
+				messageBox = QtGui.QMessageBox(
+					'Read me!', msg,
+					QtGui.QMessageBox.Information, 0, 0, 0,
+					self.__dmDialog
+					)
+				messageBox.show()
+
+
 		# TODO: Do we actually want to close this dialog once a software is
 		#       chosen?
 		self.__dmDialog.hide()
