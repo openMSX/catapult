@@ -46,6 +46,7 @@ from cheatfinder import Cheatfinder
 from trainerselect import TrainerSelect
 from softwaredb import SoftwareDB
 from autorun import Autorun
+from savestatemanager import SaveStateManager
 from openmsx_control import ControlBridge, NotConfiguredException
 from paletteeditor import PaletteEditor
 from inputtext import InputText
@@ -125,6 +126,7 @@ class MainWindow(QtGui.QMainWindow):
 			self.__autorun = Autorun(self, settingsManager, bridge)
 		self.__paletteeditor = PaletteEditor(bridge)
 		self.__inputtext = InputText(bridge)
+		self.__saveStateManager = SaveStateManager(bridge)
 		self.__connectMenuActions(ui)
 
 		bridge.logLine.connect(self.logLine)
@@ -487,7 +489,9 @@ class MainWindow(QtGui.QMainWindow):
 			self.__bridge.command('save_settings',
 					EscapedStr(tclEscape(settingsFile)))(
 					None,
-					lambda message: self.__generalFailHandler(message, 'Problem Saving Settings')
+					lambda message: self.__generalFailHandler(
+						message, 'Problem Saving Settings'
+						)
 					)
 
 	def __loadSettings(self):
@@ -504,7 +508,9 @@ class MainWindow(QtGui.QMainWindow):
 				'set', 'renderer', '$__tmp'
 				)(
 					None,
-					lambda message: self.__generalFailHandler(message, 'Problem Loading Settings')
+					lambda message: self.__generalFailHandler(
+						message, 'Problem Loading Settings'
+						)
 				)
 
 	def __loadSettingsFailedHandler(self, message):
@@ -517,20 +523,24 @@ class MainWindow(QtGui.QMainWindow):
 	def __quickLoadState(self):
 		self.__bridge.command('loadstate')(
 			None,
-			lambda message: self.__generalFailHandler(message, 'Problem Quick-Loading State')
+			lambda message: self.__generalFailHandler(
+				message, 'Problem Quick-Loading State'
+				)
 		)
 	
 	def __quickSaveState(self):
 		self.__bridge.command('savestate')(
 			None,
-			lambda message: self.__generalFailHandler(message, 'Problem Quick-Saving State')
+			lambda message: self.__generalFailHandler(
+				message, 'Problem Quick-Saving State'
+				)
 		)
 	
 	def __loadState(self):
-		pass # nothing yet
+		self.__saveStateManager.exec_('load')
 
 	def __saveState(self):
-		pass # nothing yet
+		self.__saveStateManager.exec_('save')
 
 	def __generalFailHandler(self, message, title):
 		messageBox = QtGui.QMessageBox(title, message,
