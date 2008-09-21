@@ -68,7 +68,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
 		self.__connectorModel = connectorModel = ConnectorModel(bridge)
-		self.openmsxcd = openmsxcd 
+		self.openmsxcd = openmsxcd
 		ui.setupUi(self)
 		# Added stuff that at the moment will be exclusive to
 		# the openMSX-CD
@@ -334,6 +334,10 @@ class MainWindow(QtGui.QMainWindow):
 			( ui.action_SaveSettings, self.__saveSettings ),
 			( ui.action_SaveSettingsAs, self.__saveSettingsAs ),
 			( ui.action_LoadSettings, self.__loadSettings ),
+			( ui.action_QuickLoadState, self.__quickLoadState ),
+			( ui.action_QuickSaveState, self.__quickSaveState ),
+			( ui.action_LoadState, self.__loadState ),
+			( ui.action_SaveState, self.__saveState ),
 			( ui.action_EditConfiguration, configDialog.show ),
 			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
 			( ui.action_CheatFinder, self.__cheatfinder.show ),
@@ -482,15 +486,9 @@ class MainWindow(QtGui.QMainWindow):
 		if settingsFile != '':
 			self.__bridge.command('save_settings',
 					EscapedStr(tclEscape(settingsFile)))(
-					None, self.__saveSettingsAsFailedHandler
+					None,
+					lambda message: self.__generalFailHandler(message, 'Problem Saving Settings')
 					)
-
-	def __saveSettingsAsFailedHandler(self, message):
-		messageBox = QtGui.QMessageBox('Problem Saving Settings', message,
-				QtGui.QMessageBox.Warning, 0, 0, 0,
-				self.__ui.centralwidget
-				)
-		messageBox.show()
 
 	def __loadSettings(self):
 		settingsFile = QtGui.QFileDialog.getOpenFileName(
@@ -505,11 +503,37 @@ class MainWindow(QtGui.QMainWindow):
 				EscapedStr(tclEscape(settingsFile)) + ';',
 				'set', 'renderer', '$__tmp'
 				)(
-				None, self.__loadSettingsFailedHandler
+					None,
+					lambda message: self.__generalFailHandler(message, 'Problem Loading Settings')
 				)
 
 	def __loadSettingsFailedHandler(self, message):
 		messageBox = QtGui.QMessageBox('Problem Loading Settings', message,
+			QtGui.QMessageBox.Warning, 0, 0, 0,
+			self.__ui.centralwidget
+			)
+		messageBox.show()
+
+	def __quickLoadState(self):
+		self.__bridge.command('loadstate')(
+			None,
+			lambda message: self.__generalFailHandler(message, 'Problem Quick-Loading State')
+		)
+	
+	def __quickSaveState(self):
+		self.__bridge.command('savestate')(
+			None,
+			lambda message: self.__generalFailHandler(message, 'Problem Quick-Saving State')
+		)
+	
+	def __loadState(self):
+		pass # nothing yet
+
+	def __saveState(self):
+		pass # nothing yet
+
+	def __generalFailHandler(self, message, title):
+		messageBox = QtGui.QMessageBox(title, message,
 			QtGui.QMessageBox.Warning, 0, 0, 0,
 			self.__ui.centralwidget
 			)

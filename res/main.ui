@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>562</width>
+    <width>736</width>
     <height>559</height>
    </rect>
   </property>
@@ -13,9 +13,18 @@
    <string>openMSX Catapult</string>
   </property>
   <property name="windowIcon" >
-   <iconset>logo.png</iconset>
+   <iconset>
+    <normaloff>logo.png</normaloff>logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>24</y>
+     <width>736</width>
+     <height>511</height>
+    </rect>
+   </property>
    <layout class="QGridLayout" >
     <item row="0" column="0" >
      <widget class="QTabWidget" name="tabWidget" >
@@ -23,6 +32,14 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="mediaTab" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>714</width>
+         <height>412</height>
+        </rect>
+       </property>
        <attribute name="title" >
         <string>Media</string>
        </attribute>
@@ -30,16 +47,7 @@
         <property name="spacing" >
          <number>6</number>
         </property>
-        <property name="leftMargin" >
-         <number>9</number>
-        </property>
-        <property name="topMargin" >
-         <number>9</number>
-        </property>
-        <property name="rightMargin" >
-         <number>9</number>
-        </property>
-        <property name="bottomMargin" >
+        <property name="margin" >
          <number>9</number>
         </property>
         <item>
@@ -75,16 +83,7 @@
              <property name="spacing" >
               <number>6</number>
              </property>
-             <property name="leftMargin" >
-              <number>0</number>
-             </property>
-             <property name="topMargin" >
-              <number>0</number>
-             </property>
-             <property name="rightMargin" >
-              <number>0</number>
-             </property>
-             <property name="bottomMargin" >
+             <property name="margin" >
               <number>0</number>
              </property>
              <item>
@@ -123,7 +122,7 @@
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeHint" >
+               <property name="sizeHint" stdset="0" >
                 <size>
                  <width>40</width>
                  <height>20</height>
@@ -154,7 +153,7 @@
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeHint" >
+               <property name="sizeHint" stdset="0" >
                 <size>
                  <width>61</width>
                  <height>30</height>
@@ -186,16 +185,7 @@
           <property name="spacing" >
            <number>6</number>
           </property>
-          <property name="leftMargin" >
-           <number>0</number>
-          </property>
-          <property name="topMargin" >
-           <number>0</number>
-          </property>
-          <property name="rightMargin" >
-           <number>0</number>
-          </property>
-          <property name="bottomMargin" >
+          <property name="margin" >
            <number>0</number>
           </property>
           <item>
@@ -203,16 +193,7 @@
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item>
@@ -239,23 +220,19 @@
              <number>0</number>
             </property>
             <widget class="QWidget" name="infoPage" >
+             <property name="geometry" >
+              <rect>
+               <x>2</x>
+               <y>2</y>
+               <width>434</width>
+               <height>230</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
-              <property name="leftMargin" >
+              <property name="margin" >
                <number>9</number>
               </property>
-              <property name="topMargin" >
-               <number>9</number>
-              </property>
-              <property name="rightMargin" >
-               <number>9</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>9</number>
-              </property>
-              <property name="horizontalSpacing" >
-               <number>6</number>
-              </property>
-              <property name="verticalSpacing" >
+              <property name="spacing" >
                <number>6</number>
               </property>
               <item row="0" column="0" >
@@ -274,22 +251,21 @@
              </layout>
             </widget>
             <widget class="QWidget" name="diskPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -319,7 +295,8 @@
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -348,16 +325,7 @@
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -375,7 +343,7 @@
                   <property name="sizeType" >
                    <enum>QSizePolicy::Preferred</enum>
                   </property>
-                  <property name="sizeHint" >
+                  <property name="sizeHint" stdset="0" >
                    <size>
                     <width>20</width>
                     <height>20</height>
@@ -438,7 +406,7 @@
                   <property name="orientation" >
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" >
+                  <property name="sizeHint" stdset="0" >
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -453,7 +421,7 @@
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>20</width>
                   <height>40</height>
@@ -464,22 +432,21 @@
              </layout>
             </widget>
             <widget class="QWidget" name="cartPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -509,7 +476,8 @@
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -540,16 +508,7 @@
                   <property name="spacing" >
                    <number>6</number>
                   </property>
-                  <property name="leftMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin" >
+                  <property name="margin" >
                    <number>0</number>
                   </property>
                   <item>
@@ -564,7 +523,7 @@
                     <property name="orientation" >
                      <enum>Qt::Horizontal</enum>
                     </property>
-                    <property name="sizeHint" >
+                    <property name="sizeHint" stdset="0" >
                      <size>
                       <width>40</width>
                       <height>20</height>
@@ -616,7 +575,7 @@
                     <property name="orientation" >
                      <enum>Qt::Horizontal</enum>
                     </property>
-                    <property name="sizeHint" >
+                    <property name="sizeHint" stdset="0" >
                      <size>
                       <width>40</width>
                       <height>20</height>
@@ -647,7 +606,7 @@
                     <property name="orientation" >
                      <enum>Qt::Horizontal</enum>
                     </property>
-                    <property name="sizeHint" >
+                    <property name="sizeHint" stdset="0" >
                      <size>
                       <width>40</width>
                       <height>20</height>
@@ -662,7 +621,7 @@
                   <property name="orientation" >
                    <enum>Qt::Vertical</enum>
                   </property>
-                  <property name="sizeHint" >
+                  <property name="sizeHint" stdset="0" >
                    <size>
                     <width>414</width>
                     <height>16</height>
@@ -675,6 +634,14 @@
              </layout>
             </widget>
             <widget class="QWidget" name="cassettePage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QVBoxLayout" >
@@ -683,16 +650,7 @@
                   <property name="spacing" >
                    <number>6</number>
                   </property>
-                  <property name="leftMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin" >
+                  <property name="margin" >
                    <number>0</number>
                   </property>
                   <item>
@@ -725,7 +683,8 @@ p, li { white-space: pre-wrap; }
                      </sizepolicy>
                     </property>
                     <property name="icon" >
-                     <iconset>eject.png</iconset>
+                     <iconset>
+                      <normaloff>eject.png</normaloff>eject.png</iconset>
                     </property>
                    </widget>
                   </item>
@@ -754,16 +713,7 @@ p, li { white-space: pre-wrap; }
                   <property name="spacing" >
                    <number>6</number>
                   </property>
-                  <property name="leftMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin" >
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin" >
+                  <property name="margin" >
                    <number>0</number>
                   </property>
                   <item>
@@ -778,7 +728,7 @@ p, li { white-space: pre-wrap; }
                     <property name="orientation" >
                      <enum>Qt::Horizontal</enum>
                     </property>
-                    <property name="sizeHint" >
+                    <property name="sizeHint" stdset="0" >
                      <size>
                       <width>40</width>
                       <height>20</height>
@@ -820,16 +770,7 @@ p, li { white-space: pre-wrap; }
                     <property name="spacing" >
                      <number>0</number>
                     </property>
-                    <property name="leftMargin" >
-                     <number>6</number>
-                    </property>
-                    <property name="topMargin" >
-                     <number>6</number>
-                    </property>
-                    <property name="rightMargin" >
-                     <number>6</number>
-                    </property>
-                    <property name="bottomMargin" >
+                    <property name="margin" >
                      <number>6</number>
                     </property>
                     <item>
@@ -844,7 +785,8 @@ p, li { white-space: pre-wrap; }
                        <string>Set to Play mode</string>
                       </property>
                       <property name="icon" >
-                       <iconset>play.png</iconset>
+                       <iconset>
+                        <normaloff>play.png</normaloff>play.png</iconset>
                       </property>
                       <property name="checkable" >
                        <bool>true</bool>
@@ -857,7 +799,8 @@ p, li { white-space: pre-wrap; }
                        <string>Rewind tape</string>
                       </property>
                       <property name="icon" >
-                       <iconset>rewind.png</iconset>
+                       <iconset>
+                        <normaloff>rewind.png</normaloff>rewind.png</iconset>
                       </property>
                       <property name="checkable" >
                        <bool>true</bool>
@@ -870,7 +813,8 @@ p, li { white-space: pre-wrap; }
                        <string>Stop mode</string>
                       </property>
                       <property name="icon" >
-                       <iconset>stop.png</iconset>
+                       <iconset>
+                        <normaloff>stop.png</normaloff>stop.png</iconset>
                       </property>
                       <property name="checkable" >
                        <bool>true</bool>
@@ -886,7 +830,8 @@ p, li { white-space: pre-wrap; }
                        <string>Select new tape to record to</string>
                       </property>
                       <property name="icon" >
-                       <iconset>record.png</iconset>
+                       <iconset>
+                        <normaloff>record.png</normaloff>record.png</iconset>
                       </property>
                       <property name="checkable" >
                        <bool>true</bool>
@@ -959,7 +904,7 @@ p, li { white-space: pre-wrap; }
                     <property name="orientation" >
                      <enum>Qt::Horizontal</enum>
                     </property>
-                    <property name="sizeHint" >
+                    <property name="sizeHint" stdset="0" >
                      <size>
                       <width>16</width>
                       <height>23</height>
@@ -984,7 +929,7 @@ p, li { white-space: pre-wrap; }
                   <property name="orientation" >
                    <enum>Qt::Vertical</enum>
                   </property>
-                  <property name="sizeHint" >
+                  <property name="sizeHint" stdset="0" >
                    <size>
                     <width>242</width>
                     <height>16</height>
@@ -997,20 +942,19 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="hdPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QVBoxLayout" >
               <property name="spacing" >
                <number>6</number>
               </property>
-              <property name="leftMargin" >
-               <number>9</number>
-              </property>
-              <property name="topMargin" >
-               <number>9</number>
-              </property>
-              <property name="rightMargin" >
-               <number>9</number>
-              </property>
-              <property name="bottomMargin" >
+              <property name="margin" >
                <number>9</number>
               </property>
               <item>
@@ -1018,16 +962,7 @@ p, li { white-space: pre-wrap; }
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -1073,16 +1008,7 @@ p, li { white-space: pre-wrap; }
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -1097,7 +1023,7 @@ p, li { white-space: pre-wrap; }
                   <property name="orientation" >
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" >
+                  <property name="sizeHint" stdset="0" >
                    <size>
                     <width>20</width>
                     <height>20</height>
@@ -1137,7 +1063,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>20</width>
                   <height>40</height>
@@ -1148,20 +1074,19 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="cdPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QVBoxLayout" >
               <property name="spacing" >
                <number>6</number>
               </property>
-              <property name="leftMargin" >
-               <number>9</number>
-              </property>
-              <property name="topMargin" >
-               <number>9</number>
-              </property>
-              <property name="rightMargin" >
-               <number>9</number>
-              </property>
-              <property name="bottomMargin" >
+              <property name="margin" >
                <number>9</number>
               </property>
               <item>
@@ -1169,16 +1094,7 @@ p, li { white-space: pre-wrap; }
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -1208,7 +1124,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1237,16 +1154,7 @@ p, li { white-space: pre-wrap; }
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -1261,7 +1169,7 @@ p, li { white-space: pre-wrap; }
                   <property name="orientation" >
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" >
+                  <property name="sizeHint" stdset="0" >
                    <size>
                     <width>20</width>
                     <height>20</height>
@@ -1301,7 +1209,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>20</width>
                   <height>40</height>
@@ -1318,16 +1226,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>6</number>
             </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
            </layout>
@@ -1337,6 +1236,14 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="connectorTab" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>714</width>
+         <height>412</height>
+        </rect>
+       </property>
        <attribute name="title" >
         <string>Connectors</string>
        </attribute>
@@ -1346,16 +1253,7 @@ p, li { white-space: pre-wrap; }
           <property name="spacing" >
            <number>6</number>
           </property>
-          <property name="leftMargin" >
-           <number>0</number>
-          </property>
-          <property name="topMargin" >
-           <number>0</number>
-          </property>
-          <property name="rightMargin" >
-           <number>0</number>
-          </property>
-          <property name="bottomMargin" >
+          <property name="margin" >
            <number>0</number>
           </property>
           <item>
@@ -1363,16 +1261,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item>
@@ -1405,23 +1294,19 @@ p, li { white-space: pre-wrap; }
              <number>0</number>
             </property>
             <widget class="QWidget" name="infoConnectorPage" >
+             <property name="geometry" >
+              <rect>
+               <x>2</x>
+               <y>2</y>
+               <width>690</width>
+               <height>180</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
-              <property name="leftMargin" >
+              <property name="margin" >
                <number>9</number>
               </property>
-              <property name="topMargin" >
-               <number>9</number>
-              </property>
-              <property name="rightMargin" >
-               <number>9</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>9</number>
-              </property>
-              <property name="horizontalSpacing" >
-               <number>6</number>
-              </property>
-              <property name="verticalSpacing" >
+              <property name="spacing" >
                <number>6</number>
               </property>
               <item row="0" column="0" >
@@ -1440,22 +1325,21 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="audioInPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -1488,7 +1372,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1534,7 +1419,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>211</width>
                   <height>16</height>
@@ -1545,22 +1430,21 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="casPortPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -1593,7 +1477,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1639,7 +1524,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>414</width>
                   <height>16</height>
@@ -1650,22 +1535,21 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="joyPortPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -1698,7 +1582,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1744,7 +1629,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>210</width>
                   <height>11</height>
@@ -1755,6 +1640,14 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="printerPortPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -1788,7 +1681,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1887,7 +1781,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>456</width>
                   <height>10</height>
@@ -1898,22 +1792,21 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="RS232Page" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -1946,7 +1839,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1992,7 +1886,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>210</width>
                   <height>16</height>
@@ -2003,22 +1897,21 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="Y8950KbdPortPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -2048,7 +1941,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -2094,7 +1988,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>211</width>
                   <height>16</height>
@@ -2105,22 +1999,21 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="MIDIinPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -2153,7 +2046,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -2199,7 +2093,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>211</width>
                   <height>16</height>
@@ -2210,22 +2104,21 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="MIDIoutPage" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
                 <property name="spacing" >
                  <number>6</number>
                 </property>
-                <property name="leftMargin" >
-                 <number>0</number>
-                </property>
-                <property name="topMargin" >
-                 <number>0</number>
-                </property>
-                <property name="rightMargin" >
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin" >
+                <property name="margin" >
                  <number>0</number>
                 </property>
                 <item>
@@ -2258,7 +2151,8 @@ p, li { white-space: pre-wrap; }
                    </sizepolicy>
                   </property>
                   <property name="icon" >
-                   <iconset>eject.png</iconset>
+                   <iconset>
+                    <normaloff>eject.png</normaloff>eject.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -2304,7 +2198,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>211</width>
                   <height>16</height>
@@ -2321,16 +2215,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>6</number>
             </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
            </layout>
@@ -2340,6 +2225,14 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="videoTab" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>714</width>
+         <height>412</height>
+        </rect>
+       </property>
        <attribute name="title" >
         <string>Video</string>
        </attribute>
@@ -2376,22 +2269,10 @@ p, li { white-space: pre-wrap; }
         </item>
         <item rowspan="10" row="0" column="2" >
          <layout class="QGridLayout" >
-          <property name="leftMargin" >
+          <property name="margin" >
            <number>0</number>
           </property>
-          <property name="topMargin" >
-           <number>0</number>
-          </property>
-          <property name="rightMargin" >
-           <number>0</number>
-          </property>
-          <property name="bottomMargin" >
-           <number>0</number>
-          </property>
-          <property name="horizontalSpacing" >
-           <number>0</number>
-          </property>
-          <property name="verticalSpacing" >
+          <property name="spacing" >
            <number>0</number>
           </property>
           <item row="1" column="0" >
@@ -2399,16 +2280,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>6</number>
-            </property>
-            <property name="topMargin" >
-             <number>6</number>
-            </property>
-            <property name="rightMargin" >
-             <number>6</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>6</number>
             </property>
             <item>
@@ -2451,16 +2323,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>6</number>
-            </property>
-            <property name="topMargin" >
-             <number>6</number>
-            </property>
-            <property name="rightMargin" >
-             <number>6</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>6</number>
             </property>
             <item>
@@ -2506,16 +2369,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>6</number>
-            </property>
-            <property name="topMargin" >
-             <number>6</number>
-            </property>
-            <property name="rightMargin" >
-             <number>6</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>6</number>
             </property>
             <item>
@@ -2545,16 +2399,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>6</number>
-            </property>
-            <property name="topMargin" >
-             <number>6</number>
-            </property>
-            <property name="rightMargin" >
-             <number>6</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>6</number>
             </property>
             <item>
@@ -2590,16 +2435,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>6</number>
-            </property>
-            <property name="topMargin" >
-             <number>6</number>
-            </property>
-            <property name="rightMargin" >
-             <number>6</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>6</number>
             </property>
             <item>
@@ -2639,16 +2475,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>6</number>
-            </property>
-            <property name="topMargin" >
-             <number>6</number>
-            </property>
-            <property name="rightMargin" >
-             <number>6</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>6</number>
             </property>
             <item>
@@ -2678,16 +2505,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>6</number>
-            </property>
-            <property name="topMargin" >
-             <number>6</number>
-            </property>
-            <property name="rightMargin" >
-             <number>6</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>6</number>
             </property>
             <item>
@@ -2739,7 +2557,7 @@ p, li { white-space: pre-wrap; }
             <property name="orientation" >
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0" >
              <size>
               <width>20</width>
               <height>1</height>
@@ -2873,7 +2691,7 @@ p, li { white-space: pre-wrap; }
           <property name="orientation" >
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeHint" >
+          <property name="sizeHint" stdset="0" >
            <size>
             <width>233</width>
             <height>26</height>
@@ -2884,6 +2702,14 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="audioTab" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>714</width>
+         <height>412</height>
+        </rect>
+       </property>
        <attribute name="title" >
         <string>Audio</string>
        </attribute>
@@ -2893,10 +2719,7 @@ p, li { white-space: pre-wrap; }
           <layout class="QGridLayout" >
            <item row="0" column="0" >
             <layout class="QGridLayout" >
-             <property name="horizontalSpacing" >
-              <number>0</number>
-             </property>
-             <property name="verticalSpacing" >
+             <property name="spacing" >
               <number>0</number>
              </property>
              <item row="0" column="0" >
@@ -2934,7 +2757,7 @@ p, li { white-space: pre-wrap; }
             <property name="orientation" >
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0" >
              <size>
               <width>311</width>
               <height>20</height>
@@ -2964,7 +2787,7 @@ p, li { white-space: pre-wrap; }
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeHint" >
+               <property name="sizeHint" stdset="0" >
                 <size>
                  <width>40</width>
                  <height>20</height>
@@ -3112,6 +2935,14 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="miscTab" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>714</width>
+         <height>412</height>
+        </rect>
+       </property>
        <attribute name="title" >
         <string>Misc</string>
        </attribute>
@@ -3219,7 +3050,7 @@ p, li { white-space: pre-wrap; }
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeHint" >
+               <property name="sizeHint" stdset="0" >
                 <size>
                  <width>40</width>
                  <height>20</height>
@@ -3448,7 +3279,7 @@ p, li { white-space: pre-wrap; }
           <property name="orientation" >
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeHint" >
+          <property name="sizeHint" stdset="0" >
            <size>
             <width>20</width>
             <height>56</height>
@@ -3459,6 +3290,14 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="consoleTab" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>714</width>
+         <height>412</height>
+        </rect>
+       </property>
        <attribute name="title" >
         <string>Console</string>
        </attribute>
@@ -3466,16 +3305,7 @@ p, li { white-space: pre-wrap; }
         <property name="spacing" >
          <number>0</number>
         </property>
-        <property name="leftMargin" >
-         <number>0</number>
-        </property>
-        <property name="topMargin" >
-         <number>0</number>
-        </property>
-        <property name="rightMargin" >
-         <number>0</number>
-        </property>
-        <property name="bottomMargin" >
+        <property name="margin" >
          <number>0</number>
         </property>
         <item>
@@ -3499,16 +3329,7 @@ p, li { white-space: pre-wrap; }
         <property name="spacing" >
          <number>0</number>
         </property>
-        <property name="leftMargin" >
-         <number>6</number>
-        </property>
-        <property name="topMargin" >
-         <number>6</number>
-        </property>
-        <property name="rightMargin" >
-         <number>6</number>
-        </property>
-        <property name="bottomMargin" >
+        <property name="margin" >
          <number>6</number>
         </property>
         <item>
@@ -3517,7 +3338,8 @@ p, li { white-space: pre-wrap; }
            <string>Run the selected MSX (power on)</string>
           </property>
           <property name="icon" >
-           <iconset>play.png</iconset>
+           <iconset>
+            <normaloff>play.png</normaloff>play.png</iconset>
           </property>
           <property name="checkable" >
            <bool>true</bool>
@@ -3530,7 +3352,8 @@ p, li { white-space: pre-wrap; }
            <string>Pause the MSX</string>
           </property>
           <property name="icon" >
-           <iconset>pause.png</iconset>
+           <iconset>
+            <normaloff>pause.png</normaloff>pause.png</iconset>
           </property>
           <property name="checkable" >
            <bool>true</bool>
@@ -3543,7 +3366,8 @@ p, li { white-space: pre-wrap; }
            <string>Stop running the MSX (power off)</string>
           </property>
           <property name="icon" >
-           <iconset>stop.png</iconset>
+           <iconset>
+            <normaloff>stop.png</normaloff>stop.png</iconset>
           </property>
           <property name="checkable" >
            <bool>true</bool>
@@ -3559,7 +3383,8 @@ p, li { white-space: pre-wrap; }
            <string>Set speed to maximum</string>
           </property>
           <property name="icon" >
-           <iconset>forward.png</iconset>
+           <iconset>
+            <normaloff>forward.png</normaloff>forward.png</iconset>
           </property>
           <property name="checkable" >
            <bool>true</bool>
@@ -3573,7 +3398,7 @@ p, li { white-space: pre-wrap; }
         <property name="orientation" >
          <enum>Qt::Horizontal</enum>
         </property>
-        <property name="sizeHint" >
+        <property name="sizeHint" stdset="0" >
          <size>
           <width>286</width>
           <height>44</height>
@@ -3600,8 +3425,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>562</width>
-     <height>28</height>
+     <width>736</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Help" >
@@ -3628,13 +3453,19 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_SaveSettingsAs" />
     <addaction name="action_AutoSaveSettings" />
     <addaction name="action_LoadSettings" />
+    <addaction name="separator" />
+    <addaction name="action_QuickLoadState" />
+    <addaction name="action_QuickSaveState" />
+    <addaction name="action_LoadState" />
+    <addaction name="action_SaveState" />
+    <addaction name="separator" />
     <addaction name="action_Quit" />
    </widget>
    <widget class="QMenu" name="menuTools" >
     <property name="title" >
      <string>&amp;Tools</string>
     </property>
-    <addaction name="action_Start_Debugger" />
+    <addaction name="action_StartDebugger" />
     <addaction name="separator" />
     <addaction name="action_Diskmanipulator" />
     <addaction name="separator" />
@@ -3650,7 +3481,16 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuTools" />
    <addaction name="menu_Help" />
   </widget>
-  <widget class="QStatusBar" name="statusbar" />
+  <widget class="QStatusBar" name="statusbar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>535</y>
+     <width>736</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
   <action name="action_AboutCatapult" >
    <property name="text" >
     <string>&amp;About openMSX Catapult</string>
@@ -3684,7 +3524,7 @@ p, li { white-space: pre-wrap; }
     <string>&amp;Configuration...</string>
    </property>
   </action>
-  <action name="action_Start_Debugger" >
+  <action name="action_StartDebugger" >
    <property name="enabled" >
     <bool>false</bool>
    </property>
@@ -3749,6 +3589,26 @@ p, li { white-space: pre-wrap; }
   <action name="action_LoadSettings" >
    <property name="text" >
     <string>Load Settings...</string>
+   </property>
+  </action>
+  <action name="action_QuickLoadState" >
+   <property name="text" >
+    <string>Quick Load State</string>
+   </property>
+  </action>
+  <action name="action_QuickSaveState" >
+   <property name="text" >
+    <string>Quick Save State</string>
+   </property>
+  </action>
+  <action name="action_LoadState" >
+   <property name="text" >
+    <string>Load State...</string>
+   </property>
+  </action>
+  <action name="action_SaveState" >
+   <property name="text" >
+    <string>Save State...</string>
    </property>
   </action>
  </widget>
