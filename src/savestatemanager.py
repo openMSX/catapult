@@ -88,7 +88,7 @@ class SaveStateManager(object):
 		self.__bridge.command('loadstate',
 			self.__saveStateListWidget.currentItem().text()
 			)(
-				lambda: self.__saveStateDialog.accept(),
+				lambda dummy: self.__saveStateDialog.accept(),
 				lambda message: self.__generalFailHandler(message, 'Problem loading state')
 			)
 
