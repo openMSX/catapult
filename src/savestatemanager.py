@@ -31,12 +31,15 @@ class SaveStateManager(object):
 		self.__saveStateButton = ui.saveStateButton
 		self.__loadStateButton = ui.loadStateButton
 		self.__cancelButton = ui.cancelButton
+		self.__previewLabel = ui.previewLabel
 
 		connect(self.__cancelButton, 'clicked()', lambda: dialog.reject())
 		connect(self.__deleteStateButton, 'clicked()', self.__delete)
 		connect(self.__loadStateButton, 'clicked()', self.__load)
 		connect(self.__saveStateButton, 'clicked()', self.__save)
 		connect(self.__newFileLineEdit, 'returnPressed()', self.__save)
+		connect(self.__saveStateListWidget, 'itemSelectionChanged()',
+			self.__updatePreview)
 
 	def exec_(self, mode, parent = None):
 		dialog = self.__saveStateDialog
@@ -56,6 +59,7 @@ class SaveStateManager(object):
 
 		self.__newFileLineEdit.clear()
 		self.__refreshList()
+		self.__clearPreview()
 
 		#dialog.setParent(parent) # why does this hang up the app?
 		return dialog.exec_()
@@ -95,7 +99,7 @@ class SaveStateManager(object):
 	def __save(self):
 		selected = self.__newFileLineEdit.text()
 		if selected == '':
-			currentItem =  self.__saveStateListWidget.currentItem()
+			currentItem = self.__saveStateListWidget.currentItem()
 			if currentItem == None:
 				return
 			selected = currentItem.text()
@@ -123,3 +127,25 @@ class SaveStateManager(object):
 			self.__saveStateDialog
 			)
 		messageBox.show()
+
+	def __updatePreview(self):
+		currentItem = self.__saveStateListWidget.currentItem()
+		if currentItem == None:
+			self.__clearPreview()
+			return
+		selected = currentItem.text()
+		
+		# get filename from openMSX
+		self.__bridge.command('return',
+			'"$::env(OPENMSX_USER_DATA)/../savestates/' + selected + '.png"'
+			)(self.__updatePreview2)
+
+	def __updatePreview2(self, fileName):
+		image = QtGui.QImage(fileName)
+		if image.isNull():
+			self.__clearPreview()
+		else:
+			self.__previewLabel.setPixmap(QtGui.QPixmap.fromImage(image))
+
+	def __clearPreview(self):
+		self.__previewLabel.setText('No preview available...')

@@ -1,5 +1,9 @@
 $Id$
 
+2008-09-24 Manuel Bilderbeek <manuel@msxnet.org>
+	* Added graphical preview (fixed image size of 320x240) of save state
+	  in save state manager. Just as cool as the OSD variant :)
+
 2008-09-21 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added Quick Load and Quick Save of state in File dialog
 	* Added basic save state manager (load, save, delete), text only
