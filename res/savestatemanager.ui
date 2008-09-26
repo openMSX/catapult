@@ -26,6 +26,9 @@
        </item>
        <item>
         <widget class="QListWidget" name="saveStateListWidget" >
+         <property name="toolTip" >
+          <string>Save state files</string>
+         </property>
          <property name="editTriggers" >
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
@@ -59,6 +62,9 @@
          <height>240</height>
         </size>
        </property>
+       <property name="toolTip" >
+        <string>Preview of selected save state file</string>
+       </property>
        <property name="autoFillBackground" >
         <bool>true</bool>
        </property>
@@ -89,7 +95,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="newFileLineEdit" />
+       <widget class="QLineEdit" name="newFileLineEdit" >
+        <property name="toolTip" >
+         <string>Type a new save state file name</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -114,6 +124,9 @@
        <property name="focusPolicy" >
         <enum>Qt::ClickFocus</enum>
        </property>
+       <property name="toolTip" >
+        <string>Delete currently selected save state file</string>
+       </property>
        <property name="text" >
         <string>Delete</string>
        </property>
@@ -127,6 +140,9 @@
        <property name="enabled" >
         <bool>true</bool>
        </property>
+       <property name="toolTip" >
+        <string>Save using new file name or (if none provided) over the selected save state file</string>
+       </property>
        <property name="text" >
         <string>Save</string>
        </property>
@@ -137,6 +153,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="loadStateButton" >
+       <property name="toolTip" >
+        <string>Load selected save state file</string>
+       </property>
        <property name="text" >
         <string>Load</string>
        </property>
