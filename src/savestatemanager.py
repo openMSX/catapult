@@ -89,8 +89,14 @@ class SaveStateManager(object):
 			)
 
 	def __load(self):
+		currentItem = self.__saveStateListWidget.currentItem()
+		if currentItem == None:
+			return
+		selected = currentItem.text()
+		if selected == '':
+			return
 		self.__bridge.command('loadstate',
-			self.__saveStateListWidget.currentItem().text()
+			selected
 			)(
 				lambda dummy: self.__saveStateDialog.accept(),
 				lambda message: self.__generalFailHandler(message, 'Problem loading state')
