@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>522</width>
-    <height>348</height>
+    <width>609</width>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -14,77 +14,39 @@
   </property>
   <layout class="QGridLayout" name="gridLayout" >
    <item row="0" column="0" >
-    <layout class="QHBoxLayout" name="horizontalLayout_3" >
+    <layout class="QVBoxLayout" name="verticalLayout" >
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout" >
-       <item>
-        <widget class="QLabel" name="label_2" >
-         <property name="text" >
-          <string>Select a save state:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="saveStateListWidget" >
-         <property name="toolTip" >
-          <string>Save state files</string>
-         </property>
-         <property name="editTriggers" >
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
-         <property name="showDropIndicator" stdset="0" >
-          <bool>false</bool>
-         </property>
-         <property name="alternatingRowColors" >
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QLabel" name="label_2" >
+       <property name="text" >
+        <string>Select a save state:</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QLabel" name="previewLabel" >
+      <widget class="QListWidget" name="saveStateListWidget" >
        <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="minimumSize" >
-        <size>
-         <width>320</width>
-         <height>240</height>
-        </size>
-       </property>
-       <property name="maximumSize" >
-        <size>
-         <width>320</width>
-         <height>240</height>
-        </size>
-       </property>
        <property name="toolTip" >
-        <string>Preview of selected save state file</string>
+        <string>Save state files</string>
        </property>
-       <property name="autoFillBackground" >
+       <property name="editTriggers" >
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0" >
+        <bool>false</bool>
+       </property>
+       <property name="alternatingRowColors" >
         <bool>true</bool>
-       </property>
-       <property name="frameShape" >
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="text" >
-        <string>No preview available...</string>
-       </property>
-       <property name="scaledContents" >
-        <bool>true</bool>
-       </property>
-       <property name="alignment" >
-        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="1" column="0" >
+   <item row="1" column="0" colspan="2" >
     <widget class="QWidget" native="1" name="newFileWidget" >
      <layout class="QHBoxLayout" name="horizontalLayout_2" >
       <item>
@@ -104,7 +66,7 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="0" >
+   <item row="2" column="0" colspan="2" >
     <layout class="QHBoxLayout" name="horizontalLayout" >
      <item>
       <spacer name="horizontalSpacer" >

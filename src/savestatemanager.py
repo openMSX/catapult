@@ -1,6 +1,6 @@
 # $Id$
 
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 from qt_utils import connect
 from player import PlayState
 
@@ -33,7 +33,12 @@ class SaveStateManager(object):
 		self.__saveStateButton = ui.saveStateButton
 		self.__loadStateButton = ui.loadStateButton
 		self.__cancelButton = ui.cancelButton
-		self.__previewLabel = ui.previewLabel
+
+		# insert custom widget into generated gridlayout
+		# (be careful, this may break if you change the layout...!)
+		self.__imageView = ScaledImageView()
+		self.__imageView.setText('No preview available...')
+		ui.gridLayout.addWidget(self.__imageView, 0, 1, 1, 1)
 
 		connect(self.__cancelButton, 'clicked()', lambda: dialog.reject())
 		connect(self.__deleteStateButton, 'clicked()', self.__delete)
@@ -168,7 +173,60 @@ class SaveStateManager(object):
 		if image.isNull():
 			self.__clearPreview()
 		else:
-			self.__previewLabel.setPixmap(QtGui.QPixmap.fromImage(image))
+			self.__imageView.setImage(image)
 
 	def __clearPreview(self):
-		self.__previewLabel.setText('No preview available...')
+		self.__imageView.setImage(None)
+
+class ScaledImageView(QtGui.QWidget):
+	def __init__ (self, *args):
+		QtGui.QWidget.__init__(self, *args)
+		self.setSizePolicy(QtGui.QSizePolicy(
+			QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding
+			))
+		self.__image = None
+		self.__scaledImage = None
+		self.__text = ''
+
+	def setImage(self, image):
+		self.__image = image
+		if image != None:
+			self.__updateScaledImage()
+		else:
+			self.__scaledImage = None
+		self.update()
+
+	def setText(self, text):
+		self.__text = text
+		self.update()
+
+	def sizeHint(self):
+		if self.__scaledImage != None:
+			return self.__scaledImage.size()
+		else:
+			if self.__image == None:
+				return QtCore.QSize(320, 240)
+			else:
+				return self.__image.size()
+
+	def resizeEvent(self, event):
+		if self.__image == None:
+			return
+		self.__updateScaledImage()
+
+	def __updateScaledImage(self):
+		self.__scaledImage = self.__image.scaled(self.size(),
+			QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+
+	def paintEvent(self, event):
+		painter = QtGui.QPainter(self)
+		
+		if self.__scaledImage != None:
+			xpos = (self.width() - self.__scaledImage.width()) / 2
+			ypos = (self.height() - self.__scaledImage.height()) / 2
+		
+			# draw the image on the widget
+			painter.drawImage(xpos, ypos, self.__scaledImage)
+		else:
+			painter.drawText(QtCore.QRect(0, 0, self.width(), self.height()),
+				QtCore.Qt.AlignCenter, self.__text)

@@ -4,6 +4,7 @@ $Id$
 	* Go to play state before loading savestate, which is what you expect.
 	  TODO: when loading state fails, you can get a nasty blink
 	  effect (openMSX window becomes visible for a short time). Fix this.
+	* Use custom widget to scale preview of save state.
 
 2008-09-24 Manuel Bilderbeek <manuel@msxnet.org>
 	* Added graphical preview (fixed image size of 320x240) of save state
