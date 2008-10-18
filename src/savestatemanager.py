@@ -2,11 +2,13 @@
 
 from PyQt4 import QtGui
 from qt_utils import connect
+from player import PlayState
 
 class SaveStateManager(object):
 
-	def __init__(self, bridge):
+	def __init__(self, bridge, playState):
 		self.__bridge = bridge
+		self.__playState = playState
 		
 		self.__saveStateListWidget = None
 		self.__newFileLineEdit = None
@@ -95,11 +97,26 @@ class SaveStateManager(object):
 		selected = currentItem.text()
 		if selected == '':
 			return
+		# TODO: when loading fails, while state was STOP,
+		# you see a nasty flicker (openMSX window becomes
+		# visible for a short amount of time). Fix this!
+
+		# save old play state
+		state = self.__playState.getState()
+		# set to play *before* loading the state
+		self.__playState.setState(PlayState.play)
+
 		self.__bridge.command('loadstate',
 			selected
 			)(
 				lambda dummy: self.__saveStateDialog.accept(),
-				lambda message: self.__generalFailHandler(message, 'Problem loading state')
+				lambda message: failHelper(message)
+			)
+		def failHelper(message):
+			# failed, restore play state
+			self.__playState.setState(state)
+			self.__generalFailHandler(
+				message, 'Problem loading state'
 			)
 
 	def __save(self):

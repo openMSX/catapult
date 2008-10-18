@@ -53,6 +53,7 @@ class PlayState(QtCore.QObject):
 
 	def __init__(self, settingsManager, ui):
 		QtCore.QObject.__init__(self)
+		self.__state = None
 
 		self.__buttonMap = {
 			self.play: ui.playButton,
@@ -108,9 +109,9 @@ class PlayState(QtCore.QObject):
 
 	@QtCore.pyqtSignature('')
 	def update(self):
-		newState = self.computeState()
+		self.__state = self.computeState()
 		for state, button in self.__buttonMap.iteritems():
-			button.setChecked(newState == state)
+			button.setChecked(self.__state == state)
 
 	def setState(self, newState):
 		# TODO: Disable button update while settings are being changed by
@@ -122,6 +123,9 @@ class PlayState(QtCore.QObject):
 			self.forward: self.do_forward,
 		}[newState]()
 		self.update()
+
+	def getState(self):
+		return self.__state
 
 	def do_play(self):
 		self.__throttleSetting.setValue(True)

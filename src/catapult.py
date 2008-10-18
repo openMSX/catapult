@@ -126,7 +126,8 @@ class MainWindow(QtGui.QMainWindow):
 			self.__autorun = Autorun(self, settingsManager, bridge)
 		self.__paletteeditor = PaletteEditor(bridge)
 		self.__inputtext = InputText(bridge)
-		self.__saveStateManager = SaveStateManager(bridge)
+		self.__playState = PlayState(settingsManager, ui)
+		self.__saveStateManager = SaveStateManager(bridge, self.__playState)
 		self.__connectMenuActions(ui)
 
 		bridge.logLine.connect(self.logLine)
@@ -138,8 +139,6 @@ class MainWindow(QtGui.QMainWindow):
 			'fullscreen', self.__updateSpecialSettings
 			)
 		connect(ui.fullscreen, 'clicked(bool)', self.__goFullscreen)
-
-		self.__playState = PlayState(settingsManager, ui)
 
 		connect(ui.extensionButton, 'clicked()',
 			extensionManager.chooseExtension)
@@ -521,18 +520,30 @@ class MainWindow(QtGui.QMainWindow):
 		messageBox.show()
 
 	def __quickLoadState(self):
+		# TODO: when loading fails, while state was STOP,
+		# you see a nasty flicker (openMSX window becomes
+		# visible for a short amount of time). Fix this!
+
+		# save old play state
+		state = self.__playState.getState()
+		# set to play *before* loading the state
+		self.__playState.setState(PlayState.play)
 		self.__bridge.command('loadstate')(
 			None,
-			lambda message: self.__generalFailHandler(
-				message, 'Problem Quick-Loading State'
-				)
+			lambda message: failHelper(message)
 		)
+		def failHelper(message):
+			# failed, restore play state
+			self.__playState.setState(state)
+			self.__generalFailHandler(
+				message, 'Problem quick-loading state'
+			)
 	
 	def __quickSaveState(self):
 		self.__bridge.command('savestate')(
 			None,
 			lambda message: self.__generalFailHandler(
-				message, 'Problem Quick-Saving State'
+				message, 'Problem quick-saving state'
 				)
 		)
 	
