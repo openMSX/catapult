@@ -4,6 +4,24 @@ from PyQt4 import QtCore, QtGui
 from preferences import preferences
 from qt_utils import connect
 
+# Some useful notes on how to improve things:
+# (not necessarily in this file, though!)
+# to check if executable: os.access(path, os.X_OK)
+# to expand PATH: os.environ['PATH'].split(os.path.pathsep)
+# to find the Program Files dir on Windows:
+# import _winreg
+#key = _winreg.OpenKey(
+#	_winreg.HKEY_LOCAL_MACHINE,
+#	"Software\\Microsoft\\Windows\\CurrentVersion"
+#	)
+#value, type = _winreg.QueryValueEx(key, "ProgramFilesDir")
+#print "Your Program Files dir is here: %s" % value
+# to check if we're on windows:
+#if hasattr(sys, 'getwindowsversion'):
+#	 print 'Windows found'
+#else:
+#	print 'Windows not found'
+
 class ConfigDialog(object):
 
 	def __init__(self):
