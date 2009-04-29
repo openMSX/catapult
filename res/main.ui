@@ -17,14 +17,6 @@
     <normaloff>logo.png</normaloff>logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>24</y>
-     <width>736</width>
-     <height>511</height>
-    </rect>
-   </property>
    <layout class="QGridLayout" >
     <item row="0" column="0" >
      <widget class="QTabWidget" name="tabWidget" >
@@ -32,14 +24,6 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="mediaTab" >
-       <property name="geometry" >
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>714</width>
-         <height>412</height>
-        </rect>
-       </property>
        <attribute name="title" >
         <string>Media</string>
        </attribute>
@@ -204,6 +188,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="mouseTracking" >
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
            </layout>
@@ -220,14 +207,6 @@
              <number>0</number>
             </property>
             <widget class="QWidget" name="infoPage" >
-             <property name="geometry" >
-              <rect>
-               <x>2</x>
-               <y>2</y>
-               <width>434</width>
-               <height>230</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <property name="margin" >
                <number>9</number>
@@ -251,14 +230,6 @@
              </layout>
             </widget>
             <widget class="QWidget" name="diskPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -432,14 +403,6 @@
              </layout>
             </widget>
             <widget class="QWidget" name="cartPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -634,14 +597,6 @@
              </layout>
             </widget>
             <widget class="QWidget" name="cassettePage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QVBoxLayout" >
@@ -942,14 +897,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="hdPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QVBoxLayout" >
               <property name="spacing" >
                <number>6</number>
@@ -1074,14 +1021,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="cdPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QVBoxLayout" >
               <property name="spacing" >
                <number>6</number>
@@ -1236,14 +1175,6 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="connectorTab" >
-       <property name="geometry" >
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>714</width>
-         <height>412</height>
-        </rect>
-       </property>
        <attribute name="title" >
         <string>Connectors</string>
        </attribute>
@@ -1294,14 +1225,6 @@ p, li { white-space: pre-wrap; }
              <number>0</number>
             </property>
             <widget class="QWidget" name="infoConnectorPage" >
-             <property name="geometry" >
-              <rect>
-               <x>2</x>
-               <y>2</y>
-               <width>690</width>
-               <height>180</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <property name="margin" >
                <number>9</number>
@@ -1325,14 +1248,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="audioInPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -1430,14 +1345,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="casPortPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -1535,14 +1442,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="joyPortPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -1640,14 +1539,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="printerPortPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -1792,14 +1683,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="RS232Page" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -1897,14 +1780,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="Y8950KbdPortPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -1999,14 +1874,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="MIDIinPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -2104,14 +1971,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="MIDIoutPage" >
-             <property name="geometry" >
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
              <layout class="QGridLayout" >
               <item row="0" column="0" >
                <layout class="QHBoxLayout" >
@@ -2225,14 +2084,6 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="videoTab" >
-       <property name="geometry" >
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>714</width>
-         <height>412</height>
-        </rect>
-       </property>
        <attribute name="title" >
         <string>Video</string>
        </attribute>
@@ -2702,14 +2553,6 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="audioTab" >
-       <property name="geometry" >
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>714</width>
-         <height>412</height>
-        </rect>
-       </property>
        <attribute name="title" >
         <string>Audio</string>
        </attribute>
@@ -2935,14 +2778,6 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="miscTab" >
-       <property name="geometry" >
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>714</width>
-         <height>412</height>
-        </rect>
-       </property>
        <attribute name="title" >
         <string>Misc</string>
        </attribute>
@@ -3290,14 +3125,6 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="consoleTab" >
-       <property name="geometry" >
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>714</width>
-         <height>412</height>
-        </rect>
-       </property>
        <attribute name="title" >
         <string>Console</string>
        </attribute>
@@ -3481,16 +3308,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuTools" />
    <addaction name="menu_Help" />
   </widget>
-  <widget class="QStatusBar" name="statusbar" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>535</y>
-     <width>736</width>
-     <height>24</height>
-    </rect>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar" />
   <action name="action_AboutCatapult" >
    <property name="text" >
     <string>&amp;About openMSX Catapult</string>

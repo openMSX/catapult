@@ -44,6 +44,10 @@ class MediaSwitcher(QtCore.QObject):
 			ui.mediaList, 'doubleClicked(QModelIndex)',
 			self.browseMedia
 			)
+		connect(
+			ui.mediaList, 'entered(QModelIndex)',
+			self.showMediaToolTip
+			)
 
 		# Connect signals of media panels:
 		# It is essential to keep the references, otherwise the classes are
@@ -105,6 +109,19 @@ class MediaSwitcher(QtCore.QObject):
 		# Switch page.
 		self.__ui.mediaStack.setCurrentWidget(self.__getPageBySlot(slot))
 		self.__getHandlerBySlot(slot).signalSetVisible()
+
+	@QtCore.pyqtSignature('QModelIndex')
+	def showMediaToolTip(self, index):
+		# Find out which media entry has become active.
+		mediaSlotName = str(index.data(QtCore.Qt.UserRole).toString())
+		text = ''
+		if mediaSlotName != '':
+			slot = self.__mediaModel.getMediaSlotByName(
+				mediaSlotName, self.__machineManager.getCurrentMachineId()
+				)
+			if slot.getMedium() != None:
+				text = slot.getMedium().getPath()
+		self.__ui.mediaList.setToolTip(text)
 
 	@QtCore.pyqtSignature('QModelIndex')
 	def browseMedia(self, index):
@@ -308,6 +325,7 @@ class MediaHandler(QtCore.QObject):
 		self._descriptionLabel.setText(description)
 
 		self._historyBox.lineEdit().setText(path)
+		self._historyBox.lineEdit().setToolTip(path)
 
 	def _getLabelText(self, identifier):
 		raise NotImplementedError
