@@ -94,15 +94,7 @@ class ConnectorModel(QtCore.QAbstractListModel):
 
 	def __connectorDescriptionReply(self, connector, description):
 		self.__readyCounter.decr()
-		if connector.startswith('joyport'):
-			realDescription = 'Joystick Port %s' % connector[-1].upper()
-		elif connector.startswith('joytap_port'):
-			realDescription = 'Joy Tap Port %s' % connector[-1]
-		elif connector.startswith('ninjatap'):
-			realDescription = 'Ninja Tap Port %s' % connector[-1]
-		else:
-			realDescription = description
-		self.__connectorDescriptions[connector] = realDescription.rstrip('.')
+		self.__connectorDescriptions[connector] = description
 
 	def __connectorClassReply(self, connector, connectorClass):
 		self.__readyCounter.decr()
