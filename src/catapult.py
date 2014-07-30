@@ -262,6 +262,10 @@ class MainWindow(QtGui.QMainWindow):
 		connect(ui.resetMaxFrameSkipButton, 'clicked()',
 			lambda: settingsManager.restoreToDefault('maxframeskip'))
 		settingsManager.registerSetting('z80_freq', settings.IntegerSetting)
+		# TODO: Z80 frequency can change due to MSX software (when it's locked)
+		# display the actual frequency when it's locked, not the setting
+		# (but may require openMSX changes to notify about frequency change,
+		# otherwise we would have to poll for "machine_info z80_freq")
 		settingsManager.connectSetting('z80_freq', ui.Z80FrequencySpinBox)
 		settingsManager.connectSetting('z80_freq', ui.Z80FrequencySlider)
 		settingsManager.registerSetting('z80_freq_locked', settings.BooleanSetting)
