@@ -45,11 +45,6 @@ class HardwareModel(QtCore.QAbstractTableModel):
 			lambda *info: self.__infoReply(item, info),
 			lambda message: self.__infoFailed(item, message)
 			)
-		if self._testable:
-			self._bridge.command('create_machine')(
-				lambda machineId, name = item: self.__machineIdReply(machineId, name),
-				None
-				)
 
 	def __machineIdReply(self, machineId, name):
 		self._bridge.addMachineToIgnore(machineId)
@@ -63,7 +58,12 @@ class HardwareModel(QtCore.QAbstractTableModel):
 	def __infoReply(self, name, info):
 		infoDict = dict(info[i : i + 2] for i in xrange(0, len(info), 2))
 		self._tempInfoDict = infoDict
-		if not self._testable:
+		if self._testable:
+			self._bridge.command('create_machine')(
+				lambda machineId, name_ = name: self.__machineIdReply(machineId, name_),
+				None
+				)
+		else:
 			self.__testEnd(name)
 
 	def __infoFailed(self, name, message):
