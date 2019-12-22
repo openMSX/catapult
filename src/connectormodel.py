@@ -219,7 +219,7 @@ class ConnectorModel(QtCore.QAbstractListModel):
 				'connector "%s" and machine "%s".'\
 				% ( action, connector, machineId )
 
-	def __connectorReply(self, connector, pluggable, flags = ''):
+	def __connectorReply(self, connector, pluggable = '', flags = ''):
 		print 'connector update %s to "%s" flags "%s"'\
 			% ( connector, pluggable, flags )
 		if connector[-1] == ':':
