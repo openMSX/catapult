@@ -38,7 +38,6 @@ class ConnectorModel(QtCore.QAbstractListModel):
 		self.__pluggableDescriptions = {'--empty--': 'Unplugged'}
 		bridge.registerInitial(self.__updateAll)
 		bridge.registerUpdate('plug', self.__connectorPlugged)
-		bridge.registerUpdate('unplug', self.__connectorUnplugged)
 		bridge.registerUpdate('connector', self.__updateConnectorList)
 
 		self.__readyCounter = ReadyCounter(self.initialized)
@@ -133,15 +132,13 @@ class ConnectorModel(QtCore.QAbstractListModel):
 		return self.__connectorClasses[connector]
 
 	def __connectorPlugged(self, connector, machineId, pluggable):
-		print 'Connector %s got plugged with a %s on machine %s' % (connector, \
-			pluggable, machineId)
+		if pluggable:
+			print 'Connector %s got plugged with a %s on machine %s' % (connector, \
+				pluggable, machineId)
+		else:
+			print 'Connector %s got unplugged on machine %s' % (connector, machineId)
 		# TODO: shouldn't we do something with the machineId?
 		self.__setConnector(connector, pluggable)
-
-	def __connectorUnplugged(self, connector, machineId, dummy):
-		print 'Connector %s got unplugged on machine %s' % (connector, machineId)
-		# TODO: shouldn't we do something with the machineId?
-		self.__setConnector(connector, '')
 
 	def queryConnector(self, connector):
 		'''Queries the connector info of the specified connector'''

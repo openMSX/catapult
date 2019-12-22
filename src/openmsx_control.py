@@ -52,7 +52,7 @@ class ControlBridge(QtCore.QObject):
 		connection.connectionClosed.connect(self.connectionClosed)
 		connection.start()
 		for updateType in self.__updateHandlers.iterkeys():
-			self.sendCommandRaw('update enable %s' % updateType)
+			self.sendCommandRaw('openmsx_update enable %s' % updateType)
 		for handler in self.__initialHandlers:
 			handler()
 
@@ -86,7 +86,7 @@ class ControlBridge(QtCore.QObject):
 		Only one handler per type is supported.
 		'''
 		# TODO: Along the way, we will probably need these updates:
-		#       'led', 'setting', 'plug', 'unplug', 'media', 'status'
+		#       'led', 'setting', 'plug', 'media', 'status'
 		assert updateType not in self.__updateHandlers, updateType
 		# TODO: How to deal with connected/not-connected?
 		assert self.__connection is None, 'register before connecting!'
