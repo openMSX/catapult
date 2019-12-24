@@ -32,6 +32,9 @@ CHANGELOG_REVISION=\
 	$(shell sed -ne "s/\$$Id: ChangeLog \([^ ]*\).*/\1/p" ChangeLog)
 VERSION=prerelease-$(CHANGELOG_REVISION)
 
+# Default to build
+build:
+
 run: build
 ifeq ($(OS),Darwin)
 	open derived/openMSX_Catapult.app

@@ -33,7 +33,7 @@ corresponding to your system. You can find these in "custom.py".
 If your system's default Python version is not Python 2.5, then change the line
 "python catapult.py" in the Makefile into "python2.5 catapult.py".
 
-Then to start Catapult, just run "make".
+Then to start Catapult, just run "make run".
 
 If you have problems like: KeyError: 'system/executable', you're hitting a
 small problem in this Catapult that has not been resolved yet. To fix it in
