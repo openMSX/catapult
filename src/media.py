@@ -413,7 +413,7 @@ class DiskHandler(PatchableMediaHandler):
 		self._ui.diskIPSLabel.setText('(' + str(amount) + ' selected)')
 
 	def browseDirectory(self):
-		self.insert(QtGui.QFileDialog.getExistingDirectory(
+		self._pathSelected(QtGui.QFileDialog.getExistingDirectory(
 			self._ui.mediaStack, 'Select Directory',
 			self._historyBox.itemText(0) or QtCore.QDir.homePath()
 			))
