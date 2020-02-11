@@ -1,11 +1,10 @@
 # $Id$
 
-from PyQt4 import QtCore
+from PyQt5 import QtCore
+from PyQt5.QtCore import pyqtSignal, QModelIndex
 from bisect import bisect
 from openmsx_utils import tclEscape, EscapedStr
 import os.path
-
-from qt_utils import QtSignal, Signal
 
 class Medium(QtCore.QObject):
 	'''All data that belongs to a medium is centralized in this class.
@@ -117,7 +116,7 @@ class CassetteMedium(Medium):
 		return 'cassette' + Medium.__str__(self)
 
 class MediaSlot(QtCore.QObject):
-	slotDataChanged = Signal('PyQt_PyObject') # slot
+	slotDataChanged = pyqtSignal(object) # slot
 	
 	@staticmethod
 	def create(slotName, bridge):
@@ -144,14 +143,14 @@ class MediaSlot(QtCore.QObject):
 		self._bridge.command(self.__name)(self.__mediumQueryReply)
 
 	def __mediumQueryReply(self, slotName, path, flags = ''):
-		print 'media query result of %s "%s" flags "%s"' % (
+		print('media query result of %s "%s" flags "%s"' % (
 			slotName, path, flags
-			)
+			))
 		if slotName[-1] == ':':
 			slotName = slotName[ : -1]
 		else:
-			print 'medium slot query reply does not start with "<medium>:", '\
-				'but with "%s"' % slotName
+			print('medium slot query reply does not start with "<medium>:", '\
+				'but with "%s"' % slotName)
 			return
 		assert slotName == self.__name, 'medium slot reply not for ' \
 			'this slot? Got %s, expected %s.' % (slotName, self.__name)
@@ -175,15 +174,15 @@ class MediaSlot(QtCore.QObject):
 		if medium == self._medium:
 			return False
 		if medium is None:
-			print 'ejecting from %s: %s' % (self.__name, self._medium)
+			print('ejecting from %s: %s' % (self.__name, self._medium))
 			self._bridge.command(self.__name, 'eject')(
 				None, errorHandler
 				)
 		else:
 			optionList = self._createOptionList(medium)
-			print 'insert into %s: %s (with options: %s)' % (self.__name,
+			print('insert into %s: %s (with options: %s)' % (self.__name,
 				medium, str(optionList)
-				)
+				))
 			self._bridge.command(self.__name, 'insert',
 				EscapedStr(tclEscape(medium.getPath())), *optionList)(
 				None, lambda message, realHander = errorHandler: \
@@ -206,10 +205,10 @@ class MediaSlot(QtCore.QObject):
 	def getMedium(self):
 		return self._medium
 
-	def __cmp__(self, other):
+	def __lt__(self, other):
 		# pylint: disable-msg=W0212
 		return not isinstance(other, MediaSlot) \
-			or cmp(self.__name, other.__name)
+			or self.__name < other.__name
 
 	def __str__(self):
 		return 'MediaSlot with name %s and inserted medium %s' % (self.__name,
@@ -227,7 +226,7 @@ class MediaSlotWithPatchableMedia(MediaSlot):
 
 class CassetteDeck(MediaSlot):
 
-	stateChanged = Signal('QString')
+	stateChanged = pyqtSignal(str)
 	
 	def __init__(self, name, bridge):
 		MediaSlot.__init__(self, name, bridge)
@@ -299,10 +298,10 @@ class CartridgeSlot(MediaSlotWithPatchableMedia):
 		return optionList
 
 class MediaModel(QtCore.QAbstractListModel):
-	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
-	mediaSlotRemoved = Signal('QString', 'QString')
-	mediaSlotAdded = Signal('QString', 'QString')
-	connected = Signal()
+	dataChanged = pyqtSignal(QModelIndex, QModelIndex)
+	mediaSlotRemoved = pyqtSignal(str, str)
+	mediaSlotAdded = pyqtSignal(str, str)
+	connected = pyqtSignal()
 
 	def __init__(self, bridge, machineManager):
 		QtCore.QAbstractListModel.__init__(self)
@@ -355,7 +354,7 @@ class MediaModel(QtCore.QAbstractListModel):
 			if slots[0].startswith(mediumName):
 				break
 		else:
-			print 'media slot "%s" not recognised' % slots[0]
+			print('media slot "%s" not recognised' % slots[0])
 			return
 		for slot in slots:
 			self.__mediaSlotAdded(slot,
@@ -365,12 +364,12 @@ class MediaModel(QtCore.QAbstractListModel):
 
 
 	def __machineAdded(self, machineId):
-		print 'Adding media admin for machine with id ', machineId
-		self.__mediaSlotListForMachine[unicode(machineId)] = []
+		print('Adding media admin for machine with id ', machineId)
+		self.__mediaSlotListForMachine[str(machineId)] = []
 
 	def __machineRemoved(self, machineId):
-		print 'Removing media admin for machine with id ', machineId
-		del self.__mediaSlotListForMachine[unicode(machineId)]
+		print('Removing media admin for machine with id ', machineId)
+		del self.__mediaSlotListForMachine[str(machineId)]
 
 	def __mediaSlotAdded(self, slotName, machineId):
 		slotList = self.__mediaSlotListForMachine[machineId]
@@ -392,7 +391,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		for index, slot in enumerate(slotList):
 			if slot.getName() == slotName:
 				parent = QtCore.QModelIndex() # invalid model index
-				print 'Removing "%s" for machine %s' % (slot, machineId)
+				print('Removing "%s" for machine %s' % (slot, machineId))
 				self.beginRemoveRows(parent, index, index)
 				del slotList[index]
 				self.endRemoveRows()
@@ -412,7 +411,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		if slot == self.__virtualDriveSlot:
 			return
 		# find this slot and emit a signal with its index
-		for slotList in self.__mediaSlotListForMachine.itervalues():
+		for slotList in self.__mediaSlotListForMachine.values():
 			for index, iterSlot in enumerate(slotList):
 				if slot is iterSlot:
 					modelIndex = self.createIndex(index, 0)
@@ -426,9 +425,9 @@ class MediaModel(QtCore.QAbstractListModel):
 		elif action == 'remove':
 			self.__mediaSlotRemoved(hardware, machineId)
 		else:
-			print 'received update for unsupported action "%s" for ' \
+			print('received update for unsupported action "%s" for ' \
 				'hardware "%s" on machine "%s".' \
-				% ( action, hardware, machineId )
+				% ( action, hardware, machineId ))
 
 
 	def getMediaSlotByName(self, name, machineId = ''):
@@ -436,8 +435,8 @@ class MediaModel(QtCore.QAbstractListModel):
 		name. Raises KeyError if no media slot exists by the given name.
 		'''
 		if name == 'virtual_drive':
-			print 'Ignoring machineId "%s" for virtual_drive, ' \
-				'which is not machine bound...' % machineId
+			print('Ignoring machineId "%s" for virtual_drive, ' \
+				'which is not machine bound...' % machineId)
 			return self.__virtualDriveSlot
 
 		assert machineId != '', 'You need to pass a machineId!'
@@ -471,7 +470,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		row = index.row()
 		if row < 0 or row > (len(slotList) - 1):
 			# can happen when switching machines (race conditions?)
-			# print '*********************************************************'
+			# print('*********************************************************')
 			return QtCore.QVariant()
 		slot = slotList[row]
 		slotName = slot.getName()
@@ -526,6 +525,6 @@ class MediaModel(QtCore.QAbstractListModel):
 	def __updateCassetteDeckState(self, name, machineId, state):
 		name = str(name)
 		if name == 'cassetteplayer':
-			print 'State of cassetteplayer updated to ', state
+			print('State of cassetteplayer updated to ', state)
 			deck = self.getMediaSlotByName(name, machineId)
 			deck.setState(state)

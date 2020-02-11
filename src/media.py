@@ -1,9 +1,8 @@
 # $Id$
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
 from preferences import preferences
-from qt_utils import connect
 import settings
 from ipsselector import ipsDialog
 from mediamodel import Medium
@@ -35,19 +34,9 @@ class MediaSwitcher(QtCore.QObject):
 		mediaModel.mediaSlotRemoved.connect(self.setInfoPage)
 		mediaModel.connected.connect(self.__connectSettings)
 		# Connect view:
-		connect(
-			ui.mediaList.selectionModel(),
-			'currentChanged(QModelIndex, QModelIndex)',
-			self.updateMedia
-			)
-		connect(
-			ui.mediaList, 'doubleClicked(QModelIndex)',
-			self.browseMedia
-			)
-		connect(
-			ui.mediaList, 'entered(QModelIndex)',
-			self.showMediaToolTip
-			)
+		ui.mediaList.selectionModel().currentChanged.connect(self.updateMedia)
+		ui.mediaList.doubleClicked.connect(self.browseMedia)
+		ui.mediaList.entered.connect(self.showMediaToolTip)
 
 		# Connect signals of media panels:
 		# It is essential to keep the references, otherwise the classes are
@@ -87,19 +76,18 @@ class MediaSwitcher(QtCore.QObject):
 		# Initialise the UI page for this mediumType.
 		handler.updatePage(identifier)
 
-	@QtCore.pyqtSignature('QModelIndex')
 	def updateMedia(self, index):
 		oldMediaSlot = self.__mediaSlot
 		# Find out which media entry has become active.
-		mediaSlotName = str(index.data(QtCore.Qt.UserRole).toString())
+		mediaSlotName = str(index.data(QtCore.Qt.UserRole))
 		# prevent problems due to race conditions when removing slots:
 		if mediaSlotName == '':
 			return
 		slot = self.__mediaModel.getMediaSlotByName(
 				mediaSlotName, self.__machineManager.getCurrentMachineId()
 				)
-		#print '***********'
-		#print 'mediaslot has currently become active: ', slot
+		#print('***********')
+		#print('mediaslot has currently become active: ', slot)
 		if oldMediaSlot is not None and oldMediaSlot.getName() == slot.getName():
 			return
 		if oldMediaSlot is not None:
@@ -110,10 +98,9 @@ class MediaSwitcher(QtCore.QObject):
 		self.__ui.mediaStack.setCurrentWidget(self.__getPageBySlot(slot))
 		self.__getHandlerBySlot(slot).signalSetVisible()
 
-	@QtCore.pyqtSignature('QModelIndex')
 	def showMediaToolTip(self, index):
 		# Find out which media entry has become active.
-		mediaSlotName = str(index.data(QtCore.Qt.UserRole).toString())
+		mediaSlotName = str(index.data(QtCore.Qt.UserRole))
 		text = ''
 		if mediaSlotName != '':
 			slot = self.__mediaModel.getMediaSlotByName(
@@ -123,15 +110,13 @@ class MediaSwitcher(QtCore.QObject):
 				text = slot.getMedium().getPath()
 		self.__ui.mediaList.setToolTip(text)
 
-	@QtCore.pyqtSignature('QModelIndex')
 	def browseMedia(self, index):
 		# Find out which media entry has become active.
-		mediaSlotName = str(index.data(QtCore.Qt.UserRole).toString())
+		mediaSlotName = str(index.data(QtCore.Qt.UserRole))
 		mediumType, identifier_ = parseMediaSlot(mediaSlotName)
 		handler = self.__getHandlerByMediumType(mediumType)
 		handler.browseImage()
 
-	@QtCore.pyqtSignature('QModelIndex, QModelIndex')
 	def mediaPathChanged(
 		self, topLeft, bottomRight
 		# pylint: disable-msg=W0613
@@ -139,7 +124,7 @@ class MediaSwitcher(QtCore.QObject):
 		# one item changed at a time. This is not correct in general.
 		):
 		index = topLeft
-		mediaSlotName = str(index.data(QtCore.Qt.UserRole).toString())
+		mediaSlotName = str(index.data(QtCore.Qt.UserRole))
 		if self.__mediaSlot is not None and \
 			self.__mediaSlot.getName() == mediaSlotName and \
 				mediaSlotName != '':
@@ -164,8 +149,8 @@ class MediaSwitcher(QtCore.QObject):
 			)
 
 	def __mediaChangeErrorHandler(self, message):
-		messageBox = QtGui.QMessageBox('Problem changing media', message,
-			QtGui.QMessageBox.Warning, 0, 0, 0,
+		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+			'Problem changing media', message, QtWidgets.QMessageBox.Ok,
 			self.__ui.centralwidget
 			)
 		messageBox.show()
@@ -212,13 +197,14 @@ class MediaHandler(QtCore.QObject):
 
 		# Connect signals.
 		if (self._ejectButton):
-			connect(self._ejectButton, 'clicked()', self.eject)
-		connect(self._browseButton, 'clicked()', self.browseImage)
-		connect(self._historyBox, 'activated(QString)', self._pathSelected)
-		connect(self._historyBox.lineEdit(), 'editingFinished()', self.edited)
+			self._ejectButton.clicked.connect(self.eject)
+		self._browseButton.clicked.connect(self.browseImage)
+		self._historyBox.activated.connect(lambda index: self._pathSelected((self._historyBox.currentText(), None)))
+		self._historyBox.lineEdit().editingFinished.connect(self.edited)
 
-	def _pathSelected(self, path):
-		print 'selected:', path or '<nothing>'
+	def _pathSelected(self, selection):
+		path = selection[0]
+		print('selected:', path or '<nothing>')
 		if not path:
 			return
 
@@ -232,7 +218,7 @@ class MediaHandler(QtCore.QObject):
 		'''Reads out the values from the current controls and composes the \
 		   proper media object from it.
 		'''
-		path = unicode(self._historyBox.currentText())
+		path = str(self._historyBox.currentText())
 		medium = Medium.create(self.mediumType, path)
 		return medium
 
@@ -260,7 +246,7 @@ class MediaHandler(QtCore.QObject):
 			else:
 				index += 1
 		# Persist history.
-		history = QtCore.QStringList()
+		history = list()
 		for index in range(historyBox.count()):
 			history.append(historyBox.itemText(index))
 		preferences[self.mediumType + '/history'] = history
@@ -274,10 +260,10 @@ class MediaHandler(QtCore.QObject):
 	def edited(self):
 		'''Inserts the medium specified in the combobox line edit.
 		'''
-		self._pathSelected(self._historyBox.lineEdit().text())
+		self._pathSelected((self._historyBox.lineEdit().text(), None))
 
 	def browseImage(self):
-		self._pathSelected(QtGui.QFileDialog.getOpenFileName(
+		self._pathSelected(QtWidgets.QFileDialog.getOpenFileName(
 			self._ui.mediaStack, self.browseTitle,
 			self._historyBox.itemText(0) or QtCore.QDir.homePath(),
 			self.imageSpec, None #, 0
@@ -362,7 +348,7 @@ class PatchableMediaHandler(MediaHandler):
 		self._IPSButton = getattr(ui, self.mediumType + 'IPSButton', None)
 		
 		# Connect signals.
-		connect(self._IPSButton, 'clicked()', self._IPSButtonClicked)
+		self._IPSButton.clicked.connect(self._IPSButtonClicked)
 
 	def _createMediumFromCurrentDialog(self):
 		baseMedium = MediaHandler._createMediumFromCurrentDialog(self)
@@ -381,7 +367,7 @@ class PatchableMediaHandler(MediaHandler):
 	def _IPSButtonClicked(self):
 		medium = self._switcher.getMedium()
 		assert medium is not None, 'Click on IPS button without medium'
-		if ipsDialog.exec_(self._IPSButton) == QtGui.QDialog.Accepted:
+		if ipsDialog.exec_(self._IPSButton) == QtWidgets.QDialog.Accepted:
 			self._insertMediumFromCurrentValues()
 			
 class DiskHandler(PatchableMediaHandler):
@@ -397,7 +383,7 @@ class DiskHandler(PatchableMediaHandler):
 		self._browseDirButton = ui.diskBrowseDirectoryButton
 
 		# Connect signals.
-		connect(self._browseDirButton, 'clicked()', self.browseDirectory)
+		self._browseDirButton.clicked.connect(self.browseDirectory)
 
 	def updatePage(self, identifier):
 		PatchableMediaHandler.updatePage(self, identifier)
@@ -413,10 +399,10 @@ class DiskHandler(PatchableMediaHandler):
 		self._ui.diskIPSLabel.setText('(' + str(amount) + ' selected)')
 
 	def browseDirectory(self):
-		self._pathSelected(QtGui.QFileDialog.getExistingDirectory(
+		self._pathSelected((QtWidgets.QFileDialog.getExistingDirectory(
 			self._ui.mediaStack, 'Select Directory',
 			self._historyBox.itemText(0) or QtCore.QDir.homePath()
-			))
+			), None))
 
 	def _getLabelText(self, identifier):
 		return 'Disk Drive %s' % identifier.upper()
@@ -454,8 +440,8 @@ class CartHandler(PatchableMediaHandler):
 					self.mediumType + 'mappertype/history'
 					)
 		# some backwards compatibility code:
-		tooLittleItems = historyBox.count() - mapperTypeHistory.count()
-		for dummy in xrange(tooLittleItems):
+		tooLittleItems = historyBox.count() - len(mapperTypeHistory)
+		for dummy in range(tooLittleItems):
 			mapperTypeHistory.append('Auto Detect')
 		
 		# fill our mapper type data dict
@@ -464,7 +450,7 @@ class CartHandler(PatchableMediaHandler):
 		index = 0
 		while index < historyBox.count():
 			self.__mapperTypeData[
-				unicode(historyBox.itemText(index))
+				str(historyBox.itemText(index))
 				] = mapperTypeHistory[index]
 			index += 1
 
@@ -472,8 +458,7 @@ class CartHandler(PatchableMediaHandler):
 		self._mapperTypeCombo = ui.mapperTypeCombo
 
 		# Connect signals.
-		connect(self._mapperTypeCombo, 'activated(QString)',
-			self.__mapperTypeSelected)
+		self._mapperTypeCombo.activated.connect(lambda index: self.__mapperTypeSelected(self._mapperTypeCombo.currentText()))
 
 	def _createMediumFromCurrentDialog(self):
 		baseMedium = PatchableMediaHandler._createMediumFromCurrentDialog(self)
@@ -484,19 +469,20 @@ class CartHandler(PatchableMediaHandler):
 				)
 		return medium
 
-	def _pathSelected(self, path):
-		print 'selected:', path or '<nothing>'
+	def _pathSelected(self, selection):
+		path = selection[0]
+		print('selected:', path or '<nothing>')
 		if not path:
 			return
 
-		path = unicode(path)
+		path = str(path)
 		if path in self.__mapperTypeData:
 			historyMapperType = self.__mapperTypeData[path]
 			# restore mapper type from previous entry
 			index = self._ui.mapperTypeCombo.findText(historyMapperType)
 			self._ui.mapperTypeCombo.setCurrentIndex(index)
 
-		PatchableMediaHandler._pathSelected(self, path)
+		PatchableMediaHandler._pathSelected(self, (path, None))
 
 	def _addToHistory(self, medium):
 		PatchableMediaHandler._addToHistory(self, medium)
@@ -506,10 +492,10 @@ class CartHandler(PatchableMediaHandler):
 		self.__mapperTypeData[path] = medium.getMapperType()
 
 		# Persist history (of mapper type).
-		mapperTypeHistory = QtCore.QStringList()
+		mapperTypeHistory = list()
 		for index in range(historyBox.count()):
 			mapperTypeHistory.append(self.__mapperTypeData[
-				unicode(historyBox.itemText(index))
+				str(historyBox.itemText(index))
 				])
 		preferences[self.mediumType + 'mappertype/history'] = mapperTypeHistory
 
@@ -521,10 +507,10 @@ class CartHandler(PatchableMediaHandler):
 			if len(mapperTypes) != 0:
 				self.__cartPageInited = True
 				for item in mapperTypes:
-					self._ui.mapperTypeCombo.addItem(QtCore.QString(item))
+					self._ui.mapperTypeCombo.addItem(item)
 			else:
-				print 'Interesting! We are preventing a race\
-					condition here!'
+				print('Interesting! We are preventing a race\
+					condition here!')
 		
 		# set the mappertype combo to the proper value
 		medium = self._switcher.getMedium()
@@ -596,11 +582,11 @@ class CassetteHandler(MediaHandler):
 		self.__isVisible = False
 
 		# Connect signals.
-		connect(ui.tapePlayButton, 'clicked()', self.__playButtonClicked)
-		connect(ui.tapeRewindButton, 'clicked()', self.__rewindButtonClicked)
-		connect(ui.tapeStopButton, 'clicked()', self.__stopButtonClicked)
-		connect(ui.tapeRecordButton, 'clicked()', self.__recordButtonClicked)
-		connect(self.__pollTimer, 'timeout()', self.__queryTimes)
+		ui.tapePlayButton.clicked.connect(self.__playButtonClicked)
+		ui.tapeRewindButton.clicked.connect(self.__rewindButtonClicked)
+		ui.tapeStopButton.clicked.connect(self.__stopButtonClicked)
+		ui.tapeRecordButton.clicked.connect(self.__recordButtonClicked)
+		self.__pollTimer.timeout.connect(self.__queryTimes)
 	
 		self.__buttonMap = {
 			self.play: ui.tapePlayButton,
@@ -624,7 +610,7 @@ class CassetteHandler(MediaHandler):
 		self.__updateButtonState(deck.getState())
 
 	def __updateButtonState(self, newState):
-		for state, button in self.__buttonMap.iteritems():
+		for state, button in self.__buttonMap.items():
 			button.setChecked(newState == state)
 		if newState in ['play', 'record'] and self.__isVisible:
 			self.__pollTimer.start()
@@ -653,7 +639,7 @@ class CassetteHandler(MediaHandler):
 		self.__updateButtonState(deck.getState())
 
 	def __recordButtonClicked(self):
-		filename = QtGui.QFileDialog.getSaveFileName(
+		filename = QtWidgets.QFileDialog.getSaveFileName(
 			None, 'Enter New File for Cassette Image',
 			QtCore.QDir.homePath(),
 			'Cassette Images (*.wav);;All Files (*)',
@@ -667,8 +653,8 @@ class CassetteHandler(MediaHandler):
 			deck.record(filename, self.__errorHandler)
 	
 	def __errorHandler(self, message):
-		messageBox = QtGui.QMessageBox('Cassette deck problem', message,
-				QtGui.QMessageBox.Warning, 0, 0, 0,
+		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+				'Cassette deck problem', message, QtWidgets.QMessageBox.Ok,
 				self._ui.tapeStopButton
 				)
 		messageBox.show()

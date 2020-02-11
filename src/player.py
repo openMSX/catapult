@@ -1,14 +1,14 @@
 # $Id$
 
-from PyQt4 import QtCore
+from PyQt5 import QtCore
+from PyQt5.QtCore import pyqtSignal
 
-from qt_utils import Signal
 from settings import BooleanSetting, EnumSetting
 
 class VisibleSetting(QtCore.QObject):
 	'''Virtual setting which interacts with the "renderer" setting.
 	'''
-	valueChanged = Signal('bool')
+	valueChanged = pyqtSignal('bool')
 
 	def __init__(self, rendererSetting):
 		QtCore.QObject.__init__(self)
@@ -20,7 +20,6 @@ class VisibleSetting(QtCore.QObject):
 	def getValue(self):
 		return self.__value
 
-	@QtCore.pyqtSignature('QString')
 	def setValue(self, value):
 		if self.__value == value:
 			return
@@ -34,7 +33,6 @@ class VisibleSetting(QtCore.QObject):
 			self.__rendererSetting.setValue('none')
 		self.valueChanged.emit(value)
 
-	@QtCore.pyqtSignature('QString')
 	def update(self, value):
 		boolValue = (value != 'none')
 		if self.__value == boolValue:
@@ -107,10 +105,9 @@ class PlayState(QtCore.QObject):
 		else:
 			return self.unknown
 
-	@QtCore.pyqtSignature('')
 	def update(self):
 		self.__state = self.computeState()
-		for state, button in self.__buttonMap.iteritems():
+		for state, button in self.__buttonMap.items():
 			button.setChecked(self.__state == state)
 
 	def setState(self, newState):

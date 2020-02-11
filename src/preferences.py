@@ -1,13 +1,8 @@
 # $Id$
 
-from PyQt4 import QtCore
+from PyQt5 import QtCore
 
 class _Preferences(object):
-
-	_conversionMethods = {
-		QtCore.QVariant.String: QtCore.QVariant.toString,
-		QtCore.QVariant.StringList: QtCore.QVariant.toStringList,
-		}
 
 	def __init__(self, *args):
 		self.__preferences = QtCore.QSettings(*args)
@@ -16,20 +11,11 @@ class _Preferences(object):
 		return self.__preferences.contains(key)
 
 	def __getitem__(self, key):
-		variant = self.__preferences.value(key)
-		valueType = variant.type()
-		if valueType == QtCore.QVariant.Invalid:
-			raise KeyError(key)
-		try:
-			converter = self._conversionMethods[valueType]
-		except KeyError:
-			raise NotImplementedError(
-				'Unsupported variant type (%d)' % valueType
-				)
-		return converter(variant)
+		return str(self.__preferences.value(key))
 
 	def __setitem__(self, key, value):
-		self.__preferences.setValue(key, QtCore.QVariant(value))
+		print("Setting to key %s value %s" % (key, value))
+		self.__preferences.setValue(key, value)
 
 	def get(self, key, default = None):
 		try:
@@ -38,20 +24,22 @@ class _Preferences(object):
 			return default
 
 	def getList(self, key):
-		'''Gets a preference as a QStringList.
+		'''Gets a preference as a list.
 		If the preference does not exist, an empty list is returned.
-		This method works around the problem that a stored QStringList which
-		contains a single item is read back as a QString.
+		This method works around the problem that a stored list which
+		contains a single item is read back as a single item.
 		'''
-		try:
-			value = self[key]
-		except KeyError:
-			return QtCore.QStringList()
-		if isinstance(value, QtCore.QStringList):
-			return value
-		elif isinstance(value, QtCore.QString):
-			return QtCore.QStringList(value)
+		if self.__preferences.contains(key):
+			value = self.__preferences.value(key)
+			if isinstance(value, list):
+				print("key %s is a list, so returning value: %s" % (key, value))
+				return value
+			elif isinstance(value, str):
+				print("key %s is a string, so returning value: %s" % (key, [value] if value else []))
+				return [value] if value else []
+			else:
+				raise TypeError('%s cannot be converted to list' % type(value))
 		else:
-			raise TypeError('%s cannot be converted to list' % type(value))
+			return list()
 
 preferences = _Preferences('openMSX', 'Catapult')

@@ -8,11 +8,11 @@ def parseTclValue(value):
 	http://www.tcl.tk/man/tcl8.4/TclCmd/Tcl.htm
 	'''
 	chars = iter(list(value) + [ None ])
-	ch = chars.next()
+	ch = next(chars)
 	words = []
 	while True:
 		while ch == ' ':
-			ch = chars.next()
+			ch = next(chars)
 		if ch is None:
 			return words
 		quoteType, endChar, keepBackslash = {
@@ -20,7 +20,7 @@ def parseTclValue(value):
 			'{':      ( 'brace', '}', True  ),
 			}.get(ch, ( None,    ' ', False ) )
 		if quoteType is not None:
-			ch = chars.next()
+			ch = next(chars)
 		braceLevel = 0
 		buf = []
 		while True:
@@ -34,19 +34,19 @@ def parseTclValue(value):
 			elif ch == '\\':
 				if keepBackslash:
 					buf.append(ch)
-				ch = chars.next()
+				ch = next(chars)
 				# Note: Tcl supports multi-line with backslash; we don't.
 				if ch is None:
 					raise ValueError('backslash at end of string')
 			buf.append(ch)
-			ch = chars.next()
+			ch = next(chars)
 			if ch is None:
 				break
 		words.append(u''.join(buf))
 		if quoteType is not None:
 			if ch is None:
-				raise ValueError, 'unterminated open-%s' % quoteType
-			ch = chars.next()
+				raise ValueError('unterminated open-%s' % quoteType)
+			ch = next(chars)
 			if ch not in (' ', None):
 				raise ValueError(
 					'extra characters after close-%s: %s'
@@ -86,11 +86,11 @@ if __name__ == '__main__':
 		):
 		try:
 			result = parseTclValue(inp)
-		except ValueError, message:
-			print 'ERROR:', inp, ':', message
+		except ValueError as message:
+			print('ERROR:', inp, ':', message)
 		else:
 			if result != out:
-				print 'ERROR:', inp, '->', result, '!=', out
+				print('ERROR:', inp, '->', result, '!=', out)
 
 def tclEscape(string):
 	'''Escape strings so that they don't trigger Tcl functionality.'''

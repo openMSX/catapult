@@ -1,7 +1,6 @@
 # $Id$
 
-from PyQt4 import QtCore, QtGui
-from qt_utils import connect
+from PyQt5 import QtCore, QtWidgets
 import settings
 
 class ConnectorPlugger(QtCore.QObject):
@@ -16,9 +15,7 @@ class ConnectorPlugger(QtCore.QObject):
 		# Connect to connector model and view:
 		ui.connectorList.setModel(connectorModel)
 		connectorModel.dataChanged.connect(self.connectorPluggableChanged)
-		connect(
-			ui.connectorList.selectionModel(),
-			'currentChanged(QModelIndex, QModelIndex)',
+		ui.connectorList.selectionModel().currentChanged.connect(
 			self.updateConnector
 			)
 
@@ -55,13 +52,12 @@ class ConnectorPlugger(QtCore.QObject):
 				page = handler.getPage()
 				break
 		else:
-			print 'no handler found for connectorClass "%s"' % connectorClass
+			print('no handler found for connectorClass "%s"' % connectorClass)
 		return page
 
-	@QtCore.pyqtSignature('QModelIndex')
 	def updateConnector(self, index):
 		# Find out which connector entry has become active.
-		connector = str(index.data(QtCore.Qt.UserRole).toString())
+		connector = str(index.data(QtCore.Qt.UserRole))
 		if self.__connector == connector:
 			return
 		self.__connector = connector
@@ -69,7 +65,6 @@ class ConnectorPlugger(QtCore.QObject):
 		# Switch page.
 		self.__ui.connectorStack.setCurrentWidget(page)
 
-	@QtCore.pyqtSignature('QModelIndex, QModelIndex')
 	def connectorPluggableChanged(
 		self, topLeft, bottomRight
 		# pylint: disable-msg=W0613
@@ -77,7 +72,7 @@ class ConnectorPlugger(QtCore.QObject):
 		# one item changed at a time. This is not correct in general.
 		):
 		index = topLeft
-		connector = str(index.data(QtCore.Qt.UserRole).toString())
+		connector = str(index.data(QtCore.Qt.UserRole))
 		if self.__connector == connector:
 			self.__updateConnectorPage(connector)
 
@@ -91,8 +86,8 @@ class ConnectorPlugger(QtCore.QObject):
 			)
 
 	def __connectorChangeErrorHandler(self, connector, message):
-		messageBox = QtGui.QMessageBox('Plugging problem', message,
-			QtGui.QMessageBox.Warning, 0, 0, 0,
+		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+			'Plugging problem', message, QtWidgets.QMessageBox.Ok,
 			self.__ui.centralwidget
 			)
 		messageBox.show()
@@ -122,8 +117,8 @@ class ConnectorHandler(QtCore.QObject):
 			)
 
 		# Connect signals.
-		connect(self._unplugButton, 'clicked()', self.unplug)
-		connect(self._pluggableBox, 'activated(QString)', self.selectionChanged)
+		self._unplugButton.clicked.connect(self.unplug)
+		self._pluggableBox.activated.connect(lambda index: self.selectionChanged(self._pluggableBox.currentText()))
 
 	def unplug(self):
 		'''Removes the currently inserted pluggable.

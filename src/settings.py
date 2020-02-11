@@ -1,14 +1,13 @@
 # $Id$
 
-from PyQt4 import QtCore, QtGui
-
-from qt_utils import Signal, connect
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import pyqtSignal
 
 class Setting(QtCore.QObject):
 	'''Abstract base class for settings.
 	'''
 	# Note: Will be overridden with real signature.
-	valueChanged = Signal('?')
+	valueChanged = pyqtSignal()
 
 	# TODO: Make these static methods?
 
@@ -33,7 +32,7 @@ class Setting(QtCore.QObject):
 		this setting's valueChanged to the object's setValue and
 		the object's valueChanged to this setting's setValue.
 		'''
-		#print 'Going to connectSync a %s with myself %s' % (obj, self)
+		#print('Going to connectSync a %s with myself %s' % (obj, self))
 		self.valueChanged.connect(
 			lambda value, obj = obj: self.setUiObjValue(obj, value)
 			)
@@ -41,16 +40,14 @@ class Setting(QtCore.QObject):
 		self.setUiObjValue(obj, self.__value)
 
 		# TODO: Make this more beautiful... (if possible)
-		if isinstance(obj, QtGui.QCheckBox):
-			connect(obj, 'stateChanged(int)', self.setValue)
-		elif isinstance(obj, QtGui.QAction):
-			connect(obj, 'triggered(bool)', self.setValue)
-		elif isinstance(obj, QtGui.QComboBox):
-			connect(obj, 'activated(QString)', self.setValue)
-		elif isinstance(obj, QtGui.QSlider):
-			connect(obj, 'valueChanged(int)', self.setValue)
+		if isinstance(obj, QtWidgets.QCheckBox):
+			obj.stateChanged.connect(self.setValue)
+		elif isinstance(obj, QtWidgets.QAction):
+			obj.triggered.connect(self.setValue)
+		elif isinstance(obj, QtWidgets.QComboBox):
+			obj.activated.connect(lambda index: self.setValue(obj.currentText()))
 		else:
-			connect(obj, self.valueChanged.signature, self.setValue)
+			obj.valueChanged.connect(self.setValue)
 
 	def disconnectSync(self, obj):
 		'''Disconnect from the specified object in two directions:
@@ -100,7 +97,7 @@ class Setting(QtCore.QObject):
 		obj.setValue(value)
 
 class BooleanSetting(Setting):
-	valueChanged = Signal('int')
+	valueChanged = pyqtSignal(int)
 
 	def _convertFromStr(self, valueStr):
 		return valueStr in ('on', 'true', 'yes')
@@ -112,12 +109,12 @@ class BooleanSetting(Setting):
 			return 'off'
 
 	def setUiObjValue(self, obj, value):
-		if isinstance(obj, QtGui.QCheckBox):
+		if isinstance(obj, QtWidgets.QCheckBox):
 			state = QtCore.Qt.Unchecked
 			if value:
 				state = QtCore.Qt.Checked
 			obj.setCheckState(state)
-		elif isinstance(obj, QtGui.QAction):
+		elif isinstance(obj, QtWidgets.QAction):
 			assert obj.isCheckable()
 			obj.setChecked(value)
 		else:
@@ -138,7 +135,7 @@ class BooleanSetting(Setting):
 		Setting.setValue(self, realVal)
 
 class EnumSetting(Setting):
-	valueChanged = Signal('QString')
+	valueChanged = pyqtSignal(str)
 
 	def _convertFromStr(self, valueStr):
 		return valueStr
@@ -154,7 +151,7 @@ class EnumSetting(Setting):
 			obj.setCurrentIndex(index)
 
 class IntegerSetting(Setting):
-	valueChanged = Signal('int')
+	valueChanged = pyqtSignal(int)
 
 	def _convertFromStr(self, valueStr):
 		return int(valueStr)
@@ -163,7 +160,7 @@ class IntegerSetting(Setting):
 		return str(value)
 
 class FloatSetting(Setting):
-	valueChanged = Signal('double')
+	valueChanged = pyqtSignal(float)
 
 	def _convertFromStr(self, valueStr):
 		return float(valueStr)
@@ -173,7 +170,7 @@ class FloatSetting(Setting):
 
 	def setUiObjValue(self, obj, value):
 		val = float(value)
-		if isinstance(obj, QtGui.QSlider):
+		if isinstance(obj, QtWidgets.QSlider):
 			obj.setValue(round(val*100))
 		else:
 			obj.setValue(val)
@@ -206,13 +203,13 @@ class SettingsManager(QtCore.QObject):
 		the order of instantiating
 		'''
 		if name not in self.__settings: # setting may not be registered twice
-			#print 'registering setting %s' % name
+			#print('registering setting %s' % name)
 			self.__settings[name] = settingClass(name, self.__bridge)
 			self.__bridge.command('set', name)(self.__settings[name].updateValue)
 
 	# this method probably needs an unconnectSetting method for robustness
 	def unregisterSetting(self, name):
-		#print 'unregistering setting %s' % name
+		#print('unregistering setting %s' % name)
 		assert name in self.__settings # setting must've been registered
 		del self.__settings[name]
 
@@ -232,10 +229,10 @@ class SettingsManager(QtCore.QObject):
 				)( lambda *items: self.__configUIElem(name, obj, *items), None)
 
 	def __configUIElem(self, name, obj, *items):
-		#print 'Configuring UI element %s for setting %s' % (obj, name)
+		#print('Configuring UI element %s for setting %s' % (obj, name))
 		if items[0] == 'float':
 			mini, maxi = items[2].split(' ')
-			if isinstance(obj, QtGui.QSlider):
+			if isinstance(obj, QtWidgets.QSlider):
 				obj.setMinimum(round(float(mini)*100))
 				obj.setMaximum(round(float(maxi)*100))
 			else:
@@ -247,20 +244,20 @@ class SettingsManager(QtCore.QObject):
 			obj.setMinimum(int(mini))
 			obj.setMaximum(int(maxi))
 			self.__addRestoreAction(name, obj)
-		elif items[0] == 'enumeration' and isinstance(obj, QtGui.QComboBox):
+		elif items[0] == 'enumeration' and isinstance(obj, QtWidgets.QComboBox):
 			obj.clear()
 			for item in items[2].split(' '):
-				obj.addItem(QtCore.QString(item))
+				obj.addItem(item)
 			self.__addRestoreAction(name, obj)
 		else:
-			print 'No need to configure UI element of type %s'\
-				'and setting type %s' % (type(obj), items[0])
+			print('No need to configure UI element of type %s'\
+				'and setting type %s' % (type(obj), items[0]))
 		self.__settings[name].connectSync(obj)
 
 	def __addRestoreAction(self, name, obj):
 		obj.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-		action = QtGui.QAction('Restore to default value', obj)
-		connect(action, 'triggered()',
+		action = QtWidgets.QAction('Restore to default value', obj)
+		action.triggered.connect(
 			lambda name_ = name: self.restoreToDefault(name_)
 			)
 		obj.addAction(action)
@@ -271,7 +268,7 @@ class SettingsManager(QtCore.QObject):
 		# TODO: We could probably query the whole lot with one TCL command.
 		#       We would have to be careful with escaping, but when the number
 		#       of settings becomes large, it may be worth it for performance.
-		for name, setting in self.__settings.iteritems():
+		for name, setting in self.__settings.items():
 			self.__bridge.command('set', name)(setting.updateValue)
 
 	def update(self, name, machineId, message):
@@ -286,14 +283,14 @@ class SettingsManager(QtCore.QObject):
 				callback = self.__specialSettings[name]
 				callback(name, str(message))
 			else:
-				print 'setting %s not registered' % name
+				print('setting %s not registered' % name)
 		else:
 			setting.updateValue(message)
 
 	def set(self, name, message):
 		setting = self.__settings.get(str(name))
 		if setting is None:
-			print 'setting %s not registered' % name
+			print('setting %s not registered' % name)
 		else:
 			setting.setValue(message)
 

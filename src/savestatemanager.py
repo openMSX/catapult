@@ -1,7 +1,6 @@
 # $Id$
 
-from PyQt4 import QtGui, QtCore
-from qt_utils import connect
+from PyQt5 import QtWidgets, QtCore
 from player import PlayState
 
 class SaveStateManager(object):
@@ -18,7 +17,7 @@ class SaveStateManager(object):
 		self.__loadStateButton = None
 		self.__cancelButton = None
 
-		self.__saveStateDialog = dialog = QtGui.QDialog(
+		self.__saveStateDialog = dialog = QtWidgets.QDialog(
 			None # TODO: find a way to get the real parent
 			)
 
@@ -40,12 +39,12 @@ class SaveStateManager(object):
 		self.__imageView.setText('No preview available...')
 		ui.gridLayout.addWidget(self.__imageView, 0, 1, 1, 1)
 
-		connect(self.__cancelButton, 'clicked()', lambda: dialog.reject())
-		connect(self.__deleteStateButton, 'clicked()', self.__delete)
-		connect(self.__loadStateButton, 'clicked()', self.__load)
-		connect(self.__saveStateButton, 'clicked()', self.__save)
-		connect(self.__newFileLineEdit, 'returnPressed()', self.__save)
-		connect(self.__saveStateListWidget, 'itemSelectionChanged()',
+		self.__cancelButton.clicked.connect( lambda: dialog.reject())
+		self.__deleteStateButton.clicked.connect(self.__delete)
+		self.__loadStateButton.clicked.connect(self.__load)
+		self.__saveStateButton.clicked.connect(self.__save)
+		self.__newFileLineEdit.returnPressed.connect(self.__save)
+		self.__saveStateListWidget.itemSelectionChanged.connect(
 			self.__updatePreview)
 
 	def exec_(self, mode, parent = None):
@@ -133,13 +132,13 @@ class SaveStateManager(object):
 			selected = currentItem.text()
 			if selected == '':
 				return
-			reply = QtGui.QMessageBox.question(
+			reply = QtWidgets.QMessageBox.question(
 				self.__saveStateDialog,
 				'Overwrite \"' + selected + '\"?',
 				'<p>Overwrite save state \"' + selected + '\".</p><p>Are you sure?</p>',
-				QtGui.QMessageBox.Yes,
-				QtGui.QMessageBox.Cancel)
-			if reply == QtGui.QMessageBox.Cancel:
+				QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel,
+				QtWidgets.QMessageBox.Cancel)
+			if reply == QtWidgets.QMessageBox.Cancel:
 				return
 		self.__newFileLineEdit.clear()
 		self.__bridge.command('savestate',
@@ -150,8 +149,8 @@ class SaveStateManager(object):
 			)
 
 	def __generalFailHandler(self, message, title):
-		messageBox = QtGui.QMessageBox(title, message,
-			QtGui.QMessageBox.Warning, 0, 0, 0,
+		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+			title, message, QtWidgets.QMessageBox.Ok,
 			self.__saveStateDialog
 			)
 		messageBox.show()
@@ -169,7 +168,7 @@ class SaveStateManager(object):
 			)(self.__updatePreview2)
 
 	def __updatePreview2(self, fileName):
-		image = QtGui.QImage(fileName)
+		image = QtWidgets.QImage(fileName)
 		if image.isNull():
 			self.__clearPreview()
 		else:
@@ -178,11 +177,11 @@ class SaveStateManager(object):
 	def __clearPreview(self):
 		self.__imageView.setImage(None)
 
-class ScaledImageView(QtGui.QWidget):
+class ScaledImageView(QtWidgets.QWidget):
 	def __init__ (self, *args):
-		QtGui.QWidget.__init__(self, *args)
-		self.setSizePolicy(QtGui.QSizePolicy(
-			QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding
+		QtWidgets.QWidget.__init__(self, *args)
+		self.setSizePolicy(QtWidgets.QSizePolicy(
+			QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
 			))
 		self.__image = None
 		self.__scaledImage = None
@@ -219,7 +218,7 @@ class ScaledImageView(QtGui.QWidget):
 			QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
 
 	def paintEvent(self, event):
-		painter = QtGui.QPainter(self)
+		painter = QtWidgets.QPainter(self)
 		
 		if self.__scaledImage != None:
 			xpos = (self.width() - self.__scaledImage.width()) / 2

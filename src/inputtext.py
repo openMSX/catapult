@@ -1,8 +1,7 @@
 # $Id$
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets, QtGui
 
-from qt_utils import connect
 from openmsx_utils import tclEscape
 
 class InputText(object):
@@ -15,7 +14,7 @@ class InputText(object):
 	def show(self):
 		dialog = self.__cfDialog
 		if dialog is None:
-			self.__cfDialog = dialog = QtGui.QDialog(
+			self.__cfDialog = dialog = QtWidgets.QDialog(
 				None, # TODO: find a way to get the real parent
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -30,8 +29,8 @@ class InputText(object):
 			ui.inputText.setWordWrapMode(QtGui.QTextOption.WrapAnywhere)
 
 			# Connect signals.
-			connect(ui.sendButton, 'clicked()', self.__typeInputText)
-			connect(ui.clearButton, 'clicked()', self.__clearInputText)
+			ui.sendButton.clicked.connect(self.__typeInputText)
+			ui.clearButton.clicked.connect(self.__clearInputText)
 
 		dialog.show()
 		dialog.raise_()

@@ -1,7 +1,6 @@
 # $Id$
 
-from PyQt4 import QtCore, QtGui
-from qt_utils import connect
+from PyQt5 import QtCore, QtWidgets
 
 class IPSDialog(object):
 
@@ -10,7 +9,7 @@ class IPSDialog(object):
 		self.__ipsAdd = None
 		self.__ipsRemove = None
 
-		self.__ipsDialog = dialog = QtGui.QDialog(
+		self.__ipsDialog = dialog = QtWidgets.QDialog(
 			None # TODO: find a way to get the real parent
 			)
 
@@ -22,8 +21,8 @@ class IPSDialog(object):
 		self.__ipsadd = ui.addButton
 		self.__ipsremove = ui.removeButton
 
-		connect(self.__ipsadd, 'clicked()', self.__add)
-		connect(self.__ipsremove, 'clicked()', self.__remove)
+		self.__ipsadd.clicked.connect(self.__add)
+		self.__ipsremove.clicked.connect(self.__remove)
 
 	def exec_(self, parent = None):
 		dialog = self.__ipsDialog
@@ -31,7 +30,7 @@ class IPSDialog(object):
 		return dialog.exec_()
 
 	def __add(self):
-		self.__ipsListWidget.addItems(QtGui.QFileDialog.getOpenFileNames(
+		self.__ipsListWidget.addItems(QtWidgets.QFileDialog.getOpenFileNames(
 			self.__ipsListWidget, 'Select one ore more IPS patch files',
 			QtCore.QDir.homePath(),
 			'IPS patch files (*.ips);;Compressed IPS patch files ' +
