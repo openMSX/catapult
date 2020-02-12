@@ -89,7 +89,6 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.__machineDialog = None
 		self.__extensionDialog = None
 		self.__aboutDialog = None
-		self.__assistentClient = None
 
 		self.__logColours = dict(
 			( level, QtGui.QColor(
@@ -551,29 +550,15 @@ class MainWindow(QtWidgets.QMainWindow):
 			)
 		messageBox.show()
 
-	def __getAssistentClient(self):
-		if self.__assistentClient is None:
-			from PyQt5.QtAssistant import QAssistantClient
-			# Note: The string parameter is the path to look for the
-			#       Qt Assistent executable.
-			#       Empty string means use OS search path.
-			# TODO: Is it safe to assume Qt Assistent is always in the path?
-			#       What happens if it is not?
-			self.__assistentClient = QAssistantClient('')
-		return self.__assistentClient
-
 	def showHelpSetup(self):
 		print('show Setup Guide')
-		client = self.__getAssistentClient()
-		# TODO: Make metadata documents to customize Qt Assistant for openMSX.
 		# TODO: Get a reliable path (by guessing? from openMSX?).
-		client.showPage(docDir + '/manual/setup.html')
+		QtGui.QDesktopServices.openUrl(QtCore.QUrl.fromLocalFile(docDir + '/manual/setup.html'))
 
 	def showHelpUser(self):
 		print('show User\'s Manual')
-		client = self.__getAssistentClient()
 		# TODO: Get a reliable path (by guessing? from openMSX?).
-		client.showPage(docDir + '/manual/user.html')
+		QtGui.QDesktopServices.openUrl(QtCore.QUrl.fromLocalFile(docDir + '/manual/setup.html'))
 
 	def showAboutDialog(self):
 		dialog = self.__aboutDialog
