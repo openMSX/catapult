@@ -61,14 +61,14 @@ class ConfigDialog(object):
 		preferences['system/executable'] = self.__execEdit.text()
 
 	def __browseExec(self):
-		path =  QtWidgets.QFileDialog.getOpenFileName(
+		path = QtWidgets.QFileDialog.getOpenFileName(
 			self.__browseExecutableButton,
 			'Select openMSX executable',
 			QtCore.QDir.currentPath(),
 			'All Files (*)'
 			)
-		if not path.isNull():
-			self.__execEdit.setText(path)
+		if path:
+			self.__execEdit.setText(path[0])
 		self.__setExec()
 
 configDialog = ConfigDialog()
