@@ -68,7 +68,7 @@ $(COPY_ICONS): $(RES_DIR)/%: res/%
 
 $(UI_GEN_SRC): $(PY_DIR)/ui_%.py: res/%.ui
 	@mkdir -p $(@D)
-	$(PYTHONBINPREFIX)pyuic5 $< -o $@
+	cd res && $(PYTHONBINPREFIX)pyuic5 $(<F) -o ../$@
 
 ifeq ($(OS),Darwin)
 build: $(APPCONTENTS)/Info.plist $(APPCONTENTS)/PkgInfo $(APPCONTENTS)/MacOS/run.sh
