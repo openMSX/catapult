@@ -1,6 +1,6 @@
 # $Id$
 
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore, QtGui
 from player import PlayState
 
 class SaveStateManager(object):
@@ -168,11 +168,11 @@ class SaveStateManager(object):
 			)(self.__updatePreview2)
 
 	def __updatePreview2(self, fileName):
-		image = QtWidgets.QImage(fileName)
-		if image.isNull():
-			self.__clearPreview()
-		else:
+		image = QtGui.QImage(fileName)
+		if image:
 			self.__imageView.setImage(image)
+		else:
+			self.__clearPreview()
 
 	def __clearPreview(self):
 		self.__imageView.setImage(None)
@@ -218,7 +218,7 @@ class ScaledImageView(QtWidgets.QWidget):
 			QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
 
 	def paintEvent(self, event):
-		painter = QtWidgets.QPainter(self)
+		painter = QtGui.QPainter(self)
 		
 		if self.__scaledImage != None:
 			xpos = (self.width() - self.__scaledImage.width()) / 2

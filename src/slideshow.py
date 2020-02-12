@@ -164,8 +164,8 @@ class Slideshow(QtWidgets.QWidget):
 
 	def loadFile(self, fileName):
 		#if not fileName.isEmpty():
-		image = QtWidgets.QImage(fileName)
-		if image.isNull():
+		image = QtGui.QImage(fileName)
+		if not image:
 			QtWidgets.QMessageBox.information(self, self.tr("Image Viewer"),
 				self.tr("Cannot load %1.").arg(fileName))
 			return
