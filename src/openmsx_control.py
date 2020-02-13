@@ -344,6 +344,8 @@ class ControlConnection(QtCore.QObject):
 			self.connectionClosed.emit()
 
 	def dumpEvent(self):
+		if not self.__process:
+			return
 		data = self.__errBuf + str(self.__process.readAllStandardError())
 		lastNewLine = data.rfind('\n')
 		if lastNewLine != -1:
