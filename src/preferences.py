@@ -1,5 +1,3 @@
-# $Id$
-
 from PyQt5 import QtCore
 
 class _Preferences(object):

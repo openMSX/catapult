@@ -1,5 +1,3 @@
-# $Id$
-
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, QModelIndex
 from bisect import bisect

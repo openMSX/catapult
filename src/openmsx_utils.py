@@ -1,5 +1,3 @@
-# $Id$
-
 def parseTclValue(value):
 	'''Parse a string as a Tcl expression and returns a list containing the
 	words in the original string.

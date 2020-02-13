@@ -1,5 +1,3 @@
-# $Id$
-
 # A quick hack of machine.py from mthuurne
 # main differences:
 #	- s/Machine/Extension/ in most places

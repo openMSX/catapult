@@ -1,5 +1,3 @@
-# $Id$
-
 from PyQt5 import QtCore, QtWidgets
 
 class Diskmanipulator(QtCore.QObject):

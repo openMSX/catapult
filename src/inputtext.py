@@ -1,5 +1,3 @@
-# $Id$
-
 from PyQt5 import QtCore, QtWidgets, QtGui
 
 from openmsx_utils import tclEscape

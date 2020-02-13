@@ -1,5 +1,3 @@
-# $Id$
-
 from PyQt5 import QtCore, QtWidgets
 from player import PlayState
 from settings import BooleanSetting

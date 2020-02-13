@@ -1,5 +1,3 @@
-# $Id$
-
 """This is a slideshow widget developed for Catapult the openMSX launcher"""
 
 from PyQt5 import QtCore, QtWidgets, QtGui

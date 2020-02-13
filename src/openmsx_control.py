@@ -1,5 +1,3 @@
-# $Id$
-
 from PyQt5 import QtCore, QtXml
 from PyQt5.QtCore import pyqtSignal
 
