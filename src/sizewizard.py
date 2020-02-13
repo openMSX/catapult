@@ -1,7 +1,6 @@
 import sys
 
 from PyQt5 import QtCore, QtWidgets
-from qt_utils import connect
 
 class Sizewizardtwo(QtWidgets.QDialog):
 	def __init__(self, parent=None):
@@ -70,12 +69,12 @@ class Sizewizardtwo(QtWidgets.QDialog):
 		index = 0
 		while index < self.nr_partitions:
 			widgetItem = self.listWidget.item(index)
-			partList.append( str(widgetItem.text()) )
+			partList.append(str(widgetItem.text()))
 			index += 1
 		return ' '.join(partList)
 
 	def getNrPartitions(self):
-		return 	str(self.nr_partitions)
+		return str(self.nr_partitions)
 
 	def setNrPartitions(self, i):
 		self.nr_partitions = i
@@ -157,14 +156,14 @@ class Sizewizard(QtWidgets.QDialog):
 		nr = cpd.getNrPartitions()
 		partList = cpd.getPartitionsList()
 		self.__partitionsList = partList
-		self.__ui.partedLabel.setText( nr + " partitions: " + partList )
+		self.__ui.partedLabel.setText(nr + " partitions: " + partList)
 
 	def getSizes(self):
 		ui = self.__ui
 		if ui.partedButton.isChecked():
 			sizes = self.__partitionsList
 		else:
-			sizes = str( self.__ui.unpartedSize.value() ) + 'K'
+			sizes = str(self.__ui.unpartedSize.value()) + 'K'
 		print(sizes)
 		return sizes
 
@@ -174,5 +173,3 @@ if __name__ == '__main__':
 	#item.exec_()
 	item.show()
 	sys.exit(app.exec_())
-
-

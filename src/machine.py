@@ -1,6 +1,6 @@
+from bisect import insort
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import pyqtSignal, QModelIndex
-from bisect import insort
 
 from hardware import HardwareModel
 from preferences import preferences
@@ -49,7 +49,7 @@ class MachineModel(HardwareModel):
 		info.setdefault('code', name)
 		sortRow = [
 			info.get(key, '').lower() for key in self.__columnKeys
-			] + [ name, info ]
+			] + [name, info]
 
 		sortReversed = self.__sortReversed
 		column = self.__sortColumn
@@ -86,7 +86,7 @@ class MachineModel(HardwareModel):
 		if orientation == QtCore.Qt.Horizontal:
 			if role == QtCore.Qt.DisplayRole:
 				return QtCore.QVariant(self.__columnKeys[section].capitalize())
-			elif role == QtCore.Qt.TextAlignmentRole:
+			if role == QtCore.Qt.TextAlignmentRole:
 				return QtCore.QVariant(QtCore.Qt.AlignLeft)
 
 		return QtCore.QVariant()
@@ -101,15 +101,14 @@ class MachineModel(HardwareModel):
 		if role == QtCore.Qt.DisplayRole:
 			key = self.__columnKeys[column]
 			return QtCore.QVariant(sortRow[-1].get(key, ''))
-		elif role == QtCore.Qt.UserRole:
+		if role == QtCore.Qt.UserRole:
 			return QtCore.QVariant(sortRow[-2]).value()
-		elif role == QtCore.Qt.ToolTipRole:
+		if role == QtCore.Qt.ToolTipRole:
 			key = self.__columnKeys[column]
 			value = sortRow[-1].get(key)
 			if key == 'working' and value == 'No':
 				return QtCore.QVariant(sortRow[-1].get('brokenreason'))
-			else:
-				return QtCore.QVariant(value)
+			return QtCore.QVariant(value)
 
 		return QtCore.QVariant()
 
@@ -148,7 +147,7 @@ class MachineManager(QtCore.QObject):
 		self.__currentMachineId = None
 		self.__currentMachineConfig = None
 		self.__selectedMachineConfig = None
-		self.__requestedWidths = [ 0 ] * model.columnCount()
+		self.__requestedWidths = [0] * model.columnCount()
 
 		# Load history.
 		for machine in preferences.getList('machine/history'):
@@ -161,7 +160,7 @@ class MachineManager(QtCore.QObject):
 		ui.setAsDefaultButton.clicked.connect(self.__machineSetDefault)
 
 		bridge.registerUpdatePrefix(
-			'hardware', ( 'machine', ), self.__updateHardware
+			'hardware', ('machine',), self.__updateHardware
 			)
 		# Query initial state.
 		# and get data directories needed for images
@@ -179,7 +178,7 @@ class MachineManager(QtCore.QObject):
 		# we use the fact that the response will
 		# come in the order they are requested
 		print(dataDir)
-		if self.__userdir == None:
+		if self.__userdir is None:
 			self.__userdir = dataDir
 		else:
 			self.__systemdir = dataDir
@@ -194,7 +193,7 @@ class MachineManager(QtCore.QObject):
 		self.machineChanged.emit(machineId)
 		self.__bridge.command('machine_info', 'config_name')(self.__machineChanged)
 
-	def __updateHardware(self, machineId, dummy, event):
+	def __updateHardware(self, machineId, _, event):
 		print('Machine', machineId, ':', event)
 		if event == 'select':
 			self.__updateMachineId(machineId)
@@ -270,7 +269,7 @@ class MachineManager(QtCore.QObject):
 		dialog.raise_()
 		dialog.activateWindow()
 
-	def __machineHighlighted(self, current, dummy):
+	def __machineHighlighted(self, current, _):
 		self.__ui.okButton.setEnabled(True)
 		self.__selectedMachineConfig = \
 			self.__model.data(current, QtCore.Qt.UserRole)
@@ -288,28 +287,28 @@ class MachineManager(QtCore.QObject):
 			#the <dir>/machines/<selected-machine>/images/
 			#or in the images pool
 			#the <dir>/images/<selected-machine>*.(jpeg|jpg|gif|png)
-			if not (self.__userdir == None):
+			if self.__userdir is not None:
 				print("XXX userdir")
-				dir = self.__userdir + "/machines/" + \
+				theDir = self.__userdir + "/machines/" + \
 					str(self.__selectedMachineConfig) + \
 					"/images"
-				print(dir)
-				self.__ui.slideshowWidget.addImagesInDirectory(dir)
-				dir = self.__userdir + "/images/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.addImagesInDirectory(theDir)
+				theDir = self.__userdir + "/images/" + \
 					str(self.__selectedMachineConfig)
-				print(dir)
+				print(theDir)
 				self.__ui.slideshowWidget.findImagesForMedia(dir)
-			if not (self.__systemdir == None):
+			if self.__systemdir is not None:
 				print("XXX systemdir")
-				dir = self.__systemdir + "/machines/" + \
+				theDir = self.__systemdir + "/machines/" + \
 					str(self.__selectedMachineConfig) + \
 					"/images"
-				print(dir)
-				self.__ui.slideshowWidget.addImagesInDirectory(dir)
-				dir = self.__systemdir + "/images/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.addImagesInDirectory(theDir)
+				theDir = self.__systemdir + "/images/" + \
 					str(self.__selectedMachineConfig)
-				print(dir)
-				self.__ui.slideshowWidget.findImagesForMedia(dir)
+				print(theDir)
+				self.__ui.slideshowWidget.findImagesForMedia(theDir)
 			print("XXX end images")
 
 			#filenames = "/opt/openMSX/share/images/" + \
@@ -365,7 +364,7 @@ class MachineManager(QtCore.QObject):
 		#       currently powered on.
 		self.__setMachine(machine)
 
-	def __machinesAdded(self, dummy, start, end):
+	def __machinesAdded(self, _, start, end):
 		model = self.__model
 		table = self.__ui.machineTable
 		header = table.horizontalHeader()
@@ -395,4 +394,3 @@ class MachineManager(QtCore.QObject):
 		machineBox = self.__machineBox
 		machine = machineBox.itemData(machineBox.currentIndex())
 		self.__bridge.command('set', 'default_machine', machine)()
-

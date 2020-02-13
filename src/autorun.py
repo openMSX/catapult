@@ -30,7 +30,7 @@ class Autorun(QtWidgets.QWidget):
 		settingsManager['power'].valueChanged.connect(self.updatePowerInfo)
 
 	def updatePowerInfo(self, value):
-		if self.__ui == None:
+		if self.__ui is None:
 			return
 		if value:
 			# User is running openMSX, so shouldn't be looking
@@ -120,7 +120,7 @@ class Autorun(QtWidgets.QWidget):
 
 		self.applySettingsCont("bogus")
 
-	def applySettingsCont(self, dummy):
+	def applySettingsCont(self, _):
 		switch = self.__sendState
 		self.__sendState = 1 + self.__sendState
 		if switch == 0:
@@ -136,7 +136,7 @@ class Autorun(QtWidgets.QWidget):
 				#For now it is a it-just-works solution
 				for ext in self.__extensions.split(','):
 					self.__bridge.command('ext', ext)(
-						self.applySettingsCont,self.applySettingsCont
+						self.applySettingsCont, self.applySettingsCont
 						)
 			else:
 				self.applySettingsCont("bogus")
@@ -191,8 +191,7 @@ class Autorun(QtWidgets.QWidget):
 				self.__bridge.command('reset')()
 				if self.__ui.checkBoxShutdown.isChecked():
 					self.__bridge.command('after', 'idle',
-						self.__ui.spinBoxShutdown.value(),
-						'quit')()
+						self.__ui.spinBoxShutdown.value(), 'quit')()
 
 	def nextGame(self):
 		combo = self.__ui.comboBoxGames
@@ -217,7 +216,7 @@ class Autorun(QtWidgets.QWidget):
 		index = index + 1
 		cursor.execute('SELECT Machine, Title, Info, Extensions,' +
 			' Timeout, Media, File FROM autorun WHERE id = ' +
-			str(index) )
+			str(index))
 		for row in cursor:
 			#TODO this is a quick hack to see something move :-)
 			# will be fixed in next commit

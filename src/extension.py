@@ -6,9 +6,9 @@
 # There's an awful mixing of code for the extension Add dialog and for the
 # extension part in the main view
 
+from bisect import insort
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import pyqtSignal, QModelIndex
-from bisect import insort
 
 from hardware import HardwareModel
 #from preferences import preferences
@@ -52,7 +52,7 @@ class ExtensionModel(HardwareModel):
 		info.setdefault('code', name)
 		sortRow = [
 			info.get(key, '').lower() for key in self.__columnKeys
-			] + [ name, info ]
+			] + [name, info]
 
 		sortReversed = self.__sortReversed
 		column = self.__sortColumn
@@ -89,7 +89,7 @@ class ExtensionModel(HardwareModel):
 		if orientation == QtCore.Qt.Horizontal:
 			if role == QtCore.Qt.DisplayRole:
 				return QtCore.QVariant(self.__columnKeys[section].capitalize())
-			elif role == QtCore.Qt.TextAlignmentRole:
+			if role == QtCore.Qt.TextAlignmentRole:
 				return QtCore.QVariant(QtCore.Qt.AlignLeft)
 
 		return QtCore.QVariant()
@@ -104,9 +104,9 @@ class ExtensionModel(HardwareModel):
 		if role == QtCore.Qt.DisplayRole:
 			key = self.__columnKeys[column]
 			return QtCore.QVariant(sortRow[-1].get(key, ''))
-		elif role == QtCore.Qt.UserRole:
+		if role == QtCore.Qt.UserRole:
 			return QtCore.QVariant(sortRow[-2]).value()
-		elif role == QtCore.Qt.ToolTipRole:
+		if role == QtCore.Qt.ToolTipRole:
 			key = self.__columnKeys[column]
 			value = sortRow[-1].get(key)
 			# TODO: uncomment when extension testing is implemented
@@ -114,7 +114,6 @@ class ExtensionModel(HardwareModel):
 			#	return QtCore.QVariant(sortRow[-1].get('brokenreason'))
 			#else:
 			return QtCore.QVariant(value)
-
 
 		return QtCore.QVariant()
 
@@ -149,7 +148,7 @@ class ExtensionManager(QtCore.QObject):
 		self.__currentExtensionId = None
 		self.__currentExtensionConfig = None
 		self.__selectedExtensionConfig = None
-		self.__requestedWidths = [ 0 ] * model.columnCount()
+		self.__requestedWidths = [0] * model.columnCount()
 
 		## Load history.
 		#for extension in preferences.getList('extension/history'):
@@ -173,14 +172,14 @@ class ExtensionManager(QtCore.QObject):
 		'''
 		bridge = self.__bridge
 		#bridge.command('machine')(self.__updateMachineId)
-		bridge.command('return','"$env(OPENMSX_USER_DATA)"')(self.__dirReply)
-		bridge.command('return','"$env(OPENMSX_SYSTEM_DATA)"')(self.__dirReply)
+		bridge.command('return', '"$env(OPENMSX_USER_DATA)"')(self.__dirReply)
+		bridge.command('return', '"$env(OPENMSX_SYSTEM_DATA)"')(self.__dirReply)
 
 	def __dirReply(self, dataDir):
 		# we use the fact that the response will
 		# come in the order they are requested
 		print(dataDir)
-		if self.__userdir == None:
+		if self.__userdir is None:
 			self.__userdir = dataDir
 		else:
 			self.__systemdir = dataDir
@@ -231,7 +230,7 @@ class ExtensionManager(QtCore.QObject):
 			model = self.__model
 			ui.extensionTable.setModel(model)
 			# for now hide the slideshow if not the openMSX-CD version.
-			if not self.__parent.openmsxcd :
+			if not self.__parent.openmsxcd:
 				ui.previewWidget.hide()
 				#ui.slideshowWidget.hide()
 
@@ -267,33 +266,33 @@ class ExtensionManager(QtCore.QObject):
 			self.__model.data(current, QtCore.Qt.UserRole)
 		self.__ui.extensionTable.scrollTo(current)
 		# Display images of this machine if we are in the openmsxcd version
-		if self.__parent.openmsxcd :
+		if self.__parent.openmsxcd:
 			self.__ui.slideshowWidget.reset()
 
 			#Use system and user dir to find images inside
 			#the <dir>/machines/<selected-machine>/images/
 			#or in the images pool
 			#the <dir>/images/<selected-machine>*.(jpeg|jpg|gif|png)
-			if not (self.__userdir == None):
-				dir = self.__userdir + "/extensions/" + \
+			if self.__userdir is not None:
+				theDir = self.__userdir + "/extensions/" + \
 					str(self.__selectedExtensionConfig) + \
 					"/images"
-				print(dir)
-				self.__ui.slideshowWidget.addImagesInDirectory(dir)
-				dir = self.__userdir + "/images/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.addImagesInDirectory(theDir)
+				theDir = self.__userdir + "/images/" + \
 					str(self.__selectedExtensionConfig)
-				print(dir)
-				self.__ui.slideshowWidget.findImagesForMedia(dir)
-			if not (self.__systemdir == None):
-				dir = self.__systemdir + "/extensions/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.findImagesForMedia(theDir)
+			if self.__systemdir is not None:
+				theDir = self.__systemdir + "/extensions/" + \
 					str(self.__selectedExtensionConfig) + \
 					"/images"
-				print(dir)
-				self.__ui.slideshowWidget.addImagesInDirectory(dir)
-				dir = self.__systemdir + "/images/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.addImagesInDirectory(theDir)
+				theDir = self.__systemdir + "/images/" + \
 					str(self.__selectedExtensionConfig)
-				print(dir)
-				self.__ui.slideshowWidget.findImagesForMedia(dir)
+				print(theDir)
+				self.__ui.slideshowWidget.findImagesForMedia(theDir)
 
 
 	def __extensionDialogAccepted(self):

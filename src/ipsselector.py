@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
 
-class IPSDialog(object):
+class IPSDialog:
 
 	def __init__(self):
 		self.__ipsListWidget = None
@@ -33,11 +33,11 @@ class IPSDialog(object):
 			QtCore.QDir.homePath(),
 			'IPS patch files (*.ips);;Compressed IPS patch files ' +
 				'*.zip *.gz);;All Files (*)', None #, 0
-			))
+			)[0])
 
 	def __remove(self):
 		# get the indices
-		rows = [ x.row() for x in self.__ipsListWidget.selectedIndexes() ]
+		rows = [x.row() for x in self.__ipsListWidget.selectedIndexes()]
 		# sort them, as they are in selection order
 		rows.sort()
 		# remove them in reverse order, to make sure they remain valid

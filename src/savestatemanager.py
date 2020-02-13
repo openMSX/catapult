@@ -1,12 +1,12 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 from player import PlayState
 
-class SaveStateManager(object):
+class SaveStateManager:
 
 	def __init__(self, bridge, playState):
 		self.__bridge = bridge
 		self.__playState = playState
-		
+
 		self.__saveStateListWidget = None
 		self.__newFileLineEdit = None
 		self.__newFileWidget = None
@@ -37,7 +37,7 @@ class SaveStateManager(object):
 		self.__imageView.setText('No preview available...')
 		ui.gridLayout.addWidget(self.__imageView, 0, 1, 1, 1)
 
-		self.__cancelButton.clicked.connect( lambda: dialog.reject())
+		self.__cancelButton.clicked.connect(lambda: dialog.reject())
 		self.__deleteStateButton.clicked.connect(self.__delete)
 		self.__loadStateButton.clicked.connect(self.__load)
 		self.__saveStateButton.clicked.connect(self.__save)
@@ -80,7 +80,7 @@ class SaveStateManager(object):
 
 	def __delete(self):
 		currentItem = self.__saveStateListWidget.currentItem()
-		if currentItem == None:
+		if currentItem is None:
 			return
 		selected = currentItem.text()
 		if selected == '':
@@ -94,7 +94,7 @@ class SaveStateManager(object):
 
 	def __load(self):
 		currentItem = self.__saveStateListWidget.currentItem()
-		if currentItem == None:
+		if currentItem is None:
 			return
 		selected = currentItem.text()
 		if selected == '':
@@ -111,7 +111,7 @@ class SaveStateManager(object):
 		self.__bridge.command('loadstate',
 			selected
 			)(
-				lambda dummy: self.__saveStateDialog.accept(),
+				lambda _: self.__saveStateDialog.accept(),
 				lambda message: failHelper(message)
 			)
 		def failHelper(message):
@@ -125,7 +125,7 @@ class SaveStateManager(object):
 		selected = self.__newFileLineEdit.text()
 		if selected == '':
 			currentItem = self.__saveStateListWidget.currentItem()
-			if currentItem == None:
+			if currentItem is None:
 				return
 			selected = currentItem.text()
 			if selected == '':
@@ -155,11 +155,11 @@ class SaveStateManager(object):
 
 	def __updatePreview(self):
 		currentItem = self.__saveStateListWidget.currentItem()
-		if currentItem == None:
+		if currentItem is None:
 			self.__clearPreview()
 			return
 		selected = currentItem.text()
-		
+
 		# get filename from openMSX
 		self.__bridge.command('return',
 			'"$::env(OPENMSX_USER_DATA)/../savestates/' + selected + '.png"'
@@ -176,7 +176,7 @@ class SaveStateManager(object):
 		self.__imageView.setImage(None)
 
 class ScaledImageView(QtWidgets.QWidget):
-	def __init__ (self, *args):
+	def __init__(self, *args):
 		QtWidgets.QWidget.__init__(self, *args)
 		self.setSizePolicy(QtWidgets.QSizePolicy(
 			QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
@@ -187,7 +187,7 @@ class ScaledImageView(QtWidgets.QWidget):
 
 	def setImage(self, image):
 		self.__image = image
-		if image != None:
+		if image is not None:
 			self.__updateScaledImage()
 		else:
 			self.__scaledImage = None
@@ -198,16 +198,14 @@ class ScaledImageView(QtWidgets.QWidget):
 		self.update()
 
 	def sizeHint(self):
-		if self.__scaledImage != None:
+		if self.__scaledImage is not None:
 			return self.__scaledImage.size()
-		else:
-			if self.__image == None:
-				return QtCore.QSize(320, 240)
-			else:
-				return self.__image.size()
+		if self.__image is None:
+			return QtCore.QSize(320, 240)
+		return self.__image.size()
 
-	def resizeEvent(self, event):
-		if self.__image == None:
+	def resizeEvent(self, _):
+		if self.__image is None:
 			return
 		self.__updateScaledImage()
 
@@ -215,13 +213,13 @@ class ScaledImageView(QtWidgets.QWidget):
 		self.__scaledImage = self.__image.scaled(self.size(),
 			QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
 
-	def paintEvent(self, event):
+	def paintEvent(self, _):
 		painter = QtGui.QPainter(self)
-		
-		if self.__scaledImage != None:
+
+		if self.__scaledImage is not None:
 			xpos = (self.width() - self.__scaledImage.width()) / 2
 			ypos = (self.height() - self.__scaledImage.height()) / 2
-		
+
 			# draw the image on the widget
 			painter.drawImage(xpos, ypos, self.__scaledImage)
 		else:

@@ -1,7 +1,8 @@
-from PyQt5 import QtCore, QtWidgets
 import os
 
-class SoftwareDB(object):
+from PyQt5 import QtCore, QtWidgets
+
+class SoftwareDB:
 
 	def __init__(self, bridge):
 		self.__dmDialog = None
@@ -35,7 +36,7 @@ class SoftwareDB(object):
 			# in case of python 2.4 we try to fall back to the external pysqlite2 module
 			try:
 				import sqlite3 as sqlite
-			except:
+			except ImportError:
 				from pysqlite2 import dbapi2 as sqlite
 			cursor = self.__cursor
 			if cursor is None:
@@ -150,15 +151,15 @@ class SoftwareDB(object):
 			(ui.yearComboBox, 'Year')
 			):
 			if gui.currentIndex() != 0:
-				where.append( str(sqlstatement) + " = '"
-					+ str(gui.currentText() ) + "'" )
+				where.append(str(sqlstatement) + " = '"
+					+ str(gui.currentText()) + "'")
 
 		for gui, sqlstatement in (
 			(ui.nameinfoLabel, 'Info'),
 			(ui.extentionsinfoLabel, 'HardwareExtension')
 			):
 			if gui.text() != 'not specified':
-				where.append( sqlstatement + " like '%" + str(gui.text()) +"%'")
+				where.append(sqlstatement + " like '%" + str(gui.text()) +"%'")
 		if len(where) > 0:
 			query += " WHERE "
 		query += " AND ".join(where)
@@ -192,12 +193,12 @@ class SoftwareDB(object):
 			#item.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 			#self.__ui.gamelistView.setItem(index, 1, item)
 
-			self.__selectedgameid.append( row[0] )
+			self.__selectedgameid.append(row[0])
 
 			index += 1
 
 		self.__ui.gamelistView.setRowCount(index + 1)
-		self.showGameinfo( self.__selectedgameid[0] )
+		self.showGameinfo(self.__selectedgameid[0])
 
 	def on_nextPushButton_2_clicked(self):
 		ui = self.__ui
@@ -243,7 +244,7 @@ class SoftwareDB(object):
 					extlist.append(item)
 			if len(extlist) == 0:
 				ui.extensionsLabel.setText('None')
-			else :
+			else:
 				ui.extensionsLabel.setText(','.join(extlist))
 			#media
 			for media, gui in (
@@ -254,7 +255,7 @@ class SoftwareDB(object):
 					('carta', ui.cartaLabel),
 					('cartb', ui.cartbLabel),
 				):
-				if  str(row[1]).lower()==media:
+				if  str(row[1]).lower() == media:
 					gui.setText(row[9])
 
 
@@ -272,7 +273,7 @@ class SoftwareDB(object):
 		# The 'Ok'-reply from the machine command seems to mean:
 		# "machine command accept and will start in the near future"
 		# and not "machine is switched"
-		# 
+		#
 		# Now we will create the msx shell ourself and delete the
 		# current shell afterwards
 		#
@@ -311,23 +312,23 @@ class SoftwareDB(object):
 			#in correct machine config so resume with extensions
 			self.__applyMedia(message)
 
-	def __applyMedia(self, message):
+	def __applyMedia(self, _):
 		# Insert(/eject) the media if requested
 		ui = self.__ui
 		filename = ''
 		for check, label, media in (
-			( ui.diskaCheckBox, ui.diskaLabel, '::diska' ),
-			( ui.diskbCheckBox, ui.diskbLabel, '::diskb' ),
-			( ui.cartaCheckBox, ui.cartaLabel, '::carta' ),
-			( ui.cartbCheckBox, ui.cartbLabel, '::cartb' )
+			(ui.diskaCheckBox, ui.diskaLabel, '::diska'),
+			(ui.diskbCheckBox, ui.diskbLabel, '::diskb'),
+			(ui.cartaCheckBox, ui.cartaLabel, '::carta'),
+			(ui.cartbCheckBox, ui.cartbLabel, '::cartb')
 			):
 			setmedia = str(self.__commandshell) + str(media)
 			if check.isChecked():
 				if label.text() == 'empty':
-					self.__bridge.command( setmedia, 'eject' )()
+					self.__bridge.command(setmedia, 'eject')()
 					print(setmedia + " eject")
 				else:
-					self.__bridge.command( setmedia, label.text() )()
+					self.__bridge.command(setmedia, label.text())()
 					print(setmedia + " " + str(label.text()))
 					filename = str(label.text())
 			else:
@@ -335,7 +336,7 @@ class SoftwareDB(object):
 
 		#
 		# Then the needed extension.
-		# We do this after the media because the eject of the cartx might 
+		# We do this after the media because the eject of the cartx might
 		# eject an extension otherwise (fi. an fmpac)
 		#
 		# TODO: if the machine isn't switched then we need to prevent inserting
@@ -351,30 +352,27 @@ class SoftwareDB(object):
 		#
 		if self.__destroyshell:
 			#TODO: find out in openMSX itself why this doesn't work
-			#if you first activate the new one and then delte the
+			#if you first activate the new one and then delete the
 			#current one, aka switch the two lines
-			self.__bridge.command( 'delete_machine' , self.__currentshell )()
-			self.__bridge.command( 'activate_machine' , self.__commandshell )()
+			self.__bridge.command('delete_machine', self.__currentshell)()
+			self.__bridge.command('activate_machine', self.__commandshell)()
 
 		#in the new active machine press CTRL for ten emutime-seconds if requested
 		if ui.ctrlCheckBox.isChecked():
-			self.__bridge.command( 'keymatrixdown', '6', '0x02' )()
-			self.__bridge.command( 'after', 'time', '10', 'keymatrixup', '6', '0x02' )()
+			self.__bridge.command('keymatrixdown', '6', '0x02')()
+			self.__bridge.command('after', 'time', '10', 'keymatrixup', '6', '0x02')()
 
 		#show the readme first for this piece of software
 		if filename != '':
-			if filename.lower().endswith(".gz") :
+			if filename.lower().endswith(".gz"):
 				filename = filename[:len(filename)-3]
 
-			if os.access(filename+str('.readme.1st'), os.F_OK):
-				readmefile = open(filename+str('.readme.1st'),'r')
-				msg = ''
+			if os.access(filename + str('.readme.1st'), os.F_OK):
+				readmefile = open(filename + str('.readme.1st'), 'r')
 				for line in readmefile:
 					msg += line
 				messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information,
-					'Read me!', msg, QtWidgets.QMessageBox.Ok,
-					self.__dmDialog
-					)
+					'Read me!', msg, QtWidgets.QMessageBox.Ok, self.__dmDialog)
 				messageBox.show()
 
 
@@ -385,11 +383,10 @@ class SoftwareDB(object):
 	def __machineChangeErrorHandler(self, message):
 		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
 			'Problem changing machine:', message, QtWidgets.QMessageBox.Ok,
-			self.__dmDialog
-			)
+			self.__dmDialog)
 		messageBox.show()
 
-	def showGameinfo( self , softid ):
+	def showGameinfo(self, softid):
 		query = "SELECT * FROM software WHERE id = '" + str(softid) + "'"
 		print(query)
 		cursor = self.__cursor

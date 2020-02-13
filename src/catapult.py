@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
+import os.path
+import sys
 from PyQt5 import QtCore, QtWidgets, QtGui
-import os.path, sys
 from openmsx_utils import tclEscape, EscapedStr
 
 #Is this a version for the openMSX-CD ?
@@ -90,8 +91,8 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.__aboutDialog = None
 
 		self.__logColours = dict(
-			( level, QtGui.QColor(
-				(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF ) )
+			(level, QtGui.QColor(
+				(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF))
 			for level, color in self.logStyle.items()
 			)
 
@@ -330,30 +331,30 @@ class MainWindow(QtWidgets.QMainWindow):
 			# not when the main application window is closed. Therefore we
 			# unify both flows by closing the windows, which will indirectly
 			# lead to a quit.
-			( ui.action_Quit, QtWidgets.qApp.closeAllWindows ),
-			( ui.action_SaveSettings, self.__saveSettings ),
-			( ui.action_SaveSettingsAs, self.__saveSettingsAs ),
-			( ui.action_LoadSettings, self.__loadSettings ),
-			( ui.action_QuickLoadState, self.__quickLoadState ),
-			( ui.action_QuickSaveState, self.__quickSaveState ),
-			( ui.action_LoadState, self.__loadState ),
-			( ui.action_SaveState, self.__saveState ),
-			( ui.action_EditConfiguration, configDialog.show ),
-			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
-			( ui.action_CheatFinder, self.__cheatfinder.show ),
-			( ui.action_TrainerSelect, self.__trainerselect.show ),
-			( ui.action_PaletteEditor, self.__paletteeditor.show ),
-			( ui.action_InputText, self.__inputtext.show ),
-			( ui.action_HelpSetup, self.showHelpSetup ),
-			( ui.action_HelpUser, self.showHelpUser ),
-			( ui.action_AboutCatapult, self.showAboutDialog ),
-			( ui.action_AboutQt, QtWidgets.qApp.aboutQt ),
+			(ui.action_Quit, QtWidgets.qApp.closeAllWindows),
+			(ui.action_SaveSettings, self.__saveSettings),
+			(ui.action_SaveSettingsAs, self.__saveSettingsAs),
+			(ui.action_LoadSettings, self.__loadSettings),
+			(ui.action_QuickLoadState, self.__quickLoadState),
+			(ui.action_QuickSaveState, self.__quickSaveState),
+			(ui.action_LoadState, self.__loadState),
+			(ui.action_SaveState, self.__saveState),
+			(ui.action_EditConfiguration, configDialog.show),
+			(ui.action_Diskmanipulator, self.__diskmanipulator.show),
+			(ui.action_CheatFinder, self.__cheatfinder.show),
+			(ui.action_TrainerSelect, self.__trainerselect.show),
+			(ui.action_PaletteEditor, self.__paletteeditor.show),
+			(ui.action_InputText, self.__inputtext.show),
+			(ui.action_HelpSetup, self.showHelpSetup),
+			(ui.action_HelpUser, self.showHelpUser),
+			(ui.action_AboutCatapult, self.showAboutDialog),
+			(ui.action_AboutQt, QtWidgets.qApp.aboutQt),
 			):
 			action.triggered.connect(func)
 		if openmsxcd:
 			for action, func in (
-				( ui.action_Autorun, self.__autorun.show ),
-				( ui.action_SoftwareDB, self.__softwaredb.show ),
+				(ui.action_Autorun, self.__autorun.show),
+				(ui.action_SoftwareDB, self.__softwaredb.show),
 				):
 				action.triggered.connect(func)
 
@@ -527,7 +528,7 @@ class MainWindow(QtWidgets.QMainWindow):
 			self.__generalFailHandler(
 				message, 'Problem quick-loading state'
 			)
-	
+
 	def __quickSaveState(self):
 		self.__bridge.command('savestate')(
 			None,
@@ -535,7 +536,7 @@ class MainWindow(QtWidgets.QMainWindow):
 				message, 'Problem quick-saving state'
 				)
 		)
-	
+
 	def __loadState(self):
 		self.__saveStateManager.exec_('load')
 

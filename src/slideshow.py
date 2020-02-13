@@ -84,10 +84,10 @@ class Slideshow(QtWidgets.QWidget):
 		return self.__slidePauzed
 
 	def setSlideStopped(self, value):
-		if value == False and self.__slideStarted :
+		if not value and self.__slideStarted:
 			self.__slideStarted = False
 			self.timer.stop()
-		if value == True and not  self.__slideStarted :
+		if value and not  self.__slideStarted:
 			self.__slideStarted = True
 			self.timer.start(self.__slideSpeed)
 		self.__slidePauzed = value
@@ -128,10 +128,12 @@ class Slideshow(QtWidgets.QWidget):
 
 		self.resizeImageLabel(self.scrollArea.contentsRect().size())
 
-	def minimumSize(self):
+	@staticmethod
+	def minimumSize():
 		return QtCore.QSize(40, 40)
 
-	def setGeometry(self, value):
+	@staticmethod
+	def setGeometry(value):
 		QtWidgets.QWidget.setGeometry(value)
 
 	def maximumSize(self):
@@ -191,7 +193,7 @@ class Slideshow(QtWidgets.QWidget):
 			cw = event.width()
 			ah = cw * self.curImagHeight / self.curImagWidth
 			aw = ch * self.curImagWidth / self.curImagHeight
-			if aw > cw :
+			if aw > cw:
 				self.__imageLabel.resize(QtCore.QSize(cw, ah))
 			else:
 				self.__imageLabel.resize(QtCore.QSize(aw, ch))
@@ -199,16 +201,16 @@ class Slideshow(QtWidgets.QWidget):
 	def findImagesForMedia(self, mediafile):
 		info = QtCore.QFileInfo(mediafile)
 		path = info.path()
-		filename  = info.completeBaseName()
+		filename = info.completeBaseName()
 		print(filename)
 		# We strip off the 2 last suffixes ourself.
 		# Using baseName() might strip off too much.
 		# Each suffix might be max 4 chars, this will take
 		# care of all '.crt.gz','.dsk.gz' etc
 		if filename.lastIndexOf(".") >= (filename.length() - 4):
-			filename = filename.left( filename.lastIndexOf(".") )
+			filename = filename.left(filename.lastIndexOf("."))
 		if filename.lastIndexOf(".") >= (filename.length() - 4):
-			filename = filename.left( filename.lastIndexOf(".") )
+			filename = filename.left(filename.lastIndexOf("."))
 		filename = filename + "*"
 
 		directory = QtCore.QDir(path)
@@ -218,26 +220,28 @@ class Slideshow(QtWidgets.QWidget):
 		for i in range(files.count()):
 			imgfile = directory.absoluteFilePath(files[i])
 			ext = QtCore.QFileInfo(imgfile).suffix().toLower()
-			if ext == "jpg" or ext == "png" or ext == "jpeg" or ext == "gif":
+			if ext in ("jpg", "png", "jpeg", "gif"):
 				self.addFile(imgfile)
 
-	def addImagesInDirectory(self, dir):
-		directory = QtCore.QDir(dir)
+	def addImagesInDirectory(self, theDir):
+		directory = QtCore.QDir(theDir)
 		files = list()
 		files = directory.entryList(QtCore.QDir.Files)
 		for i in range(files.count()):
 			imgfile = directory.absoluteFilePath(files[i])
 			ext = QtCore.QFileInfo(imgfile).suffix().toLower()
-			if ext == "jpg" or ext == "png" or ext == "jpeg" or ext == "gif":
+			if ext in ("jpg", "png", "jpeg", "gif"):
 				self.addFile(imgfile)
 
 	def scaleImage(self, factor):
+		# NOTE: FIXME: scaleFactor is not a member!
 		self.scaleFactor *= factor
 		self.__imageLabel.resize(self.scaleFactor * self.__imageLabel.pixmap().size())
 
 		self.__adjustScrollBar(self.scrollArea.horizontalScrollBar(), factor)
 		self.__adjustScrollBar(self.scrollArea.verticalScrollBar(), factor)
 
-	def __adjustScrollBar(self, scrollBar, factor):
+	@staticmethod
+	def __adjustScrollBar(scrollBar, factor):
 		scrollBar.setValue(int(factor * scrollBar.value()
 			+ ((factor - 1) * scrollBar.pageStep()/2)))

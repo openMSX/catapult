@@ -27,7 +27,7 @@ class ConnectorPlugger(QtCore.QObject):
 		# attached to them.
 		self.__handlers = [
 			handler(self.__ui, self)
-			for handler in ( AudioInHandler, CassettePortHandler,
+			for handler in (AudioInHandler, CassettePortHandler,
 				JoyPortHandler, PrinterPortHandler, SerialHandler,
 				AudioKbdPortHandler, MIDIinHandler, MIDIoutHandler
 				)

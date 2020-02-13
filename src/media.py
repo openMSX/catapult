@@ -6,15 +6,14 @@ from ipsselector import ipsDialog
 from mediamodel import Medium
 
 def parseMediaSlot(mediaSlot):
-	'''Returns a tuple ( mediumType, identifier) that corresponds to the given
+	'''Returns a tuple (mediumType, identifier) that corresponds to the given
 	media slot.
 	'''
 	assert mediaSlot is not None, 'Invalid media slot! (None)'
 	assert mediaSlot != '', 'Invalid media slot! (emtpy)'
 	if mediaSlot == 'cassetteplayer':
 		return 'cassette', None
-	else:
-		return mediaSlot[ : -1], mediaSlot[-1]
+	return mediaSlot[:-1], mediaSlot[-1]
 
 class MediaSwitcher(QtCore.QObject):
 
@@ -42,8 +41,8 @@ class MediaSwitcher(QtCore.QObject):
 		# attached to them.
 		self.__handlers = [
 			handler(ui, self)
-			for handler in ( DiskHandler, CartHandler,
-				CassetteHandler, HarddiskHandler, CDROMHandler )
+			for handler in (DiskHandler, CartHandler,
+				CassetteHandler, HarddiskHandler, CDROMHandler)
 			]
 
 	def __connectSettings(self):
@@ -58,6 +57,7 @@ class MediaSwitcher(QtCore.QObject):
 			if handler.mediumType == mediumType:
 				return handler
 		assert False, 'No handler found for mediumType "%s"' % mediumType
+		return None
 
 	def __getPageBySlot(self, mediaSlot):
 		mediumType, identifier_ = parseMediaSlot(mediaSlot.getName())
@@ -104,7 +104,7 @@ class MediaSwitcher(QtCore.QObject):
 			slot = self.__mediaModel.getMediaSlotByName(
 				mediaSlotName, self.__machineManager.getCurrentMachineId()
 				)
-			if slot.getMedium() != None:
+			if slot.getMedium() is not None:
 				text = slot.getMedium().getPath()
 		self.__ui.mediaList.setToolTip(text)
 
@@ -267,10 +267,10 @@ class MediaHandler(QtCore.QObject):
 			self.imageSpec, None #, 0
 			))
 
-	
+
 	def updatePage(self, identifier):
 		medium = self._switcher.getMedium()
-		
+
 		if (self._ejectButton):
 			self._ejectButton.setDisabled(medium is None)
 		self._mediaLabel.setText(self._getLabelText(identifier))
@@ -291,7 +291,7 @@ class MediaHandler(QtCore.QObject):
 			if lastDot == -1:
 				ext = None
 			else:
-				ext = path[lastDot + 1 : ].lower()
+				ext = path[lastDot + 1:].lower()
 			description = self._getFileDesc(fileInfo, ext)
 		elif fileInfo.exists():
 			description = 'Special file node'
@@ -317,7 +317,8 @@ class MediaHandler(QtCore.QObject):
 	def _getFileDesc(self, fileInfo, ext):
 		raise NotImplementedError
 
-	def _getDirDesc(self, dummy):
+	@staticmethod
+	def _getDirDesc(_):
 		# there's a default implementation in case
 		# dirs are not supported
 		return 'Not found'
@@ -344,7 +345,7 @@ class PatchableMediaHandler(MediaHandler):
 
 		# Look up UI elements.
 		self._IPSButton = getattr(ui, self.mediumType + 'IPSButton', None)
-		
+
 		# Connect signals.
 		self._IPSButton.clicked.connect(self._IPSButtonClicked)
 
@@ -367,7 +368,7 @@ class PatchableMediaHandler(MediaHandler):
 		assert medium is not None, 'Click on IPS button without medium'
 		if ipsDialog.exec_(self._IPSButton) == QtWidgets.QDialog.Accepted:
 			self._insertMediumFromCurrentValues()
-			
+
 class DiskHandler(PatchableMediaHandler):
 	mediumType = 'disk'
 	browseTitle = 'Select Disk Image'
@@ -417,7 +418,8 @@ class DiskHandler(PatchableMediaHandler):
 			description = 'Disk image of unknown type'
 		return description
 
-	def _getDirDesc(self, fileInfo):
+	@staticmethod
+	def _getDirDesc(fileInfo):
 		return 'Directory as disk (%d entries)' % (
 				fileInfo.dir().count()
 			)
@@ -439,12 +441,12 @@ class CartHandler(PatchableMediaHandler):
 					)
 		# some backwards compatibility code:
 		tooLittleItems = historyBox.count() - len(mapperTypeHistory)
-		for dummy in range(tooLittleItems):
+		for _ in range(tooLittleItems):
 			mapperTypeHistory.append('Auto Detect')
-		
+
 		# fill our mapper type data dict
 		self.__mapperTypeData = {}
-	
+
 		index = 0
 		while index < historyBox.count():
 			self.__mapperTypeData[
@@ -509,7 +511,7 @@ class CartHandler(PatchableMediaHandler):
 			else:
 				print('Interesting! We are preventing a race\
 					condition here!')
-		
+
 		# set the mappertype combo to the proper value
 		medium = self._switcher.getMedium()
 		if medium is None:
@@ -533,7 +535,7 @@ class CartHandler(PatchableMediaHandler):
 			amount = len(medium.getIpsPatchList())
 		self._ui.cartIPSLabel.setText('(' + str(amount) + ' selected)')
 
-	def __mapperTypeSelected(self, dummy):
+	def __mapperTypeSelected(self, _):
 		# We read it back from the combobox, so we don't need the
 		# mapperType param here
 		self._insertMediumFromCurrentValues()
@@ -585,7 +587,7 @@ class CassetteHandler(MediaHandler):
 		ui.tapeStopButton.clicked.connect(self.__stopButtonClicked)
 		ui.tapeRecordButton.clicked.connect(self.__recordButtonClicked)
 		self.__pollTimer.timeout.connect(self.__queryTimes)
-	
+
 		self.__buttonMap = {
 			self.play: ui.tapePlayButton,
 			self.rewind: ui.tapeRewindButton,
@@ -642,14 +644,14 @@ class CassetteHandler(MediaHandler):
 			QtCore.QDir.homePath(),
 			'Cassette Images (*.wav);;All Files (*)',
 			None #, 0
-			)
+			)[0]
 		deck = self._switcher.getSlot()
 		if filename == '':
 			self.__updateButtonState(deck.getState())
 		else:
 			self.__updateTapeLength(0)
 			deck.record(filename, self.__errorHandler)
-	
+
 	def __errorHandler(self, message):
 		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
 				'Cassette deck problem', message, QtWidgets.QMessageBox.Ok,
@@ -663,7 +665,7 @@ class CassetteHandler(MediaHandler):
 		zeroTime = QtCore.QTime(0, 0, 0)
 		time = zeroTime.addSecs(round(float(length)))
 		self._ui.tapeLength.setTime(time)
-		
+
 	def __updateTapePosition(self, position):
 		deck = self._switcher.getSlot()
 		if not deck: # can happen due to race conditions
@@ -690,7 +692,7 @@ class CassetteHandler(MediaHandler):
 		)
 
 	def signalSetVisible(self):
-		assert self.__isVisible == False, 'Um, we already were visible!?'
+		assert not self.__isVisible, 'Um, we already were visible!?'
 		self.__isVisible = True
 		# start timer in case we are in play or record mode
 		deck = self._switcher.getSlot()
@@ -701,16 +703,16 @@ class CassetteHandler(MediaHandler):
 
 
 	def signalSetInvisible(self):
-		assert self.__isVisible == True, 'Um, we were not even visible!?'
+		assert self.__isVisible, 'Um, we were not even visible!?'
 		self.__isVisible = False
 		# always stop timer
 		self.__pollTimer.stop()
 		self._switcher.getSlot().stateChanged.disconnect(self.__updateButtonState)
 
-	def _getLabelText(self, dummy):
+	def _getLabelText(self, _):
 		return 'Cassette Deck'
 
-	def _getFileDesc(self, dummy, ext):
+	def _getFileDesc(self, _, ext):
 		if ext == 'cas':
 			description = 'Cassette image in CAS format'
 		elif ext == 'wav':

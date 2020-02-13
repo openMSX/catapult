@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 
 from openmsx_utils import tclEscape
 
-class InputText(object):
+class InputText:
 
 	def __init__(self, bridge):
 		self.__cfDialog = None

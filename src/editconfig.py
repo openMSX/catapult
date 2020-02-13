@@ -19,7 +19,7 @@ from preferences import preferences
 #else:
 #	print('Windows not found')
 
-class ConfigDialog(object):
+class ConfigDialog:
 
 	def __init__(self):
 		self.__configDialog = None
@@ -64,7 +64,7 @@ class ConfigDialog(object):
 			'Select openMSX executable',
 			QtCore.QDir.currentPath(),
 			'All Files (*)'
-			)
+			)[0]
 		if path:
 			self.__execEdit.setText(path[0])
 		self.__setExec()

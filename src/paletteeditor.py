@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor, QPalette
 
-class PaletteEditor(object):
+class PaletteEditor:
 
 	def __init__(self, bridge):
 		self.__cfDialog = None
@@ -55,7 +55,7 @@ class PaletteEditor(object):
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		self.__savePalFile(path)
@@ -68,7 +68,7 @@ class PaletteEditor(object):
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		self.__loadPalFile(path)
@@ -151,7 +151,7 @@ class PaletteEditor(object):
 		self.__ui.RVal.setValue(red)
 		self.__ui.GVal.setValue(green)
 		self.__ui.BVal.setValue(blue)
-		
+
 		# Set text boxes.
 		self.__ui.lineEditRed.setText(str(red))
 		self.__ui.lineEditGreen.setText(str(green))

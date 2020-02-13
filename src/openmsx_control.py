@@ -1,14 +1,15 @@
+from inspect import getfullargspec
+
 from PyQt5 import QtCore, QtXml
 from PyQt5.QtCore import pyqtSignal
 
 from preferences import preferences
 from openmsx_utils import parseTclValue, EscapedStr
-from inspect import getargspec
 
 class NotConfiguredException(Exception):
 	pass
 
-class PrefixDemux(object):
+class PrefixDemux:
 
 	def __init__(self):
 		self.__mapping = {}
@@ -20,7 +21,7 @@ class PrefixDemux(object):
 				handler(name, machineId, message)
 				handled = True
 		if not handled:
-			print('ignore update for "%s": %s' % ( name, message ))
+			print('ignore update for "%s": %s' % (name, message))
 
 	def register(self, prefixes, handler):
 		mapping = self.__mapping
@@ -97,13 +98,14 @@ class ControlBridge(QtCore.QObject):
 			self.registerUpdate(updateType, demux)
 		demux.register(prefixes, handler)
 
-	def __formatReply(self, callbackfunc, value):
+	@staticmethod
+	def __formatReply(callbackfunc, value):
 		'''Formats a TCL reply words to either a list of
 		reply words, or a list with a single string in which all words
 		are concatenated together, depending on what the callbackfunc
 		expects.'''
 		words = parseTclValue(value)
-		args, varargs_, varkw_, defaults = getargspec(callbackfunc)
+		args, varargs_, varkw_, defaults, _, _, _ = getfullargspec(callbackfunc)
 		numArgs = len(args)
 		if numArgs != 0 and args[0] == 'self':
 			numArgs -= 1
@@ -114,12 +116,10 @@ class ControlBridge(QtCore.QObject):
 			if len(words) == 1:
 				#print('Returning (1 word): %s' % words)
 				return words
-			else:
-				#print('Returning (multiple words): %s' % " ".join(words))
-				return [" ".join(words)]
-		else:
-			#print('Returning: %s' % words)
-			return words
+			#print('Returning (multiple words): %s' % " ".join(words))
+			return [" ".join(words)]
+		#print('Returning: %s' % words)
+		return words
 
 	def command(self, *words):
 		'''Send a Tcl command to openMSX.
@@ -189,8 +189,8 @@ class ControlBridge(QtCore.QObject):
 	def _reply(self, ok, result):
 		serial = self.__receiveSerial
 		self.__receiveSerial += 1
-		print('command %d %s: %s' % ( serial, ('FAILED', 'OK')[ok], result ))
-		callback, errback = self.__callbacks.pop(serial, ( None, None ))
+		print('command %d %s: %s' % (serial, ('FAILED', 'OK')[ok], result))
+		callback, errback = self.__callbacks.pop(serial, (None, None))
 		if ok:
 			if callback is None:
 				print('nobody cares')
@@ -208,7 +208,7 @@ class ControlBridge(QtCore.QObject):
 	def addMachineToIgnore(self, machine):
 		'''Add a machine to the list of machines for which update
 		events should be ignored. So far only useful when you are
-		testing machine configurations. 
+		testing machine configurations.
 		'''
 		assert machine not in self.__machinesToIgnore
 		print('Adding machine to ignore: "%s"' % machine)
@@ -217,7 +217,7 @@ class ControlBridge(QtCore.QObject):
 	def removeMachineToIgnore(self, machine):
 		'''Remove a machine from the list of machines for which update
 		events should be ignored. So far only useful when you are
-		testing machine configurations. 
+		testing machine configurations.
 		'''
 		assert machine in self.__machinesToIgnore
 		print('Removing machine to ignore: "%s"' % machine)
@@ -376,4 +376,3 @@ class ControlConnection(QtCore.QObject):
 		# TODO: Throw I/O exception instead.
 		assert status != -1
 		#self.__stream.flush()
-

@@ -119,4 +119,3 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		self._bridge.command(
 			'openmsx_info', self._hardwareType + 's'
 			)(self.__listReply, self.__listFailed)
-

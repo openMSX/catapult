@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor
 
-class Cheatfinder(object):
+class Cheatfinder:
 
 	def __init__(self, bridge):
 		self.__cfDialog = None
@@ -107,7 +107,7 @@ class Cheatfinder(object):
 	def __findCheatRestart(self):
 		cheatValue = self.__ui.cheatVal.text()
 		self.__ui.FindCheatRestart.setEnabled(False)
-		if len(cheatValue)<1:
+		if len(cheatValue) < 1:
 			msgText = 'Start New Search:'
 		else:
 			msgText = 'Start New Search Equal To: ' + str(cheatValue)
@@ -150,7 +150,7 @@ class Cheatfinder(object):
 			cheatArray = line.split('\n')
 
 			# Create the table to be filled, disable sorting and set grid size.
-			self.__ui.CheatTable.setRowCount( len(cheatArray) - 1 )
+			self.__ui.CheatTable.setRowCount(len(cheatArray) - 1)
 			self.__ui.CheatTable.setSortingEnabled(0)
 			self.__ui.CheatTable.verticalHeader().setSectionResizeMode(
 				QtWidgets.QHeaderView.ResizeToContents

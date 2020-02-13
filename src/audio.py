@@ -217,7 +217,3 @@ class AudioMixer(QtCore.QObject):
 		else:
 			self.__ui.advancedAudioSettingsWidget.setVisible(False)
 			self.__ui.advancedAudioSettingsButton.setText('Open Advanced Settings...')
-
-
-
-

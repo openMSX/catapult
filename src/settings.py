@@ -91,7 +91,8 @@ class Setting(QtCore.QObject):
 				)()
 
 	# default implementation works for many objects (but not all)
-	def setUiObjValue(self, obj, value):
+	@staticmethod
+	def setUiObjValue(obj, value):
 		obj.setValue(value)
 
 class BooleanSetting(Setting):
@@ -101,12 +102,10 @@ class BooleanSetting(Setting):
 		return valueStr in ('on', 'true', 'yes')
 
 	def _convertToStr(self, value):
-		if value:
-			return 'on'
-		else:
-			return 'off'
+		return 'on' if value else 'off'
 
-	def setUiObjValue(self, obj, value):
+	@staticmethod
+	def setUiObjValue(obj, value):
 		if isinstance(obj, QtWidgets.QCheckBox):
 			state = QtCore.Qt.Unchecked
 			if value:
@@ -141,7 +140,8 @@ class EnumSetting(Setting):
 	def _convertToStr(self, value):
 		return value
 
-	def setUiObjValue(self, obj, value):
+	@staticmethod
+	def setUiObjValue(obj, value):
 		index = obj.findText(value)
 		if index == -1:
 			obj.addItem(value)
@@ -166,7 +166,8 @@ class FloatSetting(Setting):
 	def _convertToStr(self, value):
 		return str(value)
 
-	def setUiObjValue(self, obj, value):
+	@staticmethod
+	def setUiObjValue(obj, value):
 		val = float(value)
 		if isinstance(obj, QtWidgets.QSlider):
 			obj.setValue(round(val*100))
@@ -298,4 +299,3 @@ class SettingsManager(QtCore.QObject):
 		   new value as well.
 		'''
 		self.__bridge.command('unset', name)()
-

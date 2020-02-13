@@ -93,15 +93,12 @@ class PlayState(QtCore.QObject):
 		if power and visible:
 			if pause:
 				return self.pause
-			else:
-				if throttle:
-					return self.play
-				else:
-					return self.forward
-		elif not power and not visible:
+			if throttle:
+				return self.play
+			return self.forward
+		if not power and not visible:
 			return self.stop
-		else:
-			return self.unknown
+		return self.unknown
 
 	def update(self):
 		self.__state = self.computeState()
@@ -143,4 +140,3 @@ class PlayState(QtCore.QObject):
 		self.__powerSetting.setValue(True)
 		self.__visibleSetting.setValue(True)
 		self.__throttleSetting.setValue(False)
-

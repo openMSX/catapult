@@ -5,7 +5,7 @@ def parseTclValue(value):
 	Tcl parsing rules are followed.
 	http://www.tcl.tk/man/tcl8.4/TclCmd/Tcl.htm
 	'''
-	chars = iter(list(value) + [ None ])
+	chars = iter(list(value) + [None])
 	ch = next(chars)
 	words = []
 	while True:
@@ -14,9 +14,9 @@ def parseTclValue(value):
 		if ch is None:
 			return words
 		quoteType, endChar, keepBackslash = {
-			'"':      ( 'quote', '"', False ),
-			'{':      ( 'brace', '}', True  ),
-			}.get(ch, ( None,    ' ', False ) )
+			'"':      ('quote', '"', False),
+			'{':      ('brace', '}', True ),
+			}.get(ch, (None,    ' ', False))
 		if quoteType is not None:
 			ch = next(chars)
 		braceLevel = 0
@@ -54,33 +54,33 @@ def parseTclValue(value):
 if __name__ == '__main__':
 	# TODO: Make this into a unit test.
 	for inp, out in (
-		( '', [] ),
-		( '""', [ '' ] ),
-		( '{}', [ '' ] ),
-		( 'abc', [ 'abc' ] ),
-		( 'abc def', [ 'abc', 'def' ] ),
-		( '"abc def"', [ 'abc def' ] ),
-		( '{abc def}', [ 'abc def' ] ),
-		( '"{abc def}"', [ '{abc def}' ] ),
-		( '{"abc def"}', [ '"abc def"' ] ),
-		( '"abc}{def"', [ 'abc}{def' ] ),
-		( '{abc"def}', [ 'abc"def' ] ),
-		( '"a b" {c d} "e f"',  [ 'a b', 'c d', 'e f' ] ),
-		( '"a  b"  {c  d}  "e  f"',  [ 'a  b', 'c  d', 'e  f' ] ),
-		( 'ab { } cd " " ef', [ 'ab', ' ', 'cd', ' ', 'ef' ] ),
-		( 'abc"def', [ 'abc"def' ] ),
-		( 'abc{def', [ 'abc{def' ] ),
-		( r'\"abc\"', [ '"abc"' ] ),
-		( r'\{abc\}', [ '{abc}' ] ),
-		( r'"\{abc\"def\}"', [ '{abc"def}' ] ),
-		( r'{ \{ }', [ r' \{ ' ] ),
-		( r'\\', [ '\\' ] ),
-		( r'abc\ def', [ 'abc def' ] ),
-		( r'{abc\}def}', [ r'abc\}def' ] ),
-		( r'{abc\{def}', [ r'abc\{def' ] ),
-		( r'"abc\"def"', [ 'abc"def' ] ),
-		( 'xyz {{a b c} {d e {f}} g {h}}',
-		  [ 'xyz', '{a b c} {d e {f}} g {h}' ] ),
+		('', []),
+		('""', ['']),
+		('{}', ['']),
+		('abc', ['abc']),
+		('abc def', ['abc', 'def']),
+		('"abc def"', ['abc def']),
+		('{abc def}', ['abc def']),
+		('"{abc def}"', ['{abc def}']),
+		('{"abc def"}', ['"abc def"']),
+		('"abc}{def"', ['abc}{def']),
+		('{abc"def}', ['abc"def']),
+		('"a b" {c d} "e f"',  ['a b', 'c d', 'e f']),
+		('"a  b"  {c  d}  "e  f"',  ['a  b', 'c  d', 'e  f']),
+		('ab { } cd " " ef', ['ab', ' ', 'cd', ' ', 'ef']),
+		('abc"def', ['abc"def']),
+		('abc{def', ['abc{def']),
+		(r'\"abc\"', ['"abc"']),
+		(r'\{abc\}', ['{abc}']),
+		(r'"\{abc\"def\}"', ['{abc"def}']),
+		(r'{ \{ }', [r' \{ ']),
+		(r'\\', ['\\']),
+		(r'abc\ def', ['abc def']),
+		(r'{abc\}def}', [r'abc\}def']),
+		(r'{abc\{def}', [r'abc\{def']),
+		(r'"abc\"def"', ['abc"def']),
+		('xyz {{a b c} {d e {f}} g {h}}',
+		  ['xyz', '{a b c} {d e {f}} g {h}']),
 		):
 		try:
 			result = parseTclValue(inp)
@@ -93,9 +93,9 @@ if __name__ == '__main__':
 def tclEscape(string):
 	'''Escape strings so that they don't trigger Tcl functionality.'''
 	newString = string.replace('\\', '\\\\')
-	newString = newString.replace('\n', '\\r').replace('$', '\$')
+	newString = newString.replace('\n', '\\r').replace('$', r'\$')
 	newString = newString.replace('"', '\\"').replace('\'', '\\\'')
-	newString = newString.replace('[', '\[').replace(']', '\]')
+	newString = newString.replace('[', r'\[').replace(']', r'\]')
 	return newString
 
 # this class is used to mark a string as being already escaped

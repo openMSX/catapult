@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 
-class _Preferences(object):
+class _Preferences:
 
 	def __init__(self, *args):
 		self.__preferences = QtCore.QSettings(*args)
@@ -32,12 +32,10 @@ class _Preferences(object):
 			if isinstance(value, list):
 				print("key %s is a list, so returning value: %s" % (key, value))
 				return value
-			elif isinstance(value, str):
+			if isinstance(value, str):
 				print("key %s is a string, so returning value: %s" % (key, [value] if value else []))
 				return [value] if value else []
-			else:
-				raise TypeError('%s cannot be converted to list' % type(value))
-		else:
-			return list()
+			raise TypeError('%s cannot be converted to list' % type(value))
+		return list()
 
 preferences = _Preferences('openMSX', 'Catapult')

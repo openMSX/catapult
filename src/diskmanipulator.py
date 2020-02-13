@@ -61,7 +61,7 @@ class Diskmanipulator(QtCore.QObject):
 			#bridge.registerUpdate('media', self.__updateMedium)
 			#bridge.registerUpdatePrefix(
 			#	'hardware',
-			#	( 'disk', 'hd' ),
+			#	('disk', 'hd'),
 			#	self.__updateHardware
 			#	)
 			# TODO: how are handling the 'virtual_drive' in the above case ??
@@ -70,7 +70,7 @@ class Diskmanipulator(QtCore.QObject):
 			# Set the msxDirTable as needed
 			msxDir = self.__ui.msxDirTable
 			msxDir.setRowCount(0)
-			labels = [ 'File Name', 'Atributes', 'Size' ]
+			labels = ['File Name', 'Atributes', 'Size']
 			msxDir.setHorizontalHeaderLabels(labels)
 			msxDir.verticalHeader().hide()
 			msxDir.horizontalHeader().setSectionResizeMode(
@@ -93,7 +93,7 @@ class Diskmanipulator(QtCore.QObject):
 			hostDirTable = ui.hostDirView
 			dirModel = self.__dirModel
 			hostDirTable.setModel(dirModel)
-			self.setLocalDir( QtCore.QDir.currentPath() )
+			self.setLocalDir(QtCore.QDir.currentPath())
 
 			hostDirTable.setSelectionBehavior(
 				QtWidgets.QAbstractItemView.SelectionBehavior(1)
@@ -161,7 +161,7 @@ class Diskmanipulator(QtCore.QObject):
 			self.__localDir = QtCore.QDir(path)
 			hostDirTable = self.__ui.hostDirView
 			hostDirTable.setRootIndex(
-				self.__dirModel.index( path )
+				self.__dirModel.index(path)
 				)
 		else:
 			# Remove the path from the history.
@@ -173,7 +173,7 @@ class Diskmanipulator(QtCore.QObject):
 					index += 1
 
 	def doubleClickedMSXDir(self, modelindex):
-		attr = str( self.__ui.msxDirTable.item(modelindex.row(), 1).text() )
+		attr = str(self.__ui.msxDirTable.item(modelindex.row(), 1).text())
 		if 'd' in attr:
 			item = str(
 				self.__ui.msxDirTable.item(modelindex.row(), 0).text()
@@ -193,7 +193,7 @@ class Diskmanipulator(QtCore.QObject):
 
 	def doubleClickedLocalDir(self, modelindex):
 		if self.__dirModel.isDir(modelindex):
-			self.setLocalDir( self.__dirModel.filePath(modelindex) )
+			self.setLocalDir(self.__dirModel.filePath(modelindex))
 
 	def upLocalDir(self):
 		self.__localDir.cdUp()
@@ -211,7 +211,7 @@ class Diskmanipulator(QtCore.QObject):
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		# save current media to path
@@ -228,7 +228,7 @@ class Diskmanipulator(QtCore.QObject):
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		from sizewizard import Sizewizard
@@ -284,7 +284,7 @@ class Diskmanipulator(QtCore.QObject):
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		# Insert the selected image in the 'virtual drive'.
@@ -302,7 +302,8 @@ class Diskmanipulator(QtCore.QObject):
 			)
 		self.refreshDir()
 
-	def isUsableDisk(self, name):
+	@staticmethod
+	def isUsableDisk(name):
 		return name.startswith('disk') or name.startswith('hd') \
 			or name == 'virtual_drive'
 
@@ -337,7 +338,7 @@ class Diskmanipulator(QtCore.QObject):
 			if self.__comboBox is not None:
 				self.__comboBox.addItem(driveId)
 
-	def __driveRemoved(self, name, machineId):
+	def __driveRemoved(self, name, _):
 		driveId = str(name)
 		if self.isUsableDisk(driveId):
 			print('drive "%s" removed' % name)
@@ -364,7 +365,7 @@ class Diskmanipulator(QtCore.QObject):
 			self.__bridge.command(
 				'diskmanipulator', 'dir',
 				slotName
-				)( self.displayDir)
+				)(self.displayDir)
 		else:
 			# no disk inserted
 			self.__ui.cwdLine.setReadOnly(1)
@@ -453,17 +454,17 @@ class Diskmanipulator(QtCore.QObject):
 			)()
 		self.__bridge.command(
 			'diskmanipulator', 'mkdir',
-			slotName, str( newdir )
+			slotName, str(newdir)
 			)()
 
 		if self.__cwd[slotName] != '/':
 			self.__cwd[slotName] += '/'
-		self.__cwd[slotName] += str( newdir )
+		self.__cwd[slotName] += str(newdir)
 		self.refreshDir()
 
 	def importFiles(self):
 		# Get diskimage to work with
-		diskimage = str( self.__comboBox.currentText() )
+		diskimage = str(self.__comboBox.currentText())
 		print('diskimage:' + diskimage)
 		# Make sure we are in the correct directory on the image
 		path = self.__cwd[self.__mediaSlot.getName()]
@@ -501,4 +502,4 @@ class Diskmanipulator(QtCore.QObject):
 					diskimage,
 					str(self.__localDir.path()),
 					str(item.text())
-					)( self.refreshLocalDir )
+					)(self.refreshLocalDir)

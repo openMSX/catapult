@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
 
-class TrainerSelect(object):
+class TrainerSelect:
 
 	def __init__(self, bridge):
 		self.__cfDialog = None
