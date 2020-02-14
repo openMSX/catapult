@@ -123,7 +123,7 @@ class ExtensionModel(HardwareModel):
 		# it the other way around, to be consistent with other apps.
 		self.__sortReversed = order == QtCore.Qt.AscendingOrder
 
-		self.__extensions = [self.__allAscending]
+		self.__extensions = list(self.__allAscending)
 		self.__extensions.sort(key = lambda extension: extension[column])
 		if self.__sortReversed:
 			self.__extensions.reverse()

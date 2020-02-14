@@ -118,7 +118,7 @@ class MachineModel(HardwareModel):
 		# it the other way around, to be consistent with other apps.
 		self.__sortReversed = order == QtCore.Qt.AscendingOrder
 
-		self.__machines = [self.__allAscending]
+		self.__machines = list(self.__allAscending)
 		self.__machines.sort(
 			key = lambda machine: machine[column],
 			reverse = self.__sortReversed
