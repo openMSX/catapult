@@ -77,9 +77,10 @@ class MediaSwitcher(QtCore.QObject):
 	def updateMedia(self, index):
 		oldMediaSlot = self.__mediaSlot
 		# Find out which media entry has become active.
-		mediaSlotName = str(index.data(QtCore.Qt.UserRole))
+		mediaSlotNameData = index.data(QtCore.Qt.UserRole)
+		mediaSlotName = str(mediaSlotNameData)
 		# prevent problems due to race conditions when removing slots:
-		if mediaSlotName == '':
+		if mediaSlotName == '' or mediaSlotNameData is None:
 			return
 		slot = self.__mediaModel.getMediaSlotByName(
 				mediaSlotName, self.__machineManager.getCurrentMachineId()
