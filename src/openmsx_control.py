@@ -42,6 +42,7 @@ class ControlBridge(QtCore.QObject):
 		self.__receiveSerial = 0
 		self.__callbacks = {}
 		self.__machinesToIgnore = []
+		self.__connectionClosedCallback = None
 
 	def openConnection(self):
 		# first check if we have an executable specified
@@ -58,17 +59,27 @@ class ControlBridge(QtCore.QObject):
 	def closeConnection(self, callback):
 		if self.__connection is None:
 			# Connection is already closed.
+			print('Calling callback as connection is already gone!')
 			callback()
 		else:
 			# TODO: Have a fallback in case openMSX does not respond.
 			# TODO: Is waiting for the quit command to be confirmed good enough,
 			#       or should we wait for the control connection end tag?
-			self.command('exit_process')(callback)
+			# Note: instead of waiting for the quit command to be confirmed,
+			#       we now wait for the connection to be closed due to openMSX
+			#       having quit.
+			self.command('exit_process')(lambda: print('Waiting for connection closed...'))
+			self.__connectionClosedCallback = callback
 
 	def connectionClosed(self):
 		print('connection with openMSX was closed')
 		self.__connection = None
 		# TODO: How to handle this? Attempt a reconnect?
+		# Check if we are waiting for this callback
+		if self.__connectionClosedCallback:
+			print('Waiting for connection closed finished, close connection callback')
+			self.__connectionClosedCallback()
+			self.__connectionClosedCallback = None
 
 	def registerInitial(self, handler):
 		'''Registers a handler to be called after a new connection is
