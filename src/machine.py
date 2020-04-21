@@ -1,18 +1,16 @@
-# $Id$
-
-from PyQt4 import QtCore, QtGui
 from bisect import insort
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import pyqtSignal, QModelIndex
 
 from hardware import HardwareModel
-from qt_utils import QtSignal, Signal, connect
 from preferences import preferences
 
 class MachineModel(HardwareModel):
 	__columnKeys = 'manufacturer', 'code', 'type', 'working', 'description'
 	_hardwareType = 'machine'
 	_testable = True
-	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
-	layoutChanged = QtSignal()
+	rowsInserted = pyqtSignal(QModelIndex, int, int)
+	layoutChanged = pyqtSignal()
 
 	def __init__(self, bridge):
 		HardwareModel.__init__(self, bridge)
@@ -51,23 +49,19 @@ class MachineModel(HardwareModel):
 		info.setdefault('code', name)
 		sortRow = [
 			info.get(key, '').lower() for key in self.__columnKeys
-			] + [ name, info ]
+			] + [name, info]
 
-		if self.__sortReversed:
-			sortSign = -1
-		else:
-			sortSign = 1
+		sortReversed = self.__sortReversed
 		column = self.__sortColumn
-		key = sortRow[column]
+		key = (sortRow[column], sortRow)
 		# Unfortunately "bisect" does not offer a way to use a different
 		# comparator, so we have to do binary search ourselves.
 		low = 0
 		high = len(self.__machines)
 		while low < high:
-			mid = (low + high) / 2
+			mid = (low + high) // 2
 			machine = self.__machines[mid]
-			if (sortSign * cmp(key, machine[column])
-					or cmp(sortRow, machine)) > 0:
+			if (key > (machine[column], machine)) != sortReversed:
 				low = mid + 1
 			else:
 				high = mid
@@ -92,7 +86,7 @@ class MachineModel(HardwareModel):
 		if orientation == QtCore.Qt.Horizontal:
 			if role == QtCore.Qt.DisplayRole:
 				return QtCore.QVariant(self.__columnKeys[section].capitalize())
-			elif role == QtCore.Qt.TextAlignmentRole:
+			if role == QtCore.Qt.TextAlignmentRole:
 				return QtCore.QVariant(QtCore.Qt.AlignLeft)
 
 		return QtCore.QVariant()
@@ -103,19 +97,18 @@ class MachineModel(HardwareModel):
 
 		column = index.column()
 		sortRow = self.__machines[index.row()]
-		#print 'data requested for', sortRow[-2], 'column', column, 'role', role
+		#print('data requested for', sortRow[-2], 'column', column, 'role', role)
 		if role == QtCore.Qt.DisplayRole:
 			key = self.__columnKeys[column]
 			return QtCore.QVariant(sortRow[-1].get(key, ''))
-		elif role == QtCore.Qt.UserRole:
-			return QtCore.QVariant(sortRow[-2])
-		elif role == QtCore.Qt.ToolTipRole:
+		if role == QtCore.Qt.UserRole:
+			return QtCore.QVariant(sortRow[-2]).value()
+		if role == QtCore.Qt.ToolTipRole:
 			key = self.__columnKeys[column]
 			value = sortRow[-1].get(key)
 			if key == 'working' and value == 'No':
 				return QtCore.QVariant(sortRow[-1].get('brokenreason'))
-			else:
-				return QtCore.QVariant(value)
+			return QtCore.QVariant(value)
 
 		return QtCore.QVariant()
 
@@ -135,9 +128,9 @@ class MachineModel(HardwareModel):
 
 class MachineManager(QtCore.QObject):
 
-	machineChanged = Signal('QString')
-	machineAdded = Signal('QString')
-	machineRemoved = Signal('QString')
+	machineChanged = pyqtSignal(str)
+	machineAdded = pyqtSignal(str)
+	machineRemoved = pyqtSignal(str)
 
 	def __init__(self, parent, ui, bridge):
 		QtCore.QObject.__init__(self)
@@ -154,7 +147,7 @@ class MachineManager(QtCore.QObject):
 		self.__currentMachineId = None
 		self.__currentMachineConfig = None
 		self.__selectedMachineConfig = None
-		self.__requestedWidths = [ 0 ] * model.columnCount()
+		self.__requestedWidths = [0] * model.columnCount()
 
 		# Load history.
 		for machine in preferences.getList('machine/history'):
@@ -163,11 +156,11 @@ class MachineManager(QtCore.QObject):
 				)
 
 		# Make connections.
-		connect(ui.machineBox, 'activated(int)', self.__machineSelected)
-		connect(ui.setAsDefaultButton, 'clicked()', self.__machineSetDefault)
+		ui.machineBox.activated.connect(self.__machineSelected)
+		ui.setAsDefaultButton.clicked.connect(self.__machineSetDefault)
 
 		bridge.registerUpdatePrefix(
-			'hardware', ( 'machine', ), self.__updateHardware
+			'hardware', ('machine',), self.__updateHardware
 			)
 		# Query initial state.
 		# and get data directories needed for images
@@ -180,13 +173,12 @@ class MachineManager(QtCore.QObject):
 		bridge.command('machine')(self.__initialReply)
 		bridge.command('return','"$env(OPENMSX_USER_DATA)"')(self.__dirReply)
 		bridge.command('return','"$env(OPENMSX_SYSTEM_DATA)"')(self.__dirReply)
-	
+
 	def __dirReply(self, dataDir):
 		# we use the fact that the response will
 		# come in the order they are requested
-		print "XXX"
-		print dataDir
-		if self.__userdir == None:
+		print(dataDir)
+		if self.__userdir is None:
 			self.__userdir = dataDir
 		else:
 			self.__systemdir = dataDir
@@ -196,13 +188,13 @@ class MachineManager(QtCore.QObject):
 		self.__updateMachineId(machineId)
 
 	def __updateMachineId(self, machineId):
-		print 'ID of current machine:', machineId
+		print('ID of current machine:', machineId)
 		self.__currentMachineId = machineId
 		self.machineChanged.emit(machineId)
 		self.__bridge.command('machine_info', 'config_name')(self.__machineChanged)
 
-	def __updateHardware(self, machineId, dummy, event):
-		print 'Machine', machineId, ':', event
+	def __updateHardware(self, machineId, _, event):
+		print('Machine', machineId, ':', event)
 		if event == 'select':
 			self.__updateMachineId(machineId)
 		elif event == 'add':
@@ -224,7 +216,7 @@ class MachineManager(QtCore.QObject):
 		self.__selectedMachineConfig = self.__currentMachineConfig
 		dialog = self.__machineDialog
 		if dialog is None:
-			self.__machineDialog = dialog = QtGui.QDialog(
+			self.__machineDialog = dialog = QtWidgets.QDialog(
 				self.__parent, QtCore.Qt.Dialog
 				)
 			# Setup UI made in Qt Designer.
@@ -236,7 +228,7 @@ class MachineManager(QtCore.QObject):
 			horizontalHeader.setStretchLastSection(True)
 			horizontalHeader.setSortIndicatorShown(True)
 			horizontalHeader.setHighlightSections(False)
-			horizontalHeader.setClickable(True)
+			horizontalHeader.setSectionsClickable(True)
 			ui.machineTable.verticalHeader().hide()
 			model = self.__model
 			ui.machineTable.setModel(model)
@@ -253,12 +245,11 @@ class MachineManager(QtCore.QObject):
 			#		self.__cursor = cursor = connection.cursor()
 
 			# Make connections.
-			connect(dialog, 'accepted()', self.__machineDialogAccepted)
-			connect(
-				horizontalHeader, 'sectionClicked(int)',
+			dialog.accepted.connect(self.__machineDialogAccepted)
+			horizontalHeader.sectionClicked.connect(
 				ui.machineTable.sortByColumn
 				)
-			connect(ui.refreshButton, 'clicked()', model.repopulate)
+			ui.refreshButton.clicked.connect(model.repopulate)
 			model.populating.connect(self.__disableRefreshButton)
 			model.populated.connect(self.__enableRefreshButton)
 			model.rowsInserted.connect(self.__machinesAdded)
@@ -269,9 +260,7 @@ class MachineManager(QtCore.QObject):
 				# to the currently selected one.
 				self.__setSelection, QtCore.Qt.QueuedConnection
 				)
-			# This is a slot rather than a signal, so we connect it by
-			# overriding the method implementation.
-			ui.machineTable.currentChanged = self.__machineHighlighted
+			ui.machineTable.selectionModel().currentChanged.connect(self.__machineHighlighted)
 			# Fetch machine info.
 			self.__model.repopulate()
 		else:
@@ -280,10 +269,10 @@ class MachineManager(QtCore.QObject):
 		dialog.raise_()
 		dialog.activateWindow()
 
-	def __machineHighlighted(self, current, dummy):
+	def __machineHighlighted(self, current, _):
 		self.__ui.okButton.setEnabled(True)
 		self.__selectedMachineConfig = \
-			self.__model.data(current, QtCore.Qt.UserRole).toString()
+			self.__model.data(current, QtCore.Qt.UserRole)
 		self.__ui.machineTable.scrollTo(current)
 		# Display images of this machine if we are in the openmsxcd version
 		if self.__parent.openmsxcd :
@@ -298,39 +287,39 @@ class MachineManager(QtCore.QObject):
 			#the <dir>/machines/<selected-machine>/images/
 			#or in the images pool
 			#the <dir>/images/<selected-machine>*.(jpeg|jpg|gif|png)
-			if not (self.__userdir == None):
-				print "XXX userdir"
-				dir = self.__userdir + "/machines/" + \
+			if self.__userdir is not None:
+				print("XXX userdir")
+				theDir = self.__userdir + "/machines/" + \
 					str(self.__selectedMachineConfig) + \
 					"/images"
-				print dir
-				self.__ui.slideshowWidget.addImagesInDirectory(dir)
-				dir = self.__userdir + "/images/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.addImagesInDirectory(theDir)
+				theDir = self.__userdir + "/images/" + \
 					str(self.__selectedMachineConfig)
-				print dir
+				print(theDir)
 				self.__ui.slideshowWidget.findImagesForMedia(dir)
-			if not (self.__systemdir == None):
-				print "XXX systemdir"
-				dir = self.__systemdir + "/machines/" + \
+			if self.__systemdir is not None:
+				print("XXX systemdir")
+				theDir = self.__systemdir + "/machines/" + \
 					str(self.__selectedMachineConfig) + \
 					"/images"
-				print dir
-				self.__ui.slideshowWidget.addImagesInDirectory(dir)
-				dir = self.__systemdir + "/images/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.addImagesInDirectory(theDir)
+				theDir = self.__systemdir + "/images/" + \
 					str(self.__selectedMachineConfig)
-				print dir
-				self.__ui.slideshowWidget.findImagesForMedia(dir)
-			print "XXX end images"
+				print(theDir)
+				self.__ui.slideshowWidget.findImagesForMedia(theDir)
+			print("XXX end images")
 
 			#filenames = "/opt/openMSX/share/images/" + \
 			#	str(self.__selectedMachineConfig).lower()
-			#print "filenames => " + filenames
+			#print("filenames => " + filenames)
 			#self.__ui.slideshowWidget.findImagesForMedia(filenames)
 
 
 	def __machineDialogAccepted(self):
 		index = self.__ui.machineTable.currentIndex()
-		machine = self.__model.data(index, QtCore.Qt.UserRole).toString()
+		machine = self.__model.data(index, QtCore.Qt.UserRole)
 		self.__setMachine(machine)
 
 	def __setMachine(self, machine):
@@ -340,14 +329,14 @@ class MachineManager(QtCore.QObject):
 			)
 
 	def __machineChangeErrorHandler(self, message):
-		messageBox =  QtGui.QMessageBox('Problem changing machine:', message,
-				QtGui.QMessageBox.Warning, 0, 0, 0,
+		messageBox =  QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+				'Problem changing machine:', message, QtWidgets.QMessageBox.Ok,
 				self.__machineBox
 				)
 		messageBox.show()
 
 	def __machineChanged(self, value):
-		print 'current machine:', value
+		print('current machine:', value)
 		self.__currentMachineConfig = value
 		# TODO: Replace current item (edit text?) as well.
 		machineBox = self.__machineBox
@@ -358,24 +347,24 @@ class MachineManager(QtCore.QObject):
 		# Remove duplicates of the path from the history.
 		index = 1
 		while index < machineBox.count():
-			if machineBox.itemData(index).toString() == value:
+			if machineBox.itemData(index) == value:
 				machineBox.removeItem(index)
 			else:
 				index += 1
 		# Persist history.
-		history = QtCore.QStringList()
+		history = list()
 		for index in range(machineBox.count()):
-			history.append(machineBox.itemData(index).toString())
+			history.append(machineBox.itemData(index))
 		preferences['machine/history'] = history
 
 	def __machineSelected(self, index):
-		machine = self.__machineBox.itemData(index).toString()
-		print 'selected machine:', machine
+		machine = self.__machineBox.itemData(index)
+		print('selected machine:', machine)
 		# TODO: Ask user for confirmation if current machine is different and
 		#       currently powered on.
 		self.__setMachine(machine)
 
-	def __machinesAdded(self, dummy, start, end):
+	def __machinesAdded(self, _, start, end):
 		model = self.__model
 		table = self.__ui.machineTable
 		header = table.horizontalHeader()
@@ -403,6 +392,5 @@ class MachineManager(QtCore.QObject):
 
 	def __machineSetDefault(self):
 		machineBox = self.__machineBox
-		machine = machineBox.itemData(machineBox.currentIndex()).toString()
+		machine = machineBox.itemData(machineBox.currentIndex())
 		self.__bridge.command('set', 'default_machine', machine)()
-

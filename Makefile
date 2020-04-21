@@ -39,7 +39,7 @@ run: build
 ifeq ($(OS),Darwin)
 	open derived/openMSX_Catapult.app
 else
-	cd $(PY_DIR) && $(PYTHONBINPREFIX)python catapult.py
+	cd $(PY_DIR) && $(PYTHONBINPREFIX)python3 catapult.py
 endif
 
 #TODO make the *.db files dependend on *txt files and generate them
@@ -53,7 +53,7 @@ runcd: build dbfiles
 ifeq ($(OS),Darwin)
 	open derived/openMSX_Catapult.app --cd
 else
-	cd $(PY_DIR) && $(PYTHONBINPREFIX)python catapult.py --cd
+	cd $(PY_DIR) && $(PYTHONBINPREFIX)python3 catapult.py --cd
 endif
 
 build: $(COPY_SRC) $(COPY_ICONS) $(UI_GEN_SRC)
@@ -68,7 +68,7 @@ $(COPY_ICONS): $(RES_DIR)/%: res/%
 
 $(UI_GEN_SRC): $(PY_DIR)/ui_%.py: res/%.ui
 	@mkdir -p $(@D)
-	$(PYTHONBINPREFIX)pyuic4 $< -o $@
+	cd res && $(PYTHONBINPREFIX)pyuic5 $(<F) -o ../$@
 
 ifeq ($(OS),Darwin)
 build: $(APPCONTENTS)/Info.plist $(APPCONTENTS)/PkgInfo $(APPCONTENTS)/MacOS/run.sh

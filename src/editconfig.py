@@ -1,8 +1,5 @@
-# $Id$
-
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 from preferences import preferences
-from qt_utils import connect
 
 # Some useful notes on how to improve things:
 # (not necessarily in this file, though!)
@@ -15,14 +12,14 @@ from qt_utils import connect
 #	"Software\\Microsoft\\Windows\\CurrentVersion"
 #	)
 #value, type = _winreg.QueryValueEx(key, "ProgramFilesDir")
-#print "Your Program Files dir is here: %s" % value
+#print("Your Program Files dir is here: %s" % value)
 # to check if we're on windows:
 #if hasattr(sys, 'getwindowsversion'):
-#	 print 'Windows found'
+#	 print('Windows found')
 #else:
-#	print 'Windows not found'
+#	print('Windows not found')
 
-class ConfigDialog(object):
+class ConfigDialog:
 
 	def __init__(self):
 		self.__configDialog = None
@@ -32,7 +29,7 @@ class ConfigDialog(object):
 	def show(self, block = False):
 		dialog = self.__configDialog
 		if dialog is None:
-			self.__configDialog = dialog = QtGui.QDialog(
+			self.__configDialog = dialog = QtWidgets.QDialog(
 				None, # TODO: find a way to get the real parent
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -49,8 +46,8 @@ class ConfigDialog(object):
 				self.__execEdit.setText(preferences['system/executable'])
 			except KeyError:
 				self.__execEdit.setText('')
-			connect(self.__browseExecutableButton, 'clicked()', self.__browseExec)
-			connect(self.__execEdit, 'editingFinished()', self.__setExec)
+			self.__browseExecutableButton.clicked.connect(self.__browseExec)
+			self.__execEdit.editingFinished.connect(self.__setExec)
 		if block:
 			dialog.exec_()
 		else:
@@ -62,14 +59,14 @@ class ConfigDialog(object):
 		preferences['system/executable'] = self.__execEdit.text()
 
 	def __browseExec(self):
-		path =  QtGui.QFileDialog.getOpenFileName(
+		path = QtWidgets.QFileDialog.getOpenFileName(
 			self.__browseExecutableButton,
 			'Select openMSX executable',
 			QtCore.QDir.currentPath(),
 			'All Files (*)'
-			)
-		if not path.isNull():
-			self.__execEdit.setText(path)
+			)[0]
+		if path:
+			self.__execEdit.setText(path[0])
 		self.__setExec()
 
 configDialog = ConfigDialog()

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-# $Id$
 
-from PyQt4 import QtCore, QtGui
-import os.path, sys
+import os.path
+import sys
+from PyQt5 import QtCore, QtWidgets, QtGui
 from openmsx_utils import tclEscape, EscapedStr
 
 #Is this a version for the openMSX-CD ?
@@ -14,7 +14,7 @@ for i in sys.argv:
 # Application info must be set before the "preferences" module is imported.
 # Since many different modules might import "preferences", we perform the
 # setup before any Catapult modules are imported.
-app = QtGui.QApplication(sys.argv)
+app = QtWidgets.QApplication(sys.argv)
 app.setOrganizationName('openMSX Team')
 app.setOrganizationDomain('openmsx.org')
 app.setApplicationName('openMSX Catapult')
@@ -51,11 +51,10 @@ from openmsx_control import ControlBridge, NotConfiguredException
 from paletteeditor import PaletteEditor
 from inputtext import InputText
 from player import PlayState
-from qt_utils import connect
 import settings
 from ui_main import Ui_MainWindow
 
-class MainWindow(QtGui.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
 	# Colors used for different types of log messages:
 	logStyle = {
 		'info': 0x000000,
@@ -65,7 +64,7 @@ class MainWindow(QtGui.QMainWindow):
 		}
 
 	def __init__(self, bridge):
-		QtGui.QMainWindow.__init__(self)
+		QtWidgets.QMainWindow.__init__(self)
 		self.__bridge = bridge
 		self.__ui = ui = Ui_MainWindow()
 		self.__connectorModel = connectorModel = ConnectorModel(bridge)
@@ -74,33 +73,32 @@ class MainWindow(QtGui.QMainWindow):
 		# Added stuff that at the moment will be exclusive to
 		# the openMSX-CD
 		if openmsxcd:
-			ui.action_SoftwareDB = QtGui.QAction(self)
+			ui.action_SoftwareDB = QtWidgets.QAction(self)
 			ui.action_SoftwareDB.setObjectName("action_SoftwareDB")
-			ui.action_SoftwareDB.setText(QtGui.QApplication.translate("MainWindow",
-				"Software DB", None, QtGui.QApplication.UnicodeUTF8))
+			ui.action_SoftwareDB.setText(QtWidgets.QApplication.translate("MainWindow",
+				"Software DB", None, QtWidgets.QApplication.UnicodeUTF8))
 			ui.menuTools.addAction(ui.action_SoftwareDB)
 
-			ui.action_Autorun = QtGui.QAction(self)
+			ui.action_Autorun = QtWidgets.QAction(self)
 			ui.action_Autorun.setObjectName("action_Autorun")
-			ui.action_Autorun.setText(QtGui.QApplication.translate("MainWindow",
-				"Autorun dialog", None, QtGui.QApplication.UnicodeUTF8))
+			ui.action_Autorun.setText(QtWidgets.QApplication.translate("MainWindow",
+				"Autorun dialog", None, QtWidgets.QApplication.UnicodeUTF8))
 			ui.menuTools.addAction(ui.action_Autorun)
 
 		# Resources that are loaded on demand.
 		self.__machineDialog = None
 		self.__extensionDialog = None
 		self.__aboutDialog = None
-		self.__assistentClient = None
 
 		self.__logColours = dict(
-			( level, QtGui.QColor(
-				(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF ) )
-			for level, color in self.logStyle.iteritems()
+			(level, QtGui.QColor(
+				(color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF))
+			for level, color in self.logStyle.items()
 			)
 
-		connect(QtGui.qApp, 'lastWindowClosed()', self.closeConnection)
+		QtWidgets.qApp.lastWindowClosed.connect(self.closeConnection)
 		# We have to let openMSX quit gracefully before quitting Catapult.
-		QtGui.qApp.setQuitOnLastWindowClosed(False)
+		QtWidgets.qApp.setQuitOnLastWindowClosed(False)
 		# Register Tcl commands to intercept openMSX exit.
 		# This should happen before SettingsManager is instantiated, since that
 		# will register "unset renderer" and the exit interception should be
@@ -138,12 +136,12 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.registerSpecialSetting(
 			'fullscreen', self.__updateSpecialSettings
 			)
-		connect(ui.fullscreen, 'clicked(bool)', self.__goFullscreen)
+		ui.fullscreen.clicked.connect(self.__goFullscreen)
 
-		connect(ui.extensionButton, 'clicked()',
+		ui.extensionButton.clicked.connect(
 			extensionManager.chooseExtension)
 
-		connect(ui.machineButton, 'clicked()', machineManager.chooseMachine)
+		ui.machineButton.clicked.connect(machineManager.chooseMachine)
 
 		self.__mediaSwitcher = MediaSwitcher(
 			ui, mediaModel, settingsManager, machineManager
@@ -154,7 +152,7 @@ class MainWindow(QtGui.QMainWindow):
 		self.__audioMixer = AudioMixer(ui, settingsManager, bridge)
 		self.__frameRateTimer = QtCore.QTimer()
 		self.__frameRateTimer.setInterval(2000)
-		self.__frameRateLabel = QtGui.QLabel('')
+		self.__frameRateLabel = QtWidgets.QLabel('')
 		ui.statusbar.addWidget(self.__frameRateLabel)
 
 	def __updateSpecialSettings(self, name, message):
@@ -163,7 +161,7 @@ class MainWindow(QtGui.QMainWindow):
 
 	def __goFullscreen(self, value):
 		if value:
-			reply = QtGui.QMessageBox.warning(self,
+			reply = QtWidgets.QMessageBox.warning(self,
 				self.tr("Going fullscreen"),
 				self.tr(
 				"<p>Do you really want to go fullscreen?</p>"
@@ -171,9 +169,9 @@ class MainWindow(QtGui.QMainWindow):
 				" that you know how to disable fullscreen"
 				" later on!</p>"
 				),
-				self.tr("&Cancel"),
-				self.tr("Continue"))
-			if reply == 0:
+				QtWidgets.QMessageBox.Cancel | QtWidgets.QMessageBox.Yes,
+				QtWidgets.QMessageBox.Cancel)
+			if reply == QtWidgets.QMessageBox.Cancel:
 				self.__ui.fullscreen.setChecked(False)
 				#TODO find out why we need to activate the
 				#checbox twice before we see this dialog again
@@ -245,7 +243,7 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.registerSetting('speed', settings.IntegerSetting)
 		settingsManager.connectSetting('speed', ui.speedSlider)
 		settingsManager.connectSetting('speed', ui.speedSpinBox)
-		connect(ui.normalSpeedButton, 'clicked()',
+		ui.normalSpeedButton.clicked.connect(
 			lambda: settingsManager.restoreToDefault('speed'))
 		settingsManager.registerSetting('throttle', settings.BooleanSetting)
 		settingsManager.connectSetting('throttle', ui.limitSpeedCheckBox)
@@ -255,11 +253,11 @@ class MainWindow(QtGui.QMainWindow):
 			ui.fullSpeedWhenLoadingCheckBox)
 		settingsManager.registerSetting('minframeskip', settings.IntegerSetting)
 		settingsManager.connectSetting('minframeskip', ui.minFrameSkipSpinBox)
-		connect(ui.resetMinFrameSkipButton, 'clicked()',
+		ui.resetMinFrameSkipButton.clicked.connect(
 			lambda: settingsManager.restoreToDefault('minframeskip'))
 		settingsManager.registerSetting('maxframeskip', settings.IntegerSetting)
 		settingsManager.connectSetting('maxframeskip', ui.maxFrameSkipSpinBox)
-		connect(ui.resetMaxFrameSkipButton, 'clicked()',
+		ui.resetMaxFrameSkipButton.clicked.connect(
 			lambda: settingsManager.restoreToDefault('maxframeskip'))
 		settingsManager.registerSetting('z80_freq', settings.IntegerSetting)
 		# TODO: Z80 frequency can change due to MSX software (when it's locked)
@@ -270,7 +268,7 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.connectSetting('z80_freq', ui.Z80FrequencySlider)
 		settingsManager.registerSetting('z80_freq_locked', settings.BooleanSetting)
 		settingsManager.connectSetting('z80_freq_locked', ui.Z80FrequencyLockCheckBox)
-		connect(ui.resetZ80FrequencyButton, 'clicked()',
+		ui.resetZ80FrequencyButton.clicked.connect(
 			lambda: settingsManager.restoreToDefault('z80_freq'))
 		settingsManager.registerSetting('r800_freq', settings.IntegerSetting)
 		settingsManager.connectSetting('r800_freq', ui.R800FrequencySpinBox)
@@ -278,7 +276,7 @@ class MainWindow(QtGui.QMainWindow):
 		settingsManager.registerSetting('r800_freq_locked', settings.BooleanSetting)
 		settingsManager.connectSetting('r800_freq_locked',
 			ui.R800FrequencyLockCheckBox)
-		connect(ui.resetR800FrequencyButton, 'clicked()',
+		ui.resetR800FrequencyButton.clicked.connect(
 			lambda: settingsManager.restoreToDefault('r800_freq'))
 
 		# menu setting(s)
@@ -295,7 +293,7 @@ class MainWindow(QtGui.QMainWindow):
 		def monitorTypeListReply(*words):
 			combo = self.__ui.monitorTypeComboBox
 			for word in sorted(words):
-				combo.addItem(QtCore.QString(word.replace('_', ' ')))
+				combo.addItem(word.replace('_', ' '))
 			# hardcoding to start on normal, because this setting
 			# cannot be saved anyway
 			index = combo.findText('normal')
@@ -310,12 +308,10 @@ class MainWindow(QtGui.QMainWindow):
 				'monitor_type', str(newType.replace(' ', '_'))
 				)()
 
-		connect(self.__ui.monitorTypeComboBox, 'activated(QString)',
-			monitorTypeChanged
-			)
+		self.__ui.monitorTypeComboBox.activated.connect(lambda index: monitorTypeChanged(self.__ui.monitorTypeComboBox.currentText()))
 
 		###### other stuff
-		connect(self.__frameRateTimer, 'timeout()',
+		self.__frameRateTimer.timeout.connect(
 			lambda: self.__bridge.command('openmsx_info', 'fps')(
 				self.__updateFrameRateLabel, None
 				)
@@ -335,32 +331,32 @@ class MainWindow(QtGui.QMainWindow):
 			# not when the main application window is closed. Therefore we
 			# unify both flows by closing the windows, which will indirectly
 			# lead to a quit.
-			( ui.action_Quit, QtGui.qApp.closeAllWindows ),
-			( ui.action_SaveSettings, self.__saveSettings ),
-			( ui.action_SaveSettingsAs, self.__saveSettingsAs ),
-			( ui.action_LoadSettings, self.__loadSettings ),
-			( ui.action_QuickLoadState, self.__quickLoadState ),
-			( ui.action_QuickSaveState, self.__quickSaveState ),
-			( ui.action_LoadState, self.__loadState ),
-			( ui.action_SaveState, self.__saveState ),
-			( ui.action_EditConfiguration, configDialog.show ),
-			( ui.action_Diskmanipulator, self.__diskmanipulator.show ),
-			( ui.action_CheatFinder, self.__cheatfinder.show ),
-			( ui.action_TrainerSelect, self.__trainerselect.show ),
-			( ui.action_PaletteEditor, self.__paletteeditor.show ),
-			( ui.action_InputText, self.__inputtext.show ),
-			( ui.action_HelpSetup, self.showHelpSetup ),
-			( ui.action_HelpUser, self.showHelpUser ),
-			( ui.action_AboutCatapult, self.showAboutDialog ),
-			( ui.action_AboutQt, QtGui.qApp.aboutQt ),
+			(ui.action_Quit, QtWidgets.qApp.closeAllWindows),
+			(ui.action_SaveSettings, self.__saveSettings),
+			(ui.action_SaveSettingsAs, self.__saveSettingsAs),
+			(ui.action_LoadSettings, self.__loadSettings),
+			(ui.action_QuickLoadState, self.__quickLoadState),
+			(ui.action_QuickSaveState, self.__quickSaveState),
+			(ui.action_LoadState, self.__loadState),
+			(ui.action_SaveState, self.__saveState),
+			(ui.action_EditConfiguration, configDialog.show),
+			(ui.action_Diskmanipulator, self.__diskmanipulator.show),
+			(ui.action_CheatFinder, self.__cheatfinder.show),
+			(ui.action_TrainerSelect, self.__trainerselect.show),
+			(ui.action_PaletteEditor, self.__paletteeditor.show),
+			(ui.action_InputText, self.__inputtext.show),
+			(ui.action_HelpSetup, self.showHelpSetup),
+			(ui.action_HelpUser, self.showHelpUser),
+			(ui.action_AboutCatapult, self.showAboutDialog),
+			(ui.action_AboutQt, QtWidgets.qApp.aboutQt),
 			):
-			connect(action, 'triggered(bool)', func)
+			action.triggered.connect(func)
 		if openmsxcd:
 			for action, func in (
-				( ui.action_Autorun, self.__autorun.show ),
-				( ui.action_SoftwareDB, self.__softwaredb.show ),
+				(ui.action_Autorun, self.__autorun.show),
+				(ui.action_SoftwareDB, self.__softwaredb.show),
 				):
-				connect(action, 'triggered(bool)', func)
+				action.triggered.connect(func)
 
 	def __interceptExit(self):
 		'''Redefines the "exit" command so openMSX will stop instead of exit
@@ -398,38 +394,30 @@ class MainWindow(QtGui.QMainWindow):
 
 	# Slots:
 
-	#@QtCore.pyqtSignature('')
 	def closeEvent(self, event):
-		print " QtGui.QMainWindow.closeEvent(self, event)"
-		QtGui.QMainWindow.closeEvent(self, event)
+		print(" QtWidgets.QMainWindow.closeEvent(self, event)")
+		QtWidgets.QMainWindow.closeEvent(self, event)
 
-	@QtCore.pyqtSignature('')
 	def close(self):
 		# [Manuel] is the following log line correct??
-		print " QtGui.QMainWindow.closeEvent(self, event)"
-		QtGui.QMainWindow.close(self)
+		print(" QtWidgets.QMainWindow.close(self)")
+		QtWidgets.QMainWindow.close(self)
 
-	@QtCore.pyqtSignature('')
 	def on_playButton_clicked(self):
 		self.__playState.setState(PlayState.play)
 
-	@QtCore.pyqtSignature('')
 	def on_pauseButton_clicked(self):
 		self.__playState.setState(PlayState.pause)
 
-	@QtCore.pyqtSignature('')
 	def on_stopButton_clicked(self):
 		self.__playState.setState(PlayState.stop)
 
-	@QtCore.pyqtSignature('')
 	def on_forwardButton_clicked(self):
 		self.__playState.setState(PlayState.forward)
 
-	@QtCore.pyqtSignature('')
 	def on_resetButton_clicked(self):
 		self.__bridge.command('reset')()
 
-	@QtCore.pyqtSignature('')
 	def on_consoleLineEdit_returnPressed(self):
 		line = self.__ui.consoleLineEdit.text()
 		self.logLine('command', '> %s' % line)
@@ -439,7 +427,7 @@ class MainWindow(QtGui.QMainWindow):
 	def chooseMachine(self):
 		dialog = self.__machineDialog
 		if dialog is None:
-			self.__machineDialog = dialog = QtGui.QDialog(
+			self.__machineDialog = dialog = QtWidgets.QDialog(
 				self, QtCore.Qt.Dialog | QtCore.Qt.WindowTitleHint
 				)
 			# Setup UI made in Qt Designer.
@@ -453,7 +441,7 @@ class MainWindow(QtGui.QMainWindow):
 	def chooseExtension(self):
 		dialog = self.__extensionDialog
 		if dialog is None:
-			self.__extensionDialog = dialog = QtGui.QDialog(
+			self.__extensionDialog = dialog = QtWidgets.QDialog(
 				self, QtCore.Qt.Dialog | QtCore.Qt.WindowTitleHint
 				)
 			# Setup UI made in Qt Designer.
@@ -464,7 +452,6 @@ class MainWindow(QtGui.QMainWindow):
 		dialog.raise_()
 		dialog.activateWindow()
 
-	@QtCore.pyqtSignature('QString, QString')
 	def logLine(self, level, message):
 		text = self.__ui.logText
 		text.setTextColor(
@@ -472,17 +459,16 @@ class MainWindow(QtGui.QMainWindow):
 			)
 		text.append(message)
 
-	@QtCore.pyqtSignature('')
 	def closeConnection(self):
 		# wrap in lambda to avoid setting a builtin func as callback
 		# which is not appreciated by the command method of the bridge
-		self.__bridge.closeConnection(lambda: QtGui.qApp.quit())
+		self.__bridge.closeConnection(lambda: QtWidgets.qApp.quit())
 
 	def __saveSettings(self):
 		self.__bridge.command('save_settings')()
 
 	def __saveSettingsAs(self):
-		settingsFile = QtGui.QFileDialog.getSaveFileName(
+		settingsFile = QtWidgets.QFileDialog.getSaveFileName(
 			self.__ui.centralwidget, 'Select openMSX Settings File',
 			QtCore.QDir.homePath(),
 			'openMSX Settings Files (*.xml);;All Files (*)',
@@ -498,7 +484,7 @@ class MainWindow(QtGui.QMainWindow):
 					)
 
 	def __loadSettings(self):
-		settingsFile = QtGui.QFileDialog.getOpenFileName(
+		settingsFile = QtWidgets.QFileDialog.getOpenFileName(
 			self.__ui.centralwidget, 'Select openMSX Settings File',
 			QtCore.QDir.homePath(),
 			'openMSX Settings Files (*.xml);;All Files (*)',
@@ -517,8 +503,8 @@ class MainWindow(QtGui.QMainWindow):
 				)
 
 	def __loadSettingsFailedHandler(self, message):
-		messageBox = QtGui.QMessageBox('Problem Loading Settings', message,
-			QtGui.QMessageBox.Warning, 0, 0, 0,
+		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+			'Problem Loading Settings', message, QtWidgets.QMessageBox.Ok,
 			self.__ui.centralwidget
 			)
 		messageBox.show()
@@ -542,7 +528,7 @@ class MainWindow(QtGui.QMainWindow):
 			self.__generalFailHandler(
 				message, 'Problem quick-loading state'
 			)
-	
+
 	def __quickSaveState(self):
 		self.__bridge.command('savestate')(
 			None,
@@ -550,7 +536,7 @@ class MainWindow(QtGui.QMainWindow):
 				message, 'Problem quick-saving state'
 				)
 		)
-	
+
 	def __loadState(self):
 		self.__saveStateManager.exec_('load')
 
@@ -558,39 +544,22 @@ class MainWindow(QtGui.QMainWindow):
 		self.__saveStateManager.exec_('save')
 
 	def __generalFailHandler(self, message, title):
-		messageBox = QtGui.QMessageBox(title, message,
-			QtGui.QMessageBox.Warning, 0, 0, 0,
+		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+			title, message, QtWidgets.QMessageBox.Ok,
 			self.__ui.centralwidget
 			)
 		messageBox.show()
 
-	def __getAssistentClient(self):
-		if self.__assistentClient is None:
-			from PyQt4.QtAssistant import QAssistantClient
-			# Note: The string parameter is the path to look for the
-			#       Qt Assistent executable.
-			#       Empty string means use OS search path.
-			# TODO: Is it safe to assume Qt Assistent is always in the path?
-			#       What happens if it is not?
-			self.__assistentClient = QAssistantClient('')
-		return self.__assistentClient
-
-	@QtCore.pyqtSignature('')
 	def showHelpSetup(self):
-		print 'show Setup Guide'
-		client = self.__getAssistentClient()
-		# TODO: Make metadata documents to customize Qt Assistant for openMSX.
+		print('show Setup Guide')
 		# TODO: Get a reliable path (by guessing? from openMSX?).
-		client.showPage(docDir + '/manual/setup.html')
+		QtGui.QDesktopServices.openUrl(QtCore.QUrl.fromLocalFile(docDir + '/manual/setup.html'))
 
-	@QtCore.pyqtSignature('')
 	def showHelpUser(self):
-		print 'show User\'s Manual'
-		client = self.__getAssistentClient()
+		print('show User\'s Manual')
 		# TODO: Get a reliable path (by guessing? from openMSX?).
-		client.showPage(docDir + '/manual/user.html')
+		QtGui.QDesktopServices.openUrl(QtCore.QUrl.fromLocalFile(docDir + '/manual/setup.html'))
 
-	@QtCore.pyqtSignature('')
 	def showAboutDialog(self):
 		dialog = self.__aboutDialog
 		if dialog is None:
@@ -598,7 +567,7 @@ class MainWindow(QtGui.QMainWindow):
 			#       buttons. Although I'm not asking Qt to show those, I still
 			#       get them. Maybe a misunderstanding between Qt and the
 			#       window manager (KWin)?
-			self.__aboutDialog = dialog = QtGui.QDialog(
+			self.__aboutDialog = dialog = QtWidgets.QDialog(
 				self,
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -612,7 +581,7 @@ class MainWindow(QtGui.QMainWindow):
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
-		#print '%X' % int(dialog.windowFlags())
+		#print('%X' % int(dialog.windowFlags()))
 
 
 if __name__ == '__main__':

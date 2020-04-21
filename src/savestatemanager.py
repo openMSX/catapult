@@ -1,15 +1,12 @@
-# $Id$
-
-from PyQt4 import QtGui, QtCore
-from qt_utils import connect
+from PyQt5 import QtWidgets, QtCore, QtGui
 from player import PlayState
 
-class SaveStateManager(object):
+class SaveStateManager:
 
 	def __init__(self, bridge, playState):
 		self.__bridge = bridge
 		self.__playState = playState
-		
+
 		self.__saveStateListWidget = None
 		self.__newFileLineEdit = None
 		self.__newFileWidget = None
@@ -18,7 +15,7 @@ class SaveStateManager(object):
 		self.__loadStateButton = None
 		self.__cancelButton = None
 
-		self.__saveStateDialog = dialog = QtGui.QDialog(
+		self.__saveStateDialog = dialog = QtWidgets.QDialog(
 			None # TODO: find a way to get the real parent
 			)
 
@@ -40,12 +37,12 @@ class SaveStateManager(object):
 		self.__imageView.setText('No preview available...')
 		ui.gridLayout.addWidget(self.__imageView, 0, 1, 1, 1)
 
-		connect(self.__cancelButton, 'clicked()', lambda: dialog.reject())
-		connect(self.__deleteStateButton, 'clicked()', self.__delete)
-		connect(self.__loadStateButton, 'clicked()', self.__load)
-		connect(self.__saveStateButton, 'clicked()', self.__save)
-		connect(self.__newFileLineEdit, 'returnPressed()', self.__save)
-		connect(self.__saveStateListWidget, 'itemSelectionChanged()',
+		self.__cancelButton.clicked.connect(lambda: dialog.reject())
+		self.__deleteStateButton.clicked.connect(self.__delete)
+		self.__loadStateButton.clicked.connect(self.__load)
+		self.__saveStateButton.clicked.connect(self.__save)
+		self.__newFileLineEdit.returnPressed.connect(self.__save)
+		self.__saveStateListWidget.itemSelectionChanged.connect(
 			self.__updatePreview)
 
 	def exec_(self, mode, parent = None):
@@ -83,7 +80,7 @@ class SaveStateManager(object):
 
 	def __delete(self):
 		currentItem = self.__saveStateListWidget.currentItem()
-		if currentItem == None:
+		if currentItem is None:
 			return
 		selected = currentItem.text()
 		if selected == '':
@@ -97,7 +94,7 @@ class SaveStateManager(object):
 
 	def __load(self):
 		currentItem = self.__saveStateListWidget.currentItem()
-		if currentItem == None:
+		if currentItem is None:
 			return
 		selected = currentItem.text()
 		if selected == '':
@@ -114,7 +111,7 @@ class SaveStateManager(object):
 		self.__bridge.command('loadstate',
 			selected
 			)(
-				lambda dummy: self.__saveStateDialog.accept(),
+				lambda _: self.__saveStateDialog.accept(),
 				lambda message: failHelper(message)
 			)
 		def failHelper(message):
@@ -128,18 +125,18 @@ class SaveStateManager(object):
 		selected = self.__newFileLineEdit.text()
 		if selected == '':
 			currentItem = self.__saveStateListWidget.currentItem()
-			if currentItem == None:
+			if currentItem is None:
 				return
 			selected = currentItem.text()
 			if selected == '':
 				return
-			reply = QtGui.QMessageBox.question(
+			reply = QtWidgets.QMessageBox.question(
 				self.__saveStateDialog,
 				'Overwrite \"' + selected + '\"?',
 				'<p>Overwrite save state \"' + selected + '\".</p><p>Are you sure?</p>',
-				QtGui.QMessageBox.Yes,
-				QtGui.QMessageBox.Cancel)
-			if reply == QtGui.QMessageBox.Cancel:
+				QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel,
+				QtWidgets.QMessageBox.Cancel)
+			if reply == QtWidgets.QMessageBox.Cancel:
 				return
 		self.__newFileLineEdit.clear()
 		self.__bridge.command('savestate',
@@ -150,19 +147,19 @@ class SaveStateManager(object):
 			)
 
 	def __generalFailHandler(self, message, title):
-		messageBox = QtGui.QMessageBox(title, message,
-			QtGui.QMessageBox.Warning, 0, 0, 0,
+		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+			title, message, QtWidgets.QMessageBox.Ok,
 			self.__saveStateDialog
 			)
 		messageBox.show()
 
 	def __updatePreview(self):
 		currentItem = self.__saveStateListWidget.currentItem()
-		if currentItem == None:
+		if currentItem is None:
 			self.__clearPreview()
 			return
 		selected = currentItem.text()
-		
+
 		# get filename from openMSX
 		self.__bridge.command('return',
 			'"$::env(OPENMSX_USER_DATA)/../savestates/' + selected + '.png"'
@@ -170,19 +167,19 @@ class SaveStateManager(object):
 
 	def __updatePreview2(self, fileName):
 		image = QtGui.QImage(fileName)
-		if image.isNull():
-			self.__clearPreview()
-		else:
+		if image:
 			self.__imageView.setImage(image)
+		else:
+			self.__clearPreview()
 
 	def __clearPreview(self):
 		self.__imageView.setImage(None)
 
-class ScaledImageView(QtGui.QWidget):
-	def __init__ (self, *args):
-		QtGui.QWidget.__init__(self, *args)
-		self.setSizePolicy(QtGui.QSizePolicy(
-			QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding
+class ScaledImageView(QtWidgets.QWidget):
+	def __init__(self, *args):
+		QtWidgets.QWidget.__init__(self, *args)
+		self.setSizePolicy(QtWidgets.QSizePolicy(
+			QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
 			))
 		self.__image = None
 		self.__scaledImage = None
@@ -190,7 +187,7 @@ class ScaledImageView(QtGui.QWidget):
 
 	def setImage(self, image):
 		self.__image = image
-		if image != None:
+		if image is not None:
 			self.__updateScaledImage()
 		else:
 			self.__scaledImage = None
@@ -201,16 +198,14 @@ class ScaledImageView(QtGui.QWidget):
 		self.update()
 
 	def sizeHint(self):
-		if self.__scaledImage != None:
+		if self.__scaledImage is not None:
 			return self.__scaledImage.size()
-		else:
-			if self.__image == None:
-				return QtCore.QSize(320, 240)
-			else:
-				return self.__image.size()
+		if self.__image is None:
+			return QtCore.QSize(320, 240)
+		return self.__image.size()
 
-	def resizeEvent(self, event):
-		if self.__image == None:
+	def resizeEvent(self, _):
+		if self.__image is None:
 			return
 		self.__updateScaledImage()
 
@@ -218,13 +213,13 @@ class ScaledImageView(QtGui.QWidget):
 		self.__scaledImage = self.__image.scaled(self.size(),
 			QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
 
-	def paintEvent(self, event):
+	def paintEvent(self, _):
 		painter = QtGui.QPainter(self)
-		
-		if self.__scaledImage != None:
+
+		if self.__scaledImage is not None:
 			xpos = (self.width() - self.__scaledImage.width()) / 2
 			ypos = (self.height() - self.__scaledImage.height()) / 2
-		
+
 			# draw the image on the widget
 			painter.drawImage(xpos, ypos, self.__scaledImage)
 		else:

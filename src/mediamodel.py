@@ -1,11 +1,10 @@
-# $Id$
-
-from PyQt4 import QtCore
-from bisect import bisect
-from openmsx_utils import tclEscape, EscapedStr
 import os.path
+from bisect import bisect
 
-from qt_utils import QtSignal, Signal
+from PyQt5 import QtCore
+from PyQt5.QtCore import pyqtSignal, QModelIndex
+
+from openmsx_utils import tclEscape, EscapedStr
 
 class Medium(QtCore.QObject):
 	'''All data that belongs to a medium is centralized in this class.
@@ -21,12 +20,11 @@ class Medium(QtCore.QObject):
 			patchList = []
 		if mediumType.startswith('cart'):
 			return CartridgeMedium(path, patchList, str(mapperType))
-		elif mediumType.startswith('cassette'):
+		if mediumType.startswith('cassette'):
 			return CassetteMedium(path)
-		elif mediumType.startswith('disk'):
+		if mediumType.startswith('disk'):
 			return DiskMedium(path, patchList)
-		else:
-			return Medium(path)
+		return Medium(path)
 
 	def __init__(self, path):
 		QtCore.QObject.__init__(self)
@@ -72,7 +70,7 @@ class PatchableMedium(Medium):
 			% len(self._ipsPatchList)
 
 class CartridgeMedium(PatchableMedium):
-	
+
 	def __init__(self, path, patchList, mapperType):
 		PatchableMedium.__init__(self, path, patchList)
 		self.__mapperType = mapperType
@@ -82,7 +80,7 @@ class CartridgeMedium(PatchableMedium):
 
 	def getMapperType(self):
 		return self.__mapperType
-	
+
 	def __eq__(self, other):
 		# pylint: disable-msg=W0212
 		return (
@@ -112,13 +110,13 @@ class CassetteMedium(Medium):
 	def setLength(self, length):
 		'''Only call this from CassetteDeck!'''
 		self.__length = length
-	
+
 	def __str__(self):
 		return 'cassette' + Medium.__str__(self)
 
 class MediaSlot(QtCore.QObject):
-	slotDataChanged = Signal('PyQt_PyObject') # slot
-	
+	slotDataChanged = pyqtSignal(object) # slot
+
 	@staticmethod
 	def create(slotName, bridge):
 		'''Factory method to create the proper MediaSlot instance.
@@ -126,12 +124,11 @@ class MediaSlot(QtCore.QObject):
 		'''
 		if slotName.startswith('cassette'):
 			return CassetteDeck(slotName, bridge)
-		elif slotName.startswith('cart'):
+		if slotName.startswith('cart'):
 			return CartridgeSlot(slotName, bridge)
-		elif slotName.startswith('disk'):
+		if slotName.startswith('disk'):
 			return DiskDrive(slotName, bridge)
-		else:
-			return MediaSlot(slotName, bridge)
+		return MediaSlot(slotName, bridge)
 
 	def __init__(self, name, bridge):
 		QtCore.QObject.__init__(self)
@@ -139,19 +136,19 @@ class MediaSlot(QtCore.QObject):
 		self._bridge = bridge
 		self._medium = None # empty slot
 		self.__queryMedium()
-	
+
 	def __queryMedium(self):
 		self._bridge.command(self.__name)(self.__mediumQueryReply)
 
 	def __mediumQueryReply(self, slotName, path, flags = ''):
-		print 'media query result of %s "%s" flags "%s"' % (
+		print('media query result of %s "%s" flags "%s"' % (
 			slotName, path, flags
-			)
+			))
 		if slotName[-1] == ':':
-			slotName = slotName[ : -1]
+			slotName = slotName[:-1]
 		else:
-			print 'medium slot query reply does not start with "<medium>:", '\
-				'but with "%s"' % slotName
+			print('medium slot query reply does not start with "<medium>:", '\
+				'but with "%s"' % slotName)
 			return
 		assert slotName == self.__name, 'medium slot reply not for ' \
 			'this slot? Got %s, expected %s.' % (slotName, self.__name)
@@ -167,23 +164,23 @@ class MediaSlot(QtCore.QObject):
 			medium = Medium.create(self.__name, path)
 		self._medium = medium
 		self.slotDataChanged.emit(self)
-	
+
 	def getName(self):
 		return self.__name
 
 	def setMedium(self, medium, errorHandler):
 		if medium == self._medium:
-			return False
+			return
 		if medium is None:
-			print 'ejecting from %s: %s' % (self.__name, self._medium)
+			print('ejecting from %s: %s' % (self.__name, self._medium))
 			self._bridge.command(self.__name, 'eject')(
 				None, errorHandler
 				)
 		else:
 			optionList = self._createOptionList(medium)
-			print 'insert into %s: %s (with options: %s)' % (self.__name,
+			print('insert into %s: %s (with options: %s)' % (self.__name,
 				medium, str(optionList)
-				)
+				))
 			self._bridge.command(self.__name, 'insert',
 				EscapedStr(tclEscape(medium.getPath())), *optionList)(
 				None, lambda message, realHander = errorHandler: \
@@ -198,7 +195,8 @@ class MediaSlot(QtCore.QObject):
 		# but also re-query openMSX for the actual situation
 		self.__queryMedium()
 
-	def _createOptionList(self, medium):
+	@staticmethod
+	def _createOptionList(medium):
 		assert medium is not None, 'We should never insert None'
 		optionList = []
 		return optionList
@@ -206,10 +204,10 @@ class MediaSlot(QtCore.QObject):
 	def getMedium(self):
 		return self._medium
 
-	def __cmp__(self, other):
+	def __lt__(self, other):
 		# pylint: disable-msg=W0212
 		return not isinstance(other, MediaSlot) \
-			or cmp(self.__name, other.__name)
+			or self.__name < other.__name
 
 	def __str__(self):
 		return 'MediaSlot with name %s and inserted medium %s' % (self.__name,
@@ -217,8 +215,9 @@ class MediaSlot(QtCore.QObject):
 
 class MediaSlotWithPatchableMedia(MediaSlot):
 
-	def _createOptionList(self, medium):
-		optionList = MediaSlot._createOptionList(self, medium)
+	@staticmethod
+	def _createOptionList(medium):
+		optionList = MediaSlot._createOptionList(medium)
 		patchList = medium.getIpsPatchList()
 		for option in patchList:
 			optionList.append('-ips')
@@ -227,13 +226,13 @@ class MediaSlotWithPatchableMedia(MediaSlot):
 
 class CassetteDeck(MediaSlot):
 
-	stateChanged = Signal('QString')
-	
+	stateChanged = pyqtSignal(str)
+
 	def __init__(self, name, bridge):
 		MediaSlot.__init__(self, name, bridge)
 		self.__state = ''
 		self.__queryState()
-	
+
 	def __queryState(self):
 		self._bridge.command('cassetteplayer')(self.__stateReply)
 
@@ -273,7 +272,7 @@ class CassetteDeck(MediaSlot):
 		self._bridge.command('cassetteplayer', 'rewind')(
 			lambda *dummy: self.__queryState(), errorHandler
 			)
-	
+
 	def record(self, filename, errorHandler):
 		self._bridge.command('cassetteplayer', 'new', filename)(
 			None, errorHandler
@@ -289,8 +288,9 @@ class DiskDrive(MediaSlotWithPatchableMedia):
 
 class CartridgeSlot(MediaSlotWithPatchableMedia):
 
-	def _createOptionList(self, medium):
-		optionList = MediaSlotWithPatchableMedia._createOptionList(self, medium)
+	@staticmethod
+	def _createOptionList(medium):
+		optionList = MediaSlotWithPatchableMedia._createOptionList(medium)
 		assert isinstance(medium, CartridgeMedium), 'Wrong medium in cartridgeslot!'
 		mapper = medium.getMapperType()
 		if mapper != 'Auto Detect':
@@ -299,10 +299,10 @@ class CartridgeSlot(MediaSlotWithPatchableMedia):
 		return optionList
 
 class MediaModel(QtCore.QAbstractListModel):
-	dataChanged = QtSignal('QModelIndex', 'QModelIndex')
-	mediaSlotRemoved = Signal('QString', 'QString')
-	mediaSlotAdded = Signal('QString', 'QString')
-	connected = Signal()
+	dataChanged = pyqtSignal(QModelIndex, QModelIndex)
+	mediaSlotRemoved = pyqtSignal(str, str)
+	mediaSlotAdded = pyqtSignal(str, str)
+	connected = pyqtSignal()
 
 	def __init__(self, bridge, machineManager):
 		QtCore.QAbstractListModel.__init__(self)
@@ -318,7 +318,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		bridge.registerUpdate('status', self.__updateCassetteDeckState)
 		bridge.registerUpdatePrefix(
 			'hardware',
-			( 'cart', 'disk', 'cassette', 'hd', 'cd' ),
+			('cart', 'disk', 'cassette', 'hd', 'cd'),
 			self.__updateHardware
 			)
 		machineManager.machineAdded.connect(self.__machineAdded)
@@ -332,9 +332,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		#       the openMSX state.
 		#self.__mediaSlotList = []
 
-		for pattern in ( 'cart?', 'disk?', 'cassetteplayer', 'hd?',
-				'cd?'
-			       ):
+		for pattern in ('cart?', 'disk?', 'cassetteplayer', 'hd?', 'cd?'):
 			# Query medium slots.
 			self.__bridge.command('info', 'command', pattern)(
 				self.__mediumListReply
@@ -351,11 +349,11 @@ class MediaModel(QtCore.QAbstractListModel):
 		'''
 		if len(slots) == 0:
 			return
-		for mediumName in ( 'cart', 'disk', 'cassette', 'hd', 'cd' ):
+		for mediumName in ('cart', 'disk', 'cassette', 'hd', 'cd'):
 			if slots[0].startswith(mediumName):
 				break
 		else:
-			print 'media slot "%s" not recognised' % slots[0]
+			print('media slot "%s" not recognised' % slots[0])
 			return
 		for slot in slots:
 			self.__mediaSlotAdded(slot,
@@ -365,12 +363,12 @@ class MediaModel(QtCore.QAbstractListModel):
 
 
 	def __machineAdded(self, machineId):
-		print 'Adding media admin for machine with id ', machineId
-		self.__mediaSlotListForMachine[unicode(machineId)] = []
+		print('Adding media admin for machine with id ', machineId)
+		self.__mediaSlotListForMachine[str(machineId)] = []
 
 	def __machineRemoved(self, machineId):
-		print 'Removing media admin for machine with id ', machineId
-		del self.__mediaSlotListForMachine[unicode(machineId)]
+		print('Removing media admin for machine with id ', machineId)
+		del self.__mediaSlotListForMachine[str(machineId)]
 
 	def __mediaSlotAdded(self, slotName, machineId):
 		slotList = self.__mediaSlotListForMachine[machineId]
@@ -392,7 +390,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		for index, slot in enumerate(slotList):
 			if slot.getName() == slotName:
 				parent = QtCore.QModelIndex() # invalid model index
-				print 'Removing "%s" for machine %s' % (slot, machineId)
+				print('Removing "%s" for machine %s' % (slot, machineId))
 				self.beginRemoveRows(parent, index, index)
 				del slotList[index]
 				self.endRemoveRows()
@@ -400,7 +398,7 @@ class MediaModel(QtCore.QAbstractListModel):
 				self.mediaSlotRemoved.emit(slotName, machineId)
 				return
 		assert False, 'removed slot "%s" did not exist' % slotName
-		
+
 	# this is for the updates coming from openMSX
 	# forward to the slot
 	def __updateMedium(self, mediaSlotName, machineId, path):
@@ -412,7 +410,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		if slot == self.__virtualDriveSlot:
 			return
 		# find this slot and emit a signal with its index
-		for slotList in self.__mediaSlotListForMachine.itervalues():
+		for slotList in self.__mediaSlotListForMachine.values():
 			for index, iterSlot in enumerate(slotList):
 				if slot is iterSlot:
 					modelIndex = self.createIndex(index, 0)
@@ -426,9 +424,9 @@ class MediaModel(QtCore.QAbstractListModel):
 		elif action == 'remove':
 			self.__mediaSlotRemoved(hardware, machineId)
 		else:
-			print 'received update for unsupported action "%s" for ' \
+			print('received update for unsupported action "%s" for ' \
 				'hardware "%s" on machine "%s".' \
-				% ( action, hardware, machineId )
+				% (action, hardware, machineId))
 
 
 	def getMediaSlotByName(self, name, machineId = ''):
@@ -436,8 +434,8 @@ class MediaModel(QtCore.QAbstractListModel):
 		name. Raises KeyError if no media slot exists by the given name.
 		'''
 		if name == 'virtual_drive':
-			print 'Ignoring machineId "%s" for virtual_drive, ' \
-				'which is not machine bound...' % machineId
+			print('Ignoring machineId "%s" for virtual_drive, ' \
+				'which is not machine bound...' % machineId)
 			return self.__virtualDriveSlot
 
 		assert machineId != '', 'You need to pass a machineId!'
@@ -451,15 +449,14 @@ class MediaModel(QtCore.QAbstractListModel):
 		# TODO: What does this mean?
 		if parent.isValid():
 			return 0
-		else:
-			machineId = self.__machineManager.getCurrentMachineId()
-			try:
-				count = len(self.__mediaSlotListForMachine[machineId])
-			except KeyError:
-				# can happen when switching machines or when the 
-				# current machine is not known yet
-				count = 0
-			return count
+		machineId = self.__machineManager.getCurrentMachineId()
+		try:
+			count = len(self.__mediaSlotListForMachine[machineId])
+		except KeyError:
+			# can happen when switching machines or when the
+			# current machine is not known yet
+			count = 0
+		return count
 
 	def data(self, index, role = QtCore.Qt.DisplayRole):
 		if not index.isValid():
@@ -471,11 +468,11 @@ class MediaModel(QtCore.QAbstractListModel):
 		row = index.row()
 		if row < 0 or row > (len(slotList) - 1):
 			# can happen when switching machines (race conditions?)
-			# print '*********************************************************'
+			# print('*********************************************************')
 			return QtCore.QVariant()
 		slot = slotList[row]
 		slotName = slot.getName()
-		
+
 		if role == QtCore.Qt.DisplayRole:
 			if slotName.startswith('cart'):
 				description = 'Cartridge slot %s' % slotName[-1].upper()
@@ -492,19 +489,19 @@ class MediaModel(QtCore.QAbstractListModel):
 #				return QtCore.QVariant()
 			else:
 				description = slotName.upper()
-			
+
 			medium = slot.getMedium()
 			if medium:
 				path = medium.getPath()
 				dirName, fileName = os.path.split(path)
 				if fileName == '':
-					fileName = dirName[dirName.rfind(os.path.sep) + 1 : ]
+					fileName = dirName[dirName.rfind(os.path.sep) + 1:]
 			else:
 				fileName = '<empty>'
 			return QtCore.QVariant(
-				'%s: %s' % ( description, fileName )
+				'%s: %s' % (description, fileName)
 				)
-		elif role == QtCore.Qt.UserRole:
+		if role == QtCore.Qt.UserRole:
 			return QtCore.QVariant(slotName)
 
 		return QtCore.QVariant()
@@ -526,6 +523,6 @@ class MediaModel(QtCore.QAbstractListModel):
 	def __updateCassetteDeckState(self, name, machineId, state):
 		name = str(name)
 		if name == 'cassetteplayer':
-			print 'State of cassetteplayer updated to ', state
+			print('State of cassetteplayer updated to ', state)
 			deck = self.getMediaSlotByName(name, machineId)
 			deck.setState(state)

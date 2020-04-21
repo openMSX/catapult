@@ -1,9 +1,6 @@
-# $Id$
+from PyQt5 import QtCore, QtWidgets
 
-from PyQt4 import QtCore, QtGui
-from qt_utils import connect
-
-class TrainerSelect(object):
+class TrainerSelect:
 
 	def __init__(self, bridge):
 		self.__cfDialog = None
@@ -17,7 +14,7 @@ class TrainerSelect(object):
 	def show(self):
 		dialog = self.__cfDialog
 		if dialog is None:
-			self.__cfDialog = dialog = QtGui.QDialog(
+			self.__cfDialog = dialog = QtWidgets.QDialog(
 				None, # TODO: find a way to get the real parent
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -28,27 +25,25 @@ class TrainerSelect(object):
 			ui.setupUi(dialog)
 			self.__ui = ui
 			# layout where we will put the cheats in:
-			self.__trainerVLayout = QtGui.QVBoxLayout(ui.emptyContainerWidget)
+			self.__trainerVLayout = QtWidgets.QVBoxLayout(ui.emptyContainerWidget)
 			self.__trainerVLayout.setObjectName('trainerVLayout')
 			self.__trainerVLayout.setSpacing(0)
-			self.__trainerVLayout.setMargin(0)
+			self.__trainerVLayout.setContentsMargins(0, 0, 0, 0)
 			# scrollarea to make sure everything will fit in the window
-			self.__scrollArea = QtGui.QScrollArea(dialog)
+			self.__scrollArea = QtWidgets.QScrollArea(dialog)
 			self.__scrollArea.setWidget(ui.emptyContainerWidget)
 			self.__scrollArea.setHorizontalScrollBarPolicy(
 				QtCore.Qt.ScrollBarAlwaysOff)
 			self.__scrollArea.setWidgetResizable(True)
-			self.__scrollArea.setFrameStyle(QtGui.QFrame.NoFrame)
+			self.__scrollArea.setFrameStyle(QtWidgets.QFrame.NoFrame)
 			ui.gridlayout.addWidget(self.__scrollArea)
 
 			# Connect signals.
-			connect(ui.gameSelector, 'activated(QString)', self.__fillCheats)
-			connect(
-				ui.enableNoneButton, 'clicked()',
+			ui.gameSelector.activated.connect(lambda index: self.__fillCheats())
+			ui.enableNoneButton.clicked.connect(
 				lambda: self.__setAll(False)
 				)
-			connect(
-				ui.enableAllButton, 'clicked()',
+			ui.enableAllButton.clicked.connect(
 				lambda: self.__setAll(True)
 				)
 
@@ -57,7 +52,7 @@ class TrainerSelect(object):
 		dialog.activateWindow()
 		# Get cheats from openMSX.
 		self.__bridge.command(
-			'array', 'names', '::__trainers'
+			'tabcompletion', 'trainer ;', 'dict', 'keys', '$trainer::trainers'
 			)(self.__fillGameSelector)
 
 	def __fillGameSelector(self, *words):
@@ -84,7 +79,7 @@ class TrainerSelect(object):
 			if child is None:
 				break
 			# TODO: Why are spacers treated differently?
-			if not isinstance(child, QtGui.QSpacerItem):
+			if not isinstance(child, QtWidgets.QSpacerItem):
 				widget = child.widget()
 				widget.setParent(None)
 				widget.deleteLater()
@@ -98,13 +93,12 @@ class TrainerSelect(object):
 			trainerActive = trainerLine[openIndex : closeIndex + 1]
 			trainerDesc = trainerLine[closeIndex + 1 : ].rstrip()
 
-			checkbox = QtGui.QCheckBox()
+			checkbox = QtWidgets.QCheckBox()
 			checkbox.setText(trainerDesc)
 			checkbox.setChecked(trainerActive == '[x]')
 			checkbox.setObjectName(trainerIndex)
 			self.__checkboxes.append(checkbox)
-			connect(
-				checkbox, 'stateChanged(int)',
+			checkbox.stateChanged.connect(
 				lambda x, trainerIndex = trainerIndex:
 					self.__toggle(trainerIndex)
 				)
@@ -112,7 +106,7 @@ class TrainerSelect(object):
 		self.__trainerVLayout.addStretch(10)
 
 	def __toggle(self, index):
-		print "toggled " + str(self.__selected) + " " + str(index)
+		print("toggled " + str(self.__selected) + " " + str(index))
 		self.__bridge.command(
 			'trainer',
 			str(self.__selected),

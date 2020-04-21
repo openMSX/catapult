@@ -1,5 +1,3 @@
-# $Id$
-
 # A quick hack of machine.py from mthuurne
 # main differences:
 #	- s/Machine/Extension/ in most places
@@ -8,19 +6,19 @@
 # There's an awful mixing of code for the extension Add dialog and for the
 # extension part in the main view
 
-from PyQt4 import QtCore, QtGui
 from bisect import insort
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import pyqtSignal, QModelIndex
 
 from hardware import HardwareModel
-from qt_utils import QtSignal, connect, Signal
 #from preferences import preferences
 
 class ExtensionModel(HardwareModel):
 	__columnKeys = 'name', 'manufacturer', 'code', 'type', 'description'
 	_hardwareType = 'extension'
 	_testable = False # for now
-	rowsInserted = QtSignal('QModelIndex', 'int', 'int')
-	layoutChanged = QtSignal()
+	rowsInserted = pyqtSignal(QModelIndex, int, int)
+	layoutChanged = pyqtSignal()
 
 	def __init__(self, bridge):
 		HardwareModel.__init__(self, bridge)
@@ -54,23 +52,19 @@ class ExtensionModel(HardwareModel):
 		info.setdefault('code', name)
 		sortRow = [
 			info.get(key, '').lower() for key in self.__columnKeys
-			] + [ name, info ]
+			] + [name, info]
 
-		if self.__sortReversed:
-			sortSign = -1
-		else:
-			sortSign = 1
+		sortReversed = self.__sortReversed
 		column = self.__sortColumn
-		key = sortRow[column]
+		key = (sortRow[column], sortRow)
 		# Unfortunately "bisect" does not offer a way to use a different
 		# comparator, so we have to do binary search ourselves.
 		low = 0
 		high = len(self.__extensions)
 		while low < high:
-			mid = (low + high) / 2
+			mid = (low + high) // 2
 			extension = self.__extensions[mid]
-			if (cmp(key, extension[column]) or cmp(sortRow, extension)) \
-					== sortSign:
+			if (key > (extension[column], extension)) != sortReversed:
 				low = mid + 1
 			else:
 				high = mid
@@ -95,7 +89,7 @@ class ExtensionModel(HardwareModel):
 		if orientation == QtCore.Qt.Horizontal:
 			if role == QtCore.Qt.DisplayRole:
 				return QtCore.QVariant(self.__columnKeys[section].capitalize())
-			elif role == QtCore.Qt.TextAlignmentRole:
+			if role == QtCore.Qt.TextAlignmentRole:
 				return QtCore.QVariant(QtCore.Qt.AlignLeft)
 
 		return QtCore.QVariant()
@@ -106,13 +100,13 @@ class ExtensionModel(HardwareModel):
 
 		column = index.column()
 		sortRow = self.__extensions[index.row()]
-		#print 'data requested for', sortRow[-2], 'column', column, 'role', role
+		#print('data requested for', sortRow[-2], 'column', column, 'role', role)
 		if role == QtCore.Qt.DisplayRole:
 			key = self.__columnKeys[column]
 			return QtCore.QVariant(sortRow[-1].get(key, ''))
-		elif role == QtCore.Qt.UserRole:
-			return QtCore.QVariant(sortRow[-2])
-		elif role == QtCore.Qt.ToolTipRole:
+		if role == QtCore.Qt.UserRole:
+			return QtCore.QVariant(sortRow[-2]).value()
+		if role == QtCore.Qt.ToolTipRole:
 			key = self.__columnKeys[column]
 			value = sortRow[-1].get(key)
 			# TODO: uncomment when extension testing is implemented
@@ -120,7 +114,6 @@ class ExtensionModel(HardwareModel):
 			#	return QtCore.QVariant(sortRow[-1].get('brokenreason'))
 			#else:
 			return QtCore.QVariant(value)
-
 
 		return QtCore.QVariant()
 
@@ -139,7 +132,7 @@ class ExtensionModel(HardwareModel):
 
 class ExtensionManager(QtCore.QObject):
 
-	extensionChanged = Signal()
+	extensionChanged = pyqtSignal()
 
 	def __init__(self, parent, ui, bridge):
 		QtCore.QObject.__init__(self)
@@ -155,7 +148,7 @@ class ExtensionManager(QtCore.QObject):
 		self.__currentExtensionId = None
 		self.__currentExtensionConfig = None
 		self.__selectedExtensionConfig = None
-		self.__requestedWidths = [ 0 ] * model.columnCount()
+		self.__requestedWidths = [0] * model.columnCount()
 
 		## Load history.
 		#for extension in preferences.getList('extension/history'):
@@ -164,8 +157,8 @@ class ExtensionManager(QtCore.QObject):
 		#		)
 
 		# Make connections.
-		#connect(extensionBox, 'activated(int)', self.__extensionSelected)
-		connect(ui.removeExtensionsButton, 'clicked()', self.__removeExtensions)
+		#extensionBox.activated.connect(self.__extensionSelected)
+		ui.removeExtensionsButton.clicked.connect(self.__removeExtensions)
 
 		bridge.registerUpdate(
 			'extension', self.__updateExtension
@@ -179,14 +172,14 @@ class ExtensionManager(QtCore.QObject):
 		'''
 		bridge = self.__bridge
 		#bridge.command('machine')(self.__updateMachineId)
-		bridge.command('return','"$env(OPENMSX_USER_DATA)"')(self.__dirReply)
-		bridge.command('return','"$env(OPENMSX_SYSTEM_DATA)"')(self.__dirReply)
+		bridge.command('return', '"$env(OPENMSX_USER_DATA)"')(self.__dirReply)
+		bridge.command('return', '"$env(OPENMSX_SYSTEM_DATA)"')(self.__dirReply)
 
 	def __dirReply(self, dataDir):
 		# we use the fact that the response will
 		# come in the order they are requested
-		print dataDir
-		if self.__userdir == None:
+		print(dataDir)
+		if self.__userdir is None:
 			self.__userdir = dataDir
 		else:
 			self.__systemdir = dataDir
@@ -198,7 +191,7 @@ class ExtensionManager(QtCore.QObject):
 			self.__bridge.command('remove_extension', extension.text())()
 
 	def __updateExtension(self, extension, machineId, event):
-		print 'Extension', extension, ':', event, '(on machine ', machineId, ')'
+		print('Extension', extension, ':', event, '(on machine ', machineId, ')')
 		# TODO: shouldn't we do something with the machineId?
 		self.extensionChanged.emit()
 		if event == 'add':
@@ -220,7 +213,7 @@ class ExtensionManager(QtCore.QObject):
 		self.__selectedExtensionConfig = self.__currentExtensionConfig
 		dialog = self.__extensionDialog
 		if dialog is None:
-			self.__extensionDialog = dialog = QtGui.QDialog(
+			self.__extensionDialog = dialog = QtWidgets.QDialog(
 				self.__parent, QtCore.Qt.Dialog
 				)
 			# Setup UI made in Qt Designer.
@@ -232,22 +225,21 @@ class ExtensionManager(QtCore.QObject):
 			horizontalHeader.setStretchLastSection(True)
 			horizontalHeader.setSortIndicatorShown(True)
 			horizontalHeader.setHighlightSections(False)
-			horizontalHeader.setClickable(True)
+			horizontalHeader.setSectionsClickable(True)
 			ui.extensionTable.verticalHeader().hide()
 			model = self.__model
 			ui.extensionTable.setModel(model)
 			# for now hide the slideshow if not the openMSX-CD version.
-			if not self.__parent.openmsxcd :
+			if not self.__parent.openmsxcd:
 				ui.previewWidget.hide()
 				#ui.slideshowWidget.hide()
 
 			# Make connections.
-			connect(dialog, 'accepted()', self.__extensionDialogAccepted)
-			connect(
-				horizontalHeader, 'sectionClicked(int)',
+			dialog.accepted.connect(self.__extensionDialogAccepted)
+			horizontalHeader.sectionClicked.connect(
 				ui.extensionTable.sortByColumn
 				)
-			connect(ui.refreshButton, 'clicked()', model.repopulate)
+			ui.refreshButton.clicked.connect(model.repopulate)
 			model.populating.connect(self.__disableRefreshButton)
 			model.populated.connect(self.__enableRefreshButton)
 			model.rowsInserted.connect(self.__extensionsAdded)
@@ -258,9 +250,7 @@ class ExtensionManager(QtCore.QObject):
 				# to the currently selected one.
 				self.__setSelection, QtCore.Qt.QueuedConnection
 				)
-			# This is a slot rather than a signal, so we connect it by
-			# overriding the method implementation.
-			ui.extensionTable.currentChanged = self.__extensionHighlighted
+			ui.extensionTable.selectionModel().currentChanged.connect(self.__extensionHighlighted)
 			# Fetch extension info.
 			self.__model.repopulate()
 		else:
@@ -273,41 +263,41 @@ class ExtensionManager(QtCore.QObject):
 		# pylint: disable-msg=W0613
 		self.__ui.okButton.setEnabled(True)
 		self.__selectedExtensionConfig = \
-			self.__model.data(current, QtCore.Qt.UserRole).toString()
+			self.__model.data(current, QtCore.Qt.UserRole)
 		self.__ui.extensionTable.scrollTo(current)
 		# Display images of this machine if we are in the openmsxcd version
-		if self.__parent.openmsxcd :
+		if self.__parent.openmsxcd:
 			self.__ui.slideshowWidget.reset()
 
 			#Use system and user dir to find images inside
 			#the <dir>/machines/<selected-machine>/images/
 			#or in the images pool
 			#the <dir>/images/<selected-machine>*.(jpeg|jpg|gif|png)
-			if not (self.__userdir == None):
-				dir = self.__userdir + "/extensions/" + \
+			if self.__userdir is not None:
+				theDir = self.__userdir + "/extensions/" + \
 					str(self.__selectedExtensionConfig) + \
 					"/images"
-				print dir
-				self.__ui.slideshowWidget.addImagesInDirectory(dir)
-				dir = self.__userdir + "/images/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.addImagesInDirectory(theDir)
+				theDir = self.__userdir + "/images/" + \
 					str(self.__selectedExtensionConfig)
-				print dir
-				self.__ui.slideshowWidget.findImagesForMedia(dir)
-			if not (self.__systemdir == None):
-				dir = self.__systemdir + "/extensions/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.findImagesForMedia(theDir)
+			if self.__systemdir is not None:
+				theDir = self.__systemdir + "/extensions/" + \
 					str(self.__selectedExtensionConfig) + \
 					"/images"
-				print dir
-				self.__ui.slideshowWidget.addImagesInDirectory(dir)
-				dir = self.__systemdir + "/images/" + \
+				print(theDir)
+				self.__ui.slideshowWidget.addImagesInDirectory(theDir)
+				theDir = self.__systemdir + "/images/" + \
 					str(self.__selectedExtensionConfig)
-				print dir
-				self.__ui.slideshowWidget.findImagesForMedia(dir)
+				print(theDir)
+				self.__ui.slideshowWidget.findImagesForMedia(theDir)
 
 
 	def __extensionDialogAccepted(self):
 		index = self.__ui.extensionTable.currentIndex()
-		extension = self.__model.data(index, QtCore.Qt.UserRole).toString()
+		extension = self.__model.data(index, QtCore.Qt.UserRole)
 		self.__setExtension(extension)
 
 	def __setExtension(self, extension):
@@ -315,26 +305,26 @@ class ExtensionManager(QtCore.QObject):
 		self.__bridge.command('ext', extension)()
 
 	def __extensionChanged(self, value):
-		print 'current extension:', value
+		print('current extension:', value)
 		self.__currentExtensionConfig = value
 		# TODO: make extension history? Or save extensions for this machine?
 		# Remove duplicates of the path from the history.
 #		index = 1
 #		while index < machineBox.count():
-#			if machineBox.itemData(index).toString() == value:
+#			if machineBox.itemData(index) == value:
 #				machineBox.removeItem(index)
 #			else:
 #				index += 1
 #		# Persist history.
-#		history = QtCore.QStringList()
+#		history = list()
 #		for index in range(machineBox.count()):
-#			history.append(machineBox.itemData(index).toString())
+#			history.append(machineBox.itemData(index))
 #		preferences['machine/history'] = history
 
 	def __extensionSelected(self, index):
-		#print 'selected index %d of combo box' % index
-		extension = self.__extensionBox.itemData(index).toString()
-		print 'selected extension:', extension
+		#print('selected index %d of combo box' % index)
+		extension = self.__extensionBox.itemData(index)
+		print('selected extension:', extension)
 		# TODO: Ask user for confirmation if current extension is different and
 		#       currently powered on.
 		self.__setExtension(extension)

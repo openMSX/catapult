@@ -1,10 +1,7 @@
-# $Id$
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtGui import QColor
 
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QColor
-from qt_utils import connect
-
-class Cheatfinder(object):
+class Cheatfinder:
 
 	def __init__(self, bridge):
 		self.__cfDialog = None
@@ -14,7 +11,7 @@ class Cheatfinder(object):
 	def show(self):
 		dialog = self.__cfDialog
 		if dialog is None:
-			self.__cfDialog = dialog = QtGui.QDialog(
+			self.__cfDialog = dialog = QtWidgets.QDialog(
 				None, # TODO: find a way to get the real parent
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -26,28 +23,28 @@ class Cheatfinder(object):
 			self.__ui = ui
 
 			# Connect signals.
-			connect(ui.FindCheatLess, 'clicked()', self.__findCheatLess)
-			connect(ui.FindCheatLessEqual, 'clicked()',
+			ui.FindCheatLess.clicked.connect(self.__findCheatLess)
+			ui.FindCheatLessEqual.clicked.connect(
 				self.__findCheatLessEqual)
-			connect(ui.FindCheatEqual, 'clicked()', self.__findCheatEqual)
-			connect(ui.FindCheatNotEqual, 'clicked()', self.__findCheatNotEqual)
-			connect(ui.FindCheatMoreEqual, 'clicked()',
+			ui.FindCheatEqual.clicked.connect(self.__findCheatEqual)
+			ui.FindCheatNotEqual.clicked.connect(self.__findCheatNotEqual)
+			ui.FindCheatMoreEqual.clicked.connect(
 				self.__findCheatMoreEqual)
-			connect(ui.FindCheatMore, 'clicked()', self.__findCheatMore)
-			connect(ui.FindCheatRestart, 'clicked()', self.__findCheatRestart)
-			connect(ui.FindCheatValue, 'clicked()', self.__findCheatValue)
-			connect(ui.EmulationTogglePause, 'clicked()',
+			ui.FindCheatMore.clicked.connect(self.__findCheatMore)
+			ui.FindCheatRestart.clicked.connect(self.__findCheatRestart)
+			ui.FindCheatValue.clicked.connect(self.__findCheatValue)
+			ui.EmulationTogglePause.clicked.connect(
 				self.__emulationTogglePause)
-			connect(ui.EmulationReset, 'clicked()', self.__emulationReset)
-			connect(ui.rbCompare, 'clicked()', self.__disableDirectSearch)
-			connect(ui.rbSearch, 'clicked()', self.__disableCompareSearch)
+			ui.EmulationReset.clicked.connect(self.__emulationReset)
+			ui.rbCompare.clicked.connect(self.__disableDirectSearch)
+			ui.rbSearch.clicked.connect(self.__disableCompareSearch)
 
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
 		self.__ui.CheatTable.verticalHeader().hide()
-		self.__ui.CheatTable.horizontalHeader().setResizeMode(
-			QtGui.QHeaderView.Stretch
+		self.__ui.CheatTable.horizontalHeader().setSectionResizeMode(
+			QtWidgets.QHeaderView.Stretch
 		)
 
 	def __disableDirectSearch(self):
@@ -110,7 +107,7 @@ class Cheatfinder(object):
 	def __findCheatRestart(self):
 		cheatValue = self.__ui.cheatVal.text()
 		self.__ui.FindCheatRestart.setEnabled(False)
-		if len(cheatValue)<1:
+		if len(cheatValue) < 1:
 			msgText = 'Start New Search:'
 		else:
 			msgText = 'Start New Search Equal To: ' + str(cheatValue)
@@ -153,10 +150,10 @@ class Cheatfinder(object):
 			cheatArray = line.split('\n')
 
 			# Create the table to be filled, disable sorting and set grid size.
-			self.__ui.CheatTable.setRowCount( len(cheatArray) - 1 )
+			self.__ui.CheatTable.setRowCount(len(cheatArray) - 1)
 			self.__ui.CheatTable.setSortingEnabled(0)
-			self.__ui.CheatTable.verticalHeader().setResizeMode(
-				QtGui.QHeaderView.ResizeToContents
+			self.__ui.CheatTable.verticalHeader().setSectionResizeMode(
+				QtWidgets.QHeaderView.ResizeToContents
 				)
 
 			row = 0
@@ -165,14 +162,14 @@ class Cheatfinder(object):
 				cheatVal = cheatLine.split(';')
 
 				# Fill address value item.
-				addrItem = QtGui.QTableWidgetItem(cheatVal[0])
+				addrItem = QtWidgets.QTableWidgetItem(cheatVal[0])
 				addrItem.setFlags(
 					QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
 					)
 				self.__ui.CheatTable.setItem(row, 0, addrItem)
 
 				# Fill old value item.
-				oldValItem = QtGui.QTableWidgetItem(
+				oldValItem = QtWidgets.QTableWidgetItem(
 					cheatVal[1] + ' / ' + hex(int(cheatVal[1]))
 					)
 				oldValItem.setFlags(
@@ -181,7 +178,7 @@ class Cheatfinder(object):
 				self.__ui.CheatTable.setItem(row, 1, oldValItem)
 
 				# Fill new value item.
-				newValItem = QtGui.QTableWidgetItem(
+				newValItem = QtWidgets.QTableWidgetItem(
 					cheatVal[2] + ' / ' + hex(int(cheatVal[2]))
 					)
 				newValItem.setFlags(

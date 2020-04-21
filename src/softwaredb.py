@@ -1,10 +1,8 @@
-# $Id$
-
-from PyQt4 import QtCore, QtGui
-from qt_utils import connect
 import os
 
-class SoftwareDB(object):
+from PyQt5 import QtCore, QtWidgets
+
+class SoftwareDB:
 
 	def __init__(self, bridge):
 		self.__dmDialog = None
@@ -19,7 +17,7 @@ class SoftwareDB(object):
 	def show(self):
 		dialog = self.__dmDialog
 		if dialog is None:
-			self.__dmDialog = dialog = QtGui.QDialog(
+			self.__dmDialog = dialog = QtWidgets.QDialog(
 				None, # TODO: find a way to get the real parent
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -31,14 +29,14 @@ class SoftwareDB(object):
 			self.__ui = ui
 
 			# Connect signals.
-			#connect(ui.dirUpButton, 'clicked()', self.updir)
+			#ui.dirUpButton.clicked.connect(self.updir)
 
 			# Fill the components with values.
 			# Since Python 2.5 SQLite is part of the standard library;
 			# in case of python 2.4 we try to fall back to the external pysqlite2 module
 			try:
 				import sqlite3 as sqlite
-			except:
+			except ImportError:
 				from pysqlite2 import dbapi2 as sqlite
 			cursor = self.__cursor
 			if cursor is None:
@@ -46,46 +44,46 @@ class SoftwareDB(object):
 				self.__cursor = cursor = connection.cursor()
 
 			# First the Company
-			ui.companyComboBox.addItem(QtCore.QString('Select...'))
+			ui.companyComboBox.addItem('Select...')
 			cursor.execute(
 				'SELECT DISTINCT Company FROM software ORDER BY Company'
 				)
 			for row in cursor:
-				ui.companyComboBox.addItem(QtCore.QString(row[0]))
+				ui.companyComboBox.addItem(row[0])
 
 			# The Genre
-			ui.genreComboBox.addItem(QtCore.QString('Select...'))
+			ui.genreComboBox.addItem('Select...')
 			cursor.execute('SELECT DISTINCT Genre FROM software ORDER BY Genre')
 			for row in cursor:
-				ui.genreComboBox.addItem(QtCore.QString(row[0]))
+				ui.genreComboBox.addItem(row[0])
 
 			# The Machine
-			ui.machineComboBox.addItem(QtCore.QString('Select...'))
+			ui.machineComboBox.addItem('Select...')
 			cursor.execute(
 				'SELECT DISTINCT Machine FROM software ORDER BY Machine'
 				)
 			for row in cursor:
-				ui.machineComboBox.addItem(QtCore.QString(row[0]))
+				ui.machineComboBox.addItem(row[0])
 
 			# The Patched
-			ui.patchedComboBox.addItem(QtCore.QString('Select...'))
+			ui.patchedComboBox.addItem('Select...')
 			cursor.execute(
 				'SELECT DISTINCT Patched FROM software ORDER BY Patched'
 				)
 			for row in cursor:
-				ui.patchedComboBox.addItem(QtCore.QString(row[0]))
+				ui.patchedComboBox.addItem(row[0])
 
 			# The Type
-			ui.typeComboBox.addItem(QtCore.QString('Select...'))
+			ui.typeComboBox.addItem('Select...')
 			cursor.execute('SELECT DISTINCT Type FROM software ORDER BY Type')
 			for row in cursor:
-				ui.typeComboBox.addItem(QtCore.QString(row[0]))
+				ui.typeComboBox.addItem(row[0])
 
 			# The Year
-			ui.yearComboBox.addItem(QtCore.QString('Select...'))
+			ui.yearComboBox.addItem('Select...')
 			cursor.execute('SELECT DISTINCT Year FROM software ORDER BY Year')
 			for row in cursor:
-				ui.yearComboBox.addItem(QtCore.QString(row[0]))
+				ui.yearComboBox.addItem(row[0])
 
 			# Connect all dropdown boxes to the update counter method.
 			for combox in (
@@ -96,45 +94,31 @@ class SoftwareDB(object):
 				ui.typeComboBox,
 				ui.yearComboBox
 				):
-				connect(
-					combox,
-					'currentIndexChanged(int)',
+				combox.currentIndexChanged.connect(
 					self.findMatches
 					)
 			# connect regular buttons
-			connect(
-				ui.nextPushButton,
-				'clicked()',
+			ui.nextPushButton.clicked.connect(
 				self.on_nextPushButton_clicked
 				)
-			connect(
-				ui.nextPushButton_2,
-				'clicked()',
+			ui.nextPushButton_2.clicked.connect(
 				self.on_nextPushButton_2_clicked
 				)
-			connect(
-				ui.previousPushButton,
-				'clicked()',
+			ui.previousPushButton.clicked.connect(
 				self.on_previousPushButton_clicked
 				)
-			connect(
-				ui.previousPushButton_2,
-				'clicked()',
+			ui.previousPushButton_2.clicked.connect(
 				self.on_previousPushButton_2_clicked
 				)
-			connect(
-				ui.applyPushButton,
-				'clicked()',
+			ui.applyPushButton.clicked.connect(
 				self.on_applyPushButton_clicked
 				)
-			connect(
-				ui.gamelistView,
-				'cellClicked(int,int)',
+			ui.gamelistView.cellClicked.connect(
 				self.gamelistView_cellClicked
 				)
 		self.__ui.gamelistView.setSortingEnabled(0)
-		self.__ui.gamelistView.horizontalHeader().setResizeMode(
-			0, QtGui.QHeaderView.Stretch
+		self.__ui.gamelistView.horizontalHeader().setSectionResizeMode(
+			0, QtWidgets.QHeaderView.Stretch
 			)
 		self.__ui.gamelistView.horizontalHeader().hide()
 		self.__ui.gamelistView.verticalHeader().hide()
@@ -150,7 +134,7 @@ class SoftwareDB(object):
 		cursor = self.__cursor
 		cursor.execute(query)
 		for row in cursor:
-			print row
+			print(row)
 			self.__ui.numbermatchesLabel.setText(str(row[0]))
 
 	def constructFromPartQuery(self):
@@ -167,32 +151,29 @@ class SoftwareDB(object):
 			(ui.yearComboBox, 'Year')
 			):
 			if gui.currentIndex() != 0:
-				where.append( str(sqlstatement) + " = '"
-					+ str(gui.currentText() ) + "'" )
+				where.append(str(sqlstatement) + " = '"
+					+ str(gui.currentText()) + "'")
 
 		for gui, sqlstatement in (
 			(ui.nameinfoLabel, 'Info'),
 			(ui.extentionsinfoLabel, 'HardwareExtension')
 			):
 			if gui.text() != 'not specified':
-				where.append( sqlstatement + " like '%" + str(gui.text()) +"%'")
+				where.append(sqlstatement + " like '%" + str(gui.text()) +"%'")
 		if len(where) > 0:
 			query += " WHERE "
 		query += " AND ".join(where)
-		#print query
+		#print(query)
 		return query
 
 	# Slots:
 
-	@QtCore.pyqtSignature('')
 	def on_previousPushButton_clicked(self):
 		self.__ui.stackedPages.setCurrentIndex(0)
 
-	@QtCore.pyqtSignature('')
 	def on_previousPushButton_2_clicked(self):
 		self.__ui.stackedPages.setCurrentIndex(1)
 
-	@QtCore.pyqtSignature('')
 	def on_nextPushButton_clicked(self):
 		self.__ui.stackedPages.setCurrentIndex(1)
 		query = 'SELECT * ' + self.constructFromPartQuery() + ' ORDER BY Info'
@@ -201,25 +182,24 @@ class SoftwareDB(object):
 		self.__selectedgameid = []
 		index = 0
 		for row in cursor:
-			print row
+			print(row)
 			self.__ui.gamelistView.setRowCount(index + 1)
-			founditem = QtGui.QTableWidgetItem(QtCore.QString(row[8])) # 'Info'
+			founditem = QtWidgets.QTableWidgetItem(row[8]) # 'Info'
 			founditem.setFlags(
 				QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
 				)
 			self.__ui.gamelistView.setItem(index, 0, founditem)
-			#item = QtGui.QTableWidgetItem(row[0]) # 'id'
+			#item = QtWidgets.QTableWidgetItem(row[0]) # 'id'
 			#item.setFlags(QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable)
 			#self.__ui.gamelistView.setItem(index, 1, item)
 
-			self.__selectedgameid.append( row[0] )
+			self.__selectedgameid.append(row[0])
 
 			index += 1
 
 		self.__ui.gamelistView.setRowCount(index + 1)
-		self.showGameinfo( self.__selectedgameid[0] )
+		self.showGameinfo(self.__selectedgameid[0])
 
-	@QtCore.pyqtSignature('')
 	def on_nextPushButton_2_clicked(self):
 		ui = self.__ui
 		ui.stackedPages.setCurrentIndex(2)
@@ -250,7 +230,7 @@ class SoftwareDB(object):
 		cursor = self.__cursor
 		cursor.execute(query)
 		for row in cursor:
-			print row
+			print(row)
 			# machine
 			ui.machineLabel.setText(row[6])
 			#extensions
@@ -264,7 +244,7 @@ class SoftwareDB(object):
 					extlist.append(item)
 			if len(extlist) == 0:
 				ui.extensionsLabel.setText('None')
-			else :
+			else:
 				ui.extensionsLabel.setText(','.join(extlist))
 			#media
 			for media, gui in (
@@ -275,11 +255,10 @@ class SoftwareDB(object):
 					('carta', ui.cartaLabel),
 					('cartb', ui.cartbLabel),
 				):
-				if  str(row[1]).lower()==media:
+				if  str(row[1]).lower() == media:
 					gui.setText(row[9])
 
 
-	@QtCore.pyqtSignature('')
 	def on_applyPushButton_clicked(self):
 		ui = self.__ui
 		# First of all change machine if needed.
@@ -294,7 +273,7 @@ class SoftwareDB(object):
 		# The 'Ok'-reply from the machine command seems to mean:
 		# "machine command accept and will start in the near future"
 		# and not "machine is switched"
-		# 
+		#
 		# Now we will create the msx shell ourself and delete the
 		# current shell afterwards
 		#
@@ -333,31 +312,31 @@ class SoftwareDB(object):
 			#in correct machine config so resume with extensions
 			self.__applyMedia(message)
 
-	def __applyMedia(self, message):
+	def __applyMedia(self, _):
 		# Insert(/eject) the media if requested
 		ui = self.__ui
 		filename = ''
 		for check, label, media in (
-			( ui.diskaCheckBox, ui.diskaLabel, '::diska' ),
-			( ui.diskbCheckBox, ui.diskbLabel, '::diskb' ),
-			( ui.cartaCheckBox, ui.cartaLabel, '::carta' ),
-			( ui.cartbCheckBox, ui.cartbLabel, '::cartb' )
+			(ui.diskaCheckBox, ui.diskaLabel, '::diska'),
+			(ui.diskbCheckBox, ui.diskbLabel, '::diskb'),
+			(ui.cartaCheckBox, ui.cartaLabel, '::carta'),
+			(ui.cartbCheckBox, ui.cartbLabel, '::cartb')
 			):
 			setmedia = str(self.__commandshell) + str(media)
 			if check.isChecked():
 				if label.text() == 'empty':
-					self.__bridge.command( setmedia, 'eject' )()
-					print setmedia + " eject"
+					self.__bridge.command(setmedia, 'eject')()
+					print(setmedia + " eject")
 				else:
-					self.__bridge.command( setmedia, label.text() )()
-					print setmedia + " " + str(label.text())
+					self.__bridge.command(setmedia, label.text())()
+					print(setmedia + " " + str(label.text()))
 					filename = str(label.text())
 			else:
-				print "yyyyyyyyyyyyyyyyy not checked"
+				print("yyyyyyyyyyyyyyyyy not checked")
 
 		#
 		# Then the needed extension.
-		# We do this after the media because the eject of the cartx might 
+		# We do this after the media because the eject of the cartx might
 		# eject an extension otherwise (fi. an fmpac)
 		#
 		# TODO: if the machine isn't switched then we need to prevent inserting
@@ -373,31 +352,27 @@ class SoftwareDB(object):
 		#
 		if self.__destroyshell:
 			#TODO: find out in openMSX itself why this doesn't work
-			#if you first activate the new one and then delte the
+			#if you first activate the new one and then delete the
 			#current one, aka switch the two lines
-			self.__bridge.command( 'delete_machine' , self.__currentshell )()
-			self.__bridge.command( 'activate_machine' , self.__commandshell )()
+			self.__bridge.command('delete_machine', self.__currentshell)()
+			self.__bridge.command('activate_machine', self.__commandshell)()
 
 		#in the new active machine press CTRL for ten emutime-seconds if requested
 		if ui.ctrlCheckBox.isChecked():
-			self.__bridge.command( 'keymatrixdown', '6', '0x02' )()
-			self.__bridge.command( 'after', 'time', '10', 'keymatrixup', '6', '0x02' )()
+			self.__bridge.command('keymatrixdown', '6', '0x02')()
+			self.__bridge.command('after', 'time', '10', 'keymatrixup', '6', '0x02')()
 
 		#show the readme first for this piece of software
 		if filename != '':
-			if filename.lower().endswith(".gz") :
+			if filename.lower().endswith(".gz"):
 				filename = filename[:len(filename)-3]
 
-			if os.access(filename+str('.readme.1st'), os.F_OK):
-				readmefile = open(filename+str('.readme.1st'),'r')
-				msg = ''
+			if os.access(filename + str('.readme.1st'), os.F_OK):
+				readmefile = open(filename + str('.readme.1st'), 'r')
 				for line in readmefile:
 					msg += line
-				messageBox = QtGui.QMessageBox(
-					'Read me!', msg,
-					QtGui.QMessageBox.Information, 0, 0, 0,
-					self.__dmDialog
-					)
+				messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information,
+					'Read me!', msg, QtWidgets.QMessageBox.Ok, self.__dmDialog)
 				messageBox.show()
 
 
@@ -406,26 +381,24 @@ class SoftwareDB(object):
 		self.__dmDialog.hide()
 
 	def __machineChangeErrorHandler(self, message):
-		messageBox = QtGui.QMessageBox(
-			'Problem changing machine:', message,
-			QtGui.QMessageBox.Warning, 0, 0, 0,
-			self.__dmDialog
-			)
+		messageBox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+			'Problem changing machine:', message, QtWidgets.QMessageBox.Ok,
+			self.__dmDialog)
 		messageBox.show()
 
-	def showGameinfo( self , softid ):
+	def showGameinfo(self, softid):
 		query = "SELECT * FROM software WHERE id = '" + str(softid) + "'"
-		print query
+		print(query)
 		cursor = self.__cursor
 		cursor.execute(query)
 		for row in cursor:
-			#print row
+			#print(row)
 			#info on page 2
-			self.__ui.label_name.setText(QtCore.QString(row[8]))
-			self.__ui.label_company.setText(QtCore.QString(row[4]))
-			self.__ui.label_year.setText(QtCore.QString(row[2]))
-			self.__ui.label_machine.setText(QtCore.QString(row[6]))
-			self.__ui.label_genre.setText(QtCore.QString(row[7]))
+			self.__ui.label_name.setText(row[8])
+			self.__ui.label_company.setText(row[4])
+			self.__ui.label_year.setText(row[2])
+			self.__ui.label_machine.setText(row[6])
+			self.__ui.label_genre.setText(row[7])
 
 	def gamelistView_cellClicked(self, row, column): # pylint: disable-msg=W0613
 		self.showGameinfo(self.__selectedgameid[row])

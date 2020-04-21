@@ -1,14 +1,11 @@
-# $Id$
-
-from PyQt4 import QtCore, QtGui
-from qt_utils import connect
+from PyQt5 import QtCore, QtWidgets
 from player import PlayState
 from settings import BooleanSetting
 
-class Autorun(QtGui.QWidget):
+class Autorun(QtWidgets.QWidget):
 
 	def __init__(self, mainwindow, settingsManager, bridge):
-		QtGui.QWidget.__init__(self)
+		QtWidgets.QWidget.__init__(self)
 		self.__dmDialog = None
 		self.__ui = None
 		self.__mainwindow = mainwindow
@@ -27,15 +24,13 @@ class Autorun(QtGui.QWidget):
 		self.__cartb = "Empty"
 		self.__extensions = "Empty"
 
-		self.connect(
-			self.timer, QtCore.SIGNAL("timeout()"), self.counterTimeOut
-			)
+		self.timer.timeout.connect(self.counterTimeOut)
 
 		settingsManager.registerSetting('power', BooleanSetting)
 		settingsManager['power'].valueChanged.connect(self.updatePowerInfo)
 
 	def updatePowerInfo(self, value):
-		if self.__ui == None:
+		if self.__ui is None:
 			return
 		if value:
 			# User is running openMSX, so shouldn't be looking
@@ -77,7 +72,7 @@ class Autorun(QtGui.QWidget):
 	def show(self):
 		dialog = self.__dmDialog
 		if dialog is None:
-			self.__dmDialog = dialog = QtGui.QDialog(
+			self.__dmDialog = dialog = QtWidgets.QDialog(
 				None, # TODO: find a way to get the real parent
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -95,37 +90,20 @@ class Autorun(QtGui.QWidget):
 			#fill the components with values
 			cursor.execute('SELECT Title FROM autorun')
 			for row in cursor:
-				ui.comboBoxGames.addItem(QtCore.QString(row[0]))
+				ui.comboBoxGames.addItem(row[0])
 			# Connect signals.
-			#connect(ui.dirUpButton, 'clicked()', self.updir)
-			connect(
-				dialog,
-				'finished(int)',
-				self.getsHidden
-				)
+			#ui.dirUpButton.clicked.connect(self.updir)
+			dialog.finished.connect(self.getsHidden)
 			# connect regular buttons
-			connect(
-				ui.comboBoxGames,
-				'activated(int)',
-				self.selectionChanged
-				)
-			connect(
-				ui.pushButtonApply,
-				'clicked()',
-				self.applySettings
-				)
-			connect(
-				ui.pushButtonCounter,
-				'clicked()',
-				self.on_pushButtonCounter_clicked
-				)
+			ui.comboBoxGames.activated.connect(self.selectionChanged)
+			ui.pushButtonApply.clicked.connect(self.applySettings)
+			ui.pushButtonCounter.clicked.connect(self.on_pushButtonCounter_clicked)
 			self.selectionChanged(0)
 		self.startTimer()
 		dialog.show()
 		dialog.raise_()
 		dialog.activateWindow()
 
-	@QtCore.pyqtSignature("")
 	def applySettings(self):
 		self.__sendState = 0
 		if self.__ui.checkBoxExtensions.isChecked() and \
@@ -142,7 +120,7 @@ class Autorun(QtGui.QWidget):
 
 		self.applySettingsCont("bogus")
 
-	def applySettingsCont(self, dummy):
+	def applySettingsCont(self, _):
 		switch = self.__sendState
 		self.__sendState = 1 + self.__sendState
 		if switch == 0:
@@ -158,7 +136,7 @@ class Autorun(QtGui.QWidget):
 				#For now it is a it-just-works solution
 				for ext in self.__extensions.split(','):
 					self.__bridge.command('ext', ext)(
-						self.applySettingsCont,self.applySettingsCont
+						self.applySettingsCont, self.applySettingsCont
 						)
 			else:
 				self.applySettingsCont("bogus")
@@ -213,8 +191,7 @@ class Autorun(QtGui.QWidget):
 				self.__bridge.command('reset')()
 				if self.__ui.checkBoxShutdown.isChecked():
 					self.__bridge.command('after', 'idle',
-						self.__ui.spinBoxShutdown.value(),
-						'quit')()
+						self.__ui.spinBoxShutdown.value(), 'quit')()
 
 	def nextGame(self):
 		combo = self.__ui.comboBoxGames
@@ -230,18 +207,16 @@ class Autorun(QtGui.QWidget):
 	# Slots:
 
 	#Stop timer when window is closed/hidden
-	@QtCore.pyqtSignature("")
 	def getsHidden(self, result):
-		print " def getsHidden(self, result): ", result
+		print(" def getsHidden(self, result): ", result)
 		self.stopTimer()
 
-	@QtCore.pyqtSignature("")
 	def selectionChanged(self, index):
 		cursor = self.__cursor
 		index = index + 1
 		cursor.execute('SELECT Machine, Title, Info, Extensions,' +
 			' Timeout, Media, File FROM autorun WHERE id = ' +
-			str(index) )
+			str(index))
 		for row in cursor:
 			#TODO this is a quick hack to see something move :-)
 			# will be fixed in next commit
@@ -257,29 +232,28 @@ class Autorun(QtGui.QWidget):
 				self.__carta = row[6]
 
 			self.__ui.checkBoxMSX.setText(
-				QtCore.QString("MSX: " + self.__MSX)
+				"MSX: " + self.__MSX
 				)
 			self.__ui.checkBoxDiska.setText(
-				QtCore.QString("diska: " + self.__diska)
+				"diska: " + self.__diska
 				)
 			self.__ui.checkBoxDiskb.setText(
-				QtCore.QString("diskb: " + self.__diskb)
+				"diskb: " + self.__diskb
 				)
 			self.__ui.checkBoxCarta.setText(
-				QtCore.QString("carta: " + self.__carta)
+				"carta: " + self.__carta
 				)
 			self.__ui.checkBoxCartb.setText(
-				QtCore.QString("cartb: " + self.__cartb)
+				"cartb: " + self.__cartb
 				)
 			self.__ui.checkBoxExtensions.setText(
-				QtCore.QString("extensions: " + self.__extensions)
+				"extensions: " + self.__extensions
 				)
-			self.__ui.labelGames.setText(QtCore.QString(row[2]))
+			self.__ui.labelGames.setText(row[2])
 			self.__ui.spinBoxShutdown.setValue(int(row[4]))
 			self.__ui.slideshowWidget.reset()
 			self.__ui.slideshowWidget.findImagesForMedia(row[6])
 
-	@QtCore.pyqtSignature("")
 	def on_pushButtonCounter_clicked(self):
 		lcd = self.__ui.lcdNumber
 		if lcd.intValue() == self.__timerinit:

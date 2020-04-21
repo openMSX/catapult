@@ -1,11 +1,7 @@
-# $Id$
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtGui import QColor, QPalette
 
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QColor, QPalette
-
-from qt_utils import connect
-
-class PaletteEditor(object):
+class PaletteEditor:
 
 	def __init__(self, bridge):
 		self.__cfDialog = None
@@ -16,7 +12,7 @@ class PaletteEditor(object):
 	def show(self):
 		dialog = self.__cfDialog
 		if dialog is None:
-			self.__cfDialog = dialog = QtGui.QDialog(
+			self.__cfDialog = dialog = QtWidgets.QDialog(
 				None, # TODO: find a way to get the real parent
 				QtCore.Qt.Dialog
 				| QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowSystemMenuHint
@@ -31,18 +27,18 @@ class PaletteEditor(object):
 				]
 
 			# Connect signals.
-			connect(ui.GetMSXColors, 'clicked()', self.__getMSXColors)
+			ui.GetMSXColors.clicked.connect(self.__getMSXColors)
 
 			for index in range(16):
-				connect(self.__colorWidgets[index], 'clicked()',
-					lambda index = index: self.__clickedColor(index))
+				self.__colorWidgets[index].clicked.connect(
+					lambda dummy, index = index: self.__clickedColor(index))
 
-			connect(ui.RVal, 'valueChanged(int)', self.__changeR)
-			connect(ui.GVal, 'valueChanged(int)', self.__changeG)
-			connect(ui.BVal, 'valueChanged(int)', self.__changeB)
+			ui.RVal.valueChanged.connect(self.__changeR)
+			ui.GVal.valueChanged.connect(self.__changeG)
+			ui.BVal.valueChanged.connect(self.__changeB)
 
-			connect(ui.SavePalette, 'clicked()', self.__savePalette)
-			connect(ui.LoadPalette, 'clicked()', self.__loadPalette)
+			ui.SavePalette.clicked.connect(self.__savePalette)
+			ui.LoadPalette.clicked.connect(self.__loadPalette)
 
 		dialog.show()
 		dialog.raise_()
@@ -54,12 +50,12 @@ class PaletteEditor(object):
 	def __savePalette(self):
 		browseTitle = 'Save Palette File'
 		imageSpec = 'Palette Files (*.pal);;All Files (*)'
-		path = QtGui.QFileDialog.getSaveFileName(
+		path = QtWidgets.QFileDialog.getSaveFileName(
 			None,
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		self.__savePalFile(path)
@@ -67,12 +63,12 @@ class PaletteEditor(object):
 	def __loadPalette(self):
 		browseTitle = 'Load Palette File'
 		imageSpec = 'Palette Files (*.pal);;All Files (*)'
-		path = QtGui.QFileDialog.getOpenFileName(
+		path = QtWidgets.QFileDialog.getOpenFileName(
 			None,
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		self.__loadPalFile(path)
@@ -155,7 +151,7 @@ class PaletteEditor(object):
 		self.__ui.RVal.setValue(red)
 		self.__ui.GVal.setValue(green)
 		self.__ui.BVal.setValue(blue)
-		
+
 		# Set text boxes.
 		self.__ui.lineEditRed.setText(str(red))
 		self.__ui.lineEditGreen.setText(str(green))

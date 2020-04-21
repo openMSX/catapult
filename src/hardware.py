@@ -1,15 +1,12 @@
-# $Id$
-
-from PyQt4 import QtCore
-
-from qt_utils import Signal
+from PyQt5 import QtCore
+from PyQt5.QtCore import pyqtSignal
 
 class HardwareModel(QtCore.QAbstractTableModel):
 	'''Base class for machine and extension models.
 	'''
 	_hardwareType = property() # abstract
-	populating = Signal() # repopulation starts
-	populated = Signal() # repopulation ends
+	populating = pyqtSignal() # repopulation starts
+	populated = pyqtSignal() # repopulation ends
 
 	def __init__(self, bridge):
 		QtCore.QAbstractTableModel.__init__(self)
@@ -25,9 +22,9 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		self.__requestInfo()
 
 	def __listFailed(self, message):
-		print 'Failed to get list of %ss: %s' % (
+		print('Failed to get list of %ss: %s' % (
 			self._hardwareType, message
-			)
+			))
 		self.__allDone()
 
 	def __allDone(self):
@@ -38,7 +35,7 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		'''Requests information about the current machine.
 		   Current depends on the value of __itemIter
 		'''
-		item = self.__itemIter.next()
+		item = next(self.__itemIter)
 		self._bridge.command(
 			'openmsx_info', self._hardwareType + 's', item
 			)(
@@ -56,7 +53,7 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		raise NotImplementedError
 
 	def __infoReply(self, name, info):
-		infoDict = dict(info[i : i + 2] for i in xrange(0, len(info), 2))
+		infoDict = dict(info[i : i + 2] for i in range(0, len(info), 2))
 		self._tempInfoDict = infoDict
 		if self._testable:
 			self._bridge.command('create_machine')(
@@ -67,24 +64,24 @@ class HardwareModel(QtCore.QAbstractTableModel):
 			self.__testEnd(name)
 
 	def __infoFailed(self, name, message):
-		print 'Failed to get info about %s %s: %s' % (
+		print('Failed to get info about %s %s: %s' % (
 			self._hardwareType, name, message
-			)
+			))
 		self.__infoDone()
 
 	def _testDone(self, name, machineId, message, successful):
 		# this is automatically done after the machine is deleted
 		# in openMSX, see openmsx_control.py:
 		#self._bridge.removeMachineToIgnore(machineId)
-		print 'Test for: %s successful: %s' % (name, successful)
+		print('Test for: %s successful: %s' % (name, successful))
 		if successful:
 			self._tempInfoDict['working'] = 'Yes'
 		else:
 			self._tempInfoDict['working'] = 'No'
 			self._tempInfoDict['brokenreason'] = message
-			print 'Broken hardware found: %s %s: %s' % (
+			print('Broken hardware found: %s %s: %s' % (
 				self._hardwareType, name, message
-				)
+				))
 		self.__testEnd(name)
 
 	def __testEnd(self, name):
@@ -115,10 +112,10 @@ class HardwareModel(QtCore.QAbstractTableModel):
 		'''(Re)populate the model by querying openMSX.
 		'''
 		self.populating.emit()
-		self.reset()
+		self.beginResetModel()
 		self._clearItems()
+		self.endResetModel()
 		# Ask openMSX for list of hardware items.
 		self._bridge.command(
 			'openmsx_info', self._hardwareType + 's'
 			)(self.__listReply, self.__listFailed)
-

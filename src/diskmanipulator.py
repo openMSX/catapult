@@ -1,7 +1,4 @@
-# $Id$
-
-from PyQt4 import QtCore, QtGui
-from qt_utils import connect
+from PyQt5 import QtCore, QtWidgets
 
 class Diskmanipulator(QtCore.QObject):
 
@@ -20,7 +17,7 @@ class Diskmanipulator(QtCore.QObject):
 		self.__virtualDriveSlot = mediaModel.getMediaSlotByName('virtual_drive')
 		self.__mediaSlot = self.__virtualDriveSlot
 		self.__localDir = QtCore.QDir.home()
-		self.__dirModel = QtGui.QDirModel()
+		self.__dirModel = QtWidgets.QDirModel()
 
 		self.__virtualDriveSlot.slotDataChanged.connect(self.__diskChanged)
 		mediaModel.mediaSlotAdded.connect(self.__driveAdded)
@@ -38,7 +35,7 @@ class Diskmanipulator(QtCore.QObject):
 		if comboBox is not None:
 			comboBox.clear()
 			for device in self.__mediaModel.iterDriveNames():
-				comboBox.addItem(QtCore.QString(device))
+				comboBox.addItem(device)
 			#rebuilding the combobox will show 'virtual drive'
 			#selected so we set this as current media and
 			#update the directory listing
@@ -48,7 +45,7 @@ class Diskmanipulator(QtCore.QObject):
 	def show(self):
 		dialog = self.__dmDialog
 		if dialog is None:
-			self.__dmDialog = dialog = QtGui.QDialog(
+			self.__dmDialog = dialog = QtWidgets.QDialog(
 				# TODO: Find a better way to get the real parent :-)
 				self.__mainwindow,
 				QtCore.Qt.Dialog
@@ -64,7 +61,7 @@ class Diskmanipulator(QtCore.QObject):
 			#bridge.registerUpdate('media', self.__updateMedium)
 			#bridge.registerUpdatePrefix(
 			#	'hardware',
-			#	( 'disk', 'hd' ),
+			#	('disk', 'hd'),
 			#	self.__updateHardware
 			#	)
 			# TODO: how are handling the 'virtual_drive' in the above case ??
@@ -73,129 +70,61 @@ class Diskmanipulator(QtCore.QObject):
 			# Set the msxDirTable as needed
 			msxDir = self.__ui.msxDirTable
 			msxDir.setRowCount(0)
-			labels = QtCore.QStringList([ 'File Name', 'Atributes', 'Size' ])
+			labels = ['File Name', 'Atributes', 'Size']
 			msxDir.setHorizontalHeaderLabels(labels)
 			msxDir.verticalHeader().hide()
-			msxDir.horizontalHeader().setResizeMode(
-				0, QtGui.QHeaderView.Interactive
+			msxDir.horizontalHeader().setSectionResizeMode(
+				0, QtWidgets.QHeaderView.Interactive
 				)
-			msxDir.horizontalHeader().setResizeMode(
-				1, QtGui.QHeaderView.Interactive
+			msxDir.horizontalHeader().setSectionResizeMode(
+				1, QtWidgets.QHeaderView.Interactive
 				)
-			msxDir.horizontalHeader().setResizeMode(
-				2, QtGui.QHeaderView.Stretch
+			msxDir.horizontalHeader().setSectionResizeMode(
+				2, QtWidgets.QHeaderView.Stretch
 				)
 			msxDir.setShowGrid(0)
 			msxDir.setSelectionBehavior(
-				QtGui.QAbstractItemView.SelectionBehavior(1)
+				QtWidgets.QAbstractItemView.SelectionBehavior(1)
 				)
 			msxDir.setSelectionMode(
-				QtGui.QAbstractItemView.SelectionMode(3)
+				QtWidgets.QAbstractItemView.SelectionMode(3)
 				)
 
 			hostDirTable = ui.hostDirView
 			dirModel = self.__dirModel
 			hostDirTable.setModel(dirModel)
-			self.setLocalDir( QtCore.QDir.currentPath() )
+			self.setLocalDir(QtCore.QDir.currentPath())
 
 			hostDirTable.setSelectionBehavior(
-				QtGui.QAbstractItemView.SelectionBehavior(1)
+				QtWidgets.QAbstractItemView.SelectionBehavior(1)
 				)
 			hostDirTable.setSelectionMode(
-				QtGui.QAbstractItemView.SelectionMode(3)
+				QtWidgets.QAbstractItemView.SelectionMode(3)
 				)
 
 			# Connect signals.
 			# TODO: Find out how to do this correctly, since this doesn't work.
 			#       Maybe I should throw events from the closeEvent handler
 			#       from the mainwindow?
-			#connect(
-			#	self.__mainwindow,
-			#	'close()',
-			#	dialog.close
-			#	)
-			connect(
-				ui.openImageButton,
-				'clicked()',
-				self.browseImage
-				)
-			connect(
-				ui.saveasnewButton,
-				'clicked()',
-				self.saveasnewImage
-				)
-			connect(
-				ui.newImageButton,
-				'clicked()',
-				self.newImage
-				)
-			connect(
-				ui.dirReloadButton,
-				'clicked()',
-				self.refreshDir
-				)
-			connect(
-				ui.dirUpButton,
-				'clicked()',
-				self.updir
-				)
-			connect(
-				ui.dirNewButton,
-				'clicked()',
-				self.mkdir
-				)
-			connect(
-				ui.hostDirReloadButton,
-				'clicked()',
-				self.refreshLocalDir
-				)
-			connect(
-				ui.hostDirUpButton,
-				'clicked()',
-				self.upLocalDir
-				)
-			connect(
-				ui.hostDirNewButton,
-				'clicked()',
-				self.mklocaldir
-				)
-			connect(
-				ui.hostDirView,
-				'doubleClicked(QModelIndex)',
-				self.doubleClickedLocalDir
-				)
-			connect(
-				ui.msxDirTable,
-				'doubleClicked(QModelIndex)',
-				self.doubleClickedMSXDir
-				)
+			#self.__mainwindow.close.connect(dialog.close)
+			ui.openImageButton.clicked.connect(self.browseImage)
+			ui.saveasnewButton.clicked.connect(self.saveasnewImage)
+			ui.newImageButton.clicked.connect(self.newImage)
+			ui.dirReloadButton.clicked.connect(self.refreshDir)
+			ui.dirUpButton.clicked.connect(self.updir)
+			ui.dirNewButton.clicked.connect(self.mkdir)
+			ui.hostDirReloadButton.clicked.connect(self.refreshLocalDir)
+			ui.hostDirUpButton.clicked.connect(self.upLocalDir)
+			ui.hostDirNewButton.clicked.connect(self.mklocaldir)
+			ui.hostDirView.doubleClicked.connect(self.doubleClickedLocalDir)
+			ui.msxDirTable.doubleClicked.connect(self.doubleClickedMSXDir)
 
-			connect(
-				ui.importButton,
-				'clicked()',
-				self.importFiles
-				)
-			connect(
-				ui.exportButton,
-				'clicked()',
-				self.exportFiles
-				)
+			ui.importButton.clicked.connect(self.importFiles)
+			ui.exportButton.clicked.connect(self.exportFiles)
 
-			connect(
-				ui.mediaComboBox,
-				'activated(QString)',
-				self.showMediaDir
-				)
-			connect(
-				ui.hostDirComboBox,
-				'activated(QString)',
-				self.setLocalDir
-				)
-			connect(
-				ui.hostDirComboBox.lineEdit(),
-				'editingFinished()',
-				self.editedLocalDir
-				)
+			ui.mediaComboBox.activated.connect(lambda index: self.showMediaDir(ui.mediaComboBox.currentText()))
+			ui.hostDirComboBox.activated.connect(lambda index: self.setLocalDir(ui.hostDirComboBox.currentText()))
+			ui.hostDirComboBox.lineEdit().editingFinished.connect(self.editedLocalDir)
 		self.__rebuildUI()
 
 		dialog.show()
@@ -209,7 +138,7 @@ class Diskmanipulator(QtCore.QObject):
 		'''Show the content of the selected directory
 		'''
 
-		print 'selected:', path or '<nothing>'
+		print('selected:', path or '<nothing>')
 		if not path:
 			return
 
@@ -232,7 +161,7 @@ class Diskmanipulator(QtCore.QObject):
 			self.__localDir = QtCore.QDir(path)
 			hostDirTable = self.__ui.hostDirView
 			hostDirTable.setRootIndex(
-				self.__dirModel.index( path )
+				self.__dirModel.index(path)
 				)
 		else:
 			# Remove the path from the history.
@@ -244,12 +173,12 @@ class Diskmanipulator(QtCore.QObject):
 					index += 1
 
 	def doubleClickedMSXDir(self, modelindex):
-		attr = str( self.__ui.msxDirTable.item(modelindex.row(), 1).text() )
+		attr = str(self.__ui.msxDirTable.item(modelindex.row(), 1).text())
 		if 'd' in attr:
 			item = str(
 				self.__ui.msxDirTable.item(modelindex.row(), 0).text()
 				)
-			print item
+			print(item)
 			if item == '.':
 				self.refreshDir()
 			elif item == '..':
@@ -259,12 +188,12 @@ class Diskmanipulator(QtCore.QObject):
 				if self.__cwd[slotName] != '/':
 					self.__cwd[slotName] += '/'
 				self.__cwd[slotName] += item
-				print self.__cwd[slotName]
+				print(self.__cwd[slotName])
 				self.refreshDir()
 
 	def doubleClickedLocalDir(self, modelindex):
 		if self.__dirModel.isDir(modelindex):
-			self.setLocalDir( self.__dirModel.filePath(modelindex) )
+			self.setLocalDir(self.__dirModel.filePath(modelindex))
 
 	def upLocalDir(self):
 		self.__localDir.cdUp()
@@ -277,12 +206,12 @@ class Diskmanipulator(QtCore.QObject):
 	def saveasnewImage(self):
 		browseTitle = 'Save As New Disk Image'
 		imageSpec = 'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)'
-		path = QtGui.QFileDialog.getSaveFileName(
+		path = QtWidgets.QFileDialog.getSaveFileName(
 			self.__ui.openImageButton,
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		# save current media to path
@@ -294,19 +223,19 @@ class Diskmanipulator(QtCore.QObject):
 	def newImage(self):
 		browseTitle = 'Create New Disk Image'
 		imageSpec = 'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)'
-		path = QtGui.QFileDialog.getSaveFileName(
+		path = QtWidgets.QFileDialog.getSaveFileName(
 			self.__ui.openImageButton,
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		from sizewizard import Sizewizard
 		wizard = Sizewizard()
 		wizard.exec_()
 		size = wizard.getSizes()
-		print 'wizard.getSizes()' + size
+		print('wizard.getSizes()' + size)
 		# Ask if user is really, really sure
 		if ' ' in size:
 			text = self.tr(
@@ -326,12 +255,11 @@ class Diskmanipulator(QtCore.QObject):
 				"be inserted into the virtual drive</p>"
 				)
 
-		reply = QtGui.QMessageBox.question(
+		reply = QtWidgets.QMessageBox.question(
 				self.__dmDialog,
 				self.tr("Creating a new disk image"),
 				text,
-				QtGui.QMessageBox.Yes,
-				QtGui.QMessageBox.Cancel)
+				QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel)
 		if reply == 0:
 			return
 
@@ -351,12 +279,12 @@ class Diskmanipulator(QtCore.QObject):
 	def browseImage(self):
 		browseTitle = 'Select Disk Image'
 		imageSpec = 'Disk Images (*.dsk *.di? *.xsa *.zip *.gz);;All Files (*)'
-		path = QtGui.QFileDialog.getOpenFileName(
+		path = QtWidgets.QFileDialog.getOpenFileName(
 			self.__ui.openImageButton,
 			browseTitle,
 			QtCore.QDir.currentPath(),
 			imageSpec
-			)
+			)[0]
 		if not path:
 			return
 		# Insert the selected image in the 'virtual drive'.
@@ -374,7 +302,8 @@ class Diskmanipulator(QtCore.QObject):
 			)
 		self.refreshDir()
 
-	def isUsableDisk(self, name):
+	@staticmethod
+	def isUsableDisk(name):
 		return name.startswith('disk') or name.startswith('hd') \
 			or name == 'virtual_drive'
 
@@ -386,7 +315,7 @@ class Diskmanipulator(QtCore.QObject):
 		else:
 			path = str(medium.getPath())
 		if self.isUsableDisk(driveId):
-			print 'disk "%s" now contains image "%s" '% (driveId, path)
+			print('disk "%s" now contains image "%s" '% (driveId, path))
 			if path == '':
 				self.__cwd[driveId] = ''
 			else:
@@ -399,7 +328,7 @@ class Diskmanipulator(QtCore.QObject):
 	def __driveAdded(self, name, machineId):
 		driveId = str(name)
 		if self.isUsableDisk(driveId):
-			print 'drive "%s" added '% name
+			print('drive "%s" added '% name)
 			self.__mediaModel.getMediaSlotByName(driveId,
 				str(machineId)).slotDataChanged.connect(
 					self.__diskChanged
@@ -407,16 +336,16 @@ class Diskmanipulator(QtCore.QObject):
 			self.__cwd[driveId] = '/'
 			# only if gui is visible ofcourse
 			if self.__comboBox is not None:
-				self.__comboBox.addItem(QtCore.QString(driveId))
+				self.__comboBox.addItem(driveId)
 
-	def __driveRemoved(self, name, machineId):
+	def __driveRemoved(self, name, _):
 		driveId = str(name)
 		if self.isUsableDisk(driveId):
-			print 'drive "%s" removed' % name
+			print('drive "%s" removed' % name)
 			comboBox = self.__comboBox
 			# only if gui is visible ofcourse
 			if comboBox is not None:
-				index = comboBox.findText(QtCore.QString(driveId))
+				index = comboBox.findText(driveId)
 				comboBox.removeItem(index)
 				if driveId == self.__mediaSlot.getName():
 					self.__mediaSlot = self.__virtualDriveSlot
@@ -436,7 +365,7 @@ class Diskmanipulator(QtCore.QObject):
 			self.__bridge.command(
 				'diskmanipulator', 'dir',
 				slotName
-				)( self.displayDir)
+				)(self.displayDir)
 		else:
 			# no disk inserted
 			self.__ui.cwdLine.setReadOnly(1)
@@ -457,20 +386,20 @@ class Diskmanipulator(QtCore.QObject):
 		self.__ui.msxDirTable.setRowCount(len(entries) - 1)
 		for entry in entries[ : -1]:
 			data = entry.split('\t')
-			fileNameItem = QtGui.QTableWidgetItem(data[0])
+			fileNameItem = QtWidgets.QTableWidgetItem(data[0])
 			# not editable etc etc
 			fileNameItem.setFlags(
 				QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
 				)
 			self.__ui.msxDirTable.setItem(row, 0, fileNameItem)
 
-			fileAttrItem = QtGui.QTableWidgetItem(data[1])
+			fileAttrItem = QtWidgets.QTableWidgetItem(data[1])
 			fileAttrItem.setFlags(
 				QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
 				)
 			self.__ui.msxDirTable.setItem(row, 1, fileAttrItem)
 
-			fileSizeItem = QtGui.QTableWidgetItem(data[2])
+			fileSizeItem = QtWidgets.QTableWidgetItem(data[2])
 			fileSizeItem.setFlags(
 				QtCore.Qt.ItemIsEnabled|QtCore.Qt.ItemIsSelectable
 				)
@@ -494,11 +423,11 @@ class Diskmanipulator(QtCore.QObject):
 
 	def mklocaldir(self):
 		title = 'New directory'
-		newdir, ok = QtGui.QInputDialog.getText(
+		newdir, ok = QtWidgets.QInputDialog.getText(
 			self.__ui.dirNewButton,
 			title,
 			'Enter folder name',
-			QtGui.QLineEdit.Normal,
+			QtWidgets.QLineEdit.Normal,
 			)
 		if not ok:
 			return
@@ -509,11 +438,11 @@ class Diskmanipulator(QtCore.QObject):
 
 	def mkdir(self):
 		title = 'New directory on MSX media'
-		newdir, ok = QtGui.QInputDialog.getText(
+		newdir, ok = QtWidgets.QInputDialog.getText(
 			self.__ui.dirNewButton,
 			title,
 			'Enter folder name',
-			QtGui.QLineEdit.Normal,
+			QtWidgets.QLineEdit.Normal,
 			)
 		if not ok:
 			return
@@ -525,18 +454,18 @@ class Diskmanipulator(QtCore.QObject):
 			)()
 		self.__bridge.command(
 			'diskmanipulator', 'mkdir',
-			slotName, str( newdir )
+			slotName, str(newdir)
 			)()
 
 		if self.__cwd[slotName] != '/':
 			self.__cwd[slotName] += '/'
-		self.__cwd[slotName] += str( newdir )
+		self.__cwd[slotName] += str(newdir)
 		self.refreshDir()
 
 	def importFiles(self):
 		# Get diskimage to work with
-		diskimage = str( self.__comboBox.currentText() )
-		print 'diskimage:' + diskimage
+		diskimage = str(self.__comboBox.currentText())
+		print('diskimage:' + diskimage)
 		# Make sure we are in the correct directory on the image
 		path = self.__cwd[self.__mediaSlot.getName()]
 		self.__bridge.command(
@@ -548,7 +477,7 @@ class Diskmanipulator(QtCore.QObject):
 		table = self.__ui.hostDirView
 		for index in table.selectionModel().selectedIndexes():
 			filename = str(self.__dirModel.filePath(index))
-			print filename
+			print(filename)
 			self.__bridge.command(
 				'diskmanipulator', 'import',
 				diskimage, filename
@@ -557,7 +486,7 @@ class Diskmanipulator(QtCore.QObject):
 
 	def exportFiles(self):
 		diskimage = self.__comboBox.currentText()
-		print 'diskimage:' + diskimage
+		print('diskimage:' + diskimage)
 		slotName = self.__mediaSlot.getName()
 		self.__bridge.command(
 			'diskmanipulator', 'chdir',
@@ -573,4 +502,4 @@ class Diskmanipulator(QtCore.QObject):
 					diskimage,
 					str(self.__localDir.path()),
 					str(item.text())
-					)( self.refreshLocalDir )
+					)(self.refreshLocalDir)
