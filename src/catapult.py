@@ -400,7 +400,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 	def close(self):
 		# [Manuel] is the following log line correct??
-		print(" QtWidgets.QMainWindow.closeEvent(self, event)")
+		print(" QtWidgets.QMainWindow.close(self)")
 		QtWidgets.QMainWindow.close(self)
 
 	def on_playButton_clicked(self):
