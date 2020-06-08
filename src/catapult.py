@@ -234,6 +234,8 @@ class MainWindow(QtWidgets.QMainWindow):
 		settingsManager.connectSetting('scale_algorithm', ui.scalealgorithmComboBox)
 		settingsManager.registerSetting('videosource', settings.EnumSetting)
 		settingsManager.connectSetting('videosource', ui.videosourceComboBox)
+		settingsManager.registerSetting('sync_to_vblank_mode', settings.EnumSetting)
+		settingsManager.connectSetting('sync_to_vblank_mode', ui.vSyncComboBox)
 		settingsManager.registerSetting('renderer', settings.EnumSetting)
 		settingsManager.connectSetting('renderer', ui.rendererComboBox)
 		settingsManager.registerSetting('display_deform', settings.EnumSetting)

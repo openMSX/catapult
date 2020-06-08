@@ -371,6 +371,7 @@ class MediaModel(QtCore.QAbstractListModel):
 		del self.__mediaSlotListForMachine[str(machineId)]
 
 	def __mediaSlotAdded(self, slotName, machineId):
+		print('Adding media slot to admin admin for machine with id ', machineId, ' and slot name ', slotName)
 		slotList = self.__mediaSlotListForMachine[machineId]
 		# add empty slot
 		slot = MediaSlot.create(slotName, self.__bridge)
