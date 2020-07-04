@@ -55,7 +55,11 @@ class ConnectorPlugger(QtCore.QObject):
 
 	def updateConnector(self, index):
 		# Find out which connector entry has become active.
-		connector = str(index.data(QtCore.Qt.UserRole))
+		connectorNameData = index.data(QtCore.Qt.UserRole)
+		connectorName = str(connectorNameData)
+		# prevent problems due to race conditions when removing slots:
+		if connectorName == '' or connectorNameData is None:
+			return
 		if self.__connector == connector:
 			return
 		self.__connector = connector
