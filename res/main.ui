@@ -3172,7 +3172,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QPushButton" name="playButton" >
           <property name="toolTip" >
-           <string>Run the selected MSX (power on)</string>
+           <string>Run the selected MSX (power on), or restore to normal speed</string>
           </property>
           <property name="icon" >
            <iconset>
