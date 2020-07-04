@@ -62,15 +62,15 @@ class PlayState(QtCore.QObject):
 		self.__powerSetting = powerSetting = settingsManager['power']
 		settingsManager.registerSetting('pause', BooleanSetting)
 		self.__pauseSetting = pauseSetting = settingsManager['pause']
-		settingsManager.registerSetting('throttle', BooleanSetting)
-		self.__throttleSetting = throttleSetting = settingsManager['throttle']
+		settingsManager.registerSetting('fastforward', BooleanSetting)
+		self.__fastforwardSetting = fastforwardSetting = settingsManager['fastforward']
 		settingsManager.registerSetting('renderer', EnumSetting)
 		self.__visibleSetting = visibleSetting = VisibleSetting(
 			settingsManager['renderer']
 			)
 
 		for setting in (
-			powerSetting, pauseSetting, throttleSetting, visibleSetting
+			powerSetting, pauseSetting, fastforwardSetting, visibleSetting
 			):
 			setting.valueChanged.connect(self.update)
 
@@ -85,7 +85,7 @@ class PlayState(QtCore.QObject):
 		'''
 		power = self.__powerSetting.getValue()
 		pause = self.__pauseSetting.getValue()
-		throttle = self.__throttleSetting.getValue()
+		fastforward = self.__fastforwardSetting.getValue()
 		visible = self.__visibleSetting.getValue()
 
 		# TODO: Is it possible to do this declarative, such that the same
@@ -93,7 +93,7 @@ class PlayState(QtCore.QObject):
 		if power and visible:
 			if pause:
 				return self.pause
-			if throttle:
+			if not fastforward:
 				return self.play
 			return self.forward
 		if not power and not visible:
@@ -120,13 +120,13 @@ class PlayState(QtCore.QObject):
 		return self.__state
 
 	def do_play(self):
-		self.__throttleSetting.setValue(True)
+		self.__fastforwardSetting.setValue(False)
 		self.__pauseSetting.setValue(False)
 		self.__powerSetting.setValue(True)
 		self.__visibleSetting.setValue(True)
 
 	def do_pause(self):
-		self.__throttleSetting.setValue(True)
+		self.__fastforwardSetting.setValue(False)
 		self.__pauseSetting.setValue(True)
 		self.__powerSetting.setValue(True)
 		self.__visibleSetting.setValue(True)
@@ -139,4 +139,4 @@ class PlayState(QtCore.QObject):
 		self.__pauseSetting.setValue(False)
 		self.__powerSetting.setValue(True)
 		self.__visibleSetting.setValue(True)
-		self.__throttleSetting.setValue(False)
+		self.__fastforwardSetting.setValue(True)

@@ -3217,7 +3217,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QPushButton" name="forwardButton" >
           <property name="toolTip" >
-           <string>Set speed to maximum</string>
+           <string>Switch to fast forward speed</string>
           </property>
           <property name="icon" >
            <iconset>

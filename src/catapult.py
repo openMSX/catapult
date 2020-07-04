@@ -247,8 +247,8 @@ class MainWindow(QtWidgets.QMainWindow):
 		settingsManager.connectSetting('speed', ui.speedSpinBox)
 		ui.normalSpeedButton.clicked.connect(
 			lambda: settingsManager.restoreToDefault('speed'))
-		settingsManager.registerSetting('throttle', settings.BooleanSetting)
-		settingsManager.connectSetting('throttle', ui.limitSpeedCheckBox)
+		settingsManager.registerSetting('fastforward', settings.BooleanSetting)
+		settingsManager.connectSetting('fastforward', ui.limitSpeedCheckBox)
 		settingsManager.registerSetting('fullspeedwhenloading',
 			settings.BooleanSetting)
 		settingsManager.connectSetting('fullspeedwhenloading',
