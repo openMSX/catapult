@@ -248,7 +248,8 @@ class MainWindow(QtWidgets.QMainWindow):
 		ui.normalSpeedButton.clicked.connect(
 			lambda: settingsManager.restoreToDefault('speed'))
 		settingsManager.registerSetting('fastforward', settings.BooleanSetting)
-		settingsManager.connectSetting('fastforward', ui.limitSpeedCheckBox)
+		settingsManager.registerSetting('throttle', settings.BooleanSetting)
+		settingsManager.connectSetting('throttle', ui.limitSpeedCheckBox)
 		settingsManager.registerSetting('fullspeedwhenloading',
 			settings.BooleanSetting)
 		settingsManager.connectSetting('fullspeedwhenloading',

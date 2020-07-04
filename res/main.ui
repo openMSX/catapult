@@ -2862,7 +2862,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QCheckBox" name="limitSpeedCheckBox" >
                <property name="toolTip" >
-                <string>Uncheck for unlimited (maximum) speed</string>
+                <string>Uncheck for unlimited (maximum) speed with only few frames rendered</string>
                </property>
                <property name="text" >
                 <string>limit</string>
