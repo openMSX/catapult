@@ -5,33 +5,28 @@ openMSX Catapult
 This is the new openMSX Catapult, an external GUI for openMSX.
 
 Requirements:
-- Python 2.5 or higher
-- PyQt4 (thus also Qt4)
-- python-pysqlite2 for softwareDB tool
-- openMSX, preferably a recent version from Subversion (post 0.11.1)
+- Python 3 (probaby 3.5 or higher)
+- PyQt5 (thus also Qt5)
+- (python-pysqlite2 for softwareDB tool, but that is probably defunct)
+- openMSX, just use the latest release
 
 Download links:
 
-Qt4: (pick one of the Open Source Editions)
-  http://www.trolltech.com/products/qt/downloads
-PyQt4: (compilation requires SIP to be installed as well)
-  http://www.riverbankcomputing.co.uk/sip/download.php
-  http://www.riverbankcomputing.co.uk/pyqt/download.php
+Qt5: (pick one of the Open Source Editions)
+  https://www.qt.io/download-qt-installer
+PyQt5: (compilation requires SIP to be installed as well)
+  http://www.riverbankcomputing.com/software/sip/download
+  http://www.riverbankcomputing.com/software/pyqt/download
 openMSX:
-  http://openmsx.sourceforge.net/temp/openmsx-SVN-snapshot.tar.gz
-Catapult:
-  http://openmsx.sourceforge.net/temp/catapult-SVN-snapshot.tar.gz
+  http://openmsx.org/
 
-Or you can get openMSX and Catapult from Subversion (SVN), that way you will
+Or you can get openMSX and Catapult from GitHub, that way you will
 be able to follow development:
-  svn co https://openmsx.svn.sourceforge.net/svnroot/openmsx/openmsx/trunk openmsx
-  svn co https://openmsx.svn.sourceforge.net/svnroot/openmsx/catapult/trunk catapult
+  git clone https://github.com/openMSX/openMSX.git
+  git clone https://github.com/openMSX/catapult.git
 
 For the moment, you have to set some hardcoded paths to values
 corresponding to your system. You can find these in "custom.py".
-
-If your system's default Python version is not Python 2.5, then change the line
-"python catapult.py" in the Makefile into "python2.5 catapult.py".
 
 Then to start Catapult, just run "make run".
 
@@ -52,6 +47,9 @@ file 'GPL'.
 
 Win32/MSYS  Section
 
+Sorry, the text below is outdated. Use it as you seem fit, but please submit a
+pull request to update it.
+
 I assume you have Python 2.5 and PyQt installed in C:\Python25\  if this is not the case adjust your paths accordingly.
 
 Make sure the python.exe file is accessible through your path (set path in my computer->Advanced->Environment Variables->(go to lower window and add ;C:\Python25 to the path.
@@ -71,4 +69,3 @@ Happy MSX-ing!
                         the openMSX developers
 
 ----------------------------------------------------------------------------
-$Id$
