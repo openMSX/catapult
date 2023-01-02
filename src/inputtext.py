@@ -37,7 +37,7 @@ class InputText:
 	def __typeInputText(self):
 		#TODO: Capture Regular expressions chars like { [ at the beginning of a line
 		strText = tclEscape(self.__ui.inputText.toPlainText())
-		self.__bridge.sendCommandRaw('type "%s"' % strText)
+		self.__bridge.sendCommandRaw('type -- "%s"' % strText)
 
 	def __clearInputText(self):
 		self.__ui.inputText.clear()
