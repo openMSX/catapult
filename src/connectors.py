@@ -60,10 +60,10 @@ class ConnectorPlugger(QtCore.QObject):
 		# prevent problems due to race conditions when removing slots:
 		if connectorName == '' or connectorNameData is None:
 			return
-		if self.__connector == connector:
+		if self.__connector == connectorName:
 			return
-		self.__connector = connector
-		page = self.__updateConnectorPage(connector)
+		self.__connector = connectorName
+		page = self.__updateConnectorPage(connectorName)
 		# Switch page.
 		self.__ui.connectorStack.setCurrentWidget(page)
 
