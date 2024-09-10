@@ -35,6 +35,18 @@ small problem in this Catapult that has not been resolved yet. To fix it in
 *nix systems, make a file ~/.config/openMSX/Catapult.conf and put in it:
 [system]
 executable=/path/to/your/openmsx/executable
+For macOS, use the following method:
+Creation of plist:
+$ /usr/lib/PlistBuddy com.openmsx.Catapult
+Command: system/executable string
+Command: set system/executable /Applications/openMSX.app/Contents/MacOS/openmsx
+Command: save
+Command: quit
+Confirmation:
+$ defaults read com.openmsx.Catapult
+{
+    “system.executable” = ”/Applications/openMSX.app/Contents/MacOS/openmsx”
+}
 
 All source code and other works that are part of, or distributed with
 openMSX Catapult are copyrighted by their respective authors. The file
@@ -50,9 +62,12 @@ Win32/MSYS  Section
 Sorry, the text below is outdated. Use it as you seem fit, but please submit a
 pull request to update it.
 
-I assume you have Python 2.5 and PyQt installed in C:\Python25\  if this is not the case adjust your paths accordingly.
+I assume you have Python 2.5 and PyQt installed in C:\Python25\  if this is not
+the case adjust your paths accordingly.
 
-Make sure the python.exe file is accessible through your path (set path in my computer->Advanced->Environment Variables->(go to lower window and add ;C:\Python25 to the path.
+Make sure the python.exe file is accessible through your path (set path in my
+computer->Advanced->Environment Variables->(go to lower window and add
+;C:\Python25 to the path.
 
 - Create a file in your Python root folder called pyuic
 - Put the following line into the code:
