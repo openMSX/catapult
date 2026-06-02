@@ -2831,7 +2831,7 @@ p, li { white-space: pre-wrap; }
               </layout>
              </item>
              <item>
-              <widget class="QSpinBox" name="speedSpinBox" >
+              <widget class="QDoubleSpinBox" name="speedSpinBox" >
                <property name="toolTip" >
                 <string>Emulation speed compared to real MSX.</string>
                </property>

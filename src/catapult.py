@@ -242,7 +242,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		settingsManager.connectSetting('display_deform', ui.displaydeformComboBox)
 
 		# misc settings
-		settingsManager.registerSetting('speed', settings.IntegerSetting)
+		settingsManager.registerSetting('speed', settings.FloatSetting)
 		settingsManager.connectSetting('speed', ui.speedSlider)
 		settingsManager.connectSetting('speed', ui.speedSpinBox)
 		ui.normalSpeedButton.clicked.connect(
